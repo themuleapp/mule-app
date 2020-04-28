@@ -4,7 +4,6 @@ import 'package:mule/Screens/login.dart';
 import 'package:mule/Screens/signup.dart';
 import 'package:mule/delayed_animation.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:mule/router.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,6 +15,7 @@ class _HomePageState extends State<HomePage>
   final int delayedAmount = 500;
   double _scale;
   AnimationController _controller;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -25,7 +25,8 @@ class _HomePageState extends State<HomePage>
       ),
       lowerBound: 0.0,
       upperBound: 0.1,
-    )..addListener(() {
+    )
+      ..addListener(() {
         setState(() {});
       });
     super.initState();
@@ -77,11 +78,13 @@ class _HomePageState extends State<HomePage>
             ),
             DelayedAnimation(
               child: GestureDetector(
-                onTap: () {
+                /*onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => SignUp()),
                   );
-                },
+                },*/
+                onTapDown: _onTapDown,
+                onTapUp: _onTapUp,
                 child: Transform.scale(
                   scale: _scale,
                   child: _animatedButtonUI,
@@ -94,8 +97,9 @@ class _HomePageState extends State<HomePage>
             ),
             DelayedAnimation(
               child: GestureDetector(
-                onTap: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Login())),
+                onTap: () =>
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Login())),
                 child: Text(
                   "I already have an account".toUpperCase(),
                   style: TextStyle(
@@ -112,7 +116,8 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget get _animatedButtonUI => Container(
+  Widget get _animatedButtonUI =>
+      Container(
         height: 60,
         width: 270,
         decoration: BoxDecoration(
@@ -137,5 +142,7 @@ class _HomePageState extends State<HomePage>
 
   void _onTapUp(TapUpDetails details) {
     _controller.reverse();
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => SignUp()));
   }
 }
