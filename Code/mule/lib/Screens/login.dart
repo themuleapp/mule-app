@@ -176,7 +176,7 @@ class Login extends StatelessWidget {
         Text(
           "Forgot password?",
           style: TextStyle(
-              color: Color(0xFF6CD1E7),
+              color: Color(0xFF3D3D3D),
               fontSize: 16.0,
               fontWeight: FontWeight.bold),
         ),
