@@ -3,15 +3,18 @@ import 'package:mule/Widgets/custom_text_from_field.dart';
 import 'package:mule/router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'signup.dart';
+
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: Color(0xFFFFFFFF),
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: _theme.scaffoldBackgroundColor,
+        backgroundColor: Color(0xFFFFFFFF),
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
@@ -21,11 +24,13 @@ class Login extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
+          color: Color(0xFF6CD1E7),
         ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(SignUpRoute);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SignUp()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -33,7 +38,7 @@ class Login extends StatelessWidget {
               child: Text(
                 "Sign Up",
                 style: TextStyle(
-                  color: _theme.primaryColor,
+                  color: Color(0xFF6CD1E7),
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -52,9 +57,12 @@ class Login extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Log In",
-                  style: _theme.textTheme.title.merge(
-                    TextStyle(fontSize: 30.0),
-                  ),
+                  style:
+                    TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF3D3D3D)
+                    ),
                 ),
               ),
               SizedBox(
@@ -150,7 +158,6 @@ class Login extends StatelessWidget {
   }
 
   Widget _loginForm(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -169,7 +176,7 @@ class Login extends StatelessWidget {
         Text(
           "Forgot password?",
           style: TextStyle(
-              color: _theme.primaryColor,
+              color: Color(0xFF6CD1E7),
               fontSize: 16.0,
               fontWeight: FontWeight.bold),
         ),
@@ -180,10 +187,10 @@ class Login extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 45.0,
           child: FlatButton(
-            color: _theme.primaryColor,
-            /*onPressed: () {
-              Navigator.of(context).pushReplacementNamed(HomepageRoute);
-            },*/
+            color: Color(0xFF6CD1E7),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(LoginRoute);
+            },
             child: Text(
               "LOG IN",
               style: TextStyle(color: Colors.white, fontSize: 16.0),

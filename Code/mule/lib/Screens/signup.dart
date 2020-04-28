@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
 import 'package:mule/router.dart';
 
+import 'login.dart';
+
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
+    //final ThemeData _theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: Color(0xFFFFFFFF),
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: _theme.scaffoldBackgroundColor,
+        backgroundColor: Color(0xFFFFFFFF),
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
@@ -19,11 +22,13 @@ class SignUp extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
+          color: Color(0xFF6CD1E7),
         ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(LoginRoute);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Login()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -31,7 +36,7 @@ class SignUp extends StatelessWidget {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: _theme.primaryColor,
+                  color: Color(0xFF6CD1E7),
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -42,6 +47,7 @@ class SignUp extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+          //color: Color(0xFFFFFFFF),
           padding: EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +56,10 @@ class SignUp extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Sign Up",
-                  style: _theme.textTheme.title.merge(
-                    TextStyle(fontSize: 30.0),
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF3D3D3D)
                   ),
                 ),
               ),
@@ -67,10 +75,10 @@ class SignUp extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: 45.0,
                 child: FlatButton(
-                  color: _theme.primaryColor,
-                  /*onPressed: () {
-                    Navigator.of(context).pushNamed(OtpVerificationRoute);
-                  },*/
+                  color: Color(0xFF6CD1E7),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(SignUpRoute);
+                  },
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -138,7 +146,7 @@ class SignUp extends StatelessWidget {
         ),
         Text(
           "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff222B45)),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF3D3D3D)),
         )
       ],
     );
