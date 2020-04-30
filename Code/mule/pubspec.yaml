@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   avatar_glow:
   font_awesome_flutter: ^8.5.0
+  google_sign_in:
+  flutter_facebook_login:
 
 dev_dependencies:
   flutter_test:

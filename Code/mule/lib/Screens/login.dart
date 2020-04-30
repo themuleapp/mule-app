@@ -115,7 +115,7 @@ class Login extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           border: Border.all(
-                            color: _theme.primaryColor,
+                            color: Colors.redAccent,
                           ),
                           borderRadius: BorderRadius.circular(3.0)),
                       margin: EdgeInsets.only(
@@ -128,17 +128,17 @@ class Login extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Icon(
-                              Icons.phone,
-                              color: _theme.primaryColor,
+                              FontAwesomeIcons.google,
+                              color: Colors.redAccent,
                             ),
                             Expanded(
                               child: Text(
-                                "Connect with Phone number",
+                                "Sign in with Google",
                                 textAlign: TextAlign.center,
                                 style: _theme.textTheme.body1.merge(
                                   TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: _theme.primaryColor,
+                                    color: Colors.redAccent,
                                   ),
                                 ),
                               ),
