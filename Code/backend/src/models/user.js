@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import { v4 as uuidV4 } from 'uuid';
 const userSchema = mongoose.Schema({
   firstName: {
     type: String,
@@ -28,6 +28,17 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     // minLength: 7,
+  },
+
+  resetId: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  resetIdExpiration: {
+    type: Date,
+    required: false,
+    default: null,
   },
   dateIssued: {
     type: Date,
@@ -65,6 +76,14 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+userSchema.methods.createResetId = async function (email) {
+  const id = uuidV4();
+  this.resetId = id;
+  this.resetIdExpiration = Date.now() + 86400000;
+  await this.save();
+  return id;
+};
+
 userSchema.statics.findByCredentials = async function (email, password) {
   // Search for a user by email and password.
   const user = await this.findOne({ email });
@@ -81,6 +100,10 @@ userSchema.statics.findByCredentials = async function (email, password) {
 
 userSchema.statics.existsByEmail = async function (email) {
   return await this.exists({ email });
+};
+
+userSchema.statics.getByEmail = async function (email) {
+  return await this.findOne({ email });
 };
 
 export default mongoose.model('User', userSchema);

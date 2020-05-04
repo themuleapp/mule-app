@@ -2,7 +2,11 @@ import { Router } from 'express';
 import User from '../../models/user';
 import asyncErrorCatcher from '../../util/asyncErrorCatcher';
 import composeErrorResponse from '../../util/composeErrorResponse';
-import { validateSignupDate, validateLoginData } from './authValidators';
+import {
+  validateSignupDate,
+  validateLoginData,
+  validateResetPasswordData,
+} from './authValidators';
 
 const authRouter = Router();
 // TODO add routes in here
@@ -66,4 +70,25 @@ authRouter.post(
     }
   })
 );
+
+authRouter.post('/reset', async (req, res) => {
+  const validation = validateResetPasswordData(req.body);
+  if (validation) {
+    return res.status(400).send(composeErrorResponse(validation, 400));
+  }
+  const user = await User.getByEmail(req.body.email);
+  console.log(req.body.email);
+  console.log(user);
+  if (!user) {
+    return res
+      .status(400)
+      .send(composeErrorResponse(['No user exists with the given email'], 400));
+  }
+
+  const id = await user.createResetId();
+
+  res.send({
+    id,
+  });
+});
 export default authRouter;
