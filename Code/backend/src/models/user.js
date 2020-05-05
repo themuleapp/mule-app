@@ -76,10 +76,11 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
-userSchema.methods.createResetId = async function (email) {
+userSchema.methods.createResetId = async function () {
   const id = uuidV4();
   this.resetId = id;
   this.resetIdExpiration = Date.now() + 86400000;
+  console.log(`new id: ${id}`);
   await this.save();
   return id;
 };
@@ -104,6 +105,30 @@ userSchema.statics.existsByEmail = async function (email) {
 
 userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
+};
+
+userSchema.statics.resetPasswordWithId = async function (id, password) {
+  console.log(id);
+  const user = await this.findOne({ resetId: id });
+  if (!user) {
+    return null;
+  }
+
+  console.log('User was found! ' + user);
+
+  if (user.resetIdExpiration < Date.now()) {
+    // Remove the reset id before
+    user.resetId = null;
+    user.resetIdExpiration = null;
+    await user.save();
+    return false;
+  }
+  // Remove the reset id cause now it's used up
+  user.resetId = null;
+  user.resetIdExpiration = null;
+  user.password = password;
+  await user.save();
+  return true;
 };
 
 export default mongoose.model('User', userSchema);

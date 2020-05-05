@@ -27,9 +27,21 @@ export function validateLoginData(loginData) {
   return null;
 }
 
-export function validateResetPasswordData(resetData) {
+export function validateRequestResetPasswordData(requestResetData) {
   const validation = Joi.object({
     email: Joi.string().email().required(),
+  }).validate(requestResetData, { abortEarly: false });
+
+  if (validation?.error?.details) {
+    return validation.error.details.map(x => x.message);
+  }
+  return null;
+}
+
+export function validateResetPasswordData(resetData) {
+  const validation = Joi.object({
+    password: Joi.string().required(),
+    id: Joi.string().required(),
   }).validate(resetData, { abortEarly: false });
 
   if (validation?.error?.details) {
