@@ -47,19 +47,15 @@ authRouter.post(
       return res.status(400).send(composeErrorResponse(validation, 400));
     }
     try {
-      console.log('here');
-
       // Login a registered user
       const { email, password } = req.body;
-      console.log(email);
       const user = await User.findByCredentials(email, password); // TODO this throws error when credentials not good
-      console.log('Found');
       if (!user) {
         return res
           .status(401)
           .send(
             composeErrorResponse(
-              ['Login failed! Check authentication credentials'],
+              ['Login failed! Invalid login credentials'],
               401
             )
           );
@@ -68,8 +64,6 @@ authRouter.post(
       res.send({ user, token });
     } catch (error) {
       // TODO we shouldn't be here? Empty error something is being thrown
-      console.log(`Shit ${error}`);
-      console.log(error);
       res.status(400).send(error);
     }
   })
@@ -82,8 +76,6 @@ authRouter.post('/request-reset', async (req, res) => {
     return res.status(400).send(composeErrorResponse(validation, 400));
   }
   const user = await User.getByEmail(req.body.email);
-  console.log(req.body.email);
-  console.log(user);
   if (!user) {
     return res
       .status(400)

@@ -80,7 +80,6 @@ userSchema.methods.createResetId = async function () {
   const id = uuidV4();
   this.resetId = id;
   this.resetIdExpiration = Date.now() + 86400000;
-  console.log(`new id: ${id}`);
   await this.save();
   return id;
 };
@@ -90,11 +89,13 @@ userSchema.statics.findByCredentials = async function (email, password) {
   const user = await this.findOne({ email });
   // const user = await User/.findOne({ email });
   if (!user) {
-    throw new Error({ error: 'Invalid login credentials' });
+    // throw new Error({ error: 'Invalid login credentials' });
+    return null;
   }
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
-    throw new Error({ error: 'Invalid login credentials' });
+    return null;
+    // throw new Error({ error: 'Invalid login credentials' });
   }
   return user;
 };
@@ -108,13 +109,10 @@ userSchema.statics.getByEmail = async function (email) {
 };
 
 userSchema.statics.resetPasswordWithId = async function (id, password) {
-  console.log(id);
   const user = await this.findOne({ resetId: id });
   if (!user) {
     return null;
   }
-
-  console.log('User was found! ' + user);
 
   if (user.resetIdExpiration < Date.now()) {
     // Remove the reset id before
