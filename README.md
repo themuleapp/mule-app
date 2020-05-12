@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" height="200" src="https://github.com/mrigank2487/mule-mvp/blob/master/Code/mule/assets/images/logo.png">
+  <img width="200" height="200" src="https://github.com/mrigank2487/mule-app/blob/master/Code/mule/assets/images/logo.png">
 </p>
 
 # Mule
