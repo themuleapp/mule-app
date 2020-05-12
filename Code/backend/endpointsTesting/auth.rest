@@ -1,0 +1,26 @@
+# User signup
+POST http://localhost:3000/api/authentication/signup
+Content-Type: application/json
+
+{
+  "firstName": "Ji",
+  "lastName": "Darwish",
+  "email": "ji@darwish.com",
+  "phoneNumber": "123456789012",
+  "password": "12345678" 
+}
+
+###
+# User login
+POST http://localhost:3000/api/authentication/login
+Content-Type: application/json
+
+{
+  "email": "ji@darwish.com",
+  "password": "12345678"
+}
+
+###
+# protected route example +
+GET http://localhost:3000/api/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFmMTQyMTkwMWI4NDVmYTcxZjM1OTMiLCJpYXQiOjE1ODg1MzI0NTJ9.elUKIy0qgXHn9OTLqbSDa9PBLeWNlMBLSCpwL5w0BxE
