@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@hapi/joi": "^17.1.1",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.11"
-  }
-}
