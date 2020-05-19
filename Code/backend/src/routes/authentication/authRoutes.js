@@ -61,7 +61,7 @@ authRouter.post(
           );
       }
       const token = await user.generateAuthToken();
-      res.send({ user, token });
+      res.send({ token });
     } catch (error) {
       // TODO we shouldn't be here? Empty error something is being thrown
       res.status(400).send(error);
