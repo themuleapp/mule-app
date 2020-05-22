@@ -84,6 +84,9 @@ userSchema.methods.createResetId = async function () {
   return id;
 };
 
+userSchema.statics.updateData = function (updateData, user) {
+  return this.update({ _id: user._id }, updateData);
+};
 userSchema.statics.findByCredentials = async function (email, password) {
   // Search for a user by email and password.
   const user = await this.findOne({ email });
