@@ -118,12 +118,12 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         ),
         DrawerItem(
           text: Text(
-            'SETTINGS',
+            'Settings',
             style: TextStyle(color: Colors.white),
           ),
           icon: Icon(Icons.settings, color: Colors.white),
           page: MainPage(
-            title: 'SETTINGS',
+            title: 'Settings',
           ),
         ),
       ],
@@ -146,7 +146,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15, top: 10, bottom: 20),
+                padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
                 child: Text(
                   "Nick Miller",
                   style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),

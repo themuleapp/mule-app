@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
-import 'package:mule/router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'signup.dart';
@@ -189,7 +189,8 @@ class Login extends StatelessWidget {
           child: FlatButton(
             color: Color(0xFF6CD1E7),
             onPressed: () {
-              Navigator.of(context).pushReplacementNamed(LoginRoute);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => MainWidget()));
             },
             child: Text(
               "LOG IN",

@@ -1,177 +1,235 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/home.dart';
 
-class MainPage extends DrawerContent {
-  MainPage({Key key, this.title});
-  final String title;
-  @override
-  _MainPageState createState() => _MainPageState();
+class HiddenDrawerController {
+  HiddenDrawerController({this.items, @required DrawerContent initialPage}) {
+    this.page = initialPage;
+  }
+  List<DrawerItem> items;
+  Function open;
+  Function close;
+  DrawerContent page;
 }
 
-class _MainPageState extends State<MainPage> {
+class DrawerContent extends StatefulWidget {
+  Function onMenuPressed;
+  State<StatefulWidget> createState() {
+    return null;
+  }
+}
+
+class DrawerItem extends StatelessWidget {
+  DrawerItem({this.onPressed, this.icon, this.text, this.page});
+  Function onPressed;
+  Widget icon;
+  Widget text;
+
+  DrawerContent page;
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Row(
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 2),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
               children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  child: Material(
-                    shadowColor: Colors.transparent,
-                    color: Colors.transparent,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                      ),
-                      onPressed: widget.onMenuPressed,
-                    ),
-                  ),
+                Container(
+                  padding: EdgeInsets.only(left: 16, right: 8),
+                  child: icon,
                 ),
+                text
               ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(widget.title),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class MainWidget extends StatefulWidget {
-  MainWidget({Key key, this.title}) : super(key: key);
-  final String title;
-
+class HiddenDrawer extends StatefulWidget {
+  HiddenDrawer({this.header, this.decoration, this.controller});
+  BoxDecoration decoration;
+  Widget header;
+  HiddenDrawerController controller;
   @override
-  _MainWidgetState createState() => _MainWidgetState();
+  _HiddenDrawerState createState() => _HiddenDrawerState();
 }
 
-class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
-  HiddenDrawerController _drawerController;
+class _HiddenDrawerState extends State<HiddenDrawer>
+    with TickerProviderStateMixin {
+  bool isMenuOpen = false;
+  bool isMenudragging = false;
+  Animation<double> animation, scaleAnimation;
+  Animation<BorderRadius> radiusAnimation;
+  AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    _drawerController = HiddenDrawerController(
-      initialPage: MainPage(
-        title: 'main',
-      ),
-      items: [
-        DrawerItem(
-          text: Text('Home', style: TextStyle(color: Colors.white)),
-          icon: Icon(Icons.home, color: Colors.white),
-          page: MainPage(
-            title: 'Home',
-          ),
-        ),
-        DrawerItem(
-          text: Text(
-            'Gallery',
-            style: TextStyle(color: Colors.white),
-          ),
-          icon: Icon(Icons.photo_album, color: Colors.white),
-          page: MainPage(
-            title: 'Gallery',
-          ),
-        ),
-        DrawerItem(
-          text: Text(
-            'Favorites',
-            style: TextStyle(color: Colors.white),
-          ),
-          icon: Icon(Icons.favorite, color: Colors.white),
-          page: MainPage(
-            title: 'Favorites',
-          ),
-        ),
-        DrawerItem(
-          text: Text(
-            'Notification',
-            style: TextStyle(color: Colors.white),
-          ),
-          icon: Icon(Icons.notifications, color: Colors.white),
-          page: MainPage(
-            title: 'Notification',
-          ),
-        ),
-        DrawerItem(
-          text: Text(
-            'Invite',
-            style: TextStyle(color: Colors.white),
-          ),
-          icon: Icon(Icons.insert_invitation, color: Colors.white),
-          page: MainPage(
-            title: 'invite',
-          ),
-        ),
-        DrawerItem(
-          text: Text(
-            'SETTINGS',
-            style: TextStyle(color: Colors.white),
-          ),
-          icon: Icon(Icons.settings, color: Colors.white),
-          page: MainPage(
-            title: 'SETTINGS',
-          ),
-        ),
-      ],
-    );
+    animationController =
+        AnimationController(vsync: this, duration: Duration(microseconds: 300));
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+    scaleAnimation =
+        Tween<double>(begin: 1.0, end: 0.86).animate(animationController);
+    radiusAnimation = BorderRadiusTween(
+        begin: BorderRadius.circular(0.0), end: BorderRadius.circular(32))
+        .animate(
+        CurvedAnimation(parent: animationController, curve: Curves.ease));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
+
+  drawerItems() {
+    return widget.controller.items.map((DrawerItem item) {
+      if (item.onPressed == null) {
+        item.onPressed = () {
+          widget.controller.page = item.page;
+          widget.controller.close();
+        };
+      }
+      item.page.onMenuPressed = menuPress;
+      return item;
+    }).toList();
+  }
+
+  menuPress() {
+    isMenuOpen ? closeDrawer() : openDrawer();
+  }
+
+  closeDrawer() {
+    animationController.reverse();
+    setState(() {
+      isMenuOpen = false;
+    });
+  }
+
+  openDrawer() {
+    animationController.forward();
+    setState(() {
+      isMenuOpen = true;
+    });
+  }
+
+  animations() {
+    if (isMenudragging) {
+      var opened = false;
+      setState(() {
+        isMenudragging = false;
+      });
+      if (animationController.value >= 0.4) {
+        animationController.forward();
+        opened = true;
+      } else {
+        animationController.reverse();
+      }
+      setState(() {
+        isMenuOpen = opened;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: HiddenDrawer(
-        controller: _drawerController,
-        header: Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-            children: <Widget>[
-              Container(
-                // height: 75,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.red, width: 5)),
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: ClipOval(
-                  child: Image(
-                    fit: BoxFit.contain,
-                    image: NetworkImage(
-                      'https://scontent.fktm7-1.fna.fbcdn.net/v/t1.0-9/48405358_683680282028761_2233474687176802304_n.jpg?_nc_cat=111&_nc_oc=AQnJcz3nmJPgqG0Koen6EyPPOQktub5ubjD7KdFTstGLQRNrKupGp3hOZ-twJGEK2fM&_nc_ht=scontent.fktm7-1.fna&oh=caed7075e39bcdcd38b333395161516d&oe=5DD670D5',
-                    ),
+    widget.controller.page.onMenuPressed = menuPress;
+    widget.controller.close = closeDrawer;
+    widget.controller.open = openDrawer;
+    return Listener(
+      onPointerDown: (PointerDownEvent event) {
+        if (isMenuOpen &&
+            event.position.dx / MediaQuery.of(context).size.width >= 0.66) {
+          closeDrawer();
+        } else {
+          setState(() {
+            isMenudragging = (!isMenudragging && event.position.dx <= 8.0);
+          });
+        }
+      },
+      onPointerMove: (PointerMoveEvent event) {
+        if (isMenudragging) {
+          animationController.value =
+              event.position.dx / MediaQuery.of(context).size.width;
+        }
+      },
+      onPointerUp: (PointerUpEvent event) {
+        animations();
+      },
+      onPointerCancel: (PointerCancelEvent event) {
+        animations();
+      },
+      child: Stack(
+        children: <Widget>[
+          Container(
+            decoration: widget.decoration,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 64.0),
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    child: widget.header,
                   ),
-                ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: drawerItems())
+                ],
               ),
-              SizedBox(
-                height: 6,
-              ),
-              Text(
-                'Siddhartha joshi',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              )
-            ],
+            ),
           ),
-        ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.deepPurple[500], Colors.purple[500], Colors.purple],
-            // tileMode: TileMode.repeated,
-          ),
-        ),
+          Transform.scale(
+            scale: scaleAnimation.value,
+            child: Transform.translate(
+                offset: Offset(
+                    MediaQuery.of(context).size.width * 0.66 * animation.value,
+                    0.0),
+                child: AbsorbPointer(
+                  absorbing: isMenuOpen,
+                  child: Stack(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 32),
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(44)),
+                                child: Container(
+                                  color: Colors.white.withAlpha(128),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: animation.value * 16),
+                        child: ClipRRect(
+                          borderRadius: radiusAnimation.value,
+                          child: Container(
+                            color: Colors.white,
+                            child: widget.controller.page,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+          )
+        ],
       ),
     );
   }
