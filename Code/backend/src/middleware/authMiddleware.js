@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
+import composeErrorResponse from '../util/composeErrorResponse';
 
 export default async (req, res, next) => {
+  if (!req.header('Authorization')) {
+    res.status(401).send(composeErrorResponse(['Not logged in'], 400));
+  }
   // Get token
   const token = req.header('Authorization').replace('Bearer ', '');
 
@@ -13,7 +17,7 @@ export default async (req, res, next) => {
       // Weird case here because where's the user since he has a token???
       // throw new Error();
       // TODO
-      res.status(401).send({ error: 'No user found' });
+      res.status(401).send(composeErrorResponse(['No user found'], 400));
     }
 
     // Set the user and token on the request object to be further used in the routes
