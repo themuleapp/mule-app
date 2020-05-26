@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/drawer.dart';
+import 'package:mule/Screens/profile.dart';
 
 
 class MainPage extends DrawerContent {
@@ -115,6 +116,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           page: MainPage(
             title: 'Profile',
           ),
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => Profile()));
+          },
         ),
         DrawerItem(
           text: Text(
