@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/drawer.dart';
 import 'package:mule/Screens/profile.dart';
-
+import 'package:mule/config/app_colors.dart';
 
 class MainPage extends DrawerContent {
   MainPage({Key key, this.title});
@@ -117,8 +117,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             title: 'Profile',
           ),
           onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Profile()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Profile()));
           },
         ),
         DrawerItem(
@@ -147,14 +147,16 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               CircleAvatar(
                 radius: 50,
                 backgroundImage: NetworkImage(
-                    "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"
-                ),
+                    "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
                 child: Text(
                   "Nick Miller",
-                  style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
@@ -164,7 +166,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           ),
         ),
         decoration: BoxDecoration(
-          color: Color(0xFF292E39),
+          color: AppColors.darkBlue,
         ),
       ),
     );

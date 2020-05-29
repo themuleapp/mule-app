@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
+import 'package:mule/config/app_colors.dart';
 
 import 'login.dart';
 
@@ -22,13 +23,13 @@ class SignUp extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: Color(0xFF6CD1E7),
+          color: AppColors.lightBlue,
         ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Login()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Login()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -36,7 +37,7 @@ class SignUp extends StatelessWidget {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: Color(0xFF6CD1E7),
+                  color: Colors.lightBlue,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -59,8 +60,7 @@ class SignUp extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF3D3D3D)
-                  ),
+                      color: AppColors.darkGrey),
                 ),
               ),
               SizedBox(
@@ -75,7 +75,7 @@ class SignUp extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: 45.0,
                 child: FlatButton(
-                  color: Color(0xFF6CD1E7),
+                  color: AppColors.lightBlue,
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => MainWidget()));
@@ -147,7 +147,8 @@ class SignUp extends StatelessWidget {
         ),
         Text(
           "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF3D3D3D)),
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: AppColors.darkGrey),
         )
       ],
     );

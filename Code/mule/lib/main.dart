@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/menu.dart';
 import 'package:mule/Screens/homepage.dart';
-
 
 void main() => runApp(App());
 

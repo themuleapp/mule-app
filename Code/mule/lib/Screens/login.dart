@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mule/config/app_colors.dart';
 
 import 'signup.dart';
-
 
 class Login extends StatelessWidget {
   @override
@@ -24,13 +24,13 @@ class Login extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: Color(0xFF6CD1E7),
+          color: AppColors.lightBlue,
         ),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SignUp()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => SignUp()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -38,7 +38,7 @@ class Login extends StatelessWidget {
               child: Text(
                 "Sign Up",
                 style: TextStyle(
-                  color: Color(0xFF6CD1E7),
+                  color: AppColors.lightBlue,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -57,12 +57,10 @@ class Login extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Log In",
-                  style:
-                    TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF3D3D3D)
-                    ),
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.darkGrey),
                 ),
               ),
               SizedBox(
@@ -89,7 +87,7 @@ class Login extends StatelessWidget {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: Color(0xff3B5998),
+                        color: AppColors.blue,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -176,7 +174,7 @@ class Login extends StatelessWidget {
         Text(
           "Forgot password?",
           style: TextStyle(
-              color: Color(0xFF3D3D3D),
+              color: AppColors.darkGrey,
               fontSize: 16.0,
               fontWeight: FontWeight.bold),
         ),
@@ -187,10 +185,10 @@ class Login extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 45.0,
           child: FlatButton(
-            color: Color(0xFF6CD1E7),
+            color: AppColors.lightBlue,
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MainWidget()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => MainWidget()));
             },
             child: Text(
               "LOG IN",

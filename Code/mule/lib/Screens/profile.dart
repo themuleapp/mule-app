@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
+import 'package:mule/config/app_colors.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class Profile extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: Color(0xFF6CD1E7),
+          color: AppColors.lightBlue,
         ),
       ),
       body: SingleChildScrollView(
@@ -33,9 +34,7 @@ class Profile extends StatelessWidget {
                   Text(
                     "Hey there, Nick!",
                     style:
-                    _theme.textTheme.title.merge(TextStyle(
-                        fontSize: 30.0)
-                    ),
+                        _theme.textTheme.title.merge(TextStyle(fontSize: 30.0)),
                   ),
                   CircleAvatar(
                     radius: 40.0,
@@ -59,7 +58,7 @@ class Profile extends StatelessWidget {
                 value: "nickmiller@gmail.com",
                 suffixIcon: Icon(
                   Icons.check_circle,
-                  color: Color(0xFF6CD1E7),
+                  color: AppColors.lightBlue,
                 ),
               ),
               SizedBox(
@@ -77,7 +76,7 @@ class Profile extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 14.0,
-                  color: Color(0xFF9CA4AA),
+                  color: AppColors.lightGrey,
                 ),
               ),
               SizedBox(
@@ -85,9 +84,9 @@ class Profile extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xffFBFBFD),
+                  color: AppColors.white,
                   border: Border.all(
-                    color: Color(0xffD6D6D6),
+                    color: AppColors.offWhite,
                   ),
                 ),
                 padding: EdgeInsets.symmetric(
@@ -103,30 +102,26 @@ class Profile extends StatelessWidget {
                           child: Text(
                             "BE A MULE",
                             style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17
-                            ),
+                                fontWeight: FontWeight.bold, fontSize: 17),
                           ),
                         ),
                         Switch(
                           value: true,
-                          activeColor: Color(0xFF6CD1E7),
+                          activeColor: AppColors.lightBlue,
                           onChanged: (bool state) {},
                         )
                       ],
                     ),
                     Text(
                       "Turn on to be considered being a Mule.",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
                     )
                   ],
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xffFBFBFD),
+                  color: AppColors.white,
                 ),
                 padding: EdgeInsets.symmetric(
                   vertical: 20.0,
@@ -139,7 +134,7 @@ class Profile extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,
-                        color: Color(0xFF9CA4AA),
+                        color: AppColors.lightGrey,
                       ),
                     ),
                     SizedBox(
@@ -149,7 +144,7 @@ class Profile extends StatelessWidget {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: Color(0xff3B5998),
+                        color: AppColors.blue,
                         child: Row(
                           children: <Widget>[
                             Icon(

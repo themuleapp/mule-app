@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/config/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
@@ -8,10 +9,10 @@ class CustomTextFormField extends StatelessWidget {
   final bool showLabel;
   CustomTextFormField(
       {@required this.hintText,
-        this.verticalPadding,
-        this.value,
-        this.suffixIcon,
-        this.showLabel = true});
+      this.verticalPadding,
+      this.value,
+      this.suffixIcon,
+      this.showLabel = true});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,13 @@ class CustomTextFormField extends StatelessWidget {
         children: <Widget>[
           showLabel
               ? Text(
-            hintText.toUpperCase(),
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14.0,
-              color: Color(0xFF9CA4AA),
-            ),
-          )
+                  hintText.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0,
+                    color: AppColors.lightGrey,
+                  ),
+                )
               : SizedBox(),
           SizedBox(
             height: 7.0,
