@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
+import 'package:mule/models/login/login_data.dart';
 import 'package:mule/models/signup/signup_data.dart';
 
 class HttpClient {
@@ -27,11 +28,15 @@ class HttpClient {
     return res;
   }
 
-  String _addSlashToEndingOfUrl(String urlPath) {
-    if (urlPath.endsWith('/')) {
-      return urlPath;
+  handleLogin(LoginData data) async {
+    final res = await makePostRequest('/authentication/login', data.toMap());
+
+    // TODO Save the token!!
+    if (res.statusCode == 201) {
+      final token = res.data['token'];
+      print('Token is $token');
     }
-    return urlPath + '/';
+    return res;
   }
 
   Future<Response> makeGetRequest(String path) async {
@@ -49,13 +54,6 @@ class HttpClient {
         },
       ),
     );
-  }
-
-  // returns the response
-  Future<Response> doLogin(String username, String password) async {
-    String path = '/users/login';
-    return await makePostRequest(
-        path, {'username': username, 'password': password});
   }
 }
 

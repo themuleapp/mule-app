@@ -3,10 +3,15 @@ import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/login/login_data.dart';
 
 import 'signup.dart';
 
 class Login extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
@@ -161,12 +166,15 @@ class Login extends StatelessWidget {
       children: <Widget>[
         CustomTextFormField(
           hintText: "Email",
+          controller: emailController,
         ),
         SizedBox(
           height: 20.0,
         ),
         CustomTextFormField(
           hintText: "Password",
+          obsecureText: true,
+          controller: passwordController,
         ),
         SizedBox(
           height: 20.0,
@@ -186,9 +194,21 @@ class Login extends StatelessWidget {
           height: 45.0,
           child: FlatButton(
             color: AppColors.lightBlue,
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MainWidget()));
+            onPressed: () async {
+              final loginData = LoginData(
+                email: emailController.text.trim(),
+                password: passwordController.text.trim(),
+              );
+              final res = await httpClient.handleLogin(loginData);
+              final success = res.statusCode;
+              if (success == 200) {
+                // user is logged in successfully
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MainWidget()));
+              } else {
+                print('Nope you not authenticated yet!');
+                print(res.data);
+              }
             },
             child: Text(
               "LOG IN",

@@ -8,10 +8,12 @@ class CustomTextFormField extends StatelessWidget {
   final String value;
   final Icon suffixIcon;
   final bool showLabel;
+  final bool obsecureText;
   CustomTextFormField(
       {@required this.hintText,
       this.verticalPadding,
       this.controller,
+      this.obsecureText = false,
       this.value,
       this.suffixIcon,
       this.showLabel = true});
@@ -36,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
             height: 7.0,
           ),
           TextFormField(
+            obscureText: obsecureText,
             controller: controller,
             initialValue: value,
             style: TextStyle(
