@@ -165,11 +165,17 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20, bottom: 0),
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                    "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
-                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
+                  ),
+                )
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 15, bottom: 0),
