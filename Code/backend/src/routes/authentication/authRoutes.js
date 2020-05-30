@@ -24,9 +24,11 @@ authRouter.post('/signup', async (req, res) => {
 
     // Check user existance
     if (await User.existsByEmail(user.email)) {
-      return res.send(
-        composeErrorResponse(['A user with that email already exists'], 400)
-      );
+      return res
+        .status(400)
+        .send(
+          composeErrorResponse(['A user with that email already exists'], 400)
+        );
     }
 
     // save user

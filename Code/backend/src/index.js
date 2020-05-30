@@ -28,6 +28,7 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 // Register routes
+app.get('/api/test', (req, res) => res.send({ status: 'working' }));
 app.use('/api/authentication', authRouter);
 app.get('/api/protected', authMiddleware, async (req, res) => {
   res.send(`Authenticated ${req.token}`);

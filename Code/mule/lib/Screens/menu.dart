@@ -4,6 +4,9 @@ import 'package:mule/Screens/drawer.dart';
 import 'package:mule/Screens/profile.dart';
 import 'package:mule/config/app_colors.dart';
 
+import 'homepage.dart';
+import 'homepage.dart';
+
 class MainPage extends DrawerContent {
   MainPage({Key key, this.title});
   final String title;
@@ -130,6 +133,21 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           page: MainPage(
             title: 'Settings',
           ),
+        ),
+        DrawerItem(
+          text: Text(
+            'Logout',
+            style: TextStyle(color: Colors.white),
+          ),
+          icon: Icon(Icons.exit_to_app, color: Colors.white),
+          onPressed: () {
+            // TODO should call log out endpoint
+            // Should remove the token from local storage
+            print('hey');
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => HomePage()));
+          },
+          page: MainPage(title: 'Logout'),
         ),
       ],
     );

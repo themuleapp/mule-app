@@ -3,6 +3,7 @@ import 'package:mule/config/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
+  final TextEditingController controller;
   final double verticalPadding;
   final String value;
   final Icon suffixIcon;
@@ -10,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
       {@required this.hintText,
       this.verticalPadding,
+      this.controller,
       this.value,
       this.suffixIcon,
       this.showLabel = true});
@@ -34,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
             height: 7.0,
           ),
           TextFormField(
+            controller: controller,
             initialValue: value,
             style: TextStyle(
               fontWeight: FontWeight.bold,

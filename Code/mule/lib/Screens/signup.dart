@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_from_field.dart';
 import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/signup/signup_data.dart';
 
 import 'login.dart';
 
 class SignUp extends StatelessWidget {
+  final TextEditingController firstNameController = new TextEditingController();
+  final TextEditingController lastNameController = new TextEditingController();
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController phoneNumberPrefixController =
+      new TextEditingController();
+  final TextEditingController phoneNumberController =
+      new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     //final ThemeData _theme = Theme.of(context);
@@ -76,9 +87,27 @@ class SignUp extends StatelessWidget {
                 height: 45.0,
                 child: FlatButton(
                   color: AppColors.lightBlue,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MainWidget()));
+                  onPressed: () async {
+                    final phoneNumber =
+                        '${phoneNumberPrefixController.text.trim()}${phoneNumberController.text.trim()}';
+                    SignupData signupData = SignupData(
+                      firstName: firstNameController.text.trim(),
+                      lastName: lastNameController.text.trim(),
+                      email: emailController.text.trim(),
+                      phoneNumber: phoneNumber,
+                      password: passwordController.text.trim(),
+                    );
+
+                    final res = await httpClient.handleSignup(signupData);
+                    final success = res.statusCode;
+                    if (success == 201) {
+                      // user is signed up successfully
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MainWidget()));
+                    } else {
+                      print('Nope you not authenticated yet!');
+                      print(res.data);
+                    }
                   },
                   child: Text(
                     "SIGN UP",
@@ -101,12 +130,14 @@ class SignUp extends StatelessWidget {
             Expanded(
               child: CustomTextFormField(
                 hintText: "First name",
+                controller: firstNameController,
               ),
             ),
             SizedBox(width: 15.0),
             Expanded(
               child: CustomTextFormField(
                 hintText: "Last name",
+                controller: lastNameController,
               ),
             )
           ],
@@ -116,6 +147,7 @@ class SignUp extends StatelessWidget {
         ),
         CustomTextFormField(
           hintText: "Email",
+          controller: emailController,
         ),
         SizedBox(
           height: 20.0,
@@ -126,12 +158,14 @@ class SignUp extends StatelessWidget {
               width: 80.0,
               child: CustomTextFormField(
                 hintText: "+1",
+                controller: phoneNumberPrefixController,
               ),
             ),
             SizedBox(width: 15.0),
             Expanded(
               child: CustomTextFormField(
                 hintText: "Phone number",
+                controller: phoneNumberController,
               ),
             )
           ],
@@ -141,6 +175,7 @@ class SignUp extends StatelessWidget {
         ),
         CustomTextFormField(
           hintText: "Password",
+          controller: passwordController,
         ),
         SizedBox(
           height: 25.0,
