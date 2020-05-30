@@ -48,7 +48,7 @@ class SignUp extends StatelessWidget {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: Colors.lightBlue,
+                  color: AppColors.lightBlue,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),

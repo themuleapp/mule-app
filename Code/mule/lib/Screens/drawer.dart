@@ -34,11 +34,11 @@ class DrawerItem extends StatelessWidget {
         child: InkWell(
           onTap: onPressed,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
+            padding: EdgeInsets.symmetric(vertical: 12.0),
             child: Row(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(left: 16, right: 8),
+                  padding: EdgeInsets.only(left: 20, right: 10),
                   child: icon,
                 ),
                 text

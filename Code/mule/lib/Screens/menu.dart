@@ -161,14 +161,18 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         header: Align(
           alignment: Alignment.topLeft,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20, bottom: 0),
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(
                     "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+                padding: const EdgeInsets.only(left: 20, top: 15, bottom: 0),
                 child: Text(
                   "Nick Miller",
                   style: TextStyle(
@@ -177,8 +181,23 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(
-                height: 5,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 0, bottom: 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "Be a Mule",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white
+                      ),
+                    ),
+                    Switch(
+                      value: true,
+                      activeColor: AppColors.lightBlue,
+                      onChanged: (bool state) {},
+                    )
+                  ],
+                ),
               ),
             ],
           ),
