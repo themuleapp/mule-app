@@ -27,26 +27,29 @@ class DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 2),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 20, right: 10),
-                  child: icon,
+    return WillPopScope(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 2),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onPressed,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 20, right: 10),
+                      child: icon,
+                    ),
+                    text
+                  ],
                 ),
-                text
-              ],
+              ),
             ),
           ),
         ),
-      ),
+        onWillPop: () async => false
     );
   }
 }
