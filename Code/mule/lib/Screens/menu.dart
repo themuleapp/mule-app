@@ -5,7 +5,6 @@ import 'package:mule/Screens/profile.dart';
 import 'package:mule/config/app_colors.dart';
 
 import 'homepage.dart';
-import 'homepage.dart';
 
 class MainPage extends DrawerContent {
   MainPage({Key key, this.title});
@@ -99,6 +98,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           page: MainPage(
             title: 'Orders',
           ),
+          /*onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => MyOrders()));
+          },*/
         ),
         DrawerItem(
           text: Text(
