@@ -173,7 +173,7 @@ class Login extends StatelessWidget {
         ),
         CustomTextFormField(
           hintText: "Password",
-          obsecureText: true,
+          obscureText: true,
           controller: passwordController,
         ),
         SizedBox(

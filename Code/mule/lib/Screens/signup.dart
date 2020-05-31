@@ -175,7 +175,15 @@ class SignUp extends StatelessWidget {
         ),
         CustomTextFormField(
           hintText: "Password",
-          obsecureText: true,
+          obscureText: true,
+          controller: passwordController,
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        CustomTextFormField(
+          hintText: "Confirm Password",
+          obscureText: true,
           controller: passwordController,
         ),
         SizedBox(
