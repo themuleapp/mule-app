@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
-import 'package:mule/Widgets/custom_text_from_field.dart';
+import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_colors.dart';
 import 'package:mule/config/http_client.dart';
