@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final Icon suffixIcon;
   final bool showLabel;
   final bool obscureText;
+  final Function validator;
   CustomTextFormField(
       {@required this.hintText,
       this.verticalPadding,
@@ -16,7 +17,8 @@ class CustomTextFormField extends StatelessWidget {
       this.obscureText = false,
       this.value,
       this.suffixIcon,
-      this.showLabel = true});
+      this.showLabel = true,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class CustomTextFormField extends StatelessWidget {
             obscureText: obscureText,
             controller: controller,
             initialValue: value,
+            validator: validator,
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),

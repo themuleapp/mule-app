@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
@@ -131,6 +132,9 @@ class SignUp extends StatelessWidget {
               child: CustomTextFormField(
                 hintText: "First name",
                 controller: firstNameController,
+                validator: (String value) => value.isEmpty
+                    ? "Please enter a first name"
+                    : null,
               ),
             ),
             SizedBox(width: 15.0),
@@ -138,6 +142,9 @@ class SignUp extends StatelessWidget {
               child: CustomTextFormField(
                 hintText: "Last name",
                 controller: lastNameController,
+                validator: (String value) => value.isEmpty
+                    ? "Please enter a last name"
+                    : null,
               ),
             )
           ],
@@ -148,6 +155,9 @@ class SignUp extends StatelessWidget {
         CustomTextFormField(
           hintText: "Email",
           controller: emailController,
+          validator: (value) => !EmailValidator.validate(value, true)
+              ? "Not a valid email"
+              : null,
         ),
         SizedBox(
           height: 20.0,
@@ -159,6 +169,9 @@ class SignUp extends StatelessWidget {
               child: CustomTextFormField(
                 hintText: "+1",
                 controller: phoneNumberPrefixController,
+                validator: (String value) => value.isEmpty
+                    ? "Please enter a country code"
+                    : null,
               ),
             ),
             SizedBox(width: 15.0),
@@ -166,6 +179,9 @@ class SignUp extends StatelessWidget {
               child: CustomTextFormField(
                 hintText: "Phone number",
                 controller: phoneNumberController,
+                validator: (String value) => value.isEmpty
+                    ? "Please enter a phone number"
+                    : null,
               ),
             )
           ],
@@ -177,6 +193,9 @@ class SignUp extends StatelessWidget {
           hintText: "Password",
           obscureText: true,
           controller: passwordController,
+          validator: (val) => val.length < 4
+              ? "Password too short"
+              : null,
         ),
         SizedBox(
           height: 20.0,

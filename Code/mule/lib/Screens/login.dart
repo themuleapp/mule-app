@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
@@ -167,6 +168,9 @@ class Login extends StatelessWidget {
         CustomTextFormField(
           hintText: "Email",
           controller: emailController,
+          validator: (value) => !EmailValidator.validate(value, true)
+              ? "Not a valid email"
+              : null,
         ),
         SizedBox(
           height: 20.0,
