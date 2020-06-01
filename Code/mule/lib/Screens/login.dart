@@ -11,6 +11,7 @@ import 'package:mule/models/login/login_data.dart';
 import 'signup.dart';
 
 class Login extends StatelessWidget {
+  final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -163,71 +164,76 @@ class Login extends StatelessWidget {
   }
 
   Widget _loginForm(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        CustomTextFormField(
-          hintText: "Email",
-          controller: emailController,
-          validator: (value) => !EmailValidator.validate(value, true)
-              ? "Not a valid email"
-              : null,
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        CustomTextFormField(
-          hintText: "Password",
-          obscureText: true,
-          controller: passwordController,
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        GestureDetector(
-          child: Text(
-            "Forgot password?",
-            style: TextStyle(
-                color: AppColors.darkGrey,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold),
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          CustomTextFormField(
+            hintText: "Email",
+            controller: emailController,
+            validator: (value) => !EmailValidator.validate(value, true)
+                ? "Not a valid email"
+                : null,
           ),
-          onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ForgotPassword()));
-          },
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 45.0,
-          child: FlatButton(
-            color: AppColors.lightBlue,
-            onPressed: () async {
-              final loginData = LoginData(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              );
-              final res = await httpClient.handleLogin(loginData);
-              final success = res.statusCode;
-              if (success == 200) {
-                // user is logged in successfully
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MainWidget()));
-              } else {
-                print('Nope you not authenticated yet!');
-                print(res.data);
-              }
-            },
+          SizedBox(
+            height: 20.0,
+          ),
+          CustomTextFormField(
+            hintText: "Password",
+            obscureText: true,
+            controller: passwordController,
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          GestureDetector(
             child: Text(
-              "LOG IN",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
+              "Forgot password?",
+              style: TextStyle(
+                  color: AppColors.darkGrey,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold),
             ),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ForgotPassword()));
+            },
           ),
-        )
-      ],
+          SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 45.0,
+            child: FlatButton(
+              color: AppColors.lightBlue,
+              onPressed: () async {
+                if (formKey.currentState.validate()) {
+                  final loginData = LoginData(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                  final res = await httpClient.handleLogin(loginData);
+                  final success = res.statusCode;
+                  if (success == 200) {
+                    // user is logged in successfully
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => MainWidget()));
+                  } else {
+                    print('Nope you not authenticated yet!');
+                    print(res.data);
+                  }
+                }
+              },
+              child: Text(
+                "LOG IN",
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
