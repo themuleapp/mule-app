@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/forgot_password.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -181,17 +182,23 @@ class Login extends StatelessWidget {
           controller: passwordController,
         ),
         SizedBox(
-          height: 20.0,
+          height: 15.0,
         ),
-        Text(
-          "Forgot password?",
-          style: TextStyle(
-              color: AppColors.darkGrey,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold),
+        GestureDetector(
+          child: Text(
+            "Forgot password?",
+            style: TextStyle(
+                color: AppColors.darkGrey,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ForgotPassword()));
+          },
         ),
         SizedBox(
-          height: 25.0,
+          height: 30.0,
         ),
         Container(
           width: MediaQuery.of(context).size.width,
