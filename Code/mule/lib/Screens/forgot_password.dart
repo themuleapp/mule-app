@@ -79,7 +79,7 @@ class ForgotPassword extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "Don't worry, we'll send you reset password link!",
+          "Don't worry, enter your email to receive an OTP!",
           style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
