@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/forgot_password.dart';
+import 'package:mule/Screens/forgot_password_email.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
