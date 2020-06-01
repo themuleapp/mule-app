@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/login.dart';
+import 'package:mule/Screens/otp_verification.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
 
@@ -83,7 +84,8 @@ class ForgotPassword extends StatelessWidget {
           style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
-              color: AppColors.darkGrey),
+              color: AppColors.darkGrey
+          ),
         ),
         SizedBox(
           height: 20.0,
@@ -92,7 +94,7 @@ class ForgotPassword extends StatelessWidget {
           hintText: "Email",
         ),
         SizedBox(
-          height: 20.0,
+          height: 30.0,
         ),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -105,7 +107,7 @@ class ForgotPassword extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Login()));
+                  .push(MaterialPageRoute(builder: (context) => OtpVerification()));
             },
           ),
         )
