@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mule/Screens/login_screen.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:mule/Screens/signup_screen.dart';
+import 'package:mule/Screens/Signup/signup_screen.dart';
 import 'package:mule/Widgets/delayed_animation.dart';
 import 'package:mule/config/app_colors.dart';
 

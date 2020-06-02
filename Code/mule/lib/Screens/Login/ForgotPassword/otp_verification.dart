@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/reset_password.dart';
+import 'package:mule/Screens/Login/ForgotPassword/reset_password.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
 

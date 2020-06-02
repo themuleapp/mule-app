@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/login_screen.dart';
-import 'package:mule/Screens/otp_verification.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
+import 'package:mule/Screens/Login/ForgotPassword/otp_verification.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
 

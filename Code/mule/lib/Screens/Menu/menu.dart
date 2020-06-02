@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/drawer.dart';
-import 'package:mule/Screens/profile.dart';
-import 'package:mule/Screens/settings.dart';
+import 'package:mule/Screens/Menu/drawer.dart';
+import 'package:mule/Screens/Profile/profile.dart';
+import 'package:mule/Screens/Settings/settings.dart';
 import 'package:mule/config/app_colors.dart';
-
-import 'homepage.dart';
+import 'package:mule/Screens/homepage.dart';
 
 class MainPage extends DrawerContent {
   MainPage({Key key, this.title});
@@ -74,7 +73,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       ),
       items: [
         DrawerItem(
-          text: Text('Home', style: TextStyle(color: Colors.white)),
+          text: Text(
+              'Home',
+              style: TextStyle(color: Colors.white)
+          ),
           icon: Icon(Icons.home, color: Colors.white),
           page: MainPage(
             title: 'Home',
@@ -99,10 +101,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           page: MainPage(
             title: 'Orders',
           ),
-          /*onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MyOrders()));
-          },*/
         ),
         DrawerItem(
           text: Text(

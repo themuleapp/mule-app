@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/login_screen.dart';
-import 'package:mule/Screens/menu.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
+import 'package:mule/Screens/Menu/menu.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';

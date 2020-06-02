@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/change_password.dart';
+import 'package:mule/Screens/Settings/change_password.dart';
 import 'package:mule/config/app_colors.dart';
 
 class Settings extends StatelessWidget {
