@@ -146,7 +146,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           onPressed: () {
             // TODO should call log out endpoint
             // Should remove the token from local storage
-            print('hey');
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => HomePage()));
           },
@@ -167,19 +166,18 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 20, bottom: 0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Profile()));
-                  },
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                        "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
-                  ),
-                )
-              ),
+                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Profile()));
+                    },
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                          "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
+                    ),
+                  )),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 15, bottom: 0),
                 child: Text(
@@ -197,8 +195,9 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     Text(
                       "Be a Mule",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white
-                      ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.white),
                     ),
                     Switch(
                       value: true,

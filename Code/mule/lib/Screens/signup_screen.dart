@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/login_screen.dart';
 import 'package:mule/Screens/menu.dart';
+import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
 import 'package:mule/config/http_client.dart';
@@ -24,7 +26,26 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
   final TextEditingController password1Controller = new TextEditingController();
   final TextEditingController password2Controller = new TextEditingController();
 
-  void handleSubmit() async {
+  // void _clearForm() {
+  //   firstNameController.clear();
+  //   lastNameController.clear();
+  //   emailController.clear();
+  //   phoneNumberPrefixController.clear();
+  //   phoneNumberController.clear();
+  //   password1Controller.clear();
+  //   password2Controller.clear();
+  // }
+
+  void _clearPasswords() {
+    password1Controller.clear();
+    password2Controller.clear();
+  }
+
+  void _clearEmail() {
+    emailController.clear();
+  }
+
+  void _handleSubmit() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -33,7 +54,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     final password2 = password2Controller.text.trim();
 
     if (password1 != password2) {
-      print('Passwords are not the same show an error!!');
+      createDialogWidget(context, 'Cannot sign up!', 'Passwords do not match!');
+      _clearPasswords();
       return;
     }
 
@@ -47,15 +69,16 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       password: password1,
     );
 
-    final res = await httpClient.handleSignup(signupData);
+    final Response res = await httpClient.handleSignup(signupData);
     final success = res.statusCode;
     if (success == 201) {
       // user is signed up successfully
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => MainWidget()));
     } else {
-      print('Nope you not authenticated yet!');
-      print(res.data);
+      final errorMessages = res.data['errors'].join('\n');
+      createDialogWidget(context, 'Cannot sign up', errorMessages);
+      _clearEmail();
     }
   }
 
@@ -129,7 +152,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 height: 45.0,
                 child: FlatButton(
                   color: AppColors.lightBlue,
-                  onPressed: this.handleSubmit,
+                  onPressed: this._handleSubmit,
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),

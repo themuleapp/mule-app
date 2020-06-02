@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/forgot_password_email.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Screens/signup_screen.dart';
+import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_colors.dart';
@@ -18,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String formError = '';
 
   void handleSubmt() async {
     if (!_formKey.currentState.validate()) {
@@ -34,9 +36,10 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => MainWidget()));
     } else {
-      // TODO show a modal of login not successful!
-      print('Nope you not authenticated yet!');
-      print(res.data);
+      final errorMessages = res.data['errors'].join('\n');
+      createDialogWidget(context, 'Cannot log in!', errorMessages);
+      emailController.clear();
+      passwordController.clear();
     }
   }
 
