@@ -51,7 +51,7 @@ class Settings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.lock_open),
+              leading: Icon(Icons.lock),
               title: Text(
                 "Change Password",
                 style: TextStyle(fontWeight: FontWeight.w500),
