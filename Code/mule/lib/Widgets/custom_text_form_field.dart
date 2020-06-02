@@ -10,12 +10,14 @@ class CustomTextFormField extends StatelessWidget {
   final bool showLabel;
   final bool obscureText;
   final Function validator;
+  final TextInputType keyboardType;
   CustomTextFormField(
       {@required this.hintText,
       this.verticalPadding,
       this.controller,
       this.obscureText = false,
       this.value,
+      this.keyboardType = TextInputType.text,
       this.suffixIcon,
       this.showLabel = true,
       this.validator});
@@ -40,6 +42,7 @@ class CustomTextFormField extends StatelessWidget {
             height: 7.0,
           ),
           TextFormField(
+            keyboardType: keyboardType,
             obscureText: obscureText,
             controller: controller,
             initialValue: value,

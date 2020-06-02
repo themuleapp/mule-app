@@ -1,23 +1,49 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/forgot_password.dart';
 import 'package:mule/Screens/menu.dart';
+import 'package:mule/Screens/signup_screen.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_colors.dart';
 import 'package:mule/config/http_client.dart';
+import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/login/login_data.dart';
 
-import 'signup.dart';
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
-class Login extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
+class _LoginScreenState extends State<LoginScreen> with InputValidation {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  void handleSubmt() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    final loginData = LoginData(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+    final res = await httpClient.handleLogin(loginData);
+    final success = res.statusCode;
+    if (success == 200) {
+      // user is logged in successfully
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => MainWidget()));
+    } else {
+      // TODO show a modal of login not successful!
+      print('Nope you not authenticated yet!');
+      print(res.data);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final ThemeData _theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Color(0xFFFFFFFF),
       resizeToAvoidBottomPadding: false,
@@ -37,8 +63,8 @@ class Login extends StatelessWidget {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => SignUp()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SignupScreen()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -165,16 +191,15 @@ class Login extends StatelessWidget {
 
   Widget _loginForm(BuildContext context) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CustomTextFormField(
             hintText: "Email",
             controller: emailController,
-            validator: (value) => !EmailValidator.validate(value, true)
-                ? "Not a valid email"
-                : null,
+            validator: validateEmail,
+            keyboardType: TextInputType.emailAddress,
           ),
           SizedBox(
             height: 20.0,
@@ -182,6 +207,7 @@ class Login extends StatelessWidget {
           CustomTextFormField(
             hintText: "Password",
             obscureText: true,
+            validator: validateNotEmptyInput,
             controller: passwordController,
           ),
           SizedBox(
@@ -208,24 +234,7 @@ class Login extends StatelessWidget {
             height: 45.0,
             child: FlatButton(
               color: AppColors.lightBlue,
-              onPressed: () async {
-                if (formKey.currentState.validate()) {
-                  final loginData = LoginData(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim(),
-                  );
-                  final res = await httpClient.handleLogin(loginData);
-                  final success = res.statusCode;
-                  if (success == 200) {
-                    // user is logged in successfully
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MainWidget()));
-                  } else {
-                    print('Nope you not authenticated yet!');
-                    print(res.data);
-                  }
-                }
-              },
+              onPressed: this.handleSubmt,
               child: Text(
                 "LOG IN",
                 style: TextStyle(color: Colors.white, fontSize: 16.0),
