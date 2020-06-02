@@ -75,6 +75,18 @@ class Settings extends StatelessWidget {
               trailing: Icon(Icons.chevron_right),
             ),
             Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              leading: Icon(Icons.notifications),
+              title: Text(
+                "Notifications",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              trailing: Icon(Icons.chevron_right),
+            ),
+            Divider(),
             SizedBox(
               height: 10.0,
             ),
