@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/drawer.dart';
 import 'package:mule/Screens/profile.dart';
+import 'package:mule/Screens/settings.dart';
 import 'package:mule/config/app_colors.dart';
 
 import 'homepage.dart';
@@ -136,6 +137,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           page: MainPage(
             title: 'Settings',
           ),
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Settings()));
+          },
         ),
         DrawerItem(
           text: Text(
