@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/change_password.dart';
 import 'package:mule/config/app_colors.dart';
 
 class Settings extends StatelessWidget {
@@ -56,6 +57,10 @@ class Settings extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ChangePassword()));
+              },
             ),
             Divider(),
             ListTile(
