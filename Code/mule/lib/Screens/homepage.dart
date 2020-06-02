@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mule/Screens/login.dart';
-import 'package:mule/Screens/signup.dart';
+import 'package:mule/Screens/login_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:mule/Screens/signup_screen.dart';
 import 'package:mule/Widgets/delayed_animation.dart';
 import 'package:mule/config/app_colors.dart';
 
@@ -97,8 +97,8 @@ class _HomePageState extends State<HomePage>
             ),
             DelayedAnimation(
               child: GestureDetector(
-                onTap: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Login())),
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginScreen())),
                 child: Text(
                   "I already have an account".toUpperCase(),
                   style: TextStyle(
@@ -141,6 +141,6 @@ class _HomePageState extends State<HomePage>
   void _onTapUp(TapUpDetails details) {
     _controller.reverse();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SignUp()));
+        .push(MaterialPageRoute(builder: (context) => SignupScreen()));
   }
 }

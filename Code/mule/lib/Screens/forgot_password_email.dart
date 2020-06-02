@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/login.dart';
+import 'package:mule/Screens/login_screen.dart';
 import 'package:mule/Screens/otp_verification.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
@@ -7,7 +7,6 @@ import 'package:mule/config/app_colors.dart';
 class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Color(0xFFFFFFFF),
       resizeToAvoidBottomPadding: false,
@@ -28,7 +27,7 @@ class ForgotPassword extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Login()));
+                  .push(MaterialPageRoute(builder: (context) => LoginScreen()));
             },
             child: Container(
               alignment: Alignment.center,
@@ -84,8 +83,7 @@ class ForgotPassword extends StatelessWidget {
           style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
-              color: AppColors.darkGrey
-          ),
+              color: AppColors.darkGrey),
         ),
         SizedBox(
           height: 20.0,
@@ -106,8 +104,8 @@ class ForgotPassword extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => OtpVerification()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => OtpVerification()));
             },
           ),
         )
