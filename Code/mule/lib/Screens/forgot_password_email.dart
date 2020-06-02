@@ -7,7 +7,6 @@ import 'package:mule/config/app_colors.dart';
 class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Color(0xFFFFFFFF),
       resizeToAvoidBottomPadding: false,
