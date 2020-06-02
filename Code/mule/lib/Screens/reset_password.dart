@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/reset_password.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_colors.dart';
 
-class OtpVerification extends StatelessWidget {
+class ResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,7 @@ class OtpVerification extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
-                      "Verify Email",
+                      "Reset Password",
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -45,7 +44,7 @@ class OtpVerification extends StatelessWidget {
                     height: 20.0,
                   ),
                   Text(
-                    "Check your email, we've sent you an OTP",
+                    "Enter a new password",
                     style:
                     TextStyle(
                         fontWeight: FontWeight.bold,
@@ -53,60 +52,24 @@ class OtpVerification extends StatelessWidget {
                         color: AppColors.darkGrey
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      )
-                    ],
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  CustomTextFormField(
+                    hintText: "Password",
+                    obscureText: true,
+                    //controller: passwordController,
+                    validator: (val) => val.length < 4
+                        ? "Password too short"
+                        : null,
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Wrap(
-                    children: <Widget>[
-                      Text(
-                        "Didn't receive a code?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Resend Code",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.lightBlue,
-                          ),
-                        ),
-                        onTap: () {},
-                      ),
-                    ],
+                  CustomTextFormField(
+                    hintText: "Confirm Password",
+                    obscureText: true,
+                    //controller: passwordController,
                   ),
                   SizedBox(
                     height: 30.0,
@@ -117,13 +80,10 @@ class OtpVerification extends StatelessWidget {
                     child: FlatButton(
                       color: AppColors.lightBlue,
                       child: Text(
-                        "VERIFY",
+                        "SUBMIT",
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) => ResetPassword()));
-                      },
+                      onPressed: () {},
                     ),
                   )
                 ],

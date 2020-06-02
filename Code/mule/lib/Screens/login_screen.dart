@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/forgot_password.dart';
+import 'package:mule/Screens/forgot_password_email.dart';
 import 'package:mule/Screens/menu.dart';
 import 'package:mule/Screens/signup_screen.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
