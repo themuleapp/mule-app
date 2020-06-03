@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/Menu/drawer.dart';
 import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/Screens/Settings/settings.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/Screens/homepage.dart';
 
 class MainPage extends DrawerContent {
@@ -204,7 +204,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     ),
                     Switch(
                       value: true,
-                      activeColor: AppColors.lightBlue,
+                      activeColor: AppTheme.lightBlue,
                       onChanged: (bool state) {},
                     )
                   ],
@@ -214,7 +214,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           ),
         ),
         decoration: BoxDecoration(
-          color: AppColors.darkBlue,
+          color: AppTheme.secondaryBlue,
         ),
       ),
     );

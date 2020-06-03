@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Settings/change_password.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class Settings extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
       ),
       body: Container(
@@ -33,7 +33,7 @@ class Settings extends StatelessWidget {
               style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.darkGrey),
+                  color: AppTheme.darkGrey),
             ),
             SizedBox(
               height: 30.0,

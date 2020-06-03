@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 
 class ChangePassword extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class ChangePassword extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
       ),
       body: Container(
@@ -36,7 +36,7 @@ class ChangePassword extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkGrey
+                          color: AppTheme.darkGrey
                       ),
                     ),
                   ),
@@ -74,7 +74,7 @@ class ChangePassword extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: 45.0,
                     child: FlatButton(
-                      color: AppColors.lightBlue,
+                      color: AppTheme.lightBlue,
                       child: Text(
                         "SUBMIT",
                         style: TextStyle(color: Colors.white, fontSize: 16.0),

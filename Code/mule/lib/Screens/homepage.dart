@@ -4,7 +4,7 @@ import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:mule/Screens/Signup/signup_screen.dart';
 import 'package:mule/Widgets/delayed_animation.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
     final color = Colors.white;
     _scale = 1 - _controller.value;
     return Scaffold(
-      backgroundColor: AppColors.lightBlue,
+      backgroundColor: AppTheme.lightBlue,
       body: Center(
         child: Column(
           children: <Widget>[
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage>
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
-              color: AppColors.lightBlue,
+              color: AppTheme.lightBlue,
             ),
           ),
         ),

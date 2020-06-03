@@ -4,7 +4,7 @@ import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Screens/Menu/menu.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/signup/signup_data.dart';
@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
         actions: <Widget>[
           GestureDetector(
@@ -113,7 +113,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: AppColors.lightBlue,
+                  color: AppTheme.lightBlue,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -136,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.darkGrey),
+                      color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
@@ -151,7 +151,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: 45.0,
                 child: FlatButton(
-                  color: AppColors.lightBlue,
+                  color: AppTheme.lightBlue,
                   onPressed: this._handleSubmit,
                   child: Text(
                     "SIGN UP",
@@ -246,7 +246,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           Text(
             "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: AppColors.darkGrey),
+                fontWeight: FontWeight.bold, color: AppTheme.darkGrey),
           )
         ],
       ),
