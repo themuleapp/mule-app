@@ -94,6 +94,33 @@ authRouter.post('/request-reset', async (req, res) => {
   res.status(200).send({ id });
 });
 
+authRouter.post('/resend-reset-token', async (req, res) => {
+  const validation = validateRequestResetPasswordData(req.body);
+  if (validation) {
+    return res.status(400).send(composeErrorResponse(validation, 400));
+  }
+
+  const user = await User.getByEmail(req.body.email);
+  console.log(user);
+  // find user that has the reset id (since it's unique uuid)
+  if (!user.hasResetToken()) {
+    return res
+      .status(400)
+      .send(
+        composeErrorResponse(
+          ['You do not have a reset token to start with!'],
+          400
+        )
+      );
+  }
+
+  const id = await user.createResetId();
+
+  sendResetId(createTransporter(), user.email, id);
+
+  return res.status(200).send({ id });
+});
+
 authRouter.post('/reset', async (req, res) => {
   const validation = validateResetPasswordData(req.body);
   if (validation) {
@@ -116,4 +143,5 @@ authRouter.post('/reset', async (req, res) => {
 
   return res.status(200).send();
 });
+
 export default authRouter;

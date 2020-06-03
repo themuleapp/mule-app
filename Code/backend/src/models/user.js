@@ -84,6 +84,10 @@ userSchema.methods.createResetId = async function () {
   return id;
 };
 
+userSchema.methods.hasResetToken = function () {
+  return this.resetId;
+};
+
 userSchema.statics.findByCredentials = async function (email, password) {
   // Search for a user by email and password.
   const user = await this.findOne({ email });
