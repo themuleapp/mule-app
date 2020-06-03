@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
@@ -34,7 +34,7 @@ class CustomTextFormField extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14.0,
-                    color: AppColors.lightGrey,
+                    color: AppTheme.lightGrey,
                   ),
                 )
               : SizedBox(),

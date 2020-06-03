@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/forgot_password_email.dart';
-import 'package:mule/Screens/menu.dart';
-import 'package:mule/Screens/signup_screen.dart';
+import 'package:mule/Screens/Login/ForgotPassword/forgot_password_email.dart';
+import 'package:mule/Screens/Menu/menu.dart';
+import 'package:mule/Screens/Signup/signup_screen.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/login/login_data.dart';
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
         actions: <Widget>[
           GestureDetector(
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
               child: Text(
                 "Sign Up",
                 style: TextStyle(
-                  color: AppColors.lightBlue,
+                  color: AppTheme.lightBlue,
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.darkGrey),
+                      color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: AppColors.blue,
+                        color: AppTheme.facebookBlue,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             child: Text(
               "Forgot password?",
               style: TextStyle(
-                  color: AppColors.darkGrey,
+                  color: AppTheme.darkGrey,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold),
             ),
@@ -236,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             width: MediaQuery.of(context).size.width,
             height: 45.0,
             child: FlatButton(
-              color: AppColors.lightBlue,
+              color: AppTheme.lightBlue,
               onPressed: this.handleSubmt,
               child: Text(
                 "LOG IN",

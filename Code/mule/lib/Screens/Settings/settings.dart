@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/change_password.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/Screens/Settings/change_password.dart';
+import 'package:mule/config/app_theme.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class Settings extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
       ),
       body: Container(
@@ -33,7 +33,7 @@ class Settings extends StatelessWidget {
               style: TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.darkGrey),
+                  color: AppTheme.darkGrey),
             ),
             SizedBox(
               height: 30.0,
@@ -51,7 +51,7 @@ class Settings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.lock_open),
+              leading: Icon(Icons.lock),
               title: Text(
                 "Change Password",
                 style: TextStyle(fontWeight: FontWeight.w500),
@@ -70,6 +70,18 @@ class Settings extends StatelessWidget {
               leading: Icon(Icons.location_on),
               title: Text(
                 "Location",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              trailing: Icon(Icons.chevron_right),
+            ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              leading: Icon(Icons.notifications),
+              title: Text(
+                "Notifications",
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               trailing: Icon(Icons.chevron_right),

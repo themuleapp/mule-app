@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
-import 'package:mule/config/app_colors.dart';
+import 'package:mule/config/app_theme.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -19,7 +19,7 @@ class Profile extends StatelessWidget {
               Navigator.of(context).pop();
             }
           },
-          color: AppColors.lightBlue,
+          color: AppTheme.lightBlue,
         ),
       ),
       body: SingleChildScrollView(
@@ -58,7 +58,7 @@ class Profile extends StatelessWidget {
                 value: "nickmiller@gmail.com",
                 suffixIcon: Icon(
                   Icons.check_circle,
-                  color: AppColors.lightBlue,
+                  color: AppTheme.lightBlue,
                 ),
               ),
               SizedBox(
@@ -76,7 +76,7 @@ class Profile extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 14.0,
-                  color: AppColors.lightGrey,
+                  color: AppTheme.lightGrey,
                 ),
               ),
               SizedBox(
@@ -84,9 +84,9 @@ class Profile extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppTheme.white,
                   border: Border.all(
-                    color: AppColors.offWhite,
+                    color: AppTheme.white,
                   ),
                 ),
                 padding: EdgeInsets.symmetric(
@@ -107,7 +107,7 @@ class Profile extends StatelessWidget {
                         ),
                         Switch(
                           value: true,
-                          activeColor: AppColors.lightBlue,
+                          activeColor: AppTheme.lightBlue,
                           onChanged: (bool state) {},
                         )
                       ],
@@ -121,7 +121,7 @@ class Profile extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: AppTheme.white,
                 ),
                 padding: EdgeInsets.symmetric(
                   vertical: 20.0,
@@ -134,7 +134,7 @@ class Profile extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,
-                        color: AppColors.lightGrey,
+                        color: AppTheme.lightGrey,
                       ),
                     ),
                     SizedBox(
@@ -144,7 +144,7 @@ class Profile extends StatelessWidget {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: AppColors.blue,
+                        color: AppTheme.facebookBlue,
                         child: Row(
                           children: <Widget>[
                             Icon(
