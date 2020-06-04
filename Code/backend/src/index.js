@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime.js'; // To support async await syntax
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
