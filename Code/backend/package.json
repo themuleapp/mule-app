@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "private": true,
+  "engines": {
+    "node": "10.x"
+  },
   "license": "MIT",
   "scripts": {
     "start": "node --exec babel-node src/index.js",
