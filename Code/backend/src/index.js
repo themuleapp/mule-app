@@ -29,6 +29,8 @@ app.use(express.json());
 
 // Register routes
 
+app.get('/test-working', (req, res) => res.send({ status: 'Working' }));
+
 app.get('/api/test', (req, res) => res.send({ status: 'working' }));
 app.use('/api/authentication', authRoutes);
 app.use('/api/profile', authMiddleware, profileRoutes);

@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "private": true,
   "engines": {
-    "node": "10.x"
+    "node": "13.x"
   },
   "license": "MIT",
   "scripts": {
