@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mule/Screens/login.dart';
-import 'package:mule/Screens/signup.dart';
-import 'package:mule/delayed_animation.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:mule/Screens/Signup/signup_screen.dart';
+import 'package:mule/Widgets/delayed_animation.dart';
+import 'package:mule/config/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,8 +26,7 @@ class _HomePageState extends State<HomePage>
       ),
       lowerBound: 0.0,
       upperBound: 0.1,
-    )
-      ..addListener(() {
+    )..addListener(() {
         setState(() {});
       });
     super.initState();
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage>
     final color = Colors.white;
     _scale = 1 - _controller.value;
     return Scaffold(
-      backgroundColor: Color(0xFF6CD1E7),
+      backgroundColor: AppTheme.lightBlue,
       body: Center(
         child: Column(
           children: <Widget>[
@@ -97,9 +97,8 @@ class _HomePageState extends State<HomePage>
             ),
             DelayedAnimation(
               child: GestureDetector(
-                onTap: () =>
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Login())),
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginScreen())),
                 child: Text(
                   "I already have an account".toUpperCase(),
                   style: TextStyle(
@@ -116,8 +115,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget get _animatedButtonUI =>
-      Container(
+  Widget get _animatedButtonUI => Container(
         height: 60,
         width: 270,
         decoration: BoxDecoration(
@@ -130,7 +128,7 @@ class _HomePageState extends State<HomePage>
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF6CD1E7),
+              color: AppTheme.lightBlue,
             ),
           ),
         ),
@@ -142,7 +140,7 @@ class _HomePageState extends State<HomePage>
 
   void _onTapUp(TapUpDetails details) {
     _controller.reverse();
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => SignUp()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => SignupScreen()));
   }
 }

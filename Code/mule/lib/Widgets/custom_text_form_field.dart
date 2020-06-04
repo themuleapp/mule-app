@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mule/config/app_theme.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
+  final TextEditingController controller;
   final double verticalPadding;
   final String value;
   final Icon suffixIcon;
   final bool showLabel;
+  final bool obscureText;
+  final Function validator;
+  final TextInputType keyboardType;
   CustomTextFormField(
       {@required this.hintText,
-        this.verticalPadding,
-        this.value,
-        this.suffixIcon,
-        this.showLabel = true});
+      this.verticalPadding,
+      this.controller,
+      this.obscureText = false,
+      this.value,
+      this.keyboardType = TextInputType.text,
+      this.suffixIcon,
+      this.showLabel = true,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +30,23 @@ class CustomTextFormField extends StatelessWidget {
         children: <Widget>[
           showLabel
               ? Text(
-            hintText.toUpperCase(),
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 14.0,
-              color: Color(0xFF9CA4AA),
-            ),
-          )
+                  hintText.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0,
+                    color: AppTheme.lightGrey,
+                  ),
+                )
               : SizedBox(),
           SizedBox(
             height: 7.0,
           ),
           TextFormField(
+            keyboardType: keyboardType,
+            obscureText: obscureText,
+            controller: controller,
             initialValue: value,
+            validator: validator,
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
