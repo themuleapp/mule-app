@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js",
-    "start": "rimraf dist/ && babel src --out-dir dist/  --copy-files && node dist/index.js"
+    "start": "rm -rf dist/ && babel src --out-dir dist/  --copy-files && node dist/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
