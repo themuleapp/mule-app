@@ -117,7 +117,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     child: Text(
                       'Nick Miller',
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w700,
                         color: AppTheme.darkGrey,
                         fontSize: 25,
                       ),
@@ -130,9 +131,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         Text(
                           "Be a Mule",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.darkGrey,
-                              fontSize: 18,
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.darkGrey,
+                            fontSize: 18,
                           ),
                         ),
                         Switch(
@@ -219,18 +221,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 children: <Widget>[
                   Container(
                     width: 6.0,
-                    height: 46.0,
-                    // decoration: BoxDecoration(
-                    //   color: widget.screenIndex == listData.index
-                    //       ? Colors.blue
-                    //       : Colors.transparent,
-                    //   borderRadius: new BorderRadius.only(
-                    //     topLeft: Radius.circular(0),
-                    //     topRight: Radius.circular(16),
-                    //     bottomLeft: Radius.circular(0),
-                    //     bottomRight: Radius.circular(16),
-                    //   ),
-                    // ),
+                    height: 45.0,
+//                     decoration: BoxDecoration(
+//                       color: widget.screenIndex == listData.index
+//                           ? AppTheme.lightBlue
+//                           : Colors.transparent,
+//                       borderRadius: new BorderRadius.only(
+//                         topLeft: Radius.circular(0),
+//                         topRight: Radius.circular(16),
+//                         bottomLeft: Radius.circular(0),
+//                         bottomRight: Radius.circular(16),
+//                       ),
+//                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
@@ -242,7 +244,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           child: Image.asset(
                             listData.imageName,
                               color: widget.screenIndex == listData.index
-                                ? AppTheme.secondaryBlue
+                                ? AppTheme.black
                                 : AppTheme.black
                           ),
                       )

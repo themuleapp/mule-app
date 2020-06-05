@@ -5,23 +5,13 @@ import 'package:mule/config/app_theme.dart';
 class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
-//        leading: IconButton(
-//          icon: Icon(Icons.arrow_back_ios),
-//          onPressed: () {
-//            if (Navigator.of(context).canPop()) {
-//              Navigator.of(context).pop();
-//            }
-//          },
-//          color: AppTheme.lightBlue,
-//        ),
       ),
       body: Container(
         padding: EdgeInsets.all(15.0),
@@ -31,9 +21,11 @@ class Settings extends StatelessWidget {
             Text(
               "Settings",
               style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.darkGrey),
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.darkGrey,
+                fontSize: 30,
+              ),
             ),
             SizedBox(
               height: 30.0,
@@ -43,7 +35,7 @@ class Settings extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 14.0,
-                color: Color(0xFF9CA4AA),
+                color: AppTheme.lightGrey,
               ),
             ),
             Divider(),
@@ -54,7 +46,12 @@ class Settings extends StatelessWidget {
               leading: Icon(Icons.lock),
               title: Text(
                 "Change Password",
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
+                ),
               ),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
@@ -70,7 +67,12 @@ class Settings extends StatelessWidget {
               leading: Icon(Icons.location_on),
               title: Text(
                 "Location",
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
+                ),
               ),
               trailing: Icon(Icons.chevron_right),
             ),
@@ -82,7 +84,12 @@ class Settings extends StatelessWidget {
               leading: Icon(Icons.notifications),
               title: Text(
                 "Notifications",
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
+                ),
               ),
               trailing: Icon(Icons.chevron_right),
             ),
