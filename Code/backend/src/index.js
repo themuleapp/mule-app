@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 import authMiddleware from './middleware/authMiddleware';
 // import routers
-import authRouter from './routes/authentication/authRoutes';
+import { authRoutes, profileRoutes } from './routes/routesExport';
 
 // setup env vars
 dotenv.config();
@@ -28,8 +28,11 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 // Register routes
+
 app.get('/api/test', (req, res) => res.send({ status: 'working' }));
-app.use('/api/authentication', authRouter);
+app.use('/api/authentication', authRoutes);
+app.use('/api/profile', authMiddleware, profileRoutes);
+// Only test
 app.get('/api/protected', authMiddleware, async (req, res) => {
   res.send(`Authenticated ${req.token}`);
 });
