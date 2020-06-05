@@ -21,6 +21,7 @@ class Settings extends StatelessWidget {
             Text(
               "Settings",
               style: TextStyle(
+                fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.darkGrey,
                 fontSize: 30,
@@ -46,6 +47,7 @@ class Settings extends StatelessWidget {
               title: Text(
                 "Change Password",
                 style: TextStyle(
+                  fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
                   color: AppTheme.darkGrey,
@@ -66,6 +68,7 @@ class Settings extends StatelessWidget {
               title: Text(
                 "Location",
                 style: TextStyle(
+                  fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
                   color: AppTheme.darkGrey,
@@ -82,6 +85,7 @@ class Settings extends StatelessWidget {
               title: Text(
                 "Notifications",
                 style: TextStyle(
+                  fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
                   color: AppTheme.darkGrey,

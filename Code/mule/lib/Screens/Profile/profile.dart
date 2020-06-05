@@ -26,6 +26,7 @@ class Profile extends StatelessWidget {
                   Text(
                     "Hey there, Nick!",
                     style: TextStyle(
+                      fontFamily: AppTheme.fontName,
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey,
                       fontSize: 30,
@@ -101,6 +102,7 @@ class Profile extends StatelessWidget {
                           child: Text(
                             "Be a Mule",
                             style: TextStyle(
+                              fontFamily: AppTheme.fontName,
                               fontWeight: FontWeight.w700,
                               color: AppTheme.darkGrey,
                               fontSize: 17,
@@ -117,6 +119,7 @@ class Profile extends StatelessWidget {
                     Text(
                       "Turn on to be considered being a Mule.",
                       style: TextStyle(
+                        fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w500,
                         color: AppTheme.darkGrey,
                         fontSize: 16,
@@ -138,6 +141,7 @@ class Profile extends StatelessWidget {
                     Text(
                       "SOCIAL NETWORK",
                       style: TextStyle(
+                        fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,
                         color: AppTheme.lightGrey,
