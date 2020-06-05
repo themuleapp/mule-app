@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/Feedback/feedback_screen.dart';
+import 'package:mule/Screens/Help/help_screen.dart';
 import 'package:mule/Screens/Home/home_screen.dart';
 import 'package:mule/Screens/Menu/drawer_user_controller.dart';
 import 'package:mule/Screens/Menu/home_drawer.dart';
@@ -60,6 +62,14 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.Settings) {
         setState(() {
           screenView = Settings();
+        });
+      } else if (drawerIndex == DrawerIndex.Feedback) {
+        setState(() {
+          screenView = FeedbackScreen();
+        });
+      } else if (drawerIndex == DrawerIndex.Help) {
+        setState(() {
+          screenView = HelpScreen();
         });
       } else {
         //do in your way......

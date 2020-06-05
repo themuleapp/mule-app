@@ -61,8 +61,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Help',
-        icon: Icon(Icons.help),
+        labelName: 'Report',
+        icon: Icon(Icons.report_problem),
       ),
     ];
   }
@@ -242,14 +242,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           child: Image.asset(
                             listData.imageName,
                               color: widget.screenIndex == listData.index
-                                ? Colors.blue
+                                ? AppTheme.secondaryBlue
                                 : AppTheme.black
                           ),
                       )
                       : Icon(
                         listData.icon.icon,
                         color: widget.screenIndex == listData.index
-                            ? Colors.blue
+                            ? AppTheme.black
                             : AppTheme.black
                         ),
                       const Padding(
@@ -261,7 +261,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                           color: widget.screenIndex == listData.index
-                              ? Colors.blue
+                              ? AppTheme.black
                               : AppTheme.black,
                         ),
                         textAlign: TextAlign.left,
@@ -286,7 +286,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       width: MediaQuery.of(context).size.width * 0.75 - 64,
                       height: 46,
                       decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.2),
+                        color: AppTheme.lightBlue.withOpacity(0.5),
                         borderRadius: new BorderRadius.only(
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(28),
