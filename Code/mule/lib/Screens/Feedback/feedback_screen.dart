@@ -27,7 +27,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top,
+                        top: 100,
                         left: 16,
                         right: 16),
                     child: Image.asset('assets/images/feedback.png'),
