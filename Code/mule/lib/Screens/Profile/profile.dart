@@ -7,6 +7,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
@@ -14,6 +15,7 @@ class Profile extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: AppTheme.white,
           padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
