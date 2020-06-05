@@ -170,7 +170,7 @@ class _DrawerUserControllerState extends State<DrawerUserController> with Ticker
                               child: widget.screenView,
                             ),
                             /* alternative touch(user Interface) for
-                            widget.screen, for example, drawer is close we
+                            widget.screen, for example, drawer is open we
                             need to tap on a few home screen area and
                             close the drawer */
                             if (scrolloffset == 1.0)

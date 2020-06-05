@@ -113,7 +113,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 4),
+                    padding: const EdgeInsets.only(top: 15, left: 4),
                     child: Text(
                       'Nick Miller',
                       style: TextStyle(
@@ -123,12 +123,32 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 0, bottom: 0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "Be a Mule",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.darkGrey,
+                              fontSize: 18,
+                          ),
+                        ),
+                        Switch(
+                          value: true,
+                          activeColor: AppTheme.lightBlue,
+                          onChanged: (bool state) {},
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
           const SizedBox(
-            height: 4,
+            height: 1,
           ),
           Divider(
             height: 1,
@@ -217,23 +237,35 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   listData.isAssetsImage
                       ? Container(
-                    width: 24,
-                    height: 24,
-                    child: Image.asset(listData.imageName, color: widget.screenIndex == listData.index ? Colors.blue : AppTheme.black),
-                  )
-                      : Icon(listData.icon.icon, color: widget.screenIndex == listData.index ? Colors.blue : AppTheme.black),
-                  const Padding(
-                    padding: EdgeInsets.all(4.0),
-                  ),
-                  Text(
-                    listData.labelName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: widget.screenIndex == listData.index ? Colors.blue : AppTheme.black,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
+                          width: 24,
+                          height: 24,
+                          child: Image.asset(
+                            listData.imageName,
+                              color: widget.screenIndex == listData.index
+                                ? Colors.blue
+                                : AppTheme.black
+                          ),
+                      )
+                      : Icon(
+                        listData.icon.icon,
+                        color: widget.screenIndex == listData.index
+                            ? Colors.blue
+                            : AppTheme.black
+                        ),
+                      const Padding(
+                        padding: EdgeInsets.all(4.0),
+                      ),
+                      Text(
+                        listData.labelName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: widget.screenIndex == listData.index
+                              ? Colors.blue
+                              : AppTheme.black,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
                 ],
               ),
             ),
@@ -243,7 +275,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
               builder: (BuildContext context, Widget child) {
                 return Transform(
                   transform: Matrix4.translationValues(
-                      (MediaQuery.of(context).size.width * 0.75 - 64) * (1.0 - widget.iconAnimationController.value - 1.0), 0.0, 0.0),
+                      (MediaQuery.of(context).size.width * 0.75 - 64)
+                          * (1.0 - widget.iconAnimationController.value - 1.0),
+                      0.0,
+                      0.0
+                  ),
                   child: Padding(
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     child: Container(
