@@ -17,40 +17,44 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            color: AppTheme.white,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(top: 100, left: 16, right: 16),
-                    child: Image.asset('assets/images/feedback.png'),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: Text(
-                      'Any thoughts or suggestions?',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+        child: Expanded(
+          child: SafeArea(
+            child: Container(
+              color: AppTheme.white,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top + 20,
+                          left: 16,
+                          right: 16
+                      ),
+                      child: Image.asset('assets/images/feedback.png'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Text(
+                        'Any thoughts or suggestions?',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: const Text(
-                      'We would love to hear from you',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
+                    Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: const Text(
+                        'We would love to hear from you',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
                       ),
                     ),
-                  ),
-                  _buildComposer(),
-                  Expanded(
-                    child: Padding(
+                    _buildComposer(),
+                    Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Center(
                         child: Container(
@@ -59,7 +63,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           decoration: BoxDecoration(
                             color: AppTheme.lightBlue,
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
+                            const BorderRadius.all(Radius.circular(8)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
                                   color: Colors.grey.withOpacity(0.6),
@@ -91,8 +95,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         ),
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
