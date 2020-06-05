@@ -47,13 +47,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
-
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
@@ -98,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                   "Log In",
                   style: TextStyle(
                       fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
@@ -137,11 +135,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                               child: Text(
                                 "Connect with Facebook",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -161,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: _theme.scaffoldBackgroundColor,
+                        color: AppTheme.white,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -172,11 +168,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                               child: Text(
                                 "Sign in with Google",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent,
                                 ),
                               ),
                             ),
@@ -251,3 +245,4 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     );
   }
 }
+

@@ -143,43 +143,22 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 height: 30.0,
               ),
               _signupForm(),
-              Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: Center(
-                  child: Container(
-                    width: 120,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: AppTheme.lightBlue,
-                      borderRadius:
-                      const BorderRadius.all(Radius.circular(8)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            offset: const Offset(4, 4),
-                            blurRadius: 8.0),
-                      ],
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              'Sign up',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+              SizedBox(
+                height: 30.0,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(bottom: 30.0),
+                height: 45.0,
+                child: FlatButton(
+                  color: AppTheme.lightBlue,
+                  onPressed: this._handleSubmit,
+                  child: Text(
+                    "SIGN UP",
+                    style: TextStyle(
+                        color: AppTheme.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0
                     ),
                   ),
                 ),
