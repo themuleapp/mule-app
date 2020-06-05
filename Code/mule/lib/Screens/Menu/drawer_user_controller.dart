@@ -173,7 +173,6 @@ class _DrawerUserControllerState extends State<DrawerUserController> with Ticker
                             widget.screen, for example, drawer is close we
                             need to tap on a few home screen area and
                             close the drawer */
-                             */
                             if (scrolloffset == 1.0)
                               InkWell(
                                 onTap: () {
