@@ -6,21 +6,11 @@ import 'package:mule/config/app_theme.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _theme.scaffoldBackgroundColor,
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
-//        leading: IconButton(
-//          icon: Icon(Icons.arrow_back_ios),
-//          onPressed: () {
-//            if (Navigator.of(context).canPop()) {
-//              Navigator.of(context).pop();
-//            }
-//          },
-//          color: AppTheme.lightBlue,
-//        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -33,8 +23,11 @@ class Profile extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     "Hey there, Nick!",
-                    style:
-                        _theme.textTheme.title.merge(TextStyle(fontSize: 30.0)),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.darkGrey,
+                      fontSize: 30,
+                    ),
                   ),
                   CircleAvatar(
                     radius: 40.0,
@@ -67,6 +60,10 @@ class Profile extends StatelessWidget {
               CustomTextFormField(
                 hintText: "Phone Number",
                 value: "123-345-7890",
+                suffixIcon: Icon(
+                  Icons.check_circle,
+                  color: AppTheme.lightBlue,
+                ),
               ),
               SizedBox(
                 height: 15.0,
@@ -86,7 +83,7 @@ class Profile extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppTheme.white,
                   border: Border.all(
-                    color: AppTheme.white,
+                    color: AppTheme.lightGrey,
                   ),
                 ),
                 padding: EdgeInsets.symmetric(
@@ -100,9 +97,12 @@ class Profile extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            "BE A MULE",
+                            "Be a Mule",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17),
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.darkGrey,
+                              fontSize: 17,
+                            ),
                           ),
                         ),
                         Switch(
@@ -114,7 +114,11 @@ class Profile extends StatelessWidget {
                     ),
                     Text(
                       "Turn on to be considered being a Mule.",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: AppTheme.darkGrey,
+                        fontSize: 16,
+                      ),
                     )
                   ],
                 ),
@@ -155,11 +159,10 @@ class Profile extends StatelessWidget {
                               child: Text(
                                 "Connect with Facebook",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.white,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
@@ -177,7 +180,7 @@ class Profile extends StatelessWidget {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: _theme.scaffoldBackgroundColor,
+                        color: AppTheme.white,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -189,11 +192,10 @@ class Profile extends StatelessWidget {
                               child: Text(
                                 "Connect with Google",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.redAccent,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),
