@@ -14,22 +14,18 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppTheme.white,
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          backgroundColor: AppTheme.white,
-          body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: AppTheme.white,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            color: AppTheme.white,
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(
-                        top: 100,
-                        left: 16,
-                        right: 16),
+                    padding: EdgeInsets.only(top: 100, left: 16, right: 16),
                     child: Image.asset('assets/images/feedback.png'),
                   ),
                   Container(
@@ -53,37 +49,40 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     ),
                   ),
                   _buildComposer(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Center(
-                      child: Container(
-                        width: 120,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: AppTheme.lightBlue,
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(8)),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.6),
-                                offset: const Offset(4, 4),
-                                blurRadius: 8.0),
-                          ],
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-                            },
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'Send',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Center(
+                        child: Container(
+                          width: 120,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppTheme.lightBlue,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.6),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 8.0),
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              },
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'Send',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -124,7 +123,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             color: AppTheme.white,
             child: SingleChildScrollView(
               padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
                 maxLines: null,
                 onChanged: (String txt) {},
