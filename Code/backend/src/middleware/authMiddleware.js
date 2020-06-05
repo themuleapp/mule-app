@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
+import TokenBlacklist from '../models/tokenBlacklist';
 import composeErrorResponse from '../util/composeErrorResponse';
 
 export default async (req, res, next) => {
@@ -11,6 +12,9 @@ export default async (req, res, next) => {
 
   try {
     // verify valid
+    if (await TokenBlacklist.tokenIsBlacklisted(token)) {
+      throw Error('Blacklisted token');
+    }
     const data = jwt.verify(token, process.env.JWT_KEY);
     const user = await User.findOne({ _id: data._id });
     if (!user) {
@@ -25,6 +29,7 @@ export default async (req, res, next) => {
     req.token = token;
     next();
   } catch (error) {
-    res.status(401).send({ error: 'Error caught' });
+    console.error(error);
+    res.status(401).send({ status: 401, error: 'Token invalid' });
   }
 };
