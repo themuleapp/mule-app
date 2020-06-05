@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/ForgotPassword/forgot_password_email.dart';
-import 'package:mule/Screens/Menu/menu.dart';
 import 'package:mule/Screens/Signup/signup_screen.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
@@ -9,6 +8,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/login/login_data.dart';
+import 'package:mule/navigation_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -34,7 +34,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     if (success == 200) {
       // user is logged in successfully
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainWidget()));
+          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      /*Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => MainWidget()));*/
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot log in!', errorMessages);
@@ -45,13 +47,11 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData _theme = Theme.of(context);
-
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                   "Log In",
                   style: TextStyle(
                       fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
@@ -135,11 +135,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                               child: Text(
                                 "Connect with Facebook",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -159,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                       height: 45.0,
                       child: FlatButton(
                         onPressed: () {},
-                        color: _theme.scaffoldBackgroundColor,
+                        color: AppTheme.white,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -170,11 +168,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                               child: Text(
                                 "Sign in with Google",
                                 textAlign: TextAlign.center,
-                                style: _theme.textTheme.body1.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.redAccent,
-                                  ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent,
                                 ),
                               ),
                             ),
@@ -249,3 +245,4 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     );
   }
 }
+

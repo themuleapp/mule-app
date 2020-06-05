@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import User from '../../models/user';
+import TokenBlacklist from '../../models/tokenBlacklist';
 import asyncErrorCatcher from '../../util/asyncErrorCatcher';
 import composeErrorResponse from '../../util/composeErrorResponse';
 import {
@@ -9,6 +10,8 @@ import {
   validateResetPasswordData,
 } from './authValidators';
 import { createTransporter, sendResetId } from '../../util/emailer';
+import authMiddleware from '../../middleware/authMiddleware';
+import tokenBlacklist from '../../models/tokenBlacklist';
 
 const authRouter = Router();
 // TODO add routes in here
@@ -70,6 +73,14 @@ authRouter.post(
     }
   })
 );
+
+// Using auth middleware here
+authRouter.delete('/logout', authMiddleware, async (req, res) => {
+  const token = req.token;
+  const blackListedToken = new TokenBlacklist({ token });
+  await blackListedToken.save();
+  res.status(205).send();
+});
 
 // TODO detect if someone tries this one too many times
 authRouter.post('/request-reset', async (req, res) => {

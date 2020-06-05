@@ -3,13 +3,16 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import cron from 'node-cron';
 
 import authMiddleware from './middleware/authMiddleware';
-// import routers
 import { authRoutes, profileRoutes } from './routes/routesExport';
+import registerCronJobs from './config/cronjobs';
 
 // setup env vars
 dotenv.config();
+// Register cronjobs
+registerCronJobs(cron);
 
 // connect to db
 mongoose
