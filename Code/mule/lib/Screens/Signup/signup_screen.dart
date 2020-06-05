@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Menu/menu.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/signup/signup_data.dart';
+import 'package:mule/navigation_home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -74,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     if (success == 201) {
       // user is signed up successfully
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainWidget()));
+          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);

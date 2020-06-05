@@ -61,8 +61,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Help',
-        icon: Icon(Icons.help),
+        labelName: 'Report',
+        icon: Icon(Icons.report_problem),
       ),
     ];
   }
