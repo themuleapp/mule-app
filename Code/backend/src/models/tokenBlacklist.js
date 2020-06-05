@@ -24,4 +24,16 @@ tokenBlacklistSchema.statics.isTokenValid = function (token) {
   }
 };
 
+tokenBlacklistSchema.statics.removeExpiredTokens = async function () {
+  const tokens = await this.find();
+  await tokens.forEach(async tokenDoc => {
+    // Try verifying a token which will fail if it's expired => it's removed
+    try {
+      jwt.verify(tokenDoc.token, process.env.JWT_KEY);
+    } catch (err) {
+      await tokenDoc.remove();
+    }
+  });
+};
+
 export default mongoose.model('tokenBlacklist', tokenBlacklistSchema);
