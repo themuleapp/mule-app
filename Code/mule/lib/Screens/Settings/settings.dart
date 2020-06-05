@@ -13,15 +13,15 @@ class Settings extends StatelessWidget {
         backgroundColor: Color(0xFFFFFFFF),
         automaticallyImplyLeading: false,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            }
-          },
-          color: AppTheme.lightBlue,
-        ),
+//        leading: IconButton(
+//          icon: Icon(Icons.arrow_back_ios),
+//          onPressed: () {
+//            if (Navigator.of(context).canPop()) {
+//              Navigator.of(context).pop();
+//            }
+//          },
+//          color: AppTheme.lightBlue,
+//        ),
       ),
       body: Container(
         padding: EdgeInsets.all(15.0),

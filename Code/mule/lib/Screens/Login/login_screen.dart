@@ -9,6 +9,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/login/login_data.dart';
+import 'package:mule/navigation_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -34,7 +35,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     if (success == 200) {
       // user is logged in successfully
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainWidget()));
+          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      /*Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => MainWidget()));*/
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot log in!', errorMessages);

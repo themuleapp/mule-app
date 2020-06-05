@@ -12,15 +12,15 @@ class Profile extends StatelessWidget {
         backgroundColor: _theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            }
-          },
-          color: AppTheme.lightBlue,
-        ),
+//        leading: IconButton(
+//          icon: Icon(Icons.arrow_back_ios),
+//          onPressed: () {
+//            if (Navigator.of(context).canPop()) {
+//              Navigator.of(context).pop();
+//            }
+//          },
+//          color: AppTheme.lightBlue,
+//        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -38,8 +38,8 @@ class Profile extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 40.0,
-                    backgroundImage: NetworkImage(
-                        "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg"),
+                    backgroundImage: AssetImage(
+                        'assets/images/profile_photo_nick_miller.jpg'),
                   )
                 ],
               ),
