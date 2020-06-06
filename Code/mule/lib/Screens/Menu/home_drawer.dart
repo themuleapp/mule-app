@@ -1,10 +1,17 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({Key key, this.screenIndex, this.iconAnimationController, this.callBackIndex}) : super(key: key);
+  const HomeDrawer(
+      {Key key,
+      this.screenIndex,
+      this.iconAnimationController,
+      this.callBackIndex})
+      : super(key: key);
 
   final AnimationController iconAnimationController;
   final DrawerIndex screenIndex;
@@ -88,11 +95,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     animation: widget.iconAnimationController,
                     builder: (BuildContext context, Widget child) {
                       return ScaleTransition(
-                        scale: AlwaysStoppedAnimation<double>(1.0 - (widget.iconAnimationController.value) * 0.2),
+                        scale: AlwaysStoppedAnimation<double>(
+                            1.0 - (widget.iconAnimationController.value) * 0.2),
                         child: RotationTransition(
-                          turns: AlwaysStoppedAnimation<double>(Tween<double>(begin: 0.0, end: 24.0)
-                              .animate(CurvedAnimation(parent: widget.iconAnimationController, curve: Curves.fastOutSlowIn))
-                              .value /
+                          turns: AlwaysStoppedAnimation<double>(Tween<double>(
+                                      begin: 0.0, end: 24.0)
+                                  .animate(CurvedAnimation(
+                                      parent: widget.iconAnimationController,
+                                      curve: Curves.fastOutSlowIn))
+                                  .value /
                               360),
                           child: Container(
                             height: 120,
@@ -100,12 +111,17 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: <BoxShadow>[
-                                BoxShadow(color: AppTheme.darkGrey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
+                                BoxShadow(
+                                    color: AppTheme.darkGrey.withOpacity(0.6),
+                                    offset: const Offset(2.0, 4.0),
+                                    blurRadius: 8),
                               ],
                             ),
                             child: ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/profile_photo_nick_miller.jpg'),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(60.0)),
+                              child: Image.asset(
+                                  'assets/images/profile_photo_nick_miller.jpg'),
                             ),
                           ),
                         ),
@@ -114,13 +130,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15, left: 4),
-                    child: Text(
-                      'Nick Miller',
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.darkGrey,
-                        fontSize: 25,
+                    child: Observer(
+                      builder: (_) => Text(
+                        GetIt.I.get<UserInfoStore>().fullName,
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkGrey,
+                          fontSize: 25,
+                        ),
                       ),
                     ),
                   ),
@@ -190,8 +208,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 onTap: () {
                   // TODO should call log out endpoint
                   // Should remove the token from local storage
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
               ),
               SizedBox(
@@ -241,66 +259,64 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ? Container(
                           width: 24,
                           height: 24,
-                          child: Image.asset(
-                            listData.imageName,
+                          child: Image.asset(listData.imageName,
                               color: widget.screenIndex == listData.index
-                                ? AppTheme.black
-                                : AppTheme.black
-                          ),
-                      )
-                      : Icon(
-                        listData.icon.icon,
-                        color: widget.screenIndex == listData.index
-                            ? AppTheme.black
-                            : AppTheme.black
-                        ),
-                      const Padding(
-                        padding: EdgeInsets.all(4.0),
-                      ),
-                      Text(
-                        listData.labelName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                                  ? AppTheme.black
+                                  : AppTheme.black),
+                        )
+                      : Icon(listData.icon.icon,
                           color: widget.screenIndex == listData.index
                               ? AppTheme.black
-                              : AppTheme.black,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
+                              : AppTheme.black),
+                  const Padding(
+                    padding: EdgeInsets.all(4.0),
+                  ),
+                  Text(
+                    listData.labelName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: widget.screenIndex == listData.index
+                          ? AppTheme.black
+                          : AppTheme.black,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
                 ],
               ),
             ),
             widget.screenIndex == listData.index
                 ? AnimatedBuilder(
-              animation: widget.iconAnimationController,
-              builder: (BuildContext context, Widget child) {
-                return Transform(
-                  transform: Matrix4.translationValues(
-                      (MediaQuery.of(context).size.width * 0.75 - 64)
-                          * (1.0 - widget.iconAnimationController.value - 1.0),
-                      0.0,
-                      0.0
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 8),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.75 - 64,
-                      height: 46,
-                      decoration: BoxDecoration(
-                        color: AppTheme.lightBlue.withOpacity(0.5),
-                        borderRadius: new BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(28),
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(28),
+                    animation: widget.iconAnimationController,
+                    builder: (BuildContext context, Widget child) {
+                      return Transform(
+                        transform: Matrix4.translationValues(
+                            (MediaQuery.of(context).size.width * 0.75 - 64) *
+                                (1.0 -
+                                    widget.iconAnimationController.value -
+                                    1.0),
+                            0.0,
+                            0.0),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 8, bottom: 8),
+                          child: Container(
+                            width:
+                                MediaQuery.of(context).size.width * 0.75 - 64,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: AppTheme.lightBlue.withOpacity(0.5),
+                              borderRadius: new BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(28),
+                                bottomLeft: Radius.circular(0),
+                                bottomRight: Radius.circular(28),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
+                      );
+                    },
+                  )
                 : const SizedBox()
           ],
         ),

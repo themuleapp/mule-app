@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/homepage.dart';
+import 'package:mule/config/config.dart';
 
 void main() => runApp(App());
-
-// void temp() async {
-//   final res = await httpClient.handleLogin(LoginData(
-//     email: 'ji.darwish98@gmail.com',
-//     password: '123456789',
-//   ));
-//   print(res);
-// }
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Config.registerStoresWithGetIt();
+
     return MaterialApp(
       home: HomePage(),
       debugShowCheckedModeBanner: false,

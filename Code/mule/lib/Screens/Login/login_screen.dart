@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/Login/ForgotPassword/forgot_password_email.dart';
 import 'package:mule/Screens/Signup/signup_screen.dart';
 import 'package:mule/Widgets/alert_widget.dart';
@@ -8,7 +9,9 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
 import 'package:mule/models/login/login_data.dart';
+import 'package:mule/models/login/login_res.dart';
 import 'package:mule/navigation_home_screen.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -32,11 +35,15 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     final res = await httpClient.handleLogin(loginData);
     final success = res.statusCode;
     if (success == 200) {
+      // Update data in the store!
+      final LoginRes resData = LoginRes.fromJson(res.data);
+      print(resData);
+      GetIt.I
+          .get<UserInfoStore>()
+          .updateFirstAndLastNames(resData.firstName, resData.lastName);
       // user is logged in successfully
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
-      /*Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainWidget()));*/
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot log in!', errorMessages);
@@ -245,4 +252,3 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     );
   }
 }
-
