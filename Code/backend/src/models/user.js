@@ -45,14 +45,6 @@ const userSchema = mongoose.Schema({
     required: false,
     default: Date.now,
   },
-
-  // TODO think if this is really needed
-  // tokens: [{
-  //     token: {
-  //         type: String,
-  //         required: true
-  //     }
-  // }]
 });
 
 userSchema.pre('save', async function (next) {
