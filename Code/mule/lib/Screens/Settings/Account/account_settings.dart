@@ -65,7 +65,7 @@ class AccountSettings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.location_on),
+              leading: Icon(Icons.delete_forever),
               title: Text(
                 "Delete Account",
                 style: TextStyle(
