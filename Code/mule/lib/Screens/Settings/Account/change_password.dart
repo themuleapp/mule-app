@@ -22,7 +22,7 @@ class ChangePassword extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(
