@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/Legal/legal.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
 
@@ -164,6 +165,38 @@ class _HomeDrawerState extends State<HomeDrawer> {
               itemBuilder: (BuildContext context, int index) {
                 return inkwell(drawerList[index]);
               },
+            ),
+          ),
+          Padding (
+            padding: EdgeInsets.only(top: 10.0, left: 15, right: 15, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  child: Text(
+                    "Legal",
+                    style: TextStyle(
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.lightGrey,
+                      fontSize: 14
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Legal()));
+                  },
+                ),
+                Text(
+                  "v1.0.0",
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.lightGrey,
+                    fontSize: 14
+                  ),
+                ),
+              ],
             ),
           ),
           Divider(
