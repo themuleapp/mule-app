@@ -46,11 +46,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.chat),
       ),
       DrawerList(
-        index: DrawerIndex.Profile,
-        labelName: 'Profile',
-        icon: Icon(Icons.person),
-      ),
-      DrawerList(
         index: DrawerIndex.Settings,
         labelName: 'Settings',
         icon: Icon(Icons.settings),
@@ -351,7 +346,6 @@ enum DrawerIndex {
   Places,
   Orders,
   Chat,
-  Profile,
   Settings,
   Help,
   Feedback,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
+import 'package:mule/Screens/Settings/Account/change_password.dart';
 import 'package:mule/config/app_theme.dart';
 
 class Profile extends StatelessWidget {
@@ -8,212 +7,198 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.white,
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+          },
+          color: AppTheme.lightBlue,
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: AppTheme.white,
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Hey there, Nick!",
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              "Profile",
+              style: TextStyle(
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.darkGrey,
+                fontSize: 30,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              children: <Widget>[
+                Stack(
+                  fit: StackFit.loose,
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: AssetImage(
+                          'assets/images/profile_photo_nick_miller.jpg'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 60.0, left: 70.0),
+                      child: CircleAvatar(
+                        backgroundColor: AppTheme.lightBlue,
+                        radius: 20.0,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: AppTheme.white,
+                          size: 22,
+                        ),
+                      )
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    "Nick Miller",
                     style: TextStyle(
                       fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: AppTheme.darkGrey,
-                      fontSize: 30,
+                      fontSize: 25,
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 40.0,
-                    backgroundImage: AssetImage(
-                        'assets/images/profile_photo_nick_miller.jpg'),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 25.0,
-              ),
-              CustomTextFormField(
-                hintText: "Name",
-                value: "Nick Miller",
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              CustomTextFormField(
-                hintText: "Email",
-                value: "nickmiller@gmail.com",
-                suffixIcon: Icon(
-                  Icons.check_circle,
-                  color: AppTheme.lightBlue,
                 ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              CustomTextFormField(
-                hintText: "Phone Number",
-                value: "123-345-7890",
-                suffixIcon: Icon(
-                  Icons.check_circle,
-                  color: AppTheme.lightBlue,
+                Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      color: AppTheme.lightGrey,
+                      size: 20,
+                    ),
+                    onTap: (){},
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text(
-                "PREFERENCES",
+              ],
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                "Account Info",
                 style: TextStyle(
+                  fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w700,
-                  fontSize: 14.0,
-                  color: AppTheme.lightGrey,
+                  color: AppTheme.darkGrey,
+                  fontSize: 24,
                 ),
               ),
-              SizedBox(
-                height: 10.0,
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.white,
-                  border: Border.all(
-                    color: AppTheme.lightGrey,
-                  ),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 10.0,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            "Be a Mule",
-                            style: TextStyle(
-                              fontFamily: AppTheme.fontName,
-                              fontWeight: FontWeight.w700,
-                              color: AppTheme.darkGrey,
-                              fontSize: 17,
-                            ),
-                          ),
-                        ),
-                        Switch(
-                          value: true,
-                          activeColor: AppTheme.lightBlue,
-                          onChanged: (bool state) {},
-                        )
-                      ],
-                    ),
-                    Text(
-                      "Turn on to be considered being a Mule.",
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w500,
-                        color: AppTheme.darkGrey,
-                        fontSize: 16,
-                      ),
-                    )
-                  ],
+              leading: Icon(Icons.mail),
+              title: Text(
+                "Email",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.white,
+              trailing: Icon(Icons.chevron_right),
+            ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              leading: Icon(Icons.phone),
+              title: Text(
+                "Phone",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
                 ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 20.0,
+              ),
+              trailing: Icon(Icons.chevron_right),
+            ),
+            Divider(),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                "Account Preferences",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.darkGrey,
+                  fontSize: 24,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "SOCIAL NETWORK",
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.0,
-                        color: AppTheme.lightGrey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      height: 45.0,
-                      child: FlatButton(
-                        onPressed: () {},
-                        color: AppTheme.facebookBlue,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.facebookSquare,
-                              color: Colors.white,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Connect with Facebook",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: AppTheme.white,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.redAccent,
-                          ),
-                          borderRadius: BorderRadius.circular(3.0)),
-                      margin: EdgeInsets.only(top: 10.0),
-                      height: 45.0,
-                      child: FlatButton(
-                        onPressed: () {},
-                        color: AppTheme.white,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.google,
-                              size: 18.0,
-                              color: Colors.redAccent,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Connect with Google",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.redAccent,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              leading: Icon(Icons.lock),
+              title: Text(
+                "Change Password",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
                 ),
-              )
-            ],
-          ),
+              ),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ChangePassword()));
+              },
+            ),
+            Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              leading: Icon(Icons.delete_forever),
+              title: Text(
+                "Delete Account",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
+                  color: AppTheme.darkGrey,
+                ),
+              ),
+              trailing: Icon(Icons.chevron_right),
+            ),
+            Divider(),
+            SizedBox(
+              height: 10.0,
+            ),
+          ],
         ),
       ),
     );

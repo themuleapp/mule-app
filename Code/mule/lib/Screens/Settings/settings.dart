@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Settings/Account/account_settings.dart';
-import 'package:mule/Screens/Settings/Account/change_password.dart';
+import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/config/app_theme.dart';
 
 class Settings extends StatelessWidget {
@@ -38,7 +37,7 @@ class Settings extends StatelessWidget {
               ),
               leading: Icon(Icons.account_circle),
               title: Text(
-                "Account",
+                "Profile",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
@@ -49,7 +48,7 @@ class Settings extends StatelessWidget {
               trailing: Icon(Icons.chevron_right),
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AccountSettings()));
+                    MaterialPageRoute(builder: (context) => Profile()));
               },
             ),
             Divider(),
