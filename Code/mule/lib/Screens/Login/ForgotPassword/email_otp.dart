@@ -3,7 +3,7 @@ import 'package:mule/Screens/Login/ForgotPassword/reset_password.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 
-class OtpVerification extends StatelessWidget {
+class EmailOTP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

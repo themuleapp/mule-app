@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
+import 'package:mule/Screens/Signup/phone_otp.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
@@ -74,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     if (success == 201) {
       // user is signed up successfully
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+          .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Login/ForgotPassword/otp_verification.dart';
+import 'package:mule/Screens/Login/ForgotPassword/email_otp.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 
@@ -105,7 +105,7 @@ class ForgotPassword extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OtpVerification()));
+                  MaterialPageRoute(builder: (context) => EmailOTP()));
             },
           ),
         )
