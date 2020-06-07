@@ -38,7 +38,15 @@ authRouter.post('/signup', async (req, res) => {
     await user.save();
     // // generate token
     const token = await user.generateAuthToken();
-    res.status(201).send({ token });
+    res
+      .status(201)
+      .send({
+        token,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+      });
   } catch (error) {
     res.status(400).send(error);
   }
