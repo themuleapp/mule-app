@@ -31,7 +31,6 @@ class PhoneOTP extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Verify Phone Number",
                       style: TextStyle(
@@ -48,7 +47,7 @@ class PhoneOTP extends StatelessWidget {
                     "Please enter the code we've messaged you",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),

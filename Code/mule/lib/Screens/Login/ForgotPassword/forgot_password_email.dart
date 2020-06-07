@@ -46,12 +46,11 @@ class ForgotPassword extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(
@@ -79,9 +78,9 @@ class ForgotPassword extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "Don't worry, enter your email to receive an OTP!",
+          "Enter your email to receive a code",
           style: TextStyle(
-              fontSize: 15.0,
+              fontSize: 17.0,
               fontWeight: FontWeight.bold,
               color: AppTheme.darkGrey),
         ),

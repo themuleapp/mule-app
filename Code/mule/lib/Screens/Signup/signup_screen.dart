@@ -125,12 +125,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Sign Up",
                   style: TextStyle(

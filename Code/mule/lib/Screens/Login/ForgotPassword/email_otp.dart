@@ -7,9 +7,9 @@ class EmailOTP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
@@ -23,7 +23,7 @@ class EmailOTP extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -31,7 +31,6 @@ class EmailOTP extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Verify Email",
                       style: TextStyle(
@@ -45,11 +44,11 @@ class EmailOTP extends StatelessWidget {
                     height: 20.0,
                   ),
                   Text(
-                    "Check your email, we've sent you an OTP",
+                    "Please enter the code we've emailed you",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),
                   ),

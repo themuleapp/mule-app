@@ -6,9 +6,9 @@ class ResetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
@@ -22,7 +22,7 @@ class ResetPassword extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -30,7 +30,6 @@ class ResetPassword extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Reset Password",
                       style: TextStyle(
@@ -47,8 +46,8 @@ class ResetPassword extends StatelessWidget {
                     "Enter a new password",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),
                   ),
