@@ -8,10 +8,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
-import 'package:mule/models/login/login_data.dart';
-import 'package:mule/models/login/login_res.dart';
+import 'package:mule/models/req/login/login_data.dart';
+import 'package:mule/models/res/login_res.dart';
 import 'package:mule/navigation_home_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+
+import '../../stores/global/user_info_store.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -22,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  String formError = '';
 
   void handleSubmt() async {
     if (!_formKey.currentState.validate()) {
@@ -36,11 +37,9 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     final success = res.statusCode;
     if (success == 200) {
       // Update data in the store!
-      final LoginRes resData = LoginRes.fromJson(res.data);
-      print(resData);
-      GetIt.I
-          .get<UserInfoStore>()
-          .updateFirstAndLastNames(resData.firstName, resData.lastName);
+      final AuthRes resData = AuthRes.fromJson(res.data);
+      GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(resData);
+      print('this ${GetIt.I.get<UserInfoStore>().email}');
       // user is logged in successfully
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));

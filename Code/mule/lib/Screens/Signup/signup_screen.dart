@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/input_validation.dart';
-import 'package:mule/models/signup/signup_data.dart';
+import 'package:mule/models/req/signup/signup_data.dart';
+import 'package:mule/models/res/login_res.dart';
 import 'package:mule/navigation_home_screen.dart';
+
+import '../../stores/global/user_info_store.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -25,16 +29,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       new TextEditingController();
   final TextEditingController password1Controller = new TextEditingController();
   final TextEditingController password2Controller = new TextEditingController();
-
-  // void _clearForm() {
-  //   firstNameController.clear();
-  //   lastNameController.clear();
-  //   emailController.clear();
-  //   phoneNumberPrefixController.clear();
-  //   phoneNumberController.clear();
-  //   password1Controller.clear();
-  //   password2Controller.clear();
-  // }
 
   void _clearPasswords() {
     password1Controller.clear();
@@ -72,9 +66,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     final Response res = await httpClient.handleSignup(signupData);
     final success = res.statusCode;
     if (success == 201) {
+      final AuthRes authRes = AuthRes.fromJson(res.data);
+      GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(authRes);
       // user is signed up successfully
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);
@@ -135,8 +131,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.w700,
-                      color: AppTheme.darkGrey
-                  ),
+                      color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
@@ -158,8 +153,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                     style: TextStyle(
                         color: AppTheme.white,
                         fontWeight: FontWeight.w500,
-                        fontSize: 16.0
-                    ),
+                        fontSize: 16.0),
                   ),
                 ),
               )

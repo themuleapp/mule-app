@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
-import 'package:mule/models/login/login_data.dart';
-import 'package:mule/models/signup/signup_data.dart';
+import 'package:mule/models/req/login/login_data.dart';
+import 'package:mule/models/req/signup/signup_data.dart';
 
 class HttpClient {
   Dio _dio;
