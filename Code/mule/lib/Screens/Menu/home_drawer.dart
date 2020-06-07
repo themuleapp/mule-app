@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Legal/legal.dart';
+import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
 
@@ -99,9 +100,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 BoxShadow(color: AppTheme.darkGrey.withOpacity(0.6), offset: const Offset(2.0, 4.0), blurRadius: 8),
                               ],
                             ),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/profile_photo_nick_miller.jpg'),
+                            child: GestureDetector(
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(Radius.circular(60.0)),
+                                child: Image.asset('assets/images/profile_photo_nick_miller.jpg'),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) => Profile()));
+                              },
                             ),
                           ),
                         ),
@@ -110,14 +117,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15, left: 4),
-                    child: Text(
-                      'Nick Miller',
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.darkGrey,
-                        fontSize: 25,
+                    child: GestureDetector(
+                      child: Text(
+                        'Nick Miller',
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkGrey,
+                          fontSize: 25,
+                        ),
                       ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Profile()));
+                      },
                     ),
                   ),
                   Padding(

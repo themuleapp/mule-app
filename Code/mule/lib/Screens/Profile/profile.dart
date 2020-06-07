@@ -37,7 +37,7 @@ class Profile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10.0,
+              height: 30.0,
             ),
             Row(
               children: <Widget>[
