@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 
@@ -82,7 +83,10 @@ class ResetPassword extends StatelessWidget {
                         "SUBMIT",
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+                      },
                     ),
                   )
                 ],
