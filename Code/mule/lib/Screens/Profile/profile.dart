@@ -111,7 +111,12 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.mail),
+              leading: Padding(
+                  padding: EdgeInsets.only(top: 7.0),
+                  child: Icon(
+                      Icons.mail
+                  )
+              ),
               title: Text(
                 "Email",
                 style: TextStyle(
@@ -121,6 +126,15 @@ class Profile extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
+              subtitle: Text(
+                "nickmiller@gmail.com",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                  color: AppTheme.lightGrey,
+                ),
+              ),
               trailing: Icon(Icons.chevron_right),
             ),
             Divider(),
@@ -128,7 +142,12 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.phone),
+              leading: Padding(
+                  padding: EdgeInsets.only(top: 7.0),
+                  child: Icon(
+                      Icons.phone
+                  )
+              ),
               title: Text(
                 "Phone",
                 style: TextStyle(
@@ -136,6 +155,15 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
                   color: AppTheme.darkGrey,
+                ),
+              ),
+              subtitle: Text(
+                "+1 123-456-7890",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                  color: AppTheme.lightGrey,
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
