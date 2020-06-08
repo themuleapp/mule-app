@@ -1,10 +1,43 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Screens/Login/ForgotPassword/otp_verification.dart';
+import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/mixins/input_validation.dart';
+import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
+import 'package:mule/models/res/errorRes/error_res.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
+  @override
+  _ForgotPasswordState createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  _handleForgotPassword() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    final String email = _emailController.text.trim();
+    final ForgotPasswordReq forgotPassword = ForgotPasswordReq(email: email);
+    Response res = await httpClient.handleForgotPassword(forgotPassword);
+    if (res.statusCode == 200) {
+      print(res.data);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => OtpVerification(email: email)));
+    } else {
+      ErrorRes errRes = ErrorRes.fromJson(res.data);
+      createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
+      _emailController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,41 +108,44 @@ class ForgotPassword extends StatelessWidget {
   }
 
   Widget _forgotPasswordForm(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Don't worry, enter your email to receive an OTP!",
-          style: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.darkGrey),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        CustomTextFormField(
-          hintText: "Email",
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 45.0,
-          child: FlatButton(
-            color: AppTheme.lightBlue,
-            child: Text(
-              "SUBMIT",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OtpVerification()));
-            },
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Don't worry, enter your email to receive an OTP!",
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.darkGrey),
           ),
-        )
-      ],
+          SizedBox(
+            height: 20.0,
+          ),
+          CustomTextFormField(
+            keyboardType: TextInputType.emailAddress,
+            validator: validateEmail,
+            controller: _emailController,
+            hintText: "Email",
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 45.0,
+            child: FlatButton(
+              color: AppTheme.lightBlue,
+              child: Text(
+                "SUBMIT",
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+              onPressed: this._handleForgotPassword,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

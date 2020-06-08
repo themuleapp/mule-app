@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:mule/models/res/login_res.dart';
+import 'package:mule/models/res/loginRes/auth_res.dart';
 
 part 'user_info_store.g.dart';
 

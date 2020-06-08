@@ -13,13 +13,11 @@ class Config {
   }
 
   static Future<void> saveToken(token) async {
-    print('saving token $token');
     final storage = new FlutterSecureStorage();
     await storage.write(key: TOKEN_KEY, value: token);
   }
 
   static Future<String> getToken() async {
-    print('reading token');
     final storage = new FlutterSecureStorage();
     return await storage.read(key: TOKEN_KEY);
   }

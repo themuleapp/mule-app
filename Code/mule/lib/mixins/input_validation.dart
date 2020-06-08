@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 
 class InputValidation {
   String validateEmail(String email) {
-    if (!EmailValidator.validate(email, true)) {
+    if (!EmailValidator.validate(email.trim(), true)) {
       return 'Not a valid email';
     }
 
@@ -10,7 +10,7 @@ class InputValidation {
   }
 
   String validateNewPassword(String value) {
-    if (value.isEmpty) {
+    if (value.trim().isEmpty) {
       return 'Password cannot be empty!';
     }
 
@@ -22,7 +22,7 @@ class InputValidation {
   }
 
   String validateNotEmptyInput(String value) {
-    if (value.isEmpty) {
+    if (value.trim().isEmpty) {
       return 'Cannot be empty!';
     }
     return null;

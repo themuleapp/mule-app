@@ -2,8 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/ForgotPassword/reset_password.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/mixins/input_validation.dart';
 
-class OtpVerification extends StatelessWidget {
+class OtpVerification extends StatefulWidget {
+  final String email;
+
+  const OtpVerification({Key key, this.email}) : super(key: key);
+
+  @override
+  _OtpVerificationState createState() => _OtpVerificationState();
+}
+
+class _OtpVerificationState extends State<OtpVerification>
+    with InputValidation {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _otpController = TextEditingController();
+
+  _handleVerify() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ResetPassword()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +60,7 @@ class OtpVerification extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.darkGrey
-                      ),
+                          color: AppTheme.darkGrey),
                     ),
                   ),
                   SizedBox(
@@ -46,41 +68,20 @@ class OtpVerification extends StatelessWidget {
                   ),
                   Text(
                     "Check your email, we've sent you an OTP",
-                    style:
-                    TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.0,
-                        color: AppTheme.darkGrey
-                    ),
+                        color: AppTheme.darkGrey),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: CustomTextFormField(
-                            hintText: "", verticalPadding: 25.0),
-                      )
-                    ],
+                  Form(
+                    key: _formKey,
+                    child: CustomTextFormField(
+                      keyboardType: TextInputType.number,
+                      validator: validateNotEmptyInput,
+                      controller: _otpController,
+                      hintText: "",
+                      verticalPadding: 25.0,
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -120,10 +121,7 @@ class OtpVerification extends StatelessWidget {
                         "VERIFY",
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) => ResetPassword()));
-                      },
+                      onPressed: this._handleVerify,
                     ),
                   )
                 ],

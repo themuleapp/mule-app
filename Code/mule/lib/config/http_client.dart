@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
+import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 
@@ -64,6 +65,13 @@ class HttpClient {
         },
       ),
     );
+  }
+
+  Future<Response> handleForgotPassword(
+      ForgotPasswordReq forgotPasswordReq) async {
+    final Response res = await makePostRequest(
+        '/authentication/request-reset', forgotPasswordReq.toMap());
+    return res;
   }
 }
 
