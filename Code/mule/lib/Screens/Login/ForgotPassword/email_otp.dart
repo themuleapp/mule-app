@@ -41,7 +41,7 @@ class EmailOTP extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
                   Text(
                     "Please enter the code we've emailed you",
@@ -84,12 +84,13 @@ class EmailOTP extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Wrap(
+                  Row(
                     children: <Widget>[
                       Text(
                         "Didn't receive a code?",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15
                         ),
                       ),
                       SizedBox(
@@ -99,7 +100,8 @@ class EmailOTP extends StatelessWidget {
                         child: Text(
                           "Resend Code",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
                             color: AppTheme.lightBlue,
                           ),
                         ),

@@ -41,13 +41,13 @@ class PhoneOTP extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
                   Text(
                     "Please enter the code we've messaged you",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),
@@ -84,12 +84,13 @@ class PhoneOTP extends StatelessWidget {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Wrap(
+                  Row(
                     children: <Widget>[
                       Text(
                         "Didn't receive a code?",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15
                         ),
                       ),
                       SizedBox(
@@ -99,7 +100,8 @@ class PhoneOTP extends StatelessWidget {
                         child: Text(
                           "Resend Code",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
                             color: AppTheme.lightBlue,
                           ),
                         ),

@@ -41,7 +41,7 @@ class ResetPassword extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
                   Text(
                     "Enter a new password",
@@ -53,7 +53,7 @@ class ResetPassword extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 40.0,
+                    height: 20.0,
                   ),
                   CustomTextFormField(
                     hintText: "Password",
