@@ -20,10 +20,9 @@ class HttpClient {
   handleSignup(SignupData data) async {
     final res = await makePostRequest('/authentication/signup', data.toMap());
 
-    // TODO Save the token!!
     if (res.statusCode == 201) {
       final token = res.data['token'];
-      print('Token is $token');
+      await Config.saveToken('Bearer $token');
     }
     return res;
   }
@@ -31,16 +30,27 @@ class HttpClient {
   handleLogin(LoginData data) async {
     final res = await makePostRequest('/authentication/login', data.toMap());
 
-    // TODO Save the token!!
-    if (res.statusCode == 201) {
+    if (res.statusCode == 200) {
       final token = res.data['token'];
-      print('Token is $token');
+      await Config.saveToken('Bearer $token');
     }
     return res;
   }
 
   Future<Response> makeGetRequest(String path) async {
     return await _dio.get(path);
+  }
+
+  handleSignOut() async {
+    String token = await Config.getToken();
+    _dio.delete(
+      '/authentication/logout',
+      options: Options(
+        headers: {
+          'Authorization': token,
+        },
+      ),
+    );
   }
 
   Future<Response> makePostRequest(

@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/config.dart';
+import 'package:mule/config/http_client.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class HomeDrawer extends StatefulWidget {
@@ -27,6 +29,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void initState() {
     setdDrawerListArray();
     super.initState();
+  }
+
+  _handleSignOut() async {
+    await httpClient.handleSignOut();
+    await Config.deleteToken();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   void setdDrawerListArray() {
@@ -205,12 +214,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Icons.power_settings_new,
                   color: Colors.red,
                 ),
-                onTap: () {
-                  // TODO should call log out endpoint
-                  // Should remove the token from local storage
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
+                onTap: this._handleSignOut,
               ),
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom,

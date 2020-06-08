@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/config.dart';
 
-void main() {
+void main() async {
   Config.registerStoresWithGetIt();
   runApp(App());
 }

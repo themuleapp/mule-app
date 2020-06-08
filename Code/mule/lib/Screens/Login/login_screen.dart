@@ -39,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
       // Update data in the store!
       final AuthRes resData = AuthRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(resData);
-      print('this ${GetIt.I.get<UserInfoStore>().email}');
       // user is logged in successfully
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
