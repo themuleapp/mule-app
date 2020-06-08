@@ -66,10 +66,23 @@ class ChangePhone extends StatelessWidget {
               color: AppTheme.darkGrey),
         ),
         SizedBox(
-          height: 20.0,
+          height: 30.0,
         ),
-        CustomTextFormField(
-          hintText: "Phone Number",
+        Row(
+          children: <Widget>[
+            Container(
+              width: 60.0,
+              child: CustomTextFormField(
+                hintText: "+1",
+              ),
+            ),
+            SizedBox(width: 15.0),
+            Expanded(
+              child: CustomTextFormField(
+                hintText: "Phone number",
+              ),
+            )
+          ],
         ),
         SizedBox(
           height: 30.0,
