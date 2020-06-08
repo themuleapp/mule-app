@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Screens/Login/ForgotPassword/email_otp.dart';
+import 'package:mule/Screens/Signup/phone_otp.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ChangeEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,26 +24,6 @@ class ForgotPassword extends StatelessWidget {
           },
           color: AppTheme.lightBlue,
         ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Text(
-                "Log In",
-                style: TextStyle(
-                  color: AppTheme.lightBlue,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -52,7 +33,7 @@ class ForgotPassword extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: Text(
-                  "Forgot Password",
+                  "Change Email",
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
@@ -62,7 +43,7 @@ class ForgotPassword extends StatelessWidget {
               SizedBox(
                 height: 30.0,
               ),
-              _forgotPasswordForm(context),
+              _changeEmailForm(context),
               SizedBox(
                 height: 30.0,
               ),
@@ -73,12 +54,12 @@ class ForgotPassword extends StatelessWidget {
     );
   }
 
-  Widget _forgotPasswordForm(BuildContext context) {
+  Widget _changeEmailForm(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "Enter your email to receive a code",
+          "You can update your email address",
           style: TextStyle(
               fontSize: 17.0,
               fontWeight: FontWeight.w500,
@@ -104,7 +85,7 @@ class ForgotPassword extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => EmailOTP()));
+                  MaterialPageRoute(builder: (context) => PhoneOTP()));
             },
           ),
         )

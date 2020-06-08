@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Settings/Account/change_password.dart';
+import 'package:mule/Screens/Profile/Account/change_email.dart';
+import 'package:mule/Screens/Profile/Account/change_password.dart';
+import 'package:mule/Screens/Profile/Account/change_phone.dart';
 import 'package:mule/config/app_theme.dart';
 
 class Profile extends StatelessWidget {
@@ -136,6 +138,10 @@ class Profile extends StatelessWidget {
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ChangeEmail()));
+              },
             ),
             Divider(),
             ListTile(
@@ -167,6 +173,10 @@ class Profile extends StatelessWidget {
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ChangePhone()));
+              },
             ),
             Divider(),
             Padding(
