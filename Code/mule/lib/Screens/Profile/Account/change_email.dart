@@ -83,10 +83,7 @@ class ChangeEmail extends StatelessWidget {
               "SUBMIT",
               style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => PhoneOTP()));
-            },
+            onPressed: () {},
           ),
         )
       ],
