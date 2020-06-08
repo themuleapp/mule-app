@@ -47,7 +47,7 @@ class ResetPassword extends StatelessWidget {
                     "Enter a new password",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),

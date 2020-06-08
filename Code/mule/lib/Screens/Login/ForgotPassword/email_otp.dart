@@ -47,7 +47,7 @@ class EmailOTP extends StatelessWidget {
                     "Please enter the code we've emailed you",
                     style:
                     TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         fontSize: 17.0,
                         color: AppTheme.darkGrey
                     ),
