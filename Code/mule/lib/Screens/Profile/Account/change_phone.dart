@@ -66,7 +66,7 @@ class ChangePhone extends StatelessWidget {
               color: AppTheme.darkGrey),
         ),
         SizedBox(
-          height: 20.0,
+          height: 40.0,
         ),
         Row(
           children: <Widget>[
