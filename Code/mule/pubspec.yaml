@@ -30,6 +30,7 @@ dependencies:
   email_validator: ^1.0.4
   dio: ^3.0.9
   font_awesome_flutter: ^8.5.0
+  flutter_secure_storage: 3.3.3
 
 dev_dependencies:
   flutter_test:
