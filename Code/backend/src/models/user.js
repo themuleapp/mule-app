@@ -98,14 +98,13 @@ userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
 };
 
-userSchema.methods.createResetId = async function () {
-  const id = uuidV4();
-  this.resetId = id;
+userSchema.methods.createResetToken = async function () {
+  this.resetId = Math.floor(100000 + Math.random() * 900000);
 
   this.resetIdExpiration =
     Date.now() + parseInt(process.env.RESET_TOKEN_VALIDITY, 10);
   await this.save();
-  return id;
+  return this.resetId;
 };
 
 userSchema.methods.hasResetToken = function () {

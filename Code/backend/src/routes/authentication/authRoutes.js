@@ -110,7 +110,7 @@ authRouter.post('/request-reset', async (req, res) => {
   }
 
   // Generate id and set it on the user document
-  const id = await user.createResetId();
+  const id = await user.createResetToken();
 
   // send email
   sendResetId(createTransporter(), user.email, id);
@@ -139,7 +139,7 @@ authRouter.post('/resend-reset-token', async (req, res) => {
       );
   }
 
-  const id = await user.createResetId();
+  const id = await user.createResetToken();
 
   sendResetId(createTransporter(), user.email, id);
 
