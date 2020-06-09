@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
@@ -53,7 +54,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
       // TODO show a little reminder that it successded
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => LoginScreen(),
         ),
       );
     } else {
