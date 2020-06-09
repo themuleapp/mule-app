@@ -133,13 +133,15 @@ class Profile extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              subtitle: Text(
-                "nickmiller@gmail.com",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppTheme.lightGrey,
+              subtitle: Observer(
+                builder: (_) => Text(
+                  GetIt.I.get<UserInfoStore>().email,
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: AppTheme.lightGrey,
+                  ),
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
@@ -168,13 +170,15 @@ class Profile extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              subtitle: Text(
-                "+1 123-456-7890",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppTheme.lightGrey,
+              subtitle: Observer(
+                builder: (_) => Text(
+                  GetIt.I.get<UserInfoStore>().phoneNumber,
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.0,
+                    color: AppTheme.lightGrey,
+                  ),
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
