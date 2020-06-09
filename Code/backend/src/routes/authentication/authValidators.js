@@ -27,6 +27,18 @@ export function validateLoginData(loginData) {
   return null;
 }
 
+export function verifyTokenEmailData(resetTokenEmailData) {
+  const validation = Joi.object({
+    email: Joi.string().email().required(),
+    resetToken: Joi.string().required(),
+  }).validate(resetTokenEmailData, { abortEarly: false });
+
+  if (validation?.error?.details) {
+    return validation.error.details.map(x => x.message);
+  }
+  return null;
+}
+
 export function validateRequestResetPasswordData(requestResetData) {
   const validation = Joi.object({
     email: Joi.string().email().required(),
@@ -40,8 +52,9 @@ export function validateRequestResetPasswordData(requestResetData) {
 
 export function validateResetPasswordData(resetData) {
   const validation = Joi.object({
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
-    id: Joi.string().required(),
+    resetToken: Joi.string().required(),
   }).validate(resetData, { abortEarly: false });
 
   if (validation?.error?.details) {

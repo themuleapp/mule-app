@@ -70,18 +70,6 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
-userSchema.methods.createResetId = async function () {
-  const id = uuidV4();
-  this.resetId = id;
-  this.resetIdExpiration = Date.now() + 86400000;
-  await this.save();
-  return id;
-};
-
-userSchema.methods.hasResetToken = function () {
-  return this.resetId;
-};
-
 userSchema.statics.updateData = function (updateData, user) {
   return this.update({ _id: user._id }, updateData);
 };
@@ -110,24 +98,41 @@ userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
 };
 
-userSchema.statics.resetPasswordWithId = async function (id, password) {
-  const user = await this.findOne({ resetId: id });
-  if (!user) {
-    return null;
-  }
+userSchema.methods.createResetId = async function () {
+  const id = uuidV4();
+  this.resetId = id;
 
-  if (user.resetIdExpiration < Date.now()) {
+  this.resetIdExpiration =
+    Date.now() + parseInt(process.env.RESET_TOKEN_VALIDITY, 10);
+  await this.save();
+  return id;
+};
+
+userSchema.methods.hasResetToken = function () {
+  return this.resetId;
+};
+
+userSchema.methods.isResetTokenExpired = async function () {
+  console.log(
+    `token exp: ${this.resetIdExpiration.getTime()} now: ${Date.now()}`
+  );
+  if (this.resetIdExpiration.getTime() < Date.now()) {
+    console.log('Here what');
     // Remove the reset id before
-    user.resetId = null;
-    user.resetIdExpiration = null;
-    await user.save();
-    return false;
+    this.resetId = null;
+    this.resetIdExpiration = null;
+    await this.save();
+    return true;
   }
+  return false;
+};
+
+userSchema.methods.resetPassword = async function (password) {
   // Remove the reset id cause now it's used up
-  user.resetId = null;
-  user.resetIdExpiration = null;
-  user.password = password;
-  await user.save();
+  this.resetId = null;
+  this.resetIdExpiration = null;
+  this.password = password;
+  await this.save();
   return true;
 };
 
