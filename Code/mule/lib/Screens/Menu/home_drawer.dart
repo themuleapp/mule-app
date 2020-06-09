@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/Screens/Legal/legal.dart';
+import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
@@ -59,11 +61,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
         index: DrawerIndex.Chat,
         labelName: 'Chat',
         icon: Icon(Icons.chat),
-      ),
-      DrawerList(
-        index: DrawerIndex.Profile,
-        labelName: 'Profile',
-        icon: Icon(Icons.person),
       ),
       DrawerList(
         index: DrawerIndex.Settings,
@@ -126,11 +123,17 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     blurRadius: 8),
                               ],
                             ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset(
-                                  'assets/images/profile_photo_nick_miller.jpg'),
+                            child: GestureDetector(
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(60.0)),
+                                child: Image.asset(
+                                    'assets/images/profile_photo_nick_miller.jpg'),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Profile()));
+                              },
                             ),
                           ),
                         ),
@@ -140,14 +143,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15, left: 4),
                     child: Observer(
-                      builder: (_) => Text(
-                        GetIt.I.get<UserInfoStore>().fullName,
-                        style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          color: AppTheme.darkGrey,
-                          fontSize: 25,
+                      builder: (_) => GestureDetector(
+                        child: Text(
+                          GetIt.I.get<UserInfoStore>().fullName,
+                          style: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.darkGrey,
+                            fontSize: 25,
+                          ),
                         ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Profile()));
+                        },
                       ),
                     ),
                   ),
@@ -191,6 +200,37 @@ class _HomeDrawerState extends State<HomeDrawer> {
               itemBuilder: (BuildContext context, int index) {
                 return inkwell(drawerList[index]);
               },
+            ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.only(top: 10.0, left: 15, right: 15, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  child: Text(
+                    "Legal",
+                    style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.lightGrey,
+                        fontSize: 14),
+                  ),
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Legal()));
+                  },
+                ),
+                Text(
+                  "v1.0.0",
+                  style: TextStyle(
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.lightGrey,
+                      fontSize: 14),
+                ),
+              ],
             ),
           ),
           Divider(
@@ -338,7 +378,6 @@ enum DrawerIndex {
   Places,
   Orders,
   Chat,
-  Profile,
   Settings,
   Help,
   Feedback,

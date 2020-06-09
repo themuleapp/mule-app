@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Login/ForgotPassword/otp_verification.dart';
 import 'package:mule/Widgets/alert_widget.dart';
+import 'package:mule/Screens/Login/ForgotPassword/email_otp.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
@@ -41,10 +41,10 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
@@ -79,12 +79,11 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(

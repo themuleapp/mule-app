@@ -4,7 +4,6 @@ import 'package:mule/Screens/Help/help_screen.dart';
 import 'package:mule/Screens/Home/home_screen.dart';
 import 'package:mule/Screens/Menu/drawer_user_controller.dart';
 import 'package:mule/Screens/Menu/home_drawer.dart';
-import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/Screens/Settings/settings.dart';
 import 'package:mule/config/app_theme.dart';
 
@@ -54,10 +53,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       if (drawerIndex == DrawerIndex.HOME) {
         setState(() {
           screenView = const MyHomePage();
-        });
-      } else if (drawerIndex == DrawerIndex.Profile) {
-        setState(() {
-          screenView = Profile();
         });
       } else if (drawerIndex == DrawerIndex.Settings) {
         setState(() {

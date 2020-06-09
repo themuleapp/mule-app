@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mule/Screens/homepage.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
+import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
@@ -18,7 +19,7 @@ class ResetPassword extends StatefulWidget {
   _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ResetPasswordState extends State<ResetPassword> with InputValidation {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _firstPassController = TextEditingController();
   final TextEditingController _secondPassController = TextEditingController();
@@ -67,9 +68,9 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
@@ -83,7 +84,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -120,9 +121,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       controller: _firstPassController,
                       hintText: "Password",
                       obscureText: true,
-                      //controller: passwordController,
-                      validator: (val) =>
-                          val.length < 4 ? "Password too short" : null,
+                      validator: validateNewPassword,
                     ),
                     SizedBox(
                       height: 20.0,
@@ -131,7 +130,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                       controller: _secondPassController,
                       hintText: "Confirm Password",
                       obscureText: true,
-                      //controller: passwordController,
                     ),
                     SizedBox(
                       height: 30.0,

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/Login/login_screen.dart';
+import 'package:mule/Screens/Signup/phone_otp.dart';
 import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
@@ -9,7 +10,6 @@ import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/res/loginRes/auth_res.dart';
-import 'package:mule/navigation_home_screen.dart';
 
 import '../../stores/global/user_info_store.dart';
 
@@ -69,8 +69,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       final AuthRes authRes = AuthRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(authRes);
       // user is signed up successfully
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);
@@ -120,12 +120,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   "Sign Up",
                   style: TextStyle(

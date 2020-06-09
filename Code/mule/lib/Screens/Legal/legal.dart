@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/config/app_theme.dart';
 
-class Settings extends StatelessWidget {
+class Legal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,6 +11,15 @@ class Settings extends StatelessWidget {
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+          },
+          color: AppTheme.lightBlue,
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -19,7 +27,7 @@ class Settings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              "Settings",
+              "Legal",
               style: TextStyle(
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w700,
@@ -35,9 +43,9 @@ class Settings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.account_circle),
+              leading: Icon(Icons.security),
               title: Text(
-                "Profile",
+                "Privacy Policy",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
@@ -46,19 +54,19 @@ class Settings extends StatelessWidget {
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
-              onTap: () {
+              /*onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Profile()));
-              },
+                    MaterialPageRoute(builder: (context) => PrivacyPolicy()));
+              },*/
             ),
             Divider(),
             ListTile(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.location_on),
+              leading: Icon(Icons.verified_user),
               title: Text(
-                "Location",
+                "Terms of Service",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
@@ -67,15 +75,19 @@ class Settings extends StatelessWidget {
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
+              /*onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TermsOfService()));
+              },*/
             ),
             Divider(),
             ListTile(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.notifications),
+              leading: Icon(Icons.insert_drive_file),
               title: Text(
-                "Notifications",
+                "Licenses",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
@@ -84,6 +96,10 @@ class Settings extends StatelessWidget {
                 ),
               ),
               trailing: Icon(Icons.chevron_right),
+              /*onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Licenses()));
+              },*/
             ),
             Divider(),
             SizedBox(

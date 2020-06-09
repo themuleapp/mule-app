@@ -52,9 +52,9 @@ class _OtpVerificationState extends State<OtpVerification>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: AppTheme.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
@@ -68,7 +68,7 @@ class _OtpVerificationState extends State<OtpVerification>
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -76,7 +76,6 @@ class _OtpVerificationState extends State<OtpVerification>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
                       "Verify Email",
                       style: TextStyle(
@@ -86,7 +85,7 @@ class _OtpVerificationState extends State<OtpVerification>
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
                   Text(
                     "Check your email, we've sent you an OTP",
@@ -108,13 +107,12 @@ class _OtpVerificationState extends State<OtpVerification>
                   SizedBox(
                     height: 20.0,
                   ),
-                  Wrap(
+                  Row(
                     children: <Widget>[
                       Text(
                         "Didn't receive a code?",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontWeight: FontWeight.w600, fontSize: 15),
                       ),
                       SizedBox(
                         width: 10.0,
@@ -123,7 +121,8 @@ class _OtpVerificationState extends State<OtpVerification>
                         child: Text(
                           "Resend Code",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
                             color: AppTheme.lightBlue,
                           ),
                         ),
