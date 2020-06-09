@@ -26,7 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
     }
     final String email = _emailController.text.trim();
     final ForgotPasswordReq forgotPassword = ForgotPasswordReq(email: email);
-    Response res = await httpClient.handleForgotPassword(forgotPassword);
+    Response res = await httpClient.handleRequestOtp(forgotPassword);
     if (res.statusCode == 200) {
       print(res.data);
       Navigator.of(context).push(MaterialPageRoute(

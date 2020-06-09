@@ -1,8 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/Screens/Login/ForgotPassword/reset_password.dart';
+import 'package:mule/Widgets/alert_widget.dart';
 import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
+import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
+import 'package:mule/models/res/errorRes/error_res.dart';
 
 class OtpVerification extends StatefulWidget {
   final String email;
@@ -16,15 +21,32 @@ class OtpVerification extends StatefulWidget {
 class _OtpVerificationState extends State<OtpVerification>
     with InputValidation {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _otpController = TextEditingController();
 
-  _handleVerify() {
+  _handleVerify() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ResetPassword()));
+
+    final String otp = _otpController.text;
+    final Response res = await httpClient.handleVerifyTokenAndEmail(
+        VerifyTokenAndEmailReq(email: widget.email, token: otp));
+    if (res.statusCode == 200) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ResetPassword(
+            email: widget.email,
+            otp: otp,
+          ),
+        ),
+      );
+    } else {
+      print('Error!');
+      print(res.data);
+      ErrorRes errRes = ErrorRes.fromJson(res.data);
+      createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
+      _otpController.clear();
+    }
   }
 
   @override
