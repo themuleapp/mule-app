@@ -110,9 +110,9 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                     Text(
                       "Enter a new password",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
-                        color: AppTheme.darkGrey,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500,
+                          color: AppTheme.darkGrey
                       ),
                     ),
                     SizedBox(

@@ -113,10 +113,10 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Don't worry, enter your email to receive an OTP!",
+            "Enter your email to receive a code",
             style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+                fontSize: 17.0,
+                fontWeight: FontWeight.w500,
                 color: AppTheme.darkGrey),
           ),
           SizedBox(

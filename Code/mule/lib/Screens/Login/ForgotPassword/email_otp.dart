@@ -88,10 +88,10 @@ class _OtpVerificationState extends State<OtpVerification>
                     height: 30.0,
                   ),
                   Text(
-                    "Check your email, we've sent you an OTP",
+                    "Please enter the code we have emailed you",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500,
                         color: AppTheme.darkGrey),
                   ),
                   Form(
