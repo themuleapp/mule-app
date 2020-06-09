@@ -12,7 +12,6 @@ import {
 } from './authValidators';
 import { createTransporter, sendResetId } from '../../util/emailer';
 import authMiddleware from '../../middleware/authMiddleware';
-import tokenBlacklist from '../../models/tokenBlacklist';
 import successResponse from '../../util/successResponse';
 
 const authRouter = Router();

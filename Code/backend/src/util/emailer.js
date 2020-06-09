@@ -2,15 +2,15 @@ import nodemailer from 'nodemailer';
 
 export function createTransporter() {
   return nodemailer.createTransport({
-    service: 'gmail',
-    secure: false,
-    port: 25,
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     tls: {
       rejectUnauthorized: false,
     },
     auth: {
-      user: process.env.SENDER_EMAIL,
-      pass: process.env.SENDER_PASS,
+      user: process.env.SENDER_EMAIL, // Your email id
+      pass: process.env.SENDER_PASS, // Your password
     },
   });
 }
