@@ -161,7 +161,7 @@ authRouter.post('/verify-reset-token-email', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Reset id invalid! Please generate a new one'],
+          ['Reset token invalid! Please generate a new one'],
           401
         )
       );
@@ -214,7 +214,7 @@ authRouter.post('/reset', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Reset id invalid! Please generate a new one'],
+          ['Reset token invalid! Please generate a new one'],
           401
         )
       );
