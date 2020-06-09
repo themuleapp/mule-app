@@ -71,15 +71,13 @@ class Profile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Observer(
-                    builder: (_) => GestureDetector(
-                      child: Text(
-                        GetIt.I.get<UserInfoStore>().fullName,
-                        style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.darkGrey,
-                          fontSize: 25,
-                        ),
+                    builder: (_) => Text(
+                      GetIt.I.get<UserInfoStore>().fullName,
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.darkGrey,
+                        fontSize: 25,
                       ),
                     ),
                   ),
