@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class VerifyTokenAndEmailReq {
   final String email;
-  final String token;
+  final String resetToken;
 
   VerifyTokenAndEmailReq({
     @required this.email,
-    @required this.token,
+    @required this.resetToken,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "email": email,
-      "token": token,
+      "resetToken": resetToken,
     };
   }
 }

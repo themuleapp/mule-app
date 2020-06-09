@@ -30,7 +30,7 @@ class _OtpVerificationState extends State<OtpVerification>
 
     final String otp = _otpController.text;
     final Response res = await httpClient.handleVerifyTokenAndEmail(
-        VerifyTokenAndEmailReq(email: widget.email, token: otp));
+        VerifyTokenAndEmailReq(email: widget.email, resetToken: otp));
     if (res.statusCode == 200) {
       Navigator.of(context).push(
         MaterialPageRoute(

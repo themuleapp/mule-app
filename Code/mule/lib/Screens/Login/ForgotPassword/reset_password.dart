@@ -43,7 +43,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     VerifyPasswordReq verifyPasswordReq = VerifyPasswordReq(
       email: widget.email,
-      token: widget.otp,
+      resetToken: widget.otp,
       password: password1,
     );
     final Response res =
