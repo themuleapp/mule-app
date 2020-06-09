@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/Screens/Profile/Account/change_email.dart';
 import 'package:mule/Screens/Profile/Account/change_password.dart';
 import 'package:mule/Screens/Profile/Account/change_phone.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -66,14 +69,18 @@ class Profile extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    "Nick Miller",
-                    style: TextStyle(
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.darkGrey,
-                      fontSize: 25,
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Observer(
+                    builder: (_) => GestureDetector(
+                      child: Text(
+                        GetIt.I.get<UserInfoStore>().fullName,
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.darkGrey,
+                          fontSize: 25,
+                        ),
+                      ),
                     ),
                   ),
                 ),
