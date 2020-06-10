@@ -57,14 +57,14 @@ class CustomTextFormField extends StatelessWidget {
                   horizontal: 15.0),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.grey[400],
+                  color: AppTheme.lightBlue,
                 ),
               ),
               hintText: hintText,
               hintStyle: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 fontSize: 16.0,
-                color: Colors.grey[400],
+                color: AppTheme.lightGrey.withOpacity(0.5),
               ),
             ),
           ),
