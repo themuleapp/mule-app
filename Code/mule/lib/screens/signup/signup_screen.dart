@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Signup/phone_otp.dart';
-import 'package:mule/Widgets/alert_widget.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
+import 'package:mule/screens/login/login_screen.dart';
+import 'package:mule/screens/signup/phone_otp.dart';
+import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
 
 import '../../stores/global/user_info_store.dart';
 

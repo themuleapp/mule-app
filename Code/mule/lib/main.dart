@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/navigation_home_screen.dart';
+import 'package:mule/screens/homepage.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 void main() async {

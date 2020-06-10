@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mule/Screens/Login/login_screen.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:mule/Screens/Signup/signup_screen.dart';
-import 'package:mule/Widgets/delayed_animation.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/login/login_screen.dart';
+import 'package:mule/screens/signup/signup_screen.dart';
+import 'package:mule/widgets/delayed_animation.dart';
 
 class HomePage extends StatefulWidget {
   @override

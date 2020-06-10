@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/Screens/Legal/legal.dart';
-import 'package:mule/Screens/Profile/profile.dart';
-import 'package:mule/Screens/homepage.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
+import 'package:mule/screens/homepage.dart';
+import 'package:mule/screens/legal/legal.dart';
+import 'package:mule/screens/profile/profile.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class HomeDrawer extends StatefulWidget {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Login/ForgotPassword/email_otp.dart';
-import 'package:mule/Screens/Signup/phone_otp.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
 
 class ChangeEmail extends StatelessWidget {
   @override

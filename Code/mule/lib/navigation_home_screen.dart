@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Feedback/feedback_screen.dart';
-import 'package:mule/Screens/Help/help_screen.dart';
-import 'package:mule/Screens/Home/home_screen.dart';
-import 'package:mule/Screens/Menu/drawer_user_controller.dart';
-import 'package:mule/Screens/Menu/home_drawer.dart';
-import 'package:mule/Screens/Settings/settings.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/feedback/feedback_screen.dart';
+import 'package:mule/screens/help/help_screen.dart';
+import 'package:mule/screens/home/home_screen.dart';
+import 'package:mule/screens/menu/drawer_user_controller.dart';
+import 'package:mule/screens/menu/home_drawer.dart';
+import 'package:mule/screens/settings/settings.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override

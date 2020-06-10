@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/Screens/Profile/profile.dart';
-import 'package:mule/Widgets/alert_widget.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
+import 'package:mule/screens/profile/profile.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
 
 class ChangePassword extends StatefulWidget {
   @override

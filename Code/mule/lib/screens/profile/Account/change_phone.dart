@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Login/login_screen.dart';
-import 'package:mule/Screens/Login/ForgotPassword/email_otp.dart';
-import 'package:mule/Screens/Signup/phone_otp.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/signup/phone_otp.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
 
 class ChangePhone extends StatelessWidget {
   @override
@@ -97,8 +95,8 @@ class ChangePhone extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => PhoneOTP()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
             },
           ),
         )

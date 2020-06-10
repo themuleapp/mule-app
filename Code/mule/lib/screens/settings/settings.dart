@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Screens/Profile/profile.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/profile/profile.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -47,8 +47,8 @@ class Settings extends StatelessWidget {
               ),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Profile()));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Profile()));
               },
             ),
             Divider(),

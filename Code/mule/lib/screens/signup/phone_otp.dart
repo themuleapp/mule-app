@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/navigation_home_screen.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
 
 class PhoneOTP extends StatelessWidget {
   @override
@@ -36,8 +36,7 @@ class PhoneOTP extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.w700,
-                          color: AppTheme.darkGrey
-                      ),
+                          color: AppTheme.darkGrey),
                     ),
                   ),
                   SizedBox(
@@ -45,12 +44,10 @@ class PhoneOTP extends StatelessWidget {
                   ),
                   Text(
                     "Please enter the code we've messaged you",
-                    style:
-                    TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 17.0,
-                        color: AppTheme.darkGrey
-                    ),
+                        color: AppTheme.darkGrey),
                   ),
                   Row(
                     children: <Widget>[
@@ -89,9 +86,7 @@ class PhoneOTP extends StatelessWidget {
                       Text(
                         "Didn't receive a code?",
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15
-                        ),
+                            fontWeight: FontWeight.w600, fontSize: 15),
                       ),
                       SizedBox(
                         width: 10.0,
@@ -122,8 +117,8 @@ class PhoneOTP extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => NavigationHomeScreen()));
                       },
                     ),
                   )

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/Screens/Profile/Account/change_email.dart';
-import 'package:mule/Screens/Profile/Account/change_password.dart';
-import 'package:mule/Screens/Profile/Account/change_phone.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/profile/Account/change_email.dart';
+import 'package:mule/screens/profile/Account/change_password.dart';
+import 'package:mule/screens/profile/Account/change_phone.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class Profile extends StatelessWidget {
@@ -55,17 +55,16 @@ class Profile extends StatelessWidget {
                           'assets/images/profile_photo_nick_miller.jpg'),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 60.0, left: 70.0),
-                      child: CircleAvatar(
-                        backgroundColor: AppTheme.lightBlue,
-                        radius: 20.0,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: AppTheme.white,
-                          size: 22,
-                        ),
-                      )
-                    ),
+                        padding: EdgeInsets.only(top: 60.0, left: 70.0),
+                        child: CircleAvatar(
+                          backgroundColor: AppTheme.lightBlue,
+                          radius: 20.0,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: AppTheme.white,
+                            size: 22,
+                          ),
+                        )),
                   ],
                 ),
                 Padding(
@@ -90,7 +89,7 @@ class Profile extends StatelessWidget {
                       color: AppTheme.lightGrey,
                       size: 20,
                     ),
-                    onTap: (){},
+                    onTap: () {},
                   ),
                 ),
               ],
@@ -119,11 +118,7 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0),
-                  child: Icon(
-                      Icons.mail
-                  )
-              ),
+                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.mail)),
               title: Text(
                 "Email",
                 style: TextStyle(
@@ -156,11 +151,7 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0),
-                  child: Icon(
-                      Icons.phone
-                  )
-              ),
+                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.phone)),
               title: Text(
                 "Phone",
                 style: TextStyle(
