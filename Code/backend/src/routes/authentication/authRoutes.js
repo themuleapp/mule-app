@@ -180,7 +180,7 @@ authRouter.post('/verify-reset-token-email', async (req, res) => {
   return res.status(200).send(successResponse());
 });
 
-authRouter.post('/reset', async (req, res) => {
+authRouter.post('/reset-forgotten-password', async (req, res) => {
   const validation = validateResetPasswordData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
