@@ -75,6 +75,13 @@ class HttpClient {
     return res;
   }
 
+  Future<Response> handleReRequestOtp(
+      ForgotPasswordReq forgotPasswordReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/resend-reset-token', forgotPasswordReq.toMap());
+    return res;
+  }
+
   Future<Response> handleVerifyTokenAndEmail(
       VerifyTokenAndEmailReq verifyTokenAndEmailReq) async {
     final Response res = await _makePostRequest(
@@ -85,7 +92,7 @@ class HttpClient {
 
   handleResetPassword(VerifyPasswordReq verifyPasswordReq) async {
     final Response res = await _makePostRequest(
-        '/authentication/reset', verifyPasswordReq.toMap());
+        '/authentication/reset-forgotten-password', verifyPasswordReq.toMap());
     return res;
   }
 }

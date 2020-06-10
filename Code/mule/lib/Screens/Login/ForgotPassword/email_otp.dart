@@ -6,6 +6,7 @@ import 'package:mule/Widgets/custom_text_form_field.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
+import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
 
@@ -22,6 +23,12 @@ class _OtpVerificationState extends State<OtpVerification>
     with InputValidation {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _otpController = TextEditingController();
+
+  _handleResendResetCode() async {
+    await httpClient.handleReRequestOtp(ForgotPasswordReq(email: widget.email));
+    createDialogWidget(
+        context, 'Another reset token has been sent your way!', '');
+  }
 
   _handleVerify() async {
     if (!_formKey.currentState.validate()) {
@@ -126,7 +133,7 @@ class _OtpVerificationState extends State<OtpVerification>
                             color: AppTheme.lightBlue,
                           ),
                         ),
-                        onTap: () {},
+                        onTap: this._handleResendResetCode,
                       ),
                     ],
                   ),
