@@ -1,22 +1,22 @@
-import { Router } from 'express';
-import User from '../../models/user';
-import TokenBlacklist from '../../models/tokenBlacklist';
-import asyncErrorCatcher from '../../util/asyncErrorCatcher';
-import composeErrorResponse from '../../util/composeErrorResponse';
+import { Router } from "express";
+import User from "../../models/user";
+import TokenBlacklist from "../../models/tokenBlacklist";
+import asyncErrorCatcher from "../../util/asyncErrorCatcher";
+import composeErrorResponse from "../../util/composeErrorResponse";
 import {
   validateSignupDate,
   validateLoginData,
   validateRequestResetPasswordData,
   validateResetPasswordData,
   verifyTokenEmailData,
-} from './authValidators';
-import { createTransporter, sendResetId } from '../../util/emailer';
-import authMiddleware from '../../middleware/authMiddleware';
-import successResponse from '../../util/successResponse';
+} from "./authValidators";
+import { createTransporter, sendResetId } from "../../util/emailer";
+import authMiddleware from "../../middleware/authMiddleware";
+import successResponse from "../../util/successResponse";
 
 const authRouter = Router();
 // TODO add routes in here
-authRouter.post('/signup', async (req, res) => {
+authRouter.post("/signup", async (req, res) => {
   try {
     const validation = validateSignupDate(req.body);
     if (validation) {
@@ -31,7 +31,7 @@ authRouter.post('/signup', async (req, res) => {
       return res
         .status(400)
         .send(
-          composeErrorResponse(['A user with that email already exists'], 400)
+          composeErrorResponse(["A user with that email already exists"], 400)
         );
     }
 
@@ -52,7 +52,7 @@ authRouter.post('/signup', async (req, res) => {
 });
 
 authRouter.post(
-  '/login',
+  "/login",
   asyncErrorCatcher(async (req, res) => {
     const validation = validateLoginData(req.body);
     if (validation) {
@@ -67,7 +67,7 @@ authRouter.post(
           .status(401)
           .send(
             composeErrorResponse(
-              ['Login failed! Invalid login credentials'],
+              ["Login failed! Invalid login credentials"],
               401
             )
           );
@@ -88,7 +88,7 @@ authRouter.post(
 );
 
 // Using auth middleware here
-authRouter.delete('/logout', authMiddleware, async (req, res) => {
+authRouter.delete("/logout", authMiddleware, async (req, res) => {
   const token = req.token;
   const blackListedToken = new TokenBlacklist({ token });
   await blackListedToken.save();
@@ -96,7 +96,7 @@ authRouter.delete('/logout', authMiddleware, async (req, res) => {
 });
 
 // TODO detect if someone tries this one too many times
-authRouter.post('/request-reset', async (req, res) => {
+authRouter.post("/request-reset", async (req, res) => {
   const validation = validateRequestResetPasswordData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
@@ -105,7 +105,7 @@ authRouter.post('/request-reset', async (req, res) => {
   if (!user) {
     return res
       .status(400)
-      .send(composeErrorResponse(['No user exists with the given email'], 400));
+      .send(composeErrorResponse(["No user exists with the given email"], 400));
   }
 
   // Generate id and set it on the user document
@@ -118,7 +118,7 @@ authRouter.post('/request-reset', async (req, res) => {
   res.status(200).send({ id });
 });
 
-authRouter.post('/resend-reset-token', async (req, res) => {
+authRouter.post("/resend-reset-token", async (req, res) => {
   const validation = validateRequestResetPasswordData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
@@ -132,7 +132,7 @@ authRouter.post('/resend-reset-token', async (req, res) => {
       .status(400)
       .send(
         composeErrorResponse(
-          ['You do not have a reset token to start with!'],
+          ["You do not have a reset token to start with!"],
           400
         )
       );
@@ -146,7 +146,7 @@ authRouter.post('/resend-reset-token', async (req, res) => {
 });
 
 // verify-reset-token-email
-authRouter.post('/verify-reset-token-email', async (req, res) => {
+authRouter.post("/verify-reset-token-email", async (req, res) => {
   const validation = verifyTokenEmailData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
@@ -160,7 +160,7 @@ authRouter.post('/verify-reset-token-email', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Reset token invalid! Please generate a new one'],
+          ["Reset token invalid! Please generate a new one"],
           401
         )
       );
@@ -171,7 +171,7 @@ authRouter.post('/verify-reset-token-email', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Token is expired! Please generate a new one'],
+          ["Token is expired! Please generate a new one"],
           401
         )
       );
@@ -180,7 +180,7 @@ authRouter.post('/verify-reset-token-email', async (req, res) => {
   return res.status(200).send(successResponse());
 });
 
-authRouter.post('/reset', async (req, res) => {
+authRouter.post("/reset-forgotten-password", async (req, res) => {
   const validation = validateResetPasswordData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
@@ -193,7 +193,7 @@ authRouter.post('/reset', async (req, res) => {
   if (!user) {
     return res
       .status(401)
-      .send(composeErrorResponse(['No user was found with that email'], 401));
+      .send(composeErrorResponse(["No user was found with that email"], 401));
   }
 
   // TODO check token is valid
@@ -202,7 +202,7 @@ authRouter.post('/reset', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Reset token invalid! Please generate a new one'],
+          ["Reset token invalid! Please generate a new one"],
           401
         )
       );
@@ -213,7 +213,7 @@ authRouter.post('/reset', async (req, res) => {
       .status(401)
       .send(
         composeErrorResponse(
-          ['Reset token invalid! Please generate a new one'],
+          ["Reset token invalid! Please generate a new one"],
           401
         )
       );
