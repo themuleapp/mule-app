@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:mule/models/res/loginRes/auth_res.dart';
+import 'package:mule/models/res/profileRes/profile_res.dart';
 
 part 'user_info_store.g.dart';
 
@@ -35,7 +35,7 @@ abstract class _UserInfoStore with Store {
   }
 
   @action
-  void updateEverythingFromrRes(AuthRes res) {
+  void updateEverythingFromrRes(ProfileRes res) {
     this._firstName = res.firstName;
     this._lastName = res.lastName;
     this._email = res.email;

@@ -9,7 +9,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/login/login_data.dart';
-import 'package:mule/models/res/loginRes/auth_res.dart';
+import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/navigation_home_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     final success = res.statusCode;
     if (success == 200) {
       // Update data in the store!
-      final AuthRes resData = AuthRes.fromJson(res.data);
+      final ProfileRes resData = ProfileRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(resData);
       // user is logged in successfully
       Navigator.of(context).push(

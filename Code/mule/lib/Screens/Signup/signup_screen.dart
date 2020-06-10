@@ -9,7 +9,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
-import 'package:mule/models/res/loginRes/auth_res.dart';
+import 'package:mule/models/res/profileRes/profile_res.dart';
 
 import '../../stores/global/user_info_store.dart';
 
@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     final Response res = await httpClient.handleSignup(signupData);
     final success = res.statusCode;
     if (success == 201) {
-      final AuthRes authRes = AuthRes.fromJson(res.data);
+      final ProfileRes authRes = ProfileRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(authRes);
       // user is signed up successfully
       Navigator.of(context)

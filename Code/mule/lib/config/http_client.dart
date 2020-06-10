@@ -25,6 +25,12 @@ class HttpClient {
     return await _dio.get(path);
   }
 
+  Future<Response> _makeAuthenticatedGetRequest(String path) async {
+    final String token = await Config.getToken();
+    return await _dio.get(path,
+        options: Options(headers: {'Authorization': token}));
+  }
+
   Future<Response> _makeAuthenticatedPostRequest(
       String path, Map<String, dynamic> data) async {
     final String token = await Config.getToken();
@@ -106,17 +112,24 @@ class HttpClient {
     return res;
   }
 
-  handleResetPassword(VerifyPasswordReq verifyPasswordReq) async {
+  Future<Response> handleResetPassword(
+      VerifyPasswordReq verifyPasswordReq) async {
     final Response res = await _makePostRequest(
         '/authentication/reset-forgotten-password', verifyPasswordReq.toMap());
     return res;
   }
+
+  // Authenticated requests
 
   Future<Response> handleChangePassword(
       ChangePasswordReq changePasswordReq) async {
     final Response res = await _makeAuthenticatedPostRequest(
         '/authentication/change-password', changePasswordReq.toMap());
     return res;
+  }
+
+  Future<Response> handleGetProfileData() async {
+    return _makeAuthenticatedGetRequest('/profile');
   }
 }
 
