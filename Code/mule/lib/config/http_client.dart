@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
+import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
@@ -22,6 +23,21 @@ class HttpClient {
 
   Future<Response> _makeGetRequest(String path) async {
     return await _dio.get(path);
+  }
+
+  Future<Response> _makeAuthenticatedPostRequest(
+      String path, Map<String, dynamic> data) async {
+    final String token = await Config.getToken();
+    return await _dio.post(
+      path,
+      data: data,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      ),
+    );
   }
 
   Future<Response> _makePostRequest(
@@ -75,6 +91,13 @@ class HttpClient {
     return res;
   }
 
+  Future<Response> handleReRequestOtp(
+      ForgotPasswordReq forgotPasswordReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/resend-reset-token', forgotPasswordReq.toMap());
+    return res;
+  }
+
   Future<Response> handleVerifyTokenAndEmail(
       VerifyTokenAndEmailReq verifyTokenAndEmailReq) async {
     final Response res = await _makePostRequest(
@@ -85,7 +108,14 @@ class HttpClient {
 
   handleResetPassword(VerifyPasswordReq verifyPasswordReq) async {
     final Response res = await _makePostRequest(
-        '/authentication/reset', verifyPasswordReq.toMap());
+        '/authentication/reset-forgotten-password', verifyPasswordReq.toMap());
+    return res;
+  }
+
+  Future<Response> handleChangePassword(
+      ChangePasswordReq changePasswordReq) async {
+    final Response res = await _makeAuthenticatedPostRequest(
+        '/authentication/change-password', changePasswordReq.toMap());
     return res;
   }
 }
