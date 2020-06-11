@@ -5,6 +5,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/profile/Account/change_email.dart';
 import 'package:mule/screens/profile/Account/change_password.dart';
 import 'package:mule/screens/profile/Account/change_phone.dart';
+import 'package:mule/screens/profile/Account/delete_account.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class Profile extends StatelessWidget {
@@ -259,6 +260,10 @@ class Profile extends StatelessWidget {
                   Icons.chevron_right,
                   color: Colors.red
               ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => DeleteAccount()));
+              },
             ),
             Divider(),
             SizedBox(
