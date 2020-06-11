@@ -47,13 +47,13 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
         actions: <Widget>[
           GestureDetector(

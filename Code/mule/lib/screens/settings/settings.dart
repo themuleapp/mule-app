@@ -35,7 +35,10 @@ class Settings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.account_circle),
+              leading: Icon(
+                  Icons.account_circle,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Profile",
                 style: TextStyle(
@@ -45,7 +48,10 @@ class Settings extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => Profile()));
@@ -56,7 +62,10 @@ class Settings extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.location_on),
+              leading: Icon(
+                  Icons.location_on,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Location",
                 style: TextStyle(
@@ -66,14 +75,20 @@ class Settings extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
             ),
             Divider(),
             ListTile(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.notifications),
+              leading: Icon(
+                  Icons.notifications,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Notifications",
                 style: TextStyle(
@@ -83,7 +98,10 @@ class Settings extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
             ),
             Divider(),
             SizedBox(

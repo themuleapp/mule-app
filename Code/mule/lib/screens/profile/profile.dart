@@ -18,13 +18,13 @@ class Profile extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
@@ -86,7 +86,7 @@ class Profile extends StatelessWidget {
                   child: GestureDetector(
                     child: Icon(
                       Icons.edit,
-                      color: AppTheme.lightGrey,
+                      color: AppTheme.secondaryBlue,
                       size: 20,
                     ),
                     onTap: () {},
@@ -118,7 +118,12 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.mail)),
+                  padding: EdgeInsets.only(top: 7.0),
+                  child: Icon(
+                      Icons.mail,
+                      color: AppTheme.secondaryBlue
+                  ),
+              ),
               title: Text(
                 "Email",
                 style: TextStyle(
@@ -139,7 +144,10 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangeEmail()));
@@ -151,7 +159,12 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.phone)),
+                  padding: EdgeInsets.only(top: 7.0),
+                  child: Icon(
+                      Icons.phone,
+                      color: AppTheme.secondaryBlue
+                  )
+              ),
               title: Text(
                 "Phone",
                 style: TextStyle(
@@ -172,7 +185,10 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePhone()));
@@ -199,7 +215,10 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.lock),
+              leading: Icon(
+                  Icons.lock,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Change Password",
                 style: TextStyle(
@@ -209,7 +228,10 @@ class Profile extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePassword()));
@@ -220,17 +242,23 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.delete_forever),
+              leading: Icon(
+                  Icons.delete_forever,
+                  color: Colors.red
+              ),
               title: Text(
                 "Delete Account",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
-                  color: AppTheme.darkGrey,
+                  color: Colors.red,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: Colors.red
+              ),
             ),
             Divider(),
             SizedBox(

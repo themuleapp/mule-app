@@ -72,13 +72,13 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
@@ -98,7 +98,8 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                         style: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
-                            color: AppTheme.darkGrey),
+                            color: AppTheme.darkGrey
+                        ),
                       ),
                     ),
                     SizedBox(

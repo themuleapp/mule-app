@@ -13,13 +13,13 @@ class ChangeEmail extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: SingleChildScrollView(
@@ -34,7 +34,8 @@ class ChangeEmail extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey),
+                      color: AppTheme.darkGrey
+                  ),
                 ),
               ),
               SizedBox(
@@ -60,7 +61,8 @@ class ChangeEmail extends StatelessWidget {
           style: TextStyle(
               fontSize: 17.0,
               fontWeight: FontWeight.w500,
-              color: AppTheme.darkGrey),
+              color: AppTheme.darkGrey
+          ),
         ),
         SizedBox(
           height: 20.0,
@@ -78,7 +80,10 @@ class ChangeEmail extends StatelessWidget {
             color: AppTheme.lightBlue,
             child: Text(
               "SUBMIT",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0
+              ),
             ),
             onPressed: () {},
           ),
