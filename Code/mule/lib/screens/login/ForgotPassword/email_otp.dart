@@ -48,8 +48,6 @@ class _OtpVerificationState extends State<OtpVerification>
         ),
       );
     } else {
-      print('Error!');
-      print(res.data);
       ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
       _otpController.clear();

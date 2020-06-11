@@ -57,8 +57,6 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
         ),
       );
     } else {
-      print('Error!');
-      print(res.data);
       ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
       _clearPasswords();

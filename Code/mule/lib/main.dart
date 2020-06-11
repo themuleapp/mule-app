@@ -17,7 +17,6 @@ void main() async {
 class App extends StatelessWidget {
   final Future<bool> _isAuthenticatedUser =
       Config.getToken().then((value) async {
-    print('Loading $value');
     if (value != null && value.isNotEmpty) {
       final Response res = await httpClient.handleGetProfileData();
       if (res.statusCode == 200) {
@@ -38,11 +37,22 @@ class App extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data) {
             return NavigationHomeScreen();
+          } else if (!snapshot.hasData) {
+            return WhiteWaitingPage();
           }
-          print('Snapshot data ${snapshot.data}');
-          print('Snapshot error ${snapshot.error}');
           return HomePage();
         },
+      ),
+    );
+  }
+}
+
+class WhiteWaitingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
       ),
     );
   }
