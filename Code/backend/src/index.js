@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime.js'; // To support async await syntax
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
@@ -31,6 +32,8 @@ app.use(morgan('combined'));
 app.use(express.json());
 
 // Register routes
+
+app.get('/test-working', (req, res) => res.send({ status: 'Working' }));
 
 app.get('/api/test', (req, res) => res.send({ status: 'working' }));
 app.use('/api/authentication', authRoutes);

@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 
 export function createTransporter() {
   return nodemailer.createTransport({
-    service: 'gmail',
-    secure: false,
-    port: 25,
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     tls: {
       rejectUnauthorized: false,
     },

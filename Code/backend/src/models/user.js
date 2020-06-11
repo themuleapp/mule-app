@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { v4 as uuidV4 } from 'uuid';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { v4 as uuidV4 } from "uuid";
 const userSchema = mongoose.Schema({
   firstName: {
     type: String,
@@ -47,10 +47,10 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   // Hash the password before saving the user model
   const user = this;
-  if (user.isModified('password')) {
+  if (user.isModified("password")) {
     user.password = await bcrypt.hash(
       user.password,
       parseInt(process.env.SALT_ROUNDS)
@@ -70,16 +70,18 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
-userSchema.methods.createResetId = async function () {
-  const id = uuidV4();
-  this.resetId = id;
-  this.resetIdExpiration = Date.now() + 86400000;
-  await this.save();
-  return id;
+userSchema.methods.verifyPassword = async function (oldPassword) {
+  const isPasswordMatch = await bcrypt.compare(oldPassword, this.password);
+  if (!isPasswordMatch) {
+    return false;
+    // throw new Error({ error: 'Invalid login credentials' });
+  }
+  return true;
 };
 
-userSchema.methods.hasResetToken = function () {
-  return this.resetId;
+userSchema.methods.changePassword = async function (newPassword) {
+  this.password = newPassword;
+  await this.save();
 };
 
 userSchema.statics.updateData = function (updateData, user) {
@@ -110,25 +112,41 @@ userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
 };
 
-userSchema.statics.resetPasswordWithId = async function (id, password) {
-  const user = await this.findOne({ resetId: id });
-  if (!user) {
-    return null;
-  }
+userSchema.methods.createResetToken = async function () {
+  this.resetId = Math.floor(100000 + Math.random() * 900000);
 
-  if (user.resetIdExpiration < Date.now()) {
+  this.resetIdExpiration =
+    Date.now() + parseInt(process.env.RESET_TOKEN_VALIDITY, 10);
+  await this.save();
+  return this.resetId;
+};
+
+userSchema.methods.hasResetToken = function () {
+  return this.resetId;
+};
+
+userSchema.methods.isResetTokenExpired = async function () {
+  console.log(
+    `token exp: ${this.resetIdExpiration.getTime()} now: ${Date.now()}`
+  );
+  if (this.resetIdExpiration.getTime() < Date.now()) {
+    console.log("Here what");
     // Remove the reset id before
-    user.resetId = null;
-    user.resetIdExpiration = null;
-    await user.save();
-    return false;
+    this.resetId = null;
+    this.resetIdExpiration = null;
+    await this.save();
+    return true;
   }
+  return false;
+};
+
+userSchema.methods.resetPassword = async function (password) {
   // Remove the reset id cause now it's used up
-  user.resetId = null;
-  user.resetIdExpiration = null;
-  user.password = password;
-  await user.save();
+  this.resetId = null;
+  this.resetIdExpiration = null;
+  this.password = password;
+  await this.save();
   return true;
 };
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);
