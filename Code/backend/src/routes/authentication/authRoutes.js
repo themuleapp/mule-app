@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import User from '../../models/user';
+import DeletedUser from '../../models/deletedUser';
 import TokenBlacklist from '../../models/tokenBlacklist';
 import asyncErrorCatcher from '../../util/asyncErrorCatcher';
 import composeErrorResponse from '../../util/composeErrorResponse';
@@ -10,6 +11,7 @@ import {
   validateResetPasswordData,
   verifyTokenEmailData,
   validateChangePasswordReq,
+  validateDeleteAccountReq,
 } from './authValidators';
 import { createTransporter, sendResetId } from '../../util/emailer';
 import authMiddleware from '../../middleware/authMiddleware';
@@ -219,12 +221,6 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
 
 // Only a logged in user can do these operations d so logged in middleware has to be used
 // Using auth middleware here
-authRouter.delete('/logout', authMiddleware, async (req, res) => {
-  const token = req.token;
-  const blackListedToken = new TokenBlacklist({ token });
-  await blackListedToken.save();
-  res.status(205).send();
-});
 
 authRouter.post('/change-password', authMiddleware, async (req, res) => {
   const validation = validateChangePasswordReq(req.body);
@@ -254,6 +250,34 @@ authRouter.post('/change-password', authMiddleware, async (req, res) => {
   await user.changePassword(newPassword);
 
   return res.status(200).send(successResponse());
+});
+
+authRouter.delete('/logout', authMiddleware, async (req, res) => {
+  const token = req.token;
+  const blackListedToken = new TokenBlacklist({ token });
+  await blackListedToken.save();
+  res.status(200).send();
+});
+
+authRouter.delete('/delete-account', authMiddleware, async (req, res) => {
+  const validation = validateDeleteAccountReq(req.body);
+  if (validation) {
+    return res.status(400).send(composeErrorResponse(validation, 400));
+  }
+  const { user, token } = req;
+  const { reason } = req.body;
+  // 1. Deactivate account
+  await user.deleteAccount(); // TODO add check
+  // 2. Blacklist the token used
+  const blackListedToken = new TokenBlacklist({ token });
+  await blackListedToken.save();
+  // 3. create a deletedUser record
+  const deletedUser = new DeletedUser({
+    email: user.email,
+    reason: reason,
+  });
+  await deletedUser.save();
+  return res.status(200).send();
 });
 
 export default authRouter;
