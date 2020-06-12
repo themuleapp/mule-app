@@ -1,4 +1,4 @@
-# The Backend to the whisperingMule Mobile App
+# The Backend to the Whispering Mule Mobile App
 
 This is a guide for running the backend localy if you want to start the development process.
 
