@@ -9,6 +9,7 @@ import {
   validateRequestResetPasswordData,
   validateResetPasswordData,
   verifyTokenEmailData,
+  validateChangePasswordReq,
 } from './authValidators';
 import { createTransporter, sendResetId } from '../../util/emailer';
 import authMiddleware from '../../middleware/authMiddleware';
@@ -86,14 +87,6 @@ authRouter.post(
     }
   })
 );
-
-// Using auth middleware here
-authRouter.delete('/logout', authMiddleware, async (req, res) => {
-  const token = req.token;
-  const blackListedToken = new TokenBlacklist({ token });
-  await blackListedToken.save();
-  res.status(205).send();
-});
 
 // TODO detect if someone tries this one too many times
 authRouter.post('/request-reset', async (req, res) => {
@@ -220,6 +213,45 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
   }
 
   await user.resetPassword(password);
+
+  return res.status(200).send(successResponse());
+});
+
+// Only a logged in user can do these operations d so logged in middleware has to be used
+// Using auth middleware here
+authRouter.delete('/logout', authMiddleware, async (req, res) => {
+  const token = req.token;
+  const blackListedToken = new TokenBlacklist({ token });
+  await blackListedToken.save();
+  res.status(205).send();
+});
+
+authRouter.post('/change-password', authMiddleware, async (req, res) => {
+  const validation = validateChangePasswordReq(req.body);
+  if (validation) {
+    return res.status(400).send(composeErrorResponse(validation, 400));
+  }
+  const { email, oldPassword, newPassword } = req.body;
+  const user = await User.getByEmail(email);
+
+  if (!user) {
+    return res
+      .status(401)
+      .send(composeErrorResponse(['No user was found with that email'], 401));
+  }
+
+  if (!(await user.verifyPassword(oldPassword))) {
+    return res
+      .status(401)
+      .send(
+        composeErrorResponse(
+          ['Old password is not correct! Please try typing it again'],
+          401
+        )
+      );
+  }
+
+  await user.changePassword(newPassword);
 
   return res.status(200).send(successResponse());
 });

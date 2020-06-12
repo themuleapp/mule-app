@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { v4 as uuidV4 } from 'uuid';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { v4 as uuidV4 } from "uuid";
 const userSchema = mongoose.Schema({
   firstName: {
     type: String,
@@ -47,10 +47,10 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   // Hash the password before saving the user model
   const user = this;
-  if (user.isModified('password')) {
+  if (user.isModified("password")) {
     user.password = await bcrypt.hash(
       user.password,
       parseInt(process.env.SALT_ROUNDS)
@@ -68,6 +68,20 @@ userSchema.methods.generateAuthToken = async function () {
   // user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
+};
+
+userSchema.methods.verifyPassword = async function (oldPassword) {
+  const isPasswordMatch = await bcrypt.compare(oldPassword, this.password);
+  if (!isPasswordMatch) {
+    return false;
+    // throw new Error({ error: 'Invalid login credentials' });
+  }
+  return true;
+};
+
+userSchema.methods.changePassword = async function (newPassword) {
+  this.password = newPassword;
+  await this.save();
 };
 
 userSchema.statics.updateData = function (updateData, user) {
@@ -116,7 +130,7 @@ userSchema.methods.isResetTokenExpired = async function () {
     `token exp: ${this.resetIdExpiration.getTime()} now: ${Date.now()}`
   );
   if (this.resetIdExpiration.getTime() < Date.now()) {
-    console.log('Here what');
+    console.log("Here what");
     // Remove the reset id before
     this.resetId = null;
     this.resetIdExpiration = null;
@@ -135,4 +149,4 @@ userSchema.methods.resetPassword = async function (password) {
   return true;
 };
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);
