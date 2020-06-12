@@ -178,8 +178,18 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                             child: SizedBox(
                               width: AppBar().preferredSize.height - 8,
                               height: AppBar().preferredSize.height - 8,
-                              child: Material(
-                                color: Colors.transparent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppTheme.white,
+                                  borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.6),
+                                        offset: const Offset(4, 4),
+                                        blurRadius: 8.0),
+                                  ],
+                                ),
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(
                                       AppBar().preferredSize.height),

@@ -47,15 +47,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-//        appBar: AppBar(
-//          title: Text('Maps Sample App'),
-//          backgroundColor: AppTheme.lightBlue,
-//        ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11.0,
+            zoom: 14.0,
           ),
         ),
       ),
