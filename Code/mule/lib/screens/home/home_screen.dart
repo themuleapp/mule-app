@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -47,12 +48,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 14.0,
-          ),
+        body: Stack(
+          children: <Widget>[
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 14.0,
+              ),
+            ),
+            SlidingUpPanel(
+              minHeight: 250,
+              maxHeight: 350,
+              borderRadius: BorderRadius.circular(25),
+              panel: Center(
+                child: Text(
+                    "Add Shortcuts here"
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
