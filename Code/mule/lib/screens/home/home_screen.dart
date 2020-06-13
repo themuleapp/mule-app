@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
@@ -61,10 +63,78 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               minHeight: 250,
               maxHeight: 350,
               borderRadius: BorderRadius.circular(25),
-              panel: Center(
-                child: Text(
-                    "Add Shortcuts here"
-                ),
+              panel: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+                    child: Text(
+                      "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme.darkGrey,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 5, bottom: 20, left: 20, right: 20),
+                    child: Text(
+                      "What would you like?",
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.darkGrey,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        IconButton(
+                          splashColor: AppTheme.lightBlue,
+                          icon: Icon(
+                            Icons.search,
+                            color: AppTheme.lightBlue,
+                          ),
+                          onPressed: () {},
+                        ),
+                        Expanded(
+                          child: TextField(
+                            cursorColor: AppTheme.lightBlue,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.go,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding:
+                                EdgeInsets.symmetric(horizontal: 15),
+                                hintText: "Search..."),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             )
           ],
