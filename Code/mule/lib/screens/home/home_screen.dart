@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
@@ -85,17 +86,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        top: 20,
+                        top: 30,
                         left: 20,
                         right: 20
                     ),
-                    child: Text(
-                      "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w400,
-                        color: AppTheme.darkGrey,
-                        fontSize: 16,
+                    child: Observer(
+                      builder: (_) => Text(
+                        "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w400,
+                          color: AppTheme.darkGrey,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
