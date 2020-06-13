@@ -66,20 +66,46 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               panel: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Container(
+                        width: 40.0,
+                        height: 3.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.lightText.withOpacity(0.3),
+                            shape: BoxShape.rectangle,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
-                    padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        top: 20,
+                        left: 20,
+                        right: 20
+                    ),
                     child: Text(
                       "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
                       style: TextStyle(
                         fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w400,
                         color: AppTheme.darkGrey,
-                        fontSize: 17,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 5, bottom: 20, left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        top: 5,
+                        bottom: 20,
+                        left: 20,
+                        right: 20
+                    ),
                     child: Text(
                       "What would you like?",
                       style: TextStyle(
@@ -91,9 +117,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
+                    margin: EdgeInsets.only(
+                        left: 20,
+                        right: 20
+                    ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppTheme.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10),
@@ -102,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: AppTheme.lightGrey.withOpacity(0.3),
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset: Offset(0, 3), // changes position of shadow
@@ -115,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           splashColor: AppTheme.lightBlue,
                           icon: Icon(
                             Icons.search,
-                            color: AppTheme.lightBlue,
+                            color: AppTheme.secondaryBlue,
                           ),
                           onPressed: () {},
                         ),
@@ -126,9 +155,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             textInputAction: TextInputAction.go,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                contentPadding:
-                                EdgeInsets.symmetric(horizontal: 15),
-                                hintText: "Search..."),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15
+                                ),
+                                hintText: "Search..."
+                            ),
                           ),
                         ),
                       ],
