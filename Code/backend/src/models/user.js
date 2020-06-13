@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidV4 } from 'uuid';
+
 const userSchema = mongoose.Schema({
   firstName: {
     type: String,
@@ -18,6 +19,14 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true,
     lowercase: true,
+  },
+  emailVerificationCode: {
+    type: String,
+    default: null,
+  },
+  emailVerified: {
+    type: Boolean,
+    default: false,
   },
   phoneNumber: {
     type: String,
@@ -82,6 +91,17 @@ userSchema.statics.existsByEmail = async function (email) {
 
 userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
+};
+
+userSchema.statics.verifyEmail = async function (emailVerificationCode) {
+  const user = await this.findOne({ emailVerificationCode });
+  if (!user) {
+    return false;
+  }
+  user.emailVerified = true;
+  user.emailVerificationCode = null;
+  await user.save();
+  return true;
 };
 
 userSchema.methods.generateAuthToken = function () {

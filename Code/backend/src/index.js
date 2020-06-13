@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import cron from 'node-cron';
 
 import authMiddleware from './middleware/authMiddleware';
-import { authRoutes, profileRoutes } from './routes/routesExport';
+import { authRoutes, profileRoutes, verifyRoutes } from './routes/routesExport';
 import registerCronJobs from './config/cronjobs';
 
 // setup env vars
@@ -37,6 +37,7 @@ app.get('/test-working', (req, res) => res.send({ status: 'Working' }));
 
 app.get('/api/test', (req, res) => res.send({ status: 'working' }));
 app.use('/api/authentication', authRoutes);
+app.use('/api/verify', verifyRoutes);
 app.use('/api/profile', authMiddleware, profileRoutes);
 // Only test
 app.get('/api/protected', authMiddleware, async (req, res) => {
