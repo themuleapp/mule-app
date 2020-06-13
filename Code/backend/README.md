@@ -24,7 +24,7 @@ This will install all the dependencies you need to run the app
 
    - `JWT_VALIDATION`: For how long the JWT is valid, value is a [zeit/ms](https://github.com/zeit/ms) (e.g. 30d)
    - `RESET_TOKEN_VALIDITY` How long the reset password token (OTP) is valid for, value is in milliseconds (suggested 15 min = 900000 ms).
-   - For the email values you can use your own development email, beaware that for it to work you have to [allow less secure apps](https://hotter.io/docs/email-accounts/secure-app-gmail/) since the backend will be running on your machine (http) google sees it as a less secure app.
+   - `EMAIL_*`: for the email values you can use your own development email, Follow [this](https://medium.com/@RistaSB/use-expressjs-to-send-mails-with-gmail-oauth-2-0-and-nodemailer-d585bba71343) to generate all the values.
    - `MONGODB_URI`: where your local mongoDb is residing.
 
 5) Once all values set, in your terminal navigate to \*/backend and run
