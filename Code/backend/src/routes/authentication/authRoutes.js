@@ -230,6 +230,12 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
 //////////////////////////////////////////////////////////////////
 // Only a logged in user can do these operations d so logged in middleware has to be used
 // Using auth middleware here
+authRouter.delete('/logout', authMiddleware, async (req, res) => {
+  const token = req.token;
+  const blackListedToken = new TokenBlacklist({ token });
+  await blackListedToken.save();
+  res.status(205).send();
+});
 
 authRouter.post('/change-password', authMiddleware, async (req, res) => {
   const validation = validateChangePasswordReq(req.body);
@@ -261,12 +267,12 @@ authRouter.post('/change-password', authMiddleware, async (req, res) => {
   return res.status(200).send(successResponse());
 });
 
-authRouter.delete('/logout', authMiddleware, async (req, res) => {
-  const token = req.token;
-  const blackListedToken = new TokenBlacklist({ token });
-  await blackListedToken.save();
-  res.status(200).send();
-});
+// authRouter.delete('/logout', authMiddleware, async (req, res) => {
+//   const token = req.token;
+//   const blackListedToken = new TokenBlacklist({ token });
+//   await blackListedToken.save();
+//   res.status(200).send();
+// });
 
 authRouter.delete('/delete-account', authMiddleware, async (req, res) => {
   const validation = validateDeleteAccountReq(req.body);

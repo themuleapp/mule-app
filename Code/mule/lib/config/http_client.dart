@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
-import 'package:mule/models/login/login_data.dart';
-import 'package:mule/models/signup/signup_data.dart';
+import 'package:mule/models/req/changePassword/change_password_req.dart';
+import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
+import 'package:mule/models/req/login/login_data.dart';
+import 'package:mule/models/req/signup/signup_data.dart';
+import 'package:mule/models/req/verifyPassword/verify_password.dart';
+import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 
 class HttpClient {
   Dio _dio;
@@ -17,33 +21,32 @@ class HttpClient {
     );
   }
 
-  handleSignup(SignupData data) async {
-    final res = await makePostRequest('/authentication/signup', data.toMap());
-
-    // TODO Save the token!!
-    if (res.statusCode == 201) {
-      final token = res.data['token'];
-      print('Token is $token');
-    }
-    return res;
-  }
-
-  handleLogin(LoginData data) async {
-    final res = await makePostRequest('/authentication/login', data.toMap());
-
-    // TODO Save the token!!
-    if (res.statusCode == 201) {
-      final token = res.data['token'];
-      print('Token is $token');
-    }
-    return res;
-  }
-
-  Future<Response> makeGetRequest(String path) async {
+  Future<Response> _makeGetRequest(String path) async {
     return await _dio.get(path);
   }
 
-  Future<Response> makePostRequest(
+  Future<Response> _makeAuthenticatedGetRequest(String path) async {
+    final String token = await Config.getToken();
+    return await _dio.get(path,
+        options: Options(headers: {'Authorization': token}));
+  }
+
+  Future<Response> _makeAuthenticatedPostRequest(
+      String path, Map<String, dynamic> data) async {
+    final String token = await Config.getToken();
+    return await _dio.post(
+      path,
+      data: data,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      ),
+    );
+  }
+
+  Future<Response> _makePostRequest(
       String path, Map<String, dynamic> data) async {
     return await _dio.post(
       path,
@@ -54,6 +57,79 @@ class HttpClient {
         },
       ),
     );
+  }
+
+  handleSignup(SignupData data) async {
+    final res = await _makePostRequest('/authentication/signup', data.toMap());
+
+    if (res.statusCode == 201) {
+      final token = res.data['token'];
+      await Config.saveToken('Bearer $token');
+    }
+    return res;
+  }
+
+  handleLogin(LoginData data) async {
+    final res = await _makePostRequest('/authentication/login', data.toMap());
+
+    if (res.statusCode == 200) {
+      final token = res.data['token'];
+      await Config.saveToken('Bearer $token');
+    }
+    return res;
+  }
+
+  handleSignOut() async {
+    String token = await Config.getToken();
+    _dio.delete(
+      '/authentication/logout',
+      options: Options(
+        headers: {
+          'Authorization': token,
+        },
+      ),
+    );
+  }
+
+  Future<Response> handleRequestOtp(ForgotPasswordReq forgotPasswordReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/request-reset', forgotPasswordReq.toMap());
+    return res;
+  }
+
+  Future<Response> handleReRequestOtp(
+      ForgotPasswordReq forgotPasswordReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/resend-reset-token', forgotPasswordReq.toMap());
+    return res;
+  }
+
+  Future<Response> handleVerifyTokenAndEmail(
+      VerifyTokenAndEmailReq verifyTokenAndEmailReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/verify-reset-token-email',
+        verifyTokenAndEmailReq.toMap());
+    return res;
+  }
+
+  Future<Response> handleResetPassword(
+      VerifyPasswordReq verifyPasswordReq) async {
+    final Response res = await _makePostRequest(
+        '/authentication/reset-forgotten-password', verifyPasswordReq.toMap());
+    return res;
+  }
+
+  // Authenticated requests
+
+  Future<Response> handleChangePassword(
+      ChangePasswordReq changePasswordReq) async {
+    final Response res = await _makeAuthenticatedPostRequest(
+        '/authentication/change-password', changePasswordReq.toMap());
+    return res;
+  }
+
+  Future<Response> handleGetProfileData() async {
+    return _makeAuthenticatedGetRequest('/profile');
   }
 }
 
