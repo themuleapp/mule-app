@@ -7,12 +7,13 @@ import composeSuccessResponse from '../../util/successResponse';
 const profileRouter = Router();
 
 profileRouter.get('/', (req, res) => {
-  const { firstName, lastName, email, phoneNumber } = req.user;
+  const { firstName, lastName, email, phoneNumber, emailVerified } = req.user;
   res.send({
     firstName,
     lastName,
     email,
     phoneNumber,
+    emailVerified,
   });
 });
 
