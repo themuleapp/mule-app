@@ -64,116 +64,120 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               minHeight: 250,
               maxHeight: 350,
               borderRadius: BorderRadius.circular(25),
-              panel: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Container(
-                        width: 40.0,
-                        height: 3.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.lightText.withOpacity(0.3),
-                            shape: BoxShape.rectangle,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: 30,
-                        left: 20,
-                        right: 20
-                    ),
-                    child: Observer(
-                      builder: (_) => Text(
-                        "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
-                        style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w400,
-                          color: AppTheme.darkGrey,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        top: 5,
-                        bottom: 20,
-                        left: 20,
-                        right: 20
-                    ),
-                    child: Text(
-                      "What would you like?",
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.darkGrey,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: 20,
-                        right: 20
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppTheme.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10)
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.lightGrey.withOpacity(0.3),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        IconButton(
-                          splashColor: AppTheme.lightBlue,
-                          icon: Icon(
-                            Icons.search,
-                            color: AppTheme.secondaryBlue,
-                          ),
-                          onPressed: () {},
-                        ),
-                        Expanded(
-                          child: TextField(
-                            cursorColor: AppTheme.lightBlue,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.go,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15
-                                ),
-                                hintText: "Search..."
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              panel: _panel(),
             )
           ],
         ),
       ),
     );
   }
+}
+
+Widget _panel() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Container(
+            width: 40.0,
+            height: 3.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppTheme.lightText.withOpacity(0.3),
+                shape: BoxShape.rectangle,
+                borderRadius:
+                BorderRadius.all(Radius.circular(8.0)),
+              ),
+            ),
+          ),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(
+            top: 30,
+            left: 20,
+            right: 20
+        ),
+        child: Observer(
+          builder: (_) => Text(
+            "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
+            style: TextStyle(
+              fontFamily: AppTheme.fontName,
+              fontWeight: FontWeight.w400,
+              color: AppTheme.darkGrey,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(
+            top: 5,
+            bottom: 20,
+            left: 20,
+            right: 20
+        ),
+        child: Text(
+          "What would you like?",
+          style: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.darkGrey,
+            fontSize: 20,
+          ),
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.only(
+            left: 20,
+            right: 20
+        ),
+        decoration: BoxDecoration(
+          color: AppTheme.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppTheme.lightGrey.withOpacity(0.3),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              splashColor: AppTheme.lightBlue,
+              icon: Icon(
+                Icons.search,
+                color: AppTheme.secondaryBlue,
+              ),
+              onPressed: () {},
+            ),
+            Expanded(
+              child: TextField(
+                cursorColor: AppTheme.lightBlue,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.go,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15
+                    ),
+                    hintText: "Search..."
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }
