@@ -83,7 +83,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     //final ThemeData _theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppTheme.white,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,

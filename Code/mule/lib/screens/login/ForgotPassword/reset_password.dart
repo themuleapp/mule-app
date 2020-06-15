@@ -66,6 +66,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       backgroundColor: AppTheme.white,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
@@ -86,66 +87,70 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
-                      child: Text(
-                        "Reset Password",
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.darkGrey
+              child: ListView(
+                children: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: Text(
+                            "Reset Password",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.darkGrey),
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      "Enter a new password",
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w500,
-                          color: AppTheme.darkGrey),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _firstPassController,
-                      hintText: "Password",
-                      obscureText: true,
-                      validator: validateNewPassword,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _secondPassController,
-                      hintText: "Confirm Password",
-                      obscureText: true,
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 45.0,
-                      child: FlatButton(
-                        color: AppTheme.lightBlue,
-                        child: Text(
-                          "SUBMIT",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        SizedBox(
+                          height: 20.0,
                         ),
-                        onPressed: this._handleSubmit,
-                      ),
-                    )
-                  ],
-                ),
+                        Text(
+                          "Enter a new password",
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.darkGrey),
+                        ),
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _firstPassController,
+                          hintText: "Password",
+                          obscureText: true,
+                          validator: validateNewPassword,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _secondPassController,
+                          hintText: "Confirm Password",
+                          obscureText: true,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45.0,
+                          child: FlatButton(
+                            color: AppTheme.lightBlue,
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.0),
+                            ),
+                            onPressed: this._handleSubmit,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ],

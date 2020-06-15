@@ -8,7 +8,7 @@ class ChangePhone extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.white,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
@@ -26,26 +26,28 @@ class ChangePhone extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "Change Phone Number",
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Change Phone Number",
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.darkGrey),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              _changePhoneNumberForm(context),
-              SizedBox(
-                height: 30.0,
-              ),
-            ],
+                SizedBox(
+                  height: 30.0,
+                ),
+                _changePhoneNumberForm(context),
+                SizedBox(
+                  height: 30.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),

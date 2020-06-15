@@ -84,68 +84,72 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      //padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        "Change Password",
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.darkGrey
+              child: ListView(
+                children: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          //padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            "Change Password",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.darkGrey),
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _oldPasswordController,
-                      hintText: "Current Password",
-                      obscureText: true,
-                      validator: validateNewPassword,
-                      //controller: passwordController,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _newPassword1Controller,
-                      hintText: "New Password",
-                      obscureText: true,
-                      validator: validateNewPassword,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _newPassword2Controller,
-                      validator: validateNewPassword,
-                      hintText: "Confirm New Password",
-                      obscureText: true,
-                      //controller: passwordController,
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 45.0,
-                      child: FlatButton(
-                        color: AppTheme.lightBlue,
-                        child: Text(
-                          "SUBMIT",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        SizedBox(
+                          height: 40.0,
                         ),
-                        onPressed: this._handleSubmitChangePassword,
-                      ),
-                    )
-                  ],
-                ),
+                        CustomTextFormField(
+                          controller: _oldPasswordController,
+                          hintText: "Current Password",
+                          obscureText: true,
+                          validator: validateNewPassword,
+                          //controller: passwordController,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _newPassword1Controller,
+                          hintText: "New Password",
+                          obscureText: true,
+                          validator: validateNewPassword,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _newPassword2Controller,
+                          validator: validateNewPassword,
+                          hintText: "Confirm New Password",
+                          obscureText: true,
+                          //controller: passwordController,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45.0,
+                          child: FlatButton(
+                            color: AppTheme.lightBlue,
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.0),
+                            ),
+                            onPressed: this._handleSubmitChangePassword,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
