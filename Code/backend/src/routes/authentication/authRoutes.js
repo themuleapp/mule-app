@@ -19,7 +19,40 @@ import authMiddleware from '../../middleware/authMiddleware';
 import successResponse from '../../util/successResponse';
 
 const authRouter = Router();
-// TODO add routes in here
+
+/**
+ * @swagger
+ * /ice-cream:
+ *   post:
+ *     summary: This should create a new ice cream.
+ *     description: This is where you can give some background as to why this route is being created or perhaps reference a ticket number.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: firstName
+ *         schema:
+ *           type: String
+ *       - in: body
+ *         name: lastName
+ *         schema:
+ *           type: String
+ *       - in: body
+ *         name: email
+ *         schema:
+ *           type: String
+ *       - in: body
+ *         name: phoneNumber
+ *         schema:
+ *           type: String
+ *       - in: body
+ *         name: password
+ *         schema:
+ *           type: String
+ *     responses:
+ *       200:
+ *         description: Receive back flavor and flavor Id.
+ */
 authRouter.post('/signup', async (req, res) => {
   try {
     const validation = validateSignupDate(req.body);
