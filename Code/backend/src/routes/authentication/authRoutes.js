@@ -22,33 +22,34 @@ const authRouter = Router();
 
 /**
  * @swagger
- * /ice-cream:
+ * /api/authentication/signup:
  *   post:
- *     summary: This should create a new ice cream.
- *     description: This is where you can give some background as to why this route is being created or perhaps reference a ticket number.
+ *     summary: This creates a new user.
+ *     description: given that there's no other user with the same email and all
+ *        the body parts are correctly supplied this will create a new user
  *     consumes:
  *       - application/json
  *     parameters:
  *       - in: body
  *         name: firstName
  *         schema:
- *           type: String
+ *           type: string
  *       - in: body
  *         name: lastName
  *         schema:
- *           type: String
+ *           type: string
  *       - in: body
  *         name: email
  *         schema:
- *           type: String
+ *           type: string
  *       - in: body
  *         name: phoneNumber
  *         schema:
- *           type: String
+ *           type: string
  *       - in: body
  *         name: password
  *         schema:
- *           type: String
+ *           type: string
  *     responses:
  *       200:
  *         description: Receive back flavor and flavor Id.
