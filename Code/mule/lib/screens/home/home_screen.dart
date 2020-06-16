@@ -93,139 +93,210 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget _getFormDependingPanelOpen() {
     if (panelIsOpen) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Container(
-                width: 40.0,
-                height: 3.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppTheme.lightText.withOpacity(0.3),
-                    shape: BoxShape.rectangle,
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(8.0)),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          TextFormField(
-            focusNode: _fromFocusNode,
-            controller: _fromController,
-            decoration: InputDecoration(hintText: 'From'),
-          ),
+          _slideIcon(),
           SizedBox(
             height: 20,
           ),
-          TextFormField(
-            decoration: InputDecoration(hintText: 'Destination'),
-          )
+          _destinationTitle(),
+          _destinationBar(),
+          SizedBox(
+            height: 20,
+          ),
+          _searchBarTitle(),
+          _searchBar(),
         ],
       );
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Container(
-                width: 40.0,
-                height: 3.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppTheme.lightText.withOpacity(0.3),
-                    shape: BoxShape.rectangle,
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(8.0)),
-                  ),
-                ),
-              ),
-            ),
+          _slideIcon(),
+          _greetingTitle(),
+          _destinationTitle(),
+          SizedBox(
+            height: 10,
           ),
-          Container(
-            padding: EdgeInsets.only(
-                top: 30,
-            ),
-            child: Observer(
-              builder: (_) => Text(
-                "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w400,
-                  color: AppTheme.darkGrey,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-                top: 5,
-                bottom: 20,
-            ),
-            child: Text(
-              "What would you like?",
-              style: TextStyle(
-                fontFamily: AppTheme.fontName,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.darkGrey,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppTheme.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.lightGrey.withOpacity(0.3),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  splashColor: AppTheme.lightBlue,
-                  icon: Icon(
-                    Icons.search,
-                    color: AppTheme.secondaryBlue,
-                  ),
-                  onPressed: () {},
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: _searchController,
-                    focusNode: _searchFocusNode,
-                    cursorColor: AppTheme.lightBlue,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.go,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15
-                        ),
-                        hintText: "Search..."
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          _destinationBar(),
         ],
       );
     }
+  }
+
+  Widget _slideIcon() {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: Container(
+          width: 40.0,
+          height: 3.0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.lightText.withOpacity(0.3),
+              shape: BoxShape.rectangle,
+              borderRadius:
+              BorderRadius.all(Radius.circular(8.0)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _greetingTitle() {
+    return Container(
+      padding: EdgeInsets.only(
+        top: 30,
+      ),
+      child: Observer(
+        builder: (_) => Text(
+          "Hey there, " + GetIt.I.get<UserInfoStore>().firstName + "!",
+          style: TextStyle(
+            fontFamily: AppTheme.fontName,
+            fontWeight: FontWeight.w400,
+            color: AppTheme.darkGrey,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _destinationTitle() {
+    return Container(
+      padding: EdgeInsets.only(
+        top: 5,
+        bottom: 10
+      ),
+      child: Text(
+        "Where are you headed?",
+        style: TextStyle(
+          fontFamily: AppTheme.fontName,
+          fontWeight: FontWeight.w700,
+          color: AppTheme.darkGrey,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
+  Widget _destinationBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.lightGrey.withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            splashColor: AppTheme.lightBlue,
+            icon: Icon(
+              Icons.add_location,
+              color: AppTheme.secondaryBlue,
+            ),
+            onPressed: () {},
+          ),
+          Expanded(
+            child: TextFormField(
+              controller: _searchController,
+              focusNode: _searchFocusNode,
+              cursorColor: AppTheme.lightBlue,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.go,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 15
+                  ),
+                  hintText: "Destination..."
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _searchBarTitle() {
+    return Container(
+      padding: EdgeInsets.only(
+        top: 5,
+        bottom: 10,
+      ),
+      child: Text(
+        "What would you like?",
+        style: TextStyle(
+          fontFamily: AppTheme.fontName,
+          fontWeight: FontWeight.w700,
+          color: AppTheme.darkGrey,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
+  Widget _searchBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.lightGrey.withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            splashColor: AppTheme.lightBlue,
+            icon: Icon(
+              Icons.search,
+              color: AppTheme.secondaryBlue,
+            ),
+            onPressed: () {},
+          ),
+          Expanded(
+            child: TextFormField(
+              controller: _searchController,
+              focusNode: _searchFocusNode,
+              cursorColor: AppTheme.lightBlue,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.go,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 15
+                  ),
+                  hintText: "Search..."
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
