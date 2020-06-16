@@ -23,36 +23,36 @@ const authRouter = Router();
 /**
  * @swagger
  * /api/authentication/signup:
- *   post:
- *     summary: This creates a new user.
- *     description: given that there's no other user with the same email and all
- *        the body parts are correctly supplied this will create a new user
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: firstName
- *         schema:
- *           type: string
- *       - in: body
- *         name: lastName
- *         schema:
- *           type: string
- *       - in: body
- *         name: email
- *         schema:
- *           type: string
- *       - in: body
- *         name: phoneNumber
- *         schema:
- *           type: string
- *       - in: body
- *         name: password
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Receive back flavor and flavor Id.
+ *    post:
+ *      summary: This creates a new user.
+ *      tags:
+ *        - authentication
+ *      description: given that there's no other user with the same email and all
+ *         the body parts are correctly supplied this will create a new user
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: user
+ *          description: user to create
+ *          schema:
+ *            type: object
+ *            properties:
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              email:
+ *                type: string
+ *              phoneNumber:
+ *                type: string
+ *              password:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success message with the profile info
+ *        400:
+ *          description: fail with error message(s)
  */
 authRouter.post('/signup', async (req, res) => {
   try {
@@ -95,6 +95,32 @@ authRouter.post('/signup', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/authentication/login:
+ *    post:
+ *      summary: This Logs in a user
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: userCredentials
+ *          description: credentials of the user to create
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success message with the profile info
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post(
   '/login',
   asyncErrorCatcher(async (req, res) => {
@@ -108,11 +134,11 @@ authRouter.post(
       const user = await User.findByCredentials(email, password); // TODO this throws error when credentials not good
       if (!user) {
         return res
-          .status(401)
+          .status(400)
           .send(
             composeErrorResponse(
               ['Login failed! Invalid login credentials'],
-              401
+              400
             )
           );
       }
@@ -132,7 +158,30 @@ authRouter.post(
   })
 );
 
-// TODO detect if someone tries this one too many times
+/**
+ * @swagger
+ * /api/authentication/request-reset:
+ *    post:
+ *      summary: Requests a reset password OTP and sends it to users email
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: email
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post('/request-reset', async (req, res) => {
   const validation = validateRequestResetPasswordData(req.body);
   if (validation) {
@@ -155,6 +204,31 @@ authRouter.post('/request-reset', async (req, res) => {
   res.status(200).send({ id });
 });
 
+/**
+ * @swagger
+ * /api/authentication/resend-reset-token:
+ *    post:
+ *      summary: Resends the OTP to the user
+ *      description: Used if the user didn't receive an email or exceeded
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: email
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post('/resend-reset-token', async (req, res) => {
   const validation = validateRequestResetPasswordData(req.body);
   if (validation) {
@@ -173,49 +247,94 @@ authRouter.post('/resend-reset-token', async (req, res) => {
         )
       );
   }
-
   const id = await user.createResetToken();
-
   sendResetId(user.email, id);
-
   return res.status(200).send({ id });
 });
 
-// verify-reset-token-email
+/**
+ * @swagger
+ * /api/authentication/verify-reset-token-email:
+ *    post:
+ *      summary: Verifies that this OTP token is the one that was generated for the user
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: email
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              resetToken:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post('/verify-reset-token-email', async (req, res) => {
   const validation = verifyTokenEmailData(req.body);
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
   }
-
   const user = await User.getByEmail(req.body.email);
-
   // TODO check token is valid
   if (user.resetId !== req.body.resetToken) {
     return res
-      .status(401)
+      .status(400)
       .send(
         composeErrorResponse(
           ['Reset token invalid! Please generate a new one'],
-          401
+          400
         )
       );
   }
 
   if (await user.isResetTokenExpired()) {
     return res
-      .status(401)
+      .status(400)
       .send(
         composeErrorResponse(
           ['Token is expired! Please generate a new one'],
-          401
+          400
         )
       );
   }
-
   return res.status(200).send(successResponse());
 });
 
+/**
+ * @swagger
+ * /api/authentication/reset-forgotten-password:
+ *    post:
+ *      summary: Changes the password of a user given everything
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: body
+ *          name: email and reset OTP
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              resetToken:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success response
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post('/reset-forgotten-password', async (req, res) => {
   const validation = validateResetPasswordData(req.body);
   if (validation) {
@@ -223,40 +342,36 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
   }
 
   const { email, resetToken, password } = req.body;
-
   const user = await User.getByEmail(email);
-
   if (!user) {
     return res
-      .status(401)
-      .send(composeErrorResponse(['No user was found with that email'], 401));
+      .status(400)
+      .send(composeErrorResponse(['No user was found with that email'], 400));
   }
-
   // TODO check token is valid
   if (user.resetId !== resetToken) {
     return res
-      .status(401)
+      .status(400)
       .send(
         composeErrorResponse(
           ['Reset token invalid! Please generate a new one'],
-          401
+          400
         )
       );
   }
 
   if (await user.isResetTokenExpired()) {
     return res
-      .status(401)
+      .status(400)
       .send(
         composeErrorResponse(
           ['Reset token invalid! Please generate a new one'],
-          401
+          400
         )
       );
   }
 
   await user.resetPassword(password);
-
   return res.status(200).send(successResponse());
 });
 
@@ -264,13 +379,66 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
 //////////////////////////////////////////////////////////////////
 // Only a logged in user can do these operations d so logged in middleware has to be used
 // Using auth middleware here
+
+/**
+ * @swagger
+ * /api/authentication/logout:
+ *    post:
+ *      summary: Logs a user out
+ *      description: Puts users token in the blacklist so that it's not usable anymore
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: JWT Bearer
+ *      responses:
+ *        200:
+ *          description: success response
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.delete('/logout', authMiddleware, async (req, res) => {
   const token = req.token;
   const blackListedToken = new TokenBlacklist({ token });
   await blackListedToken.save();
-  res.status(205).send();
+  res.status(200).send();
 });
 
+/**
+ * @swagger
+ * /api/authentication/change-password:
+ *    post:
+ *      summary: Changes the password of a user
+ *      description: given the email, old password and new password changes the password of a user
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: JWT Bearer
+ *        - in: body
+ *          name: email
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *              oldPassword:
+ *                type: string
+ *              newPassword:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success response
+ *        400:
+ *          description: fail with error message(s)
+ */
 authRouter.post('/change-password', authMiddleware, async (req, res) => {
   const validation = validateChangePasswordReq(req.body);
   if (validation) {
@@ -281,33 +449,50 @@ authRouter.post('/change-password', authMiddleware, async (req, res) => {
 
   if (!user) {
     return res
-      .status(401)
-      .send(composeErrorResponse(['No user was found with that email'], 401));
+      .status(400)
+      .send(composeErrorResponse(['No user was found with that email'], 400));
   }
 
   if (!(await user.verifyPassword(oldPassword))) {
     return res
-      .status(401)
+      .status(400)
       .send(
         composeErrorResponse(
           ['Old password is not correct! Please try typing it again'],
-          401
+          400
         )
       );
   }
 
   await user.changePassword(newPassword);
-
   return res.status(200).send(successResponse());
 });
 
-// authRouter.delete('/logout', authMiddleware, async (req, res) => {
-//   const token = req.token;
-//   const blackListedToken = new TokenBlacklist({ token });
-//   await blackListedToken.save();
-//   res.status(200).send();
-// });
-
+/**
+ * @swagger
+ * /api/authentication/delete-account:
+ *    delete:
+ *      summary: Deletes users account
+ *      tags:
+ *        - authentication
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          type: JWT Bearer
+ *        - in: body
+ *          name: email
+ *          description:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              reason:
+ *                type: string
+ *      responses:
+ *        200:
+ *          description: success response
+ */
 authRouter.delete('/delete-account', authMiddleware, async (req, res) => {
   const validation = validateDeleteAccountReq(req.body);
   if (validation) {

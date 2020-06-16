@@ -18,4 +18,19 @@ export default {
     },
   },
   apis: ['src/index.js', './src/routes/**/*.js'],
+  // Define req bodies and such in here
+  // components: {
+  //   schemas: {
+  //     user: {
+  //       type: 'object',
+  //       properties: {
+  //         firstName: { type: 'string' },
+  //         lastName: { type: 'string' },
+  //         email: { type: 'string' },
+  //         phoneNumber: { type: 'string' },
+  //         password: { type: 'string' },
+  //       },
+  //     },
+  //   },
+  // },
 };
