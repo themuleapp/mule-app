@@ -64,12 +64,26 @@ authRouter.post('/signup', async (req, res) => {
     // Create a new user
     const user = new User(req.body);
 
-    // Check user existance
+    // Check user existance by email
     if (await User.existsByEmail(user.email)) {
       return res
         .status(400)
         .send(
           composeErrorResponse(['A user with that email already exists'], 400)
+        );
+    }
+
+    // Check user existance by phoneNumber
+    const unique = await User.existsByPhoneNumber(user.phoneNumber);
+    console.log(`Phone unique ${unique}`);
+    if (await User.existsByPhoneNumber(user.phoneNumber)) {
+      return res
+        .status(400)
+        .send(
+          composeErrorResponse(
+            ['A user with that phone number already exists'],
+            400
+          )
         );
     }
 
