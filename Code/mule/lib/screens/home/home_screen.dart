@@ -21,7 +21,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   final FocusNode _searchFocusNode = FocusNode();
   final FocusNode _fromFocusNode = FocusNode();
   final TextEditingController _searchController = TextEditingController();
-  final TextEditingController _fromController = TextEditingController();
   bool panelIsOpen = false;
   bool programmaticallyOpeningOrClosing = false;
 
