@@ -383,7 +383,7 @@ authRouter.post('/reset-forgotten-password', async (req, res) => {
 /**
  * @swagger
  * /api/authentication/logout:
- *    post:
+ *    delete:
  *      summary: Logs a user out
  *      description: Puts users token in the blacklist so that it's not usable anymore
  *      tags:
