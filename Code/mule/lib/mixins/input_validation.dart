@@ -14,7 +14,7 @@ class InputValidation {
       return 'Password cannot be empty!';
     }
 
-    if (value.length < 8) {
+    if (value.trim().length < 8) {
       return 'Password must be at least 8 characters';
     }
 
