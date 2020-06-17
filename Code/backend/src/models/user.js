@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
   },
   phoneNumber: {
     type: String,
+    unique: true,
     required: false,
     max: 12,
   },
@@ -87,6 +88,10 @@ userSchema.statics.findByCredentials = async function (email, password) {
 
 userSchema.statics.existsByEmail = async function (email) {
   return await this.exists({ email });
+};
+
+userSchema.statics.existsByPhoneNumber = async function (phoneNumber) {
+  return await this.exists({ phoneNumber });
 };
 
 userSchema.statics.getByEmail = async function (email) {
