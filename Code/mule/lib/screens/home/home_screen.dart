@@ -11,7 +11,6 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
 
@@ -19,27 +18,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> {
   final PanelController _panelController = PanelController();
-  final FocusNode _searchFocusNode = FocusNode();
-  final FocusNode _fromFocusNode = FocusNode();
-  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _fakeFocusNode = FocusNode();
+  final FocusNode _destinationFocusNode = FocusNode();
   bool panelIsOpen = false;
   bool programmaticallyOpeningOrClosing = false;
 
-  AnimationController animationController;
-  bool multiple = true;
-
-  Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _mapCompleter = Completer();
   Position _position;
   Widget _child;
 
   void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
+    _mapCompleter.complete(controller);
   }
 
   void getCurrentLocation() async {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _position = position;
       _child = mapWidget();
@@ -48,34 +44,31 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
-    _searchFocusNode.addListener(_handleSearchFocus);
+    _fakeFocusNode.addListener(_handleSearchFocus);
     getCurrentLocation();
     super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
     super.dispose();
   }
 
   _handleSearchFocus() {
-    if (_searchFocusNode.hasFocus) {
+    if (_fakeFocusNode.hasFocus) {
       setState(() {
         programmaticallyOpeningOrClosing = true;
       });
       this._openPanel();
-      _searchFocusNode.unfocus();
-      _fromFocusNode.requestFocus();
+      _fakeFocusNode.unfocus();
+      _destinationFocusNode.requestFocus();
     }
   }
 
   _openPanel() {
     _panelController.open().then((value) => setState(() {
-      programmaticallyOpeningOrClosing = false;
-    }));
+          programmaticallyOpeningOrClosing = false;
+        }));
     setState(() {
       panelIsOpen = true;
     });
@@ -83,8 +76,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   _closePanel() {
     _panelController.close().then((value) => setState(() {
-      programmaticallyOpeningOrClosing = false;
-    }));
+          programmaticallyOpeningOrClosing = false;
+        }));
     setState(() {
       panelIsOpen = false;
     });
@@ -113,16 +106,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
         ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
         ..add(Factory<HorizontalDragGestureRecognizer>(
-                () => HorizontalDragGestureRecognizer()))
+            () => HorizontalDragGestureRecognizer()))
         ..add(Factory<VerticalDragGestureRecognizer>(
-                () => VerticalDragGestureRecognizer())),
+            () => VerticalDragGestureRecognizer())),
       initialCameraPosition: CameraPosition(
         target: LatLng(_position.latitude, _position.longitude),
         zoom: 15.0,
       ),
     );
   }
-
 
   Widget _getFormDependingPanelOpen() {
     if (panelIsOpen) {
@@ -134,7 +126,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             height: 20,
           ),
           _destinationTitle(),
-          _destinationBar(),
+          _destinationBar(
+            focusNode: _destinationFocusNode,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -152,7 +146,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           SizedBox(
             height: 10,
           ),
-          _destinationBar(),
+          _destinationBar(
+            focusNode: _fakeFocusNode,
+          ),
         ],
       );
     }
@@ -169,8 +165,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             decoration: BoxDecoration(
               color: AppTheme.lightText.withOpacity(0.3),
               shape: BoxShape.rectangle,
-              borderRadius:
-              BorderRadius.all(Radius.circular(8.0)),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
           ),
         ),
@@ -199,10 +194,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Widget _destinationTitle() {
     return Container(
-      padding: EdgeInsets.only(
-        top: 5,
-        bottom: 10
-      ),
+      padding: EdgeInsets.only(top: 5, bottom: 10),
       child: Text(
         "Where are you headed?",
         style: TextStyle(
@@ -215,7 +207,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _destinationBar() {
+  Widget _destinationBar({
+    FocusNode focusNode,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.white,
@@ -223,8 +217,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
             bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)
-        ),
+            bottomRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
             color: AppTheme.lightGrey.withOpacity(0.3),
@@ -246,18 +239,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           Expanded(
             child: TextFormField(
-              controller: _searchController,
-              focusNode: _searchFocusNode,
+              focusNode: focusNode,
               cursorColor: AppTheme.lightBlue,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.go,
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 15
-                  ),
-                  hintText: "Destination..."
-              ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  hintText: "Destination..."),
             ),
           ),
         ],
@@ -291,8 +280,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
             bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)
-        ),
+            bottomRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
             color: AppTheme.lightGrey.withOpacity(0.3),
@@ -314,18 +302,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           Expanded(
             child: TextFormField(
-              controller: _searchController,
-              focusNode: _searchFocusNode,
+              // focusNode: _searchFocusNode,
               cursorColor: AppTheme.lightBlue,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.go,
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 15
-                  ),
-                  hintText: "Search..."
-              ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  hintText: "Search..."),
             ),
           ),
         ],
