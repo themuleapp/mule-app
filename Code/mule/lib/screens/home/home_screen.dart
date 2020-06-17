@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Completer<GoogleMapController> _controller = Completer();
   Position _position;
-  //Widget _child;
+  Widget _child;
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _position = position;
-      //_child = mapWidget();
+      _child = mapWidget();
     });
     print(position);
   }
@@ -343,7 +343,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
           ),
           body: Center(
-            child: mapWidget(),
+            child: _child,
           ),
         ),
       ),
