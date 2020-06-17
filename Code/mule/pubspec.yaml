@@ -33,6 +33,7 @@ dependencies:
   flutter_secure_storage: 3.3.3
   google_maps_flutter:
   sliding_up_panel: ^1.0.2
+  geolocator:
 
 dev_dependencies:
   flutter_test:

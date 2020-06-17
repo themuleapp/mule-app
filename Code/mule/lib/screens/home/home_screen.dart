@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
@@ -28,11 +29,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool multiple = true;
 
   Completer<GoogleMapController> _controller = Completer();
-
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
+  Position _position;
+  //Widget _child;
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
+  }
+
+  void getCurrentLocation() async {
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _position = position;
+      //_child = mapWidget();
+    });
+    print(position);
   }
 
   @override
@@ -40,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     _searchFocusNode.addListener(_handleSearchFocus);
+    getCurrentLocation();
     super.initState();
   }
 
@@ -88,6 +99,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       this._closePanel();
     }
   }
+
+  Widget mapWidget() {
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(_position.latitude, _position.longitude),
+        zoom: 14.0,
+      ),
+    );
+  }
+
 
   Widget _getFormDependingPanelOpen() {
     if (panelIsOpen) {
@@ -321,13 +343,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
           ),
           body: Center(
-            child: GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 14.0,
-              ),
-            ),
+            child: mapWidget(),
           ),
         ),
       ),
