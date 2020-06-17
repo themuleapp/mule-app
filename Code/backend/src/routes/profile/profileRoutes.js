@@ -25,7 +25,7 @@ const profileRouter = Router();
  */
 profileRouter.get('/', (req, res) => {
   const { firstName, lastName, email, phoneNumber, emailVerified } = req.user;
-  res.status.status(200).send({
+  res.status(200).send({
     firstName,
     lastName,
     email,
