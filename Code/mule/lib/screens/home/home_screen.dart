@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
@@ -103,9 +105,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return GoogleMap(
       mapType: MapType.normal,
       onMapCreated: _onMapCreated,
+      scrollGesturesEnabled: true,
+      zoomGesturesEnabled: true,
+      myLocationEnabled: true,
+      gestureRecognizers: Set()
+        ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+        ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
+        ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
+        ..add(Factory<HorizontalDragGestureRecognizer>(
+                () => HorizontalDragGestureRecognizer()))
+        ..add(Factory<VerticalDragGestureRecognizer>(
+                () => VerticalDragGestureRecognizer())),
       initialCameraPosition: CameraPosition(
         target: LatLng(_position.latitude, _position.longitude),
-        zoom: 14.0,
+        zoom: 15.0,
       ),
     );
   }
