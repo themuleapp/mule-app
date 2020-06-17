@@ -333,6 +333,7 @@ class _MyHomePageState extends State<MyHomePage> {
           minHeight: MediaQuery.of(context).size.height / 4,
           maxHeight: MediaQuery.of(context).size.height - 120,
           controller: _panelController,
+          backdropEnabled: true,
           panel: Form(
             child: Container(
               padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
