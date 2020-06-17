@@ -42,7 +42,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       _position = position;
       _child = mapWidget();
     });
-    print(position);
   }
 
   @override
@@ -102,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Widget mapWidget() {
     return GoogleMap(
+      mapType: MapType.normal,
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: LatLng(_position.latitude, _position.longitude),
