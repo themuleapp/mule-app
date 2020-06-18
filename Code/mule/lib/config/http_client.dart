@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
+import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
@@ -126,6 +127,22 @@ class HttpClient {
     final Response res = await _makeAuthenticatedPostRequest(
         '/authentication/change-password', changePasswordReq.toMap());
     return res;
+  }
+
+  Future<Response> handleDeleteAccount(
+      DeleteAccountReq deleteAccountReq) async {
+
+    String token = await Config.getToken();
+
+    return await _dio.delete(
+      '/authentication/delete-account',
+      data: deleteAccountReq.toMap(),
+      options: Options(
+        headers: {
+          'Authorization': token,
+        },
+      ),
+    );
   }
 
   Future<Response> handleGetProfileData() async {
