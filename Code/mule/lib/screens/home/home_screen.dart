@@ -18,7 +18,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with AutomaticKeepAliveClientMixin {
   final PanelController _panelController = PanelController();
   final FocusNode _fakeFocusNode = FocusNode();
   final FocusNode _destinationFocusNode = FocusNode();
@@ -28,6 +29,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Completer<GoogleMapController> _mapCompleter = Completer();
   Position _position;
   Widget _child;
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _onMapCreated(GoogleMapController controller) {
     _mapCompleter.complete(controller);
@@ -319,6 +323,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(20.0),
       topRight: Radius.circular(20.0),
