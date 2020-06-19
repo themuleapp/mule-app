@@ -5,7 +5,7 @@ import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/navigation_home_screen.dart';
-import 'package:mule/screens/homepage.dart';
+import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/splash_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 

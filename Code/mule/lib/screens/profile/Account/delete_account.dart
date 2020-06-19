@@ -5,7 +5,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
-import 'package:mule/screens/homepage.dart';
+import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
 
 class DeleteAccount extends StatefulWidget {
