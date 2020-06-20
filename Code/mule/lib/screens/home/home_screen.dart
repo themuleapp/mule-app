@@ -333,23 +333,25 @@ class _MyHomePageState extends State<MyHomePage>
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SlidingUpPanel(
-          borderRadius: radius,
-          onPanelSlide: this._handlePanelSlide,
-          minHeight: MediaQuery.of(context).size.height / 4,
-          maxHeight: MediaQuery.of(context).size.height - 120,
-          controller: _panelController,
-          backdropEnabled: true,
-          panel: Form(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-              child: _getFormDependingPanelOpen(),
+        body: SingleChildScrollView(
+          child: SlidingUpPanel(
+            borderRadius: radius,
+            onPanelSlide: this._handlePanelSlide,
+            minHeight: MediaQuery.of(context).size.height / 4,
+            maxHeight: MediaQuery.of(context).size.height - 120,
+            controller: _panelController,
+            backdropEnabled: true,
+            panel: Form(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                child: _getFormDependingPanelOpen(),
+              ),
+            ),
+            body: Center(
+              child: _child,
             ),
           ),
-          body: Center(
-            child: _child,
-          ),
-        ),
+        )
       ),
     );
   }
