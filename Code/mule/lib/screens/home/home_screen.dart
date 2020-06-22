@@ -231,9 +231,16 @@ class _MyHomePageState extends State<MyHomePage>
           ),
         ],
       ),
-      child: Row(
-        children: <Widget>[
-          IconButton(
+      child: TextFormField(
+        focusNode: focusNode,
+        cursorColor: AppTheme.lightBlue,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.go,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 15),
+          hintText: "Destination...",
+          prefixIcon: IconButton(
             splashColor: AppTheme.lightBlue,
             icon: Icon(
               Icons.add_location,
@@ -241,19 +248,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             onPressed: () {},
           ),
-          Expanded(
-            child: TextFormField(
-              focusNode: focusNode,
-              cursorColor: AppTheme.lightBlue,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.go,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                  hintText: "Destination..."),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -294,9 +289,16 @@ class _MyHomePageState extends State<MyHomePage>
           ),
         ],
       ),
-      child: Row(
-        children: <Widget>[
-          IconButton(
+      child: TextFormField(
+        //focusNode: _searchfocusNode,
+        cursorColor: AppTheme.lightBlue,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.go,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 15),
+          hintText: "Search...",
+          prefixIcon: IconButton(
             splashColor: AppTheme.lightBlue,
             icon: Icon(
               Icons.search,
@@ -304,19 +306,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             onPressed: () {},
           ),
-          Expanded(
-            child: TextFormField(
-              // focusNode: _searchFocusNode,
-              cursorColor: AppTheme.lightBlue,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.go,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                  hintText: "Search..."),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
