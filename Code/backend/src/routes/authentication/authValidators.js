@@ -65,7 +65,6 @@ export function validateResetPasswordData(resetData) {
 
 export function validateChangePasswordReq(changePasswordData) {
   const validation = Joi.object({
-    email: Joi.string().email().required(),
     oldPassword: Joi.string().required(),
     newPassword: Joi.string().required(),
   }).validate(changePasswordData, { abortEarly: false });
