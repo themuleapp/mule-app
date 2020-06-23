@@ -214,6 +214,9 @@ class SliderFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _getFormDependingPanelOpen();
+    return Container(
+      padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+      child: _getFormDependingPanelOpen(),
+    );
   }
 }
