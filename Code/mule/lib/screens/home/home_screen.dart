@@ -1,13 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/map_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -26,30 +23,12 @@ class _MyHomePageState extends State<MyHomePage>
   bool panelIsOpen = false;
   bool programmaticallyOpeningOrClosing = false;
 
-  Completer<GoogleMapController> _mapCompleter = Completer();
-  Position _position;
-  Widget _child;
-
   @override
   bool get wantKeepAlive => true;
-
-  void _onMapCreated(GoogleMapController controller) {
-    _mapCompleter.complete(controller);
-  }
-
-  void getCurrentLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      _position = position;
-      _child = mapWidget();
-    });
-  }
 
   @override
   void initState() {
     _fakeFocusNode.addListener(_handleSearchFocus);
-    getCurrentLocation();
     super.initState();
   }
 
@@ -96,28 +75,6 @@ class _MyHomePageState extends State<MyHomePage>
     } else if (panelIsOpen && percentage <= 0.5) {
       this._closePanel();
     }
-  }
-
-  Widget mapWidget() {
-    return GoogleMap(
-      mapType: MapType.normal,
-      onMapCreated: _onMapCreated,
-      scrollGesturesEnabled: true,
-      zoomGesturesEnabled: true,
-      myLocationEnabled: true,
-      gestureRecognizers: Set()
-        ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-        ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
-        ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
-        ..add(Factory<HorizontalDragGestureRecognizer>(
-            () => HorizontalDragGestureRecognizer()))
-        ..add(Factory<VerticalDragGestureRecognizer>(
-            () => VerticalDragGestureRecognizer())),
-      initialCameraPosition: CameraPosition(
-        target: LatLng(_position.latitude, _position.longitude),
-        zoom: 15.0,
-      ),
-    );
   }
 
   Widget _getFormDependingPanelOpen() {
@@ -322,27 +279,26 @@ class _MyHomePageState extends State<MyHomePage>
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: SlidingUpPanel(
-            borderRadius: radius,
-            onPanelSlide: this._handlePanelSlide,
-            minHeight: MediaQuery.of(context).size.height / 4,
-            maxHeight: MediaQuery.of(context).size.height - 120,
-            controller: _panelController,
-            backdropEnabled: true,
-            panel: Form(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                child: _getFormDependingPanelOpen(),
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            child: SlidingUpPanel(
+              borderRadius: radius,
+              onPanelSlide: this._handlePanelSlide,
+              minHeight: MediaQuery.of(context).size.height / 4,
+              maxHeight: MediaQuery.of(context).size.height - 120,
+              controller: _panelController,
+              backdropEnabled: true,
+              panel: Form(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                  child: _getFormDependingPanelOpen(),
+                ),
+              ),
+              body: Center(
+                child: MapWidget(),
               ),
             ),
-            body: Center(
-              child: _child,
-            ),
-          ),
-        )
-      ),
+          )),
     );
   }
 }
