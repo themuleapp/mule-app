@@ -1,10 +1,13 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
-class SliderFormWidget extends StatelessWidget {
+class SliderFormWidget extends StatefulWidget {
   final bool panelIsOpen;
   final FocusNode destinationFocusNode;
   final FocusNode fakeFocusNode;
@@ -16,8 +19,37 @@ class SliderFormWidget extends StatelessWidget {
       this.fakeFocusNode})
       : super(key: key);
 
+  @override
+  _SliderFormWidgetState createState() => _SliderFormWidgetState();
+}
+
+class _SliderFormWidgetState extends State<SliderFormWidget> {
+  final TextEditingController _destinationController = TextEditingController();
+  Timer _destinationThrottle;
+
+  @override
+  void initState() {
+    super.initState();
+    _destinationController.addListener(this._handleDestinationInputChange);
+  }
+
+  _handleDestinationInputChange() {
+    if (_destinationThrottle?.isActive ?? false) _destinationThrottle.cancel();
+    _destinationThrottle = Timer(Duration(milliseconds: 500), () async {
+      String searchTerm = _destinationController.text;
+      String API_KEY = "<API_KEY>";
+
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request = '$baseURL?input=$searchTerm&key=$API_KEY&type=address';
+
+      Response res = await Dio().get(request);
+      print(res.data);
+    });
+  }
+
   Widget _getFormDependingPanelOpen() {
-    if (panelIsOpen) {
+    if (widget.panelIsOpen) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -27,7 +59,7 @@ class SliderFormWidget extends StatelessWidget {
           ),
           _destinationTitle(),
           _destinationBar(
-            focusNode: destinationFocusNode,
+            focusNode: widget.destinationFocusNode,
           ),
           SizedBox(
             height: 20,
@@ -47,7 +79,7 @@ class SliderFormWidget extends StatelessWidget {
             height: 10,
           ),
           _destinationBar(
-            focusNode: fakeFocusNode,
+            focusNode: widget.fakeFocusNode,
           ),
         ],
       );
@@ -134,6 +166,7 @@ class SliderFormWidget extends StatelessWidget {
       ),
       child: TextFormField(
         focusNode: focusNode,
+        controller: _destinationController,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
