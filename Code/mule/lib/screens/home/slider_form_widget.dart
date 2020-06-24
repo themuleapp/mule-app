@@ -23,8 +23,19 @@ class SliderFormWidget extends StatefulWidget {
   _SliderFormWidgetState createState() => _SliderFormWidgetState();
 }
 
+class SearchItem {
+  String description;
+  String placeId;
+
+  SearchItem.fromJson(Map<String, dynamic> json)
+      : description = json['description'],
+        placeId = json['place_id'];
+}
+
 class _SliderFormWidgetState extends State<SliderFormWidget> {
   final TextEditingController _destinationController = TextEditingController();
+  List<SearchItem> suggestions = List();
+  SearchItem selectedSearchTerm;
   Timer _destinationThrottle;
 
   @override
@@ -37,14 +48,20 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     if (_destinationThrottle?.isActive ?? false) _destinationThrottle.cancel();
     _destinationThrottle = Timer(Duration(milliseconds: 500), () async {
       String searchTerm = _destinationController.text;
-      String API_KEY = "<API_KEY>";
+      String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
 
       String baseURL =
           'https://maps.googleapis.com/maps/api/place/autocomplete/json';
       String request = '$baseURL?input=$searchTerm&key=$API_KEY&type=address';
 
       Response res = await Dio().get(request);
-      print(res.data);
+      List<SearchItem> foundSuggestions = res.data['predictions']
+          .map<SearchItem>((singleData) => SearchItem.fromJson(singleData))
+          .toList();
+      setState(() {
+        suggestions.clear();
+        suggestions.addAll(foundSuggestions);
+      });
     });
   }
 
@@ -60,6 +77,28 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           _destinationTitle(),
           _destinationBar(
             focusNode: widget.destinationFocusNode,
+          ),
+          DropdownButton(
+            hint: Text('Select'),
+            onChanged: (SearchItem suggestion) {
+              print(suggestion);
+              setState(() {
+                selectedSearchTerm = suggestion;
+              });
+            },
+            value: selectedSearchTerm,
+            items: suggestions
+                .map((suggestion) => DropdownMenuItem(
+                      value: suggestion,
+                      child: Row(
+                        children: <Widget>[
+                          Text(suggestion.description),
+                          SizedBox(height: 10.0),
+                          Text(suggestion.placeId),
+                        ],
+                      ),
+                    ))
+                .toList(),
           ),
           SizedBox(
             height: 20,
