@@ -8,8 +8,11 @@ Boards can have automation in it. Our boards differ slightly to the default, thi
 Issues and merge requests will be automatically added to one of the board columns if they meet certain cirteria.
 
 > To do: When an issue is opened it's automatically added here (can of also be made from a node within the board itself)
+
 > In Progress: When a pull request is newly opened it gets added here
+
 > Testing: When a pull request awaits review, it's moved here
+
 > Done: Merged pull requests are added here, so too are closed issues
 
 Every column in every board can be edited by clicking on the three dots in the top right corner and then `managing automation`.
