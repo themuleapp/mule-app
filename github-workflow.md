@@ -24,14 +24,15 @@ This is a typical github workflow:
 4. As soon as you push to a new branch Github will give you the option to make a pull request 
 5. When creating the pull request, mention all the issues you're working on using *[keywords*](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue) and set the project this request belongs by clicking **Projects** on the right of the pull request description
 6. This can either be done in the commit messages, or the pull request description
+7. Finalize by clicking the arrow next to create issue to create a **Draft** request.
 
 > Mentioning the issues will link them to the pull request. This ensures the project board will always be up to date
 
-7. When the pull request is ready for reviewing/testing, remove the draft property and mention all the people authorized to review your work.
+8. When the pull request is ready for reviewing/testing, remove the draft property and mention all the people authorized to review your work.
 
 > This will automatically move the pull request to the `Testing` column in the project board
 
-8. After review, merge and close
+9. After review, merge and close
 
 ### Motivation
 
