@@ -191,7 +191,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         suggestionsCallback: _handleSearchDestination,
         itemBuilder: (context, Suggestion suggestion) {
           return ListTile(
-            leading: Icon(Icons.local_activity),
+            //leading: Icon(Icons.local_activity),
             title: Text(suggestion.description),
             subtitle: Text(suggestion.placeId),
           );
