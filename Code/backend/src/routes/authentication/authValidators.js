@@ -5,7 +5,7 @@ export function validateSignupDate(signUpData) {
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
-    phoneNumber: Joi.string().max(12).required(), // TODO is 12 really the longest?
+    phoneNumber: Joi.string().max(16).required(), // TODO is 12 really the longest?
     password: Joi.string().required(),
   }).validate(signUpData, { abortEarly: false });
 
