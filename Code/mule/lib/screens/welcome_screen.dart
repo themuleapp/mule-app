@@ -65,15 +65,16 @@ class _HomePageState extends State<HomePage>
                       backgroundColor: Colors.grey[100],
                       child: Image.asset('assets/images/logo.png'),
                       radius: screenHeight <= 660
-                          ? 100
+                          ? 75
                           : screenHeight < 812
-                              ? 115
+                              ? 90
                               : screenHeight <= 853
-                                  ? 125
+                                  ? 100
                                   : screenHeight <= 960
-                                      ? 140
-                                      : screenHeight <= 1024 ? 180 : 220,
-                    )),
+                                      ? 110
+                                      : screenHeight <= 1024 ? 155 : 185,
+                    )
+                ),
               ),
               DelayedAnimation(
                 child: Text(
@@ -89,7 +90,8 @@ class _HomePageState extends State<HomePage>
                                   : screenHeight <= 960
                                       ? 40
                                       : screenHeight <= 1024 ? 55 : 70,
-                      color: color),
+                      color: color
+                  ),
                 ),
                 delay: delayedAmount + 1000,
               ),
@@ -107,7 +109,8 @@ class _HomePageState extends State<HomePage>
                                   : screenHeight <= 960
                                       ? 40
                                       : screenHeight <= 1024 ? 55 : 70,
-                      color: color),
+                      color: color
+                  ),
                 ),
                 delay: delayedAmount + 2000,
               ),
