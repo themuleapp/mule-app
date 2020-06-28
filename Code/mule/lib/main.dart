@@ -12,7 +12,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
-  runApp(App());
+  runApp( App());
 }
 
 class App extends StatelessWidget {

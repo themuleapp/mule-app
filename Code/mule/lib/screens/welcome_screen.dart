@@ -34,17 +34,25 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
     final color = Colors.white;
     _scale = 1 - _controller.value;
     return Scaffold(
       backgroundColor: AppTheme.lightBlue,
       body: SingleChildScrollView(
-              child: Center(
+        child: Center(
           child: Column(
             children: <Widget>[
               AvatarGlow(
-                endRadius: height <= 660 ? 150 : height <= 810 ? 170 : 250,
+                endRadius: screenHeight <= 660
+                    ? 150
+                    : screenHeight < 812
+                        ? 180
+                        : screenHeight <= 853
+                            ? 210
+                            : screenHeight <= 960
+                                ? 240
+                                : screenHeight <= 1024 ? 290 : 380,
                 duration: Duration(seconds: 2),
                 glowColor: Colors.white24,
                 repeat: true,
@@ -56,14 +64,32 @@ class _HomePageState extends State<HomePage>
                     child: CircleAvatar(
                       backgroundColor: Colors.grey[100],
                       child: Image.asset('assets/images/logo.png'),
-                      radius: height >= 1024 ? 150 : 100.0,
+                      radius: screenHeight <= 660
+                          ? 100
+                          : screenHeight < 812
+                              ? 115
+                              : screenHeight <= 853
+                                  ? 125
+                                  : screenHeight <= 960
+                                      ? 140
+                                      : screenHeight <= 1024 ? 180 : 220,
                     )),
               ),
               DelayedAnimation(
                 child: Text(
                   "Hey there!",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenHeight <= 660
+                          ? 30
+                          : screenHeight < 812
+                              ? 33
+                              : screenHeight <= 853
+                                  ? 35
+                                  : screenHeight <= 960
+                                      ? 40
+                                      : screenHeight <= 1024 ? 55 : 70,
+                      color: color),
                 ),
                 delay: delayedAmount + 1000,
               ),
@@ -71,12 +97,28 @@ class _HomePageState extends State<HomePage>
                 child: Text(
                   "I'm Mule",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenHeight <= 660
+                          ? 30
+                          : screenHeight < 812
+                              ? 33
+                              : screenHeight <= 853
+                                  ? 35
+                                  : screenHeight <= 960
+                                      ? 40
+                                      : screenHeight <= 1024 ? 55 : 70,
+                      color: color),
                 ),
                 delay: delayedAmount + 2000,
               ),
               SizedBox(
-                height: 30.0,
+                height: screenHeight < 667
+                    ? 30.0
+                    : screenHeight < 812
+                        ? 60.0
+                        : screenHeight <= 896
+                            ? 70
+                            : screenHeight <= 1024 ? 80 : 90,
               ),
               DelayedAnimation(
                 child: GestureDetector(
@@ -89,13 +131,13 @@ class _HomePageState extends State<HomePage>
                   onTapUp: _onTapUp,
                   child: Transform.scale(
                     scale: _scale,
-                    child: _animatedButtonUI,
+                    child: _animatedButtonUI(screenHeight),
                   ),
                 ),
                 delay: delayedAmount + 4000,
               ),
               SizedBox(
-                height: 50.0,
+                height: screenHeight <= 896 ? 35 : 50.0,
               ),
               DelayedAnimation(
                 child: GestureDetector(
@@ -104,7 +146,13 @@ class _HomePageState extends State<HomePage>
                   child: Text(
                     "I already have an account".toUpperCase(),
                     style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: screenHeight < 670
+                            ? 16
+                            : screenHeight <= 740
+                                ? 18.0
+                                : screenHeight < 960
+                                    ? 20.0
+                                    : screenHeight <= 1024 ? 24.0 : 28.0,
                         fontWeight: FontWeight.bold,
                         color: color),
                   ),
@@ -118,9 +166,13 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget get _animatedButtonUI => Container(
-        height: 60,
-        width: 270,
+  Widget _animatedButtonUI(double screenHeight) => Container(
+        height: screenHeight < 667
+            ? 50
+            : screenHeight < 960 ? 60 : screenHeight < 1280 ? 70 : 80,
+        width: screenHeight <= 740
+            ? 240
+            : screenHeight < 960 ? 270 : screenHeight <= 1280 ? 400 : 440,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
           color: Colors.white,
@@ -129,7 +181,8 @@ class _HomePageState extends State<HomePage>
           child: Text(
             'Sign Up',
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize:
+                  screenHeight < 960 ? 20.0 : screenHeight < 1280 ? 25 : 30,
               fontWeight: FontWeight.bold,
               color: AppTheme.lightBlue,
             ),
