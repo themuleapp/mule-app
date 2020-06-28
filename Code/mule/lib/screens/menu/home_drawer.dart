@@ -99,54 +99,58 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      AnimatedBuilder(
-                        animation: widget.iconAnimationController,
-                        builder: (BuildContext context, Widget child) {
-                          return ScaleTransition(
-                            scale: AlwaysStoppedAnimation<double>(1.0 -
-                                (widget.iconAnimationController.value) * 0.2),
-                            child: RotationTransition(
-                              turns: AlwaysStoppedAnimation<double>(
-                                  Tween<double>(begin: 0.0, end: 24.0)
-                                          .animate(CurvedAnimation(
-                                              parent: widget
-                                                  .iconAnimationController,
-                                              curve: Curves.fastOutSlowIn))
-                                          .value /
-                                      360),
-                              child: Container(
-                                height: 120,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                        color:
-                                            AppTheme.darkGrey.withOpacity(0.6),
-                                        offset: const Offset(2.0, 4.0),
-                                        blurRadius: 8),
-                                  ],
-                                ),
-                                child: GestureDetector(
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(60.0)),
-                                    child: Image.asset(
-                                        'assets/images/profile_photo_nick_miller.jpg'),
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, left: 4.0),
+                        child: AnimatedBuilder(
+                          animation: widget.iconAnimationController,
+                          builder: (BuildContext context, Widget child) {
+                            return ScaleTransition(
+                              scale: AlwaysStoppedAnimation<double>(1.0 -
+                                  (widget.iconAnimationController.value) * 0.2),
+                              child: RotationTransition(
+                                turns: AlwaysStoppedAnimation<double>(
+                                    Tween<double>(begin: 0.0, end: 24.0)
+                                        .animate(CurvedAnimation(
+                                        parent: widget
+                                            .iconAnimationController,
+                                        curve: Curves.fastOutSlowIn))
+                                        .value /
+                                        360),
+                                child: Container(
+                                  height: 120,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                          color:
+                                          AppTheme.darkGrey.withOpacity(0.6),
+                                          offset: const Offset(2.0, 4.0),
+                                          blurRadius: 8),
+                                    ],
                                   ),
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => Profile()));
-                                  },
+                                  child: GestureDetector(
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(60.0)
+                                      ),
+                                      child: Image.asset(
+                                          'assets/images/profile_photo_nick_miller.jpg'),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Profile()));
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 15, left: 4),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Observer(
                           builder: (_) => GestureDetector(
                             child: Text(
@@ -165,27 +169,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 4, top: 0, bottom: 0),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              "Be a Mule",
-                              style: TextStyle(
-                                fontFamily: AppTheme.fontName,
-                                fontWeight: FontWeight.w600,
-                                color: AppTheme.darkGrey,
-                                fontSize: 18,
-                              ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "Be a Mule",
+                            style: TextStyle(
+                              fontFamily: AppTheme.fontName,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.darkGrey,
+                              fontSize: 18,
                             ),
-                            Switch(
-                              value: true,
-                              activeColor: AppTheme.lightBlue,
-                              onChanged: (bool state) {},
-                            )
-                          ],
-                        ),
+                          ),
+                          Switch(
+                            value: true,
+                            activeColor: AppTheme.lightBlue,
+                            onChanged: (bool state) {},
+                          )
+                        ],
                       ),
                     ],
                   ),

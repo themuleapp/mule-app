@@ -1,10 +1,14 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
-class SliderFormWidget extends StatelessWidget {
+class SliderFormWidget extends StatefulWidget {
   final bool panelIsOpen;
   final FocusNode destinationFocusNode;
   final FocusNode fakeFocusNode;
@@ -16,8 +20,36 @@ class SliderFormWidget extends StatelessWidget {
       this.fakeFocusNode})
       : super(key: key);
 
+  @override
+  _SliderFormWidgetState createState() => _SliderFormWidgetState();
+}
+
+class Suggestion {
+  String description;
+  String placeId;
+
+  Suggestion.fromJson(Map<String, dynamic> json)
+      : description = json['description'],
+        placeId = json['place_id'];
+}
+
+class _SliderFormWidgetState extends State<SliderFormWidget> {
+  TextEditingController _destinationController = TextEditingController();
+
+  Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
+    String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+    String request = '$baseURL?input=$searchTerm&key=$API_KEY&type=address';
+
+    Response res = await Dio().get(request);
+    return res.data['predictions']
+        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
+        .toList();
+  }
+
   Widget _getFormDependingPanelOpen() {
-    if (panelIsOpen) {
+    if (widget.panelIsOpen) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -27,7 +59,8 @@ class SliderFormWidget extends StatelessWidget {
           ),
           _destinationTitle(),
           _destinationBar(
-            focusNode: destinationFocusNode,
+            focusNode: widget.destinationFocusNode,
+            controller: _destinationController,
           ),
           SizedBox(
             height: 20,
@@ -47,7 +80,8 @@ class SliderFormWidget extends StatelessWidget {
             height: 10,
           ),
           _destinationBar(
-            focusNode: fakeFocusNode,
+            focusNode: widget.fakeFocusNode,
+            controller: TextEditingController(),
           ),
         ],
       );
@@ -113,7 +147,8 @@ class SliderFormWidget extends StatelessWidget {
   }
 
   Widget _destinationBar({
-    FocusNode focusNode,
+    @required FocusNode focusNode,
+    @required TextEditingController controller,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -132,25 +167,62 @@ class SliderFormWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: TextFormField(
-        focusNode: focusNode,
-        cursorColor: AppTheme.lightBlue,
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.go,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.only(top: 15),
-          hintText: "Destination...",
-          prefixIcon: IconButton(
-            splashColor: AppTheme.lightBlue,
-            icon: Icon(
-              Icons.add_location,
-              color: AppTheme.secondaryBlue,
+      child: TypeAheadField(
+        textFieldConfiguration: TextFieldConfiguration(
+          cursorColor: AppTheme.lightBlue,
+          controller: controller,
+          textInputAction: TextInputAction.go,
+          focusNode: focusNode,
+          autofocus: true,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.only(top: 15),
+            hintText: "Destination...",
+            prefixIcon: IconButton(
+              splashColor: AppTheme.lightBlue,
+              icon: Icon(
+                Icons.add_location,
+                color: AppTheme.secondaryBlue,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         ),
+        suggestionsCallback: _handleSearchDestination,
+        itemBuilder: (context, Suggestion suggestion) {
+          return ListTile(
+            //leading: Icon(Icons.local_activity),
+            title: Text(suggestion.description),
+            subtitle: Text(suggestion.placeId),
+          );
+        },
+        onSuggestionSelected: (Suggestion suggestion) {
+          controller.text = suggestion.description;
+        },
+        suggestionsBoxDecoration: SuggestionsBoxDecoration(
+            elevation: 0.7,
+            constraints: BoxConstraints(minHeight: 40.0, maxHeight: 50.0)),
       ),
+      // child: TextFormField(
+      //   focusNode: focusNode,
+      //   controller: _destinationController,
+      //   cursorColor: AppTheme.lightBlue,
+      //   keyboardType: TextInputType.text,
+      //   textInputAction: TextInputAction.go,
+      //   decoration: InputDecoration(
+      //     border: InputBorder.none,
+      //     contentPadding: EdgeInsets.only(top: 15),
+      //     hintText: "Destination...",
+      //     prefixIcon: IconButton(
+      //       splashColor: AppTheme.lightBlue,
+      //       icon: Icon(
+      //         Icons.add_location,
+      //         color: AppTheme.secondaryBlue,
+      //       ),
+      //       onPressed: () {},
+      //     ),
+      //   ),
+      // ),
     );
   }
 

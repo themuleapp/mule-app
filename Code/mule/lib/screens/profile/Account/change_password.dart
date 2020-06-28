@@ -52,6 +52,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         await httpClient.handleChangePassword(changePasswordReq);
     if (res.statusCode == 200) {
       Navigator.of(context).pop();
+      createDialogWidget(context, 'Success!',
+          'Your password has been changed');
     } else {
       ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
