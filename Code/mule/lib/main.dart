@@ -13,7 +13,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
-  runApp( DevicePreview(builder: (_) => App()));
+  runApp( App());
 }
 
 class App extends StatelessWidget {
@@ -33,7 +33,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: _isAuthenticatedUser,

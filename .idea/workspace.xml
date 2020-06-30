@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/config/app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/config/app_theme.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/mule/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/welcome_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/welcome_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/mule/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
