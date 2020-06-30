@@ -2,41 +2,45 @@ import 'regenerator-runtime/runtime.js'; // To support async await syntax
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import mongoose from 'mongoose';
 import cron from 'node-cron';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
+// Our imports
 import authMiddleware from './middleware/authMiddleware';
-import { authRoutes, profileRoutes } from './routes/routesExport';
+import { authRoutes, profileRoutes, verifyRoutes } from './routes/routesExport';
 import registerCronJobs from './config/cronjobs';
+import connectToMongo from './config/connectToMongo';
+import swaggerOptions from './config/swaggerOptions';
 
 // setup env vars
 dotenv.config();
 // Register cronjobs
 registerCronJobs(cron);
-
-// connect to db
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('Database connection established'))
-  .catch(err =>
-    console.error(`Error establishing connection to database ${err}`)
-  );
+// Connect to DB
+connectToMongo();
 
 const app = express();
-
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Middleware
 app.use(morgan('combined'));
 app.use(express.json());
 
 // Register routes
 
-app.get('/test-working', (req, res) => res.send({ status: 'Working' }));
-
+/**
+ * @swagger
+ * /api/test:
+ *   get:
+ *    summary: This should help you check if the server is alive and working.
+ *    responses:
+ *      200:
+ *        description: Receive back property status working
+ */
 app.get('/api/test', (req, res) => res.send({ status: 'working' }));
 app.use('/api/authentication', authRoutes);
+app.use('/api/verify', verifyRoutes);
 app.use('/api/profile', authMiddleware, profileRoutes);
 // Only test
 app.get('/api/protected', authMiddleware, async (req, res) => {

@@ -5,7 +5,7 @@ import composeErrorResponse from '../util/composeErrorResponse';
 
 export default async (req, res, next) => {
   if (!req.header('Authorization')) {
-    res.status(401).send(composeErrorResponse(['Not logged in'], 400));
+    return res.status(401).send(composeErrorResponse(['Not logged in'], 400));
   }
   // Get token
   const token = req.header('Authorization').replace('Bearer ', '');

@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi";
+import Joi from '@hapi/joi';
 
 export function validateSignupDate(signUpData) {
   const validation = Joi.object({
@@ -10,7 +10,7 @@ export function validateSignupDate(signUpData) {
   }).validate(signUpData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
@@ -22,7 +22,7 @@ export function validateLoginData(loginData) {
   }).validate(loginData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
@@ -34,7 +34,7 @@ export function verifyTokenEmailData(resetTokenEmailData) {
   }).validate(resetTokenEmailData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
@@ -45,7 +45,7 @@ export function validateRequestResetPasswordData(requestResetData) {
   }).validate(requestResetData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
@@ -58,7 +58,7 @@ export function validateResetPasswordData(resetData) {
   }).validate(resetData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
@@ -71,7 +71,18 @@ export function validateChangePasswordReq(changePasswordData) {
   }).validate(changePasswordData, { abortEarly: false });
 
   if (validation?.error?.details) {
-    return validation.error.details.map((x) => x.message);
+    return validation.error.details.map(x => x.message);
+  }
+  return null;
+}
+
+export function validateDeleteAccountReq(deleteAccountData) {
+  const validation = Joi.object({
+    reason: Joi.string().required(),
+  }).validate(deleteAccountData, { abortEarly: false });
+
+  if (validation?.error?.details) {
+    return validation.error.details.map(x => x.message);
   }
   return null;
 }
