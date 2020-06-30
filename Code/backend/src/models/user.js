@@ -55,6 +55,9 @@ const userSchema = mongoose.Schema({
     required: false,
     default: Date.now,
   },
+  profileImageLocation: {
+    type: String,
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -170,5 +173,10 @@ userSchema.methods.resetPassword = async function (password) {
 
 userSchema.methods.deleteAccount = async function () {
   await this.remove();
+};
+
+userSchema.methods.updateProfileImageLocation = async function (imgLocation) {
+  this.profileImageLocation = imgLocation;
+  await this.save();
 };
 export default mongoose.model('User', userSchema);
