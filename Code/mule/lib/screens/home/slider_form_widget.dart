@@ -59,7 +59,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           ),
           _destinationTitle(),
           _destinationBar(
-            focusNode: widget.destinationFocusNode,
+            // TODO: Fix automatic sliding when focused
+            // focusNode: widget.destinationFocusNode,
             controller: _destinationController,
           ),
           SizedBox(
@@ -80,7 +81,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             height: 10,
           ),
           _destinationBar(
-            focusNode: widget.fakeFocusNode,
+            // TODO: Fix automatic sliding when focused
+            // focusNode: widget.fakeFocusNode,
             controller: TextEditingController(),
           ),
         ],
@@ -147,7 +149,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   }
 
   Widget _destinationBar({
-    @required FocusNode focusNode,
+    // @required FocusNode focusNode,
     @required TextEditingController controller,
   }) {
     return Container(
@@ -172,7 +174,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           cursorColor: AppTheme.lightBlue,
           controller: controller,
           textInputAction: TextInputAction.go,
-          focusNode: focusNode,
+          // TODO: Fix automatic sliding when focused
+          // focusNode: focusNode,
           autofocus: true,
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -188,12 +191,12 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             ),
           ),
         ),
-        suggestionsCallback: _handleSearchDestination,
+        suggestionsCallback: (pattern) async {
+          return await _handleSearchDestination(pattern);
+        },
         itemBuilder: (context, Suggestion suggestion) {
           return ListTile(
-            //leading: Icon(Icons.local_activity),
             title: Text(suggestion.description),
-            subtitle: Text(suggestion.placeId),
           );
         },
         onSuggestionSelected: (Suggestion suggestion) {
@@ -201,7 +204,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         },
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
             elevation: 0.7,
-            constraints: BoxConstraints(minHeight: 40.0, maxHeight: 50.0)),
+            constraints: BoxConstraints(minHeight: 40.0, maxHeight: 200.0)),
       ),
       // child: TextFormField(
       //   focusNode: focusNode,
@@ -263,6 +266,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
+        // TODO: Fix automatic sliding when focused
         //focusNode: _searchfocusNode,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
