@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -37,6 +38,9 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   TextEditingController _destinationController = TextEditingController();
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
+    if (searchTerm.isEmpty) {
+      return null;
+    }
     String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
@@ -48,6 +52,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         .toList();
   }
 
+  // Shows only destination bar, or complete form depending on the
+  // state of the slider panel
   Widget _getFormDependingPanelOpen() {
     if (widget.panelIsOpen) {
       return Column(
@@ -79,9 +85,10 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           SizedBox(
             height: 10,
           ),
+          // Destinationbar only needs to be functional when panel is open
           _destinationBar(
             focusNode: widget.fakeFocusNode,
-            controller: TextEditingController(),
+            controller: null,
           ),
         ],
       );
@@ -163,7 +170,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             color: AppTheme.lightGrey.withOpacity(0.3),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -173,7 +180,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           controller: controller,
           textInputAction: TextInputAction.go,
           focusNode: focusNode,
-          autofocus: true,
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 15),
@@ -184,45 +190,30 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
                 Icons.add_location,
                 color: AppTheme.secondaryBlue,
               ),
-              onPressed: () {},
+              onPressed: () {
+                print(focusNode == primaryFocus);
+              },
             ),
           ),
         ),
-        suggestionsCallback: _handleSearchDestination,
+        suggestionsCallback: (pattern) async {
+          return await _handleSearchDestination(pattern);
+        },
         itemBuilder: (context, Suggestion suggestion) {
-          return ListTile(
-            //leading: Icon(Icons.local_activity),
-            title: Text(suggestion.description),
-            subtitle: Text(suggestion.placeId),
-          );
+          // If string is empty, suggestion wil be null
+          return (suggestion == null)
+              ? null
+              : ListTile(
+                  title: Text(suggestion.description),
+                );
         },
         onSuggestionSelected: (Suggestion suggestion) {
           controller.text = suggestion.description;
         },
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
             elevation: 0.7,
-            constraints: BoxConstraints(minHeight: 40.0, maxHeight: 50.0)),
+            constraints: BoxConstraints(minHeight: 40.0, maxHeight: 200.0)),
       ),
-      // child: TextFormField(
-      //   focusNode: focusNode,
-      //   controller: _destinationController,
-      //   cursorColor: AppTheme.lightBlue,
-      //   keyboardType: TextInputType.text,
-      //   textInputAction: TextInputAction.go,
-      //   decoration: InputDecoration(
-      //     border: InputBorder.none,
-      //     contentPadding: EdgeInsets.only(top: 15),
-      //     hintText: "Destination...",
-      //     prefixIcon: IconButton(
-      //       splashColor: AppTheme.lightBlue,
-      //       icon: Icon(
-      //         Icons.add_location,
-      //         color: AppTheme.secondaryBlue,
-      //       ),
-      //       onPressed: () {},
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -263,7 +254,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
-        //focusNode: _searchfocusNode,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,

@@ -22,19 +22,15 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   _openPanel() {
     _panelController.open().then((value) => setState(() {
           programmaticallyOpeningOrClosing = false;
+          panelIsOpen = true;
         }));
-    setState(() {
-      panelIsOpen = true;
-    });
   }
 
   _closePanel() {
     _panelController.close().then((value) => setState(() {
           programmaticallyOpeningOrClosing = false;
+          panelIsOpen = false;
         }));
-    setState(() {
-      panelIsOpen = false;
-    });
   }
 
   _handleSearchFocus() {
@@ -43,8 +39,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         programmaticallyOpeningOrClosing = true;
       });
       this._openPanel();
-      _fakeFocusNode.unfocus();
       _destinationFocusNode.requestFocus();
+      _fakeFocusNode.unfocus();
     }
   }
 
