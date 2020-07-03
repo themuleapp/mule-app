@@ -63,7 +63,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             controller: _destinationController,
           ),
           SizedBox(
-            height: 200,
+            height: 20,
           ),
           _searchBarTitle(),
           _searchBar(),
@@ -204,26 +204,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             elevation: 0.7,
             constraints: BoxConstraints(minHeight: 40.0, maxHeight: 200.0)),
       ),
-      // child: TextFormField(
-      //   focusNode: focusNode,
-      //   controller: _destinationController,
-      //   cursorColor: AppTheme.lightBlue,
-      //   keyboardType: TextInputType.text,
-      //   textInputAction: TextInputAction.go,
-      //   decoration: InputDecoration(
-      //     border: InputBorder.none,
-      //     contentPadding: EdgeInsets.only(top: 15),
-      //     hintText: "Destination...",
-      //     prefixIcon: IconButton(
-      //       splashColor: AppTheme.lightBlue,
-      //       icon: Icon(
-      //         Icons.add_location,
-      //         color: AppTheme.secondaryBlue,
-      //       ),
-      //       onPressed: () {},
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -264,7 +244,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
-        // focusNode: _searchfocusNode,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
