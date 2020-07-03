@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -37,6 +38,9 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   TextEditingController _destinationController = TextEditingController();
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
+    if (searchTerm.isEmpty) {
+      return null;
+    }
     String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
@@ -48,6 +52,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         .toList();
   }
 
+  // Shows only destination bar, or complete form depending on the
+  // state of the slider panel
   Widget _getFormDependingPanelOpen() {
     if (widget.panelIsOpen) {
       return Column(
@@ -79,9 +85,10 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           SizedBox(
             height: 10,
           ),
+          // Destinationbar only needs to be functional when panel is open
           _destinationBar(
             focusNode: widget.fakeFocusNode,
-            controller: TextEditingController(),
+            controller: null,
           ),
         ],
       );
@@ -163,7 +170,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             color: AppTheme.lightGrey.withOpacity(0.3),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -193,9 +200,12 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           return await _handleSearchDestination(pattern);
         },
         itemBuilder: (context, Suggestion suggestion) {
-          return ListTile(
-            title: Text(suggestion.description),
-          );
+          // If string is empty, suggestion wil be null
+          return (suggestion == null)
+              ? null
+              : ListTile(
+                  title: Text(suggestion.description),
+                );
         },
         onSuggestionSelected: (Suggestion suggestion) {
           controller.text = suggestion.description;
