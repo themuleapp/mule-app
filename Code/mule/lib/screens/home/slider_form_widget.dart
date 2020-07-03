@@ -59,12 +59,11 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           ),
           _destinationTitle(),
           _destinationBar(
-            // TODO: Fix automatic sliding when focused
-            // focusNode: widget.destinationFocusNode,
+            focusNode: widget.destinationFocusNode,
             controller: _destinationController,
           ),
           SizedBox(
-            height: 20,
+            height: 200,
           ),
           _searchBarTitle(),
           _searchBar(),
@@ -81,8 +80,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             height: 10,
           ),
           _destinationBar(
-            // TODO: Fix automatic sliding when focused
-            // focusNode: widget.fakeFocusNode,
+            focusNode: widget.fakeFocusNode,
             controller: TextEditingController(),
           ),
         ],
@@ -149,7 +147,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   }
 
   Widget _destinationBar({
-    // @required FocusNode focusNode,
+    @required FocusNode focusNode,
     @required TextEditingController controller,
   }) {
     return Container(
@@ -174,9 +172,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           cursorColor: AppTheme.lightBlue,
           controller: controller,
           textInputAction: TextInputAction.go,
-          // TODO: Fix automatic sliding when focused
-          // focusNode: focusNode,
-          autofocus: true,
+          focusNode: focusNode,
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 15),
@@ -187,7 +183,9 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
                 Icons.add_location,
                 color: AppTheme.secondaryBlue,
               ),
-              onPressed: () {},
+              onPressed: () {
+                print(focusNode == primaryFocus);
+              },
             ),
           ),
         ),
@@ -266,8 +264,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
-        // TODO: Fix automatic sliding when focused
-        //focusNode: _searchfocusNode,
+        // focusNode: _searchfocusNode,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
