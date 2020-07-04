@@ -12,13 +12,13 @@ class Legal extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
@@ -43,7 +43,10 @@ class Legal extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.security),
+              leading: Icon(
+                  Icons.security,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Privacy Policy",
                 style: TextStyle(
@@ -53,7 +56,10 @@ class Legal extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               /*onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => PrivacyPolicy()));
@@ -64,7 +70,10 @@ class Legal extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.verified_user),
+              leading: Icon(
+                  Icons.verified_user,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Terms of Service",
                 style: TextStyle(
@@ -74,7 +83,10 @@ class Legal extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               /*onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => TermsOfService()));
@@ -85,7 +97,10 @@ class Legal extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.insert_drive_file),
+              leading: Icon(
+                  Icons.insert_drive_file,
+                  color: AppTheme.secondaryBlue
+              ),
               title: Text(
                 "Licenses",
                 style: TextStyle(
@@ -95,7 +110,10 @@ class Legal extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue
+              ),
               /*onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => Licenses()));

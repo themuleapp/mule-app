@@ -13,83 +13,90 @@ class Settings extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              "Settings",
-              style: TextStyle(
-                fontFamily: AppTheme.fontName,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.darkGrey,
-                fontSize: 30,
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Divider(),
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 0.0,
-              ),
-              leading: Icon(Icons.account_circle),
-              title: Text(
-                "Profile",
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                "Settings",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
+                  fontSize: 30,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Profile()));
-              },
-            ),
-            Divider(),
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 0.0,
+              SizedBox(
+                height: 10.0,
               ),
-              leading: Icon(Icons.location_on),
-              title: Text(
-                "Location",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
-                  color: AppTheme.darkGrey,
+              Divider(),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 0.0,
                 ),
-              ),
-              trailing: Icon(Icons.chevron_right),
-            ),
-            Divider(),
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 0.0,
-              ),
-              leading: Icon(Icons.notifications),
-              title: Text(
-                "Notifications",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
-                  color: AppTheme.darkGrey,
+                leading:
+                    Icon(Icons.account_circle, color: AppTheme.secondaryBlue),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    color: AppTheme.darkGrey,
+                  ),
                 ),
+                trailing:
+                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Profile()));
+                },
               ),
-              trailing: Icon(Icons.chevron_right),
-            ),
-            Divider(),
-            SizedBox(
-              height: 10.0,
-            ),
-          ],
+              Divider(),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 0.0,
+                ),
+                leading: Icon(Icons.location_on, color: AppTheme.secondaryBlue),
+                title: Text(
+                  "Location",
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    color: AppTheme.darkGrey,
+                  ),
+                ),
+                trailing:
+                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+              ),
+              Divider(),
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 0.0,
+                ),
+                leading:
+                    Icon(Icons.notifications, color: AppTheme.secondaryBlue),
+                title: Text(
+                  "Notifications",
+                  style: TextStyle(
+                    fontFamily: AppTheme.fontName,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16.0,
+                    color: AppTheme.darkGrey,
+                  ),
+                ),
+                trailing:
+                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+              ),
+              Divider(),
+              SizedBox(
+                height: 10.0,
+              ),
+            ],
+          ),
         ),
       ),
     );

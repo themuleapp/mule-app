@@ -46,4 +46,5 @@ abstract class _UserInfoStore with Store {
   String get fullName => '$_firstName $_lastName';
   String get email => this._email;
   String get phoneNumber => this._phoneNumber;
+  String get firstName => this._firstName;
 }

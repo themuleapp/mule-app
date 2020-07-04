@@ -7,44 +7,46 @@ class ChangeEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.white,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  "Change Email",
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "Change Email",
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.darkGrey),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 30.0,
-              ),
-              _changeEmailForm(context),
-              SizedBox(
-                height: 30.0,
-              ),
-            ],
+                SizedBox(
+                  height: 30.0,
+                ),
+                _changeEmailForm(context),
+                SizedBox(
+                  height: 30.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -52,38 +54,40 @@ class ChangeEmail extends StatelessWidget {
   }
 
   Widget _changeEmailForm(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "You can update your email address",
-          style: TextStyle(
-              fontSize: 17.0,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.darkGrey),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        CustomTextFormField(
-          hintText: "Email",
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 45.0,
-          child: FlatButton(
-            color: AppTheme.lightBlue,
-            child: Text(
-              "SUBMIT",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            onPressed: () {},
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "You can update your email address",
+            style: TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w500,
+                color: AppTheme.darkGrey),
           ),
-        )
-      ],
+          SizedBox(
+            height: 20.0,
+          ),
+          CustomTextFormField(
+            hintText: "Email",
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 45.0,
+            child: FlatButton(
+              color: AppTheme.lightBlue,
+              child: Text(
+                "SUBMIT",
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+              onPressed: () {},
+            ),
+          )
+        ],
+      ),
     );
   }
 }

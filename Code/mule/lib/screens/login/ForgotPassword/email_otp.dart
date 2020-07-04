@@ -57,19 +57,20 @@ class _OtpVerificationState extends State<OtpVerification>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       backgroundColor: AppTheme.white,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
@@ -77,80 +78,82 @@ class _OtpVerificationState extends State<OtpVerification>
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Verify Email",
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Verify Email",
+                        style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.darkGrey),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      "Please enter the code we have emailed you",
                       style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500,
                           color: AppTheme.darkGrey),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Text(
-                    "Please enter the code we have emailed you",
-                    style: TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                        color: AppTheme.darkGrey),
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: CustomTextFormField(
-                      keyboardType: TextInputType.number,
-                      validator: validateNotEmptyInput,
-                      controller: _otpController,
-                      hintText: "",
-                      verticalPadding: 25.0,
+                    Form(
+                      key: _formKey,
+                      child: CustomTextFormField(
+                        keyboardType: TextInputType.number,
+                        validator: validateNotEmptyInput,
+                        controller: _otpController,
+                        hintText: "",
+                        verticalPadding: 25.0,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        "Didn't receive a code?",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 15),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Resend Code",
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Didn't receive a code?",
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: AppTheme.lightBlue,
-                          ),
+                              fontWeight: FontWeight.w600, fontSize: 15),
                         ),
-                        onTap: this._handleResendResetCode,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 45.0,
-                    child: FlatButton(
-                      color: AppTheme.lightBlue,
-                      child: Text(
-                        "VERIFY",
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      ),
-                      onPressed: this._handleVerify,
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            "Resend Code",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: AppTheme.lightBlue,
+                            ),
+                          ),
+                          onTap: this._handleResendResetCode,
+                        ),
+                      ],
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 45.0,
+                      child: FlatButton(
+                        color: AppTheme.lightBlue,
+                        child: Text(
+                          "VERIFY",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                        onPressed: this._handleVerify,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],

@@ -5,7 +5,8 @@ import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/navigation_home_screen.dart';
-import 'package:mule/screens/homepage.dart';
+import 'package:mule/screens/welcome_screen.dart';
+import 'package:mule/splash_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 void main() async {
@@ -38,21 +39,10 @@ class App extends StatelessWidget {
           if (snapshot.hasData && snapshot.data) {
             return NavigationHomeScreen();
           } else if (!snapshot.hasData) {
-            return WhiteWaitingPage();
+            return SplashScreen();
           }
           return HomePage();
         },
-      ),
-    );
-  }
-}
-
-class WhiteWaitingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
       ),
     );
   }

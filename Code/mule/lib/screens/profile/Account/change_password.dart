@@ -45,14 +45,15 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
       return;
     }
     final String oldPass = _oldPasswordController.text.trim();
-    final String email = GetIt.I.get<UserInfoStore>().email;
-    final ChangePasswordReq changePasswordReq = ChangePasswordReq(
-        email: email, oldPassword: oldPass, newPassword: newPass1);
+    final ChangePasswordReq changePasswordReq =
+        ChangePasswordReq(oldPassword: oldPass, newPassword: newPass1);
 
     final Response res =
         await httpClient.handleChangePassword(changePasswordReq);
     if (res.statusCode == 200) {
       Navigator.of(context).pop();
+      createDialogWidget(context, 'Success!',
+          'Your password has been changed');
     } else {
       ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
@@ -70,13 +71,13 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
@@ -84,67 +85,72 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      //padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        "Change Password",
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.darkGrey),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _oldPasswordController,
-                      hintText: "Current Password",
-                      obscureText: true,
-                      validator: validateNewPassword,
-                      //controller: passwordController,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _newPassword1Controller,
-                      hintText: "New Password",
-                      obscureText: true,
-                      validator: validateNewPassword,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CustomTextFormField(
-                      controller: _newPassword2Controller,
-                      validator: validateNewPassword,
-                      hintText: "Confirm New Password",
-                      obscureText: true,
-                      //controller: passwordController,
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 45.0,
-                      child: FlatButton(
-                        color: AppTheme.lightBlue,
-                        child: Text(
-                          "SUBMIT",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+              child: ListView(
+                children: <Widget>[
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          //padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            "Change Password",
+                            style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.darkGrey),
+                          ),
                         ),
-                        onPressed: this._handleSubmitChangePassword,
-                      ),
-                    )
-                  ],
-                ),
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _oldPasswordController,
+                          hintText: "Current Password",
+                          obscureText: true,
+                          validator: validateNewPassword,
+                          //controller: passwordController,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _newPassword1Controller,
+                          hintText: "New Password",
+                          obscureText: true,
+                          validator: validateNewPassword,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        CustomTextFormField(
+                          controller: _newPassword2Controller,
+                          validator: validateNewPassword,
+                          hintText: "Confirm New Password",
+                          obscureText: true,
+                          //controller: passwordController,
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45.0,
+                          child: FlatButton(
+                            color: AppTheme.lightBlue,
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.0),
+                            ),
+                            onPressed: this._handleSubmitChangePassword,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

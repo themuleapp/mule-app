@@ -5,6 +5,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/profile/Account/change_email.dart';
 import 'package:mule/screens/profile/Account/change_password.dart';
 import 'package:mule/screens/profile/Account/change_phone.dart';
+import 'package:mule/screens/profile/Account/delete_account.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class Profile extends StatelessWidget {
@@ -18,19 +19,18 @@ class Profile extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: <Widget>[
             Text(
               "Profile",
@@ -67,29 +67,20 @@ class Profile extends StatelessWidget {
                         )),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Observer(
-                    builder: (_) => Text(
-                      GetIt.I.get<UserInfoStore>().fullName,
-                      style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.darkGrey,
-                        fontSize: 25,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Observer(
+                      builder: (_) => Text(
+                        GetIt.I.get<UserInfoStore>().fullName,
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.darkGrey,
+                          fontSize: 25,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: GestureDetector(
-                    child: Icon(
-                      Icons.edit,
-                      color: AppTheme.lightGrey,
-                      size: 20,
-                    ),
-                    onTap: () {},
                   ),
                 ),
               ],
@@ -118,7 +109,9 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.mail)),
+                padding: EdgeInsets.only(top: 7.0),
+                child: Icon(Icons.mail, color: AppTheme.secondaryBlue),
+              ),
               title: Text(
                 "Email",
                 style: TextStyle(
@@ -139,7 +132,8 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing:
+                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangeEmail()));
@@ -151,7 +145,8 @@ class Profile extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Padding(
-                  padding: EdgeInsets.only(top: 7.0), child: Icon(Icons.phone)),
+                  padding: EdgeInsets.only(top: 7.0),
+                  child: Icon(Icons.phone, color: AppTheme.secondaryBlue)),
               title: Text(
                 "Phone",
                 style: TextStyle(
@@ -172,7 +167,8 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing:
+                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePhone()));
@@ -199,7 +195,7 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.lock),
+              leading: Icon(Icons.lock, color: AppTheme.secondaryBlue),
               title: Text(
                 "Change Password",
                 style: TextStyle(
@@ -209,7 +205,8 @@ class Profile extends StatelessWidget {
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing:
+                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePassword()));
@@ -220,17 +217,21 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.delete_forever),
+              leading: Icon(Icons.delete_forever, color: Colors.red),
               title: Text(
                 "Delete Account",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.0,
-                  color: AppTheme.darkGrey,
+                  color: Colors.red,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right),
+              trailing: Icon(Icons.chevron_right, color: Colors.red),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => DeleteAccount()));
+              },
             ),
             Divider(),
             SizedBox(
