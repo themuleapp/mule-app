@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     final color = Colors.white;
     _scale = 1 - _controller.value;
     return Scaffold(
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage>
           child: Column(
             children: <Widget>[
               AvatarGlow(
-                endRadius: 250,
+                endRadius: height <= 660 ? 150 : height <= 810 ? 170 : 250,
                 duration: Duration(seconds: 2),
                 glowColor: Colors.white24,
                 repeat: true,
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage>
                     child: CircleAvatar(
                       backgroundColor: Colors.grey[100],
                       child: Image.asset('assets/images/logo.png'),
-                      radius: 100.0,
+                      radius: height >= 1024 ? 150 : 100.0,
                     )),
               ),
               DelayedAnimation(

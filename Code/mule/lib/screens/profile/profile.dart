@@ -91,17 +91,6 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: GestureDetector(
-                    child: Icon(
-                      Icons.edit,
-                      color: AppTheme.secondaryBlue,
-                      size: 20,
-                    ),
-                    onTap: () {},
-                  ),
-                ),
               ],
             ),
             SizedBox(

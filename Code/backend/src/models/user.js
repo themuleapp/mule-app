@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { v4 as uuidV4 } from "uuid";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidV4 } from 'uuid';
+
 const userSchema = mongoose.Schema({
   firstName: {
     type: String,
@@ -19,8 +20,17 @@ const userSchema = mongoose.Schema({
     unique: true,
     lowercase: true,
   },
+  emailVerificationCode: {
+    type: String,
+    default: null,
+  },
+  emailVerified: {
+    type: Boolean,
+    default: false,
+  },
   phoneNumber: {
     type: String,
+    unique: true,
     required: false,
     max: 12,
   },
@@ -47,10 +57,10 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   // Hash the password before saving the user model
   const user = this;
-  if (user.isModified("password")) {
+  if (user.isModified('password')) {
     user.password = await bcrypt.hash(
       user.password,
       parseInt(process.env.SALT_ROUNDS)
@@ -59,31 +69,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.generateAuthToken = async function () {
-  // Generate an auth token for the user
-  const user = this;
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
-    expiresIn: process.env.JWT_VALIDATION,
-  });
-  // user.tokens = user.tokens.concat({ token });
-  await user.save();
-  return token;
-};
-
-userSchema.methods.verifyPassword = async function (oldPassword) {
-  const isPasswordMatch = await bcrypt.compare(oldPassword, this.password);
-  if (!isPasswordMatch) {
-    return false;
-    // throw new Error({ error: 'Invalid login credentials' });
-  }
-  return true;
-};
-
-userSchema.methods.changePassword = async function (newPassword) {
-  this.password = newPassword;
-  await this.save();
-};
-
 userSchema.statics.updateData = function (updateData, user) {
   return this.update({ _id: user._id }, updateData);
 };
@@ -91,15 +76,12 @@ userSchema.statics.updateData = function (updateData, user) {
 userSchema.statics.findByCredentials = async function (email, password) {
   // Search for a user by email and password.
   const user = await this.findOne({ email });
-  // const user = await User/.findOne({ email });
   if (!user) {
-    // throw new Error({ error: 'Invalid login credentials' });
     return null;
   }
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
     return null;
-    // throw new Error({ error: 'Invalid login credentials' });
   }
   return user;
 };
@@ -108,8 +90,45 @@ userSchema.statics.existsByEmail = async function (email) {
   return await this.exists({ email });
 };
 
+userSchema.statics.existsByPhoneNumber = async function (phoneNumber) {
+  return await this.exists({ phoneNumber });
+};
+
 userSchema.statics.getByEmail = async function (email) {
   return await this.findOne({ email });
+};
+
+userSchema.statics.verifyEmail = async function (emailVerificationCode) {
+  const user = await this.findOne({ emailVerificationCode });
+  if (!user) {
+    return false;
+  }
+  user.emailVerified = true;
+  user.emailVerificationCode = null;
+  await user.save();
+  return true;
+};
+
+userSchema.methods.generateAuthToken = function () {
+  // Generate an auth token for the user
+  const user = this;
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
+    expiresIn: process.env.JWT_VALIDATION,
+  });
+  return token;
+};
+
+userSchema.methods.verifyPassword = async function (oldPassword) {
+  const isPasswordMatch = await bcrypt.compare(oldPassword, this.password);
+  if (!isPasswordMatch) {
+    return false;
+  }
+  return true;
+};
+
+userSchema.methods.changePassword = async function (newPassword) {
+  this.password = newPassword;
+  await this.save();
 };
 
 userSchema.methods.createResetToken = async function () {
@@ -130,7 +149,7 @@ userSchema.methods.isResetTokenExpired = async function () {
     `token exp: ${this.resetIdExpiration.getTime()} now: ${Date.now()}`
   );
   if (this.resetIdExpiration.getTime() < Date.now()) {
-    console.log("Here what");
+    console.log('Here what');
     // Remove the reset id before
     this.resetId = null;
     this.resetIdExpiration = null;
@@ -149,4 +168,7 @@ userSchema.methods.resetPassword = async function (password) {
   return true;
 };
 
-export default mongoose.model("User", userSchema);
+userSchema.methods.deleteAccount = async function () {
+  await this.remove();
+};
+export default mongoose.model('User', userSchema);

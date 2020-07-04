@@ -1,4 +1,4 @@
-export default (errors, status) => ({
+export default (errors, status = 400) => ({
   status,
   errors,
 });
