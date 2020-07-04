@@ -5,13 +5,15 @@ import morgan from 'morgan';
 import cron from 'node-cron';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-
+import bodyParser from 'body-parser';
+import path from 'path';
 // Our imports
 import authMiddleware from './middleware/authMiddleware';
 import { authRoutes, profileRoutes, verifyRoutes } from './routes/routesExport';
 import registerCronJobs from './config/cronjobs';
 import connectToMongo from './config/connectToMongo';
 import swaggerOptions from './config/swaggerOptions';
+import uploadImg from './config/imageUpload';
 
 // setup env vars
 dotenv.config();
@@ -25,9 +27,34 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Middleware
 app.use(morgan('combined'));
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-// Register routes
+app.get('/profile-image', authMiddleware, (req, res) => {
+  const profileImageName = req.user.profileImageLocation;
+  const location = path.join(__dirname, '..', 'images', profileImageName);
+  return res.sendFile(location);
+});
+
+app.post(
+  '/upload-image',
+  authMiddleware,
+  uploadImg.single('image'),
+  (req, res) => {
+    if (!req.file) {
+      console.log('No file received');
+      return res.send({
+        success: false,
+        msg: 'No file received',
+      });
+    } else {
+      console.log('file received');
+      return res.send({
+        success: true,
+      });
+    }
+  }
+);
 
 /**
  * @swagger

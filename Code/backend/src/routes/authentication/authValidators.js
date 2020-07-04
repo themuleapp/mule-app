@@ -5,7 +5,7 @@ export function validateSignupDate(signUpData) {
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
-    phoneNumber: Joi.string().max(12).required(), // TODO is 12 really the longest?
+    phoneNumber: Joi.string().max(16).required(), // TODO is 12 really the longest?
     password: Joi.string().required(),
   }).validate(signUpData, { abortEarly: false });
 
@@ -65,7 +65,6 @@ export function validateResetPasswordData(resetData) {
 
 export function validateChangePasswordReq(changePasswordData) {
   const validation = Joi.object({
-    email: Joi.string().email().required(),
     oldPassword: Joi.string().required(),
     newPassword: Joi.string().required(),
   }).validate(changePasswordData, { abortEarly: false });

@@ -458,14 +458,8 @@ authRouter.post('/change-password', authMiddleware, async (req, res) => {
   if (validation) {
     return res.status(400).send(composeErrorResponse(validation, 400));
   }
-  const { email, oldPassword, newPassword } = req.body;
-  const user = await User.getByEmail(email);
-
-  if (!user) {
-    return res
-      .status(400)
-      .send(composeErrorResponse(['No user was found with that email'], 400));
-  }
+  const { oldPassword, newPassword } = req.body;
+  const user = req.user;
 
   if (!(await user.verifyPassword(oldPassword))) {
     return res
