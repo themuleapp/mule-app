@@ -120,6 +120,25 @@ class HttpClient {
     return res;
   }
 
+  Future<Response> handleEmailVerificationCode(
+      String emailVerificationCode) async {
+    final Response res = await _makeAuthenticatedGetRequest(
+        '/verify/email/' + emailVerificationCode);
+    return res;
+  }
+
+  Future<Response> handleEmailVerificationResend() async {
+    final Response res =
+        await _makeAuthenticatedGetRequest('/verify/email/resend');
+    return res;
+  }
+
+  Future<Response> handleCheckEmailVerification() async {
+    final Response res =
+        await _makeAuthenticatedGetRequest('/verify/email/verified');
+    return res;
+  }
+
   // Authenticated requests
 
   Future<Response> handleChangePassword(
@@ -131,7 +150,6 @@ class HttpClient {
 
   Future<Response> handleDeleteAccount(
       DeleteAccountReq deleteAccountReq) async {
-
     String token = await Config.getToken();
 
     return await _dio.delete(
