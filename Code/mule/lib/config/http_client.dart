@@ -120,6 +120,8 @@ class HttpClient {
     return res;
   }
 
+  // Authenticated requests
+
   Future<Response> handleEmailVerificationCode(
       String emailVerificationCode) async {
     final Response res = await _makeAuthenticatedGetRequest(
@@ -133,13 +135,11 @@ class HttpClient {
     return res;
   }
 
-  Future<Response> handleCheckEmailVerification() async {
+  Future<Response> handleCheckEmailVerification() async* {
     final Response res =
         await _makeAuthenticatedGetRequest('/verify/email/verified');
     return res;
   }
-
-  // Authenticated requests
 
   Future<Response> handleChangePassword(
       ChangePasswordReq changePasswordReq) async {
