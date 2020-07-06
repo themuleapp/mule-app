@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   Future<bool> checkEmailValidation() async {
     final res = await httpClient.handleCheckEmailVerification();
-    if (res.statusCode == 200) {
+    if (res.statusCode != 200) {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => EmailVerification()));
     }

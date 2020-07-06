@@ -14,18 +14,16 @@ class EmailVerification extends StatefulWidget {
 }
 
 class _EmailVerificationState extends State<EmailVerification> {
-  String reason = "No feedback";
+  String code = "";
 
   @override
   void initState() {
     super.initState();
   }
 
-  _handleSubmit() async {
-    DeleteAccountReq deleteAccountReq = DeleteAccountReq(
-      reason: this.reason,
-    );
-    final Response res = await httpClient.handleDeleteAccount(deleteAccountReq);
+  _checkVerificationCode() async {
+    final Response res = await httpClient.handleEmailVerificationCode(code);
+
     if (res.statusCode == 200) {
       // TODO show a little reminder that it successded
       Navigator.of(context).push(
@@ -35,8 +33,19 @@ class _EmailVerificationState extends State<EmailVerification> {
       );
     } else {
       // TODO Response data field seems to be of the incorrect type
-      ErrorRes errRes = ErrorRes.fromJson(res.data);
+      ErrorRes _ = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', 'Please try again');
+    }
+  }
+
+  _resendVerificationEmail() async {
+    final Response res = await httpClient.handleEmailVerificationResend();
+
+    if (res.statusCode != 200) {
+      // TODO Response data field seems to be of the incorrect type
+      ErrorRes _ = ErrorRes.fromJson(res.data);
+      createDialogWidget(context, 'Oh, no...',
+          'Sorry, something went wrong with resending the verification code. Please check your internet conneciton and try again!');
     }
   }
 
@@ -48,15 +57,6 @@ class _EmailVerificationState extends State<EmailVerification> {
         backgroundColor: AppTheme.white,
         automaticallyImplyLeading: false,
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            }
-          },
-          color: AppTheme.black,
-        ),
       ),
       body: Column(
         children: <Widget>[
@@ -79,35 +79,14 @@ class _EmailVerificationState extends State<EmailVerification> {
                       Container(
                         padding: const EdgeInsets.only(top: 25),
                         child: Text(
-                          "We're sorry to see you go!",
+                          "Please verify your email",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: const Text(
-                          "We would love to hear why you're leaving",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
                       _buildComposer(),
-                      Container(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: const Text(
-                          "Are you sure you want to leave?",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Center(
@@ -115,7 +94,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             width: 120,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.blue,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8)),
                               boxShadow: <BoxShadow>[
@@ -137,10 +116,10 @@ class _EmailVerificationState extends State<EmailVerification> {
                                     padding: const EdgeInsets.all(4.0),
                                     child: GestureDetector(
                                       onTap: () {
-                                        _handleSubmit();
+                                        _resendVerificationEmail();
                                       },
                                       child: Text(
-                                        'Delete',
+                                        'Resend',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
@@ -156,18 +135,47 @@ class _EmailVerificationState extends State<EmailVerification> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: Text(
-                            "CANCEL",
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.lightText),
+                        child: Center(
+                          child: Container(
+                            width: 120,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.6),
+                                    offset: const Offset(4, 4),
+                                    blurRadius: 8.0),
+                              ],
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                },
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _checkVerificationCode();
+                                      },
+                                      child: Text(
+                                        'Verify',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -207,8 +215,8 @@ class _EmailVerificationState extends State<EmailVerification> {
                   const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
                 maxLines: null,
-                onChanged: (String reason) {
-                  this.reason = reason;
+                onChanged: (String code) {
+                  this.code = code;
                 },
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
@@ -218,7 +226,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                 cursorColor: AppTheme.lightBlue,
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'How can we improve...'),
+                    hintText: 'Please enter your code here'),
               ),
             ),
           ),
