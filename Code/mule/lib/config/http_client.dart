@@ -135,7 +135,7 @@ class HttpClient {
     return res;
   }
 
-  Future<Response> handleCheckEmailVerification() async* {
+  Future<Response> handleCheckEmailVerification() async {
     final Response res =
         await _makeAuthenticatedGetRequest('/verify/email/verified');
     return res;
