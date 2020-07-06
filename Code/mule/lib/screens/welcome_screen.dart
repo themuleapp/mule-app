@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: AppTheme.lightBlue,
       body: SingleChildScrollView(
-              child: Center(
+        child: Center(
           child: Column(
             children: <Widget>[
               AvatarGlow(
@@ -63,7 +63,9 @@ class _HomePageState extends State<HomePage>
                 child: Text(
                   "Hey there!",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35.0,
+                      color: color),
                 ),
                 delay: delayedAmount + 1000,
               ),
@@ -71,7 +73,9 @@ class _HomePageState extends State<HomePage>
                 child: Text(
                   "I'm Mule",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 35.0, color: color),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35.0,
+                      color: color),
                 ),
                 delay: delayedAmount + 2000,
               ),
