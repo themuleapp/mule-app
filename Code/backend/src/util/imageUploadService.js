@@ -29,6 +29,8 @@ export const handleImageUpload = (file, _id) =>
           .file(filename);
         const blobStream = blob.createWriteStream({
           resumable: false,
+          gzip: true,
+          private: true,
         });
         blobStream
           .on("finish", () => {
