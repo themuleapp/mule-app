@@ -18,7 +18,7 @@ export const getImageForUser = async (imgLocation) => {
 export const handleImageUpload = (file, _id) =>
   new Promise((resolve, reject) => {
     const { originalname } = file;
-    const filename = `${_id}${path.extname(originalname)}`;
+    const filename = `profile_pictures/${_id}${path.extname(originalname)}`;
 
     sharp(file.buffer)
       .resize(320)
