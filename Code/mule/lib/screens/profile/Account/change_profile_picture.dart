@@ -19,10 +19,13 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
       _image = File(pickedFile.path);
     });
   }
-  
+
   Future _getImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
+    if (pickedFile == null) {
+      return;
+    }
     setState(() {
       _image = File(pickedFile.path);
     });
@@ -34,6 +37,10 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
 
   Future _submitImage() async {
     // TODO upload image to server
+
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -83,7 +90,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
       ),
     );
   }
-  
+
   Widget _changeProfilePictureForm(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -91,30 +98,30 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         children: <Widget>[
           Center(
             child: CircleAvatar(
-              radius: 150.0,
-              backgroundImage: _image == null
-                ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                : FileImage(_image)
-            ),
+                radius: 150.0,
+                backgroundImage: _image == null
+                    ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
+                    : FileImage(_image)),
           ),
           SizedBox(
             height: 30.0,
           ),
           Container(
-            height: 45.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _ButtonWithText("Add with camera", _getImageFromCamera),
-                SizedBox(width: 30.0,),
-                _ButtonWithText("Add from gallery", _getImageFromGallery),
-              ],
-            )
-          ),
+              height: 45.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _ButtonWithText("Add with camera", _getImageFromCamera),
+                  SizedBox(
+                    width: 30.0,
+                  ),
+                  _ButtonWithText("Add from gallery", _getImageFromGallery),
+                ],
+              )),
           SizedBox(
             height: 30.0,
           ),
-          Container (
+          Container(
             width: MediaQuery.of(context).size.width,
             child: FlatButton(
               color: AppTheme.lightBlue,
@@ -133,7 +140,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
   }
 
   Widget _ButtonWithText(String buttonText, Function callback) {
-    return Container (
+    return Container(
       child: FlatButton(
         color: AppTheme.lightBlue,
         child: Text(
