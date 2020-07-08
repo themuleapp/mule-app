@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: true,
@@ -60,7 +61,12 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 28, 30, 33, 35, 40, 45, 50),
+            color: AppTheme.lightBlue,
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -81,7 +87,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                 "Sign Up",
                 style: TextStyle(
                   color: AppTheme.lightBlue,
-                  fontSize: 18.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 18, 20, 22, 24, 26, 30, 34, 40),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -99,17 +106,20 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                 child: Text(
                   "Log In",
                   style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 30, 32, 34, 36, 38, 42, 45, 50),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
-                height: 30.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 30, 32, 34, 38, 40, 43, 46, 50),
               ),
-              _loginForm(context),
+              _loginForm(context, screenHeight),
               SizedBox(
-                height: 30.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 30, 32, 34, 36, 38, 40, 42, 44),
               ),
               Container(
                 child: Column(
@@ -118,14 +128,18 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                     Text(
                       "Or connect using social account",
                       style: TextStyle(
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     SizedBox(
-                      height: 10.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
                     ),
                     Container(
-                      height: 45.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
                       child: FlatButton(
                         onPressed: () {},
                         color: AppTheme.facebookBlue,
@@ -133,6 +147,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                           children: <Widget>[
                             Icon(
                               FontAwesomeIcons.facebookSquare,
+                              size: AppTheme.elementSize(
+                                  screenHeight, 25, 26, 27, 28, 30, 32, 35, 38),
                               color: Colors.white,
                             ),
                             Expanded(
@@ -141,6 +157,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
+                                  fontSize: AppTheme.elementSize(screenHeight,
+                                      16, 18, 20, 22, 24, 26, 28, 30),
                                   color: Colors.white,
                                 ),
                               ),
@@ -158,7 +176,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                       margin: EdgeInsets.only(
                         top: 10.0,
                       ),
-                      height: 45.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
                       child: FlatButton(
                         onPressed: () {},
                         color: AppTheme.white,
@@ -166,6 +185,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                           children: <Widget>[
                             Icon(
                               FontAwesomeIcons.google,
+                              size: AppTheme.elementSize(
+                                  screenHeight, 25, 26, 27, 28, 30, 32, 35, 38),
                               color: Colors.redAccent,
                             ),
                             Expanded(
@@ -174,6 +195,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: AppTheme.elementSize(screenHeight,
+                                      16, 18, 20, 22, 24, 26, 28, 30),
                                   color: Colors.redAccent,
                                 ),
                               ),
@@ -192,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
     );
   }
 
-  Widget _loginForm(BuildContext context) {
+  Widget _loginForm(BuildContext context, double screenHeight) {
     return Form(
       key: _formKey,
       child: Column(
@@ -205,7 +228,8 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             keyboardType: TextInputType.emailAddress,
           ),
           SizedBox(
-            height: 20.0,
+            height: AppTheme.elementSize(
+                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Password",
@@ -214,14 +238,16 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             controller: passwordController,
           ),
           SizedBox(
-            height: 15.0,
+            height: AppTheme.elementSize(
+                screenHeight, 15, 17, 20, 22, 24, 26, 28, 30),
           ),
           GestureDetector(
             child: Text(
               "Forgot password?",
               style: TextStyle(
                   color: AppTheme.darkGrey,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),
                   fontWeight: FontWeight.bold),
             ),
             onTap: () {
@@ -230,17 +256,23 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             },
           ),
           SizedBox(
-            height: 30.0,
+            height: AppTheme.elementSize(
+                screenHeight, 30, 32, 34, 36, 36, 40, 42, 44),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 45.0,
+            height: AppTheme.elementSize(
+                screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
             child: FlatButton(
               color: AppTheme.lightBlue,
               onPressed: this.handleSubmt,
               child: Text(
                 "LOG IN",
-                style: TextStyle(color: Colors.white, fontSize: 16.0),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),
+                ),
               ),
             ),
           )

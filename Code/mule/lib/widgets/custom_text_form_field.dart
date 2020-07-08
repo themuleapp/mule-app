@@ -24,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,13 +34,15 @@ class CustomTextFormField extends StatelessWidget {
                   hintText.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: 14.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 15, 16, 17, 19, 22, 24, 26),
                     color: AppTheme.lightGrey,
                   ),
                 )
               : SizedBox(),
           SizedBox(
-            height: 7.0,
+            height: AppTheme.elementSize(
+                screenHeight, 7, 8, 9, 10, 11, 12, 14, 16),
           ),
           TextFormField(
             keyboardType: keyboardType,
@@ -49,6 +52,8 @@ class CustomTextFormField extends StatelessWidget {
             validator: validator,
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: AppTheme.elementSize(
+                  screenHeight, 15, 16, 17, 20, 22, 24, 26, 28),
             ),
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
@@ -63,7 +68,8 @@ class CustomTextFormField extends StatelessWidget {
               hintText: hintText,
               hintStyle: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 16.0,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 16, 17, 18, 19, 21, 23, 25, 27),
                 color: AppTheme.lightGrey.withOpacity(0.5),
               ),
             ),

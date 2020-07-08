@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map_widget.dart';
 import 'package:mule/screens/home/slider_form_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -67,11 +68,13 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return SlidingUpPanel(
       borderRadius: radius,
       onPanelSlide: this._handlePanelSlide,
-      minHeight: MediaQuery.of(context).size.height / 4,
-      maxHeight: MediaQuery.of(context).size.height - 120,
+//      minHeight: AppTheme.elementSize(screenHeight, 200, 210, 230, 350, 360, 380, 400, 420),
+      minHeight: screenHeight / 3,
+      maxHeight: screenHeight - 120,
       controller: _panelController,
       backdropEnabled: true,
       panel: SliderFormWidget(
