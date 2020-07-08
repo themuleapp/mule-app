@@ -164,7 +164,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                         color: AppTheme.white,
                         fontWeight: FontWeight.w500,
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),),
+                            screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),
+                    ),
                   ),
                 ),
               )

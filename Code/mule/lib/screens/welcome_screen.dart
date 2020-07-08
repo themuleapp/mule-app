@@ -44,7 +44,8 @@ class _HomePageState extends State<HomePage>
           child: Column(
             children: <Widget>[
               AvatarGlow(
-                endRadius: AppTheme.elementSize(screenHeight, 150, 165, 180, 210, 240, 290, 320, 380),
+                endRadius: AppTheme.elementSize(
+                    screenHeight, 150, 165, 180, 210, 240, 290, 320, 380),
                 duration: Duration(seconds: 2),
                 glowColor: Colors.white24,
                 repeat: true,
@@ -56,16 +57,20 @@ class _HomePageState extends State<HomePage>
                     child: CircleAvatar(
                       backgroundColor: Colors.grey[100],
                       child: Image.asset('assets/images/logo.png'),
-                      radius: AppTheme.elementSize(screenHeight, 75, 85, 90, 100, 110, 155, 160, 185),
-                    )),
+                      radius: AppTheme.elementSize(
+                          screenHeight, 75, 85, 90, 100, 110, 155, 160, 185),
+                    )
+                ),
               ),
               DelayedAnimation(
                 child: Text(
                   "Hey there!",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: AppTheme.elementSize(screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
-                      color: color),
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
+                      color: color
+                  ),
                 ),
                 delay: delayedAmount + 1000,
               ),
@@ -74,13 +79,17 @@ class _HomePageState extends State<HomePage>
                   "I'm Mule",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: AppTheme.elementSize(screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
-                      color: color),
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
+                      color: color
+                  ),
                 ),
                 delay: delayedAmount + 2000,
               ),
               SizedBox(
-                height: AppTheme.elementSize(screenHeight, 30, 45, 60, 70, 75, 80, 90, 95),
+                height: AppTheme.elementSize(
+                    screenHeight, 30, 45, 60, 70, 75, 80, 90, 95
+                ),
               ),
               DelayedAnimation(
                 child: GestureDetector(
@@ -99,7 +108,8 @@ class _HomePageState extends State<HomePage>
                 delay: delayedAmount + 4000,
               ),
               SizedBox(
-                height: AppTheme.elementSize(screenHeight, 28, 30, 32, 35, 37, 41, 45, 50),
+                height: AppTheme.elementSize(
+                    screenHeight, 28, 30, 32, 35, 37, 41, 45, 50),
               ),
               DelayedAnimation(
                 child: GestureDetector(
@@ -108,7 +118,8 @@ class _HomePageState extends State<HomePage>
                   child: Text(
                     "I already have an account".toUpperCase(),
                     style: TextStyle(
-                        fontSize: AppTheme.elementSize(screenHeight, 16, 17, 18, 20, 22, 24, 28, 30),
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 16, 17, 18, 20, 22, 24, 28, 30),
                         fontWeight: FontWeight.bold,
                         color: color),
                   ),
@@ -123,17 +134,20 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _animatedButtonUI(double screenHeight) => Container(
-        height: AppTheme.elementSize(screenHeight, 50, 52.5, 55, 57, 60, 65, 70, 80),
-        width: AppTheme.elementSize(screenHeight, 200, 220, 240, 250, 270, 320, 400, 420),
+        height: AppTheme.elementSize(
+            screenHeight, 50, 52.5, 55, 57, 60, 65, 80, 85),
+        width: AppTheme.elementSize(
+            screenHeight, 200, 220, 240, 250, 270, 320, 370, 420),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
-          color: Colors.white,
+          color: AppTheme.white,
         ),
         child: Center(
           child: Text(
             'Sign Up',
             style: TextStyle(
-              fontSize: AppTheme.elementSize(screenHeight, 20, 21, 22, 24, 25, 26, 28, 30),
+              fontSize: AppTheme.elementSize(
+                  screenHeight, 20, 21, 22, 24, 25, 26, 28, 30),
               fontWeight: FontWeight.bold,
               color: AppTheme.lightBlue,
             ),
