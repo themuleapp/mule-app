@@ -1,6 +1,9 @@
 import { initCloudStorage } from "../config/imageUploadConfig";
 import path from "path";
 import sharp from "sharp";
+import imageMin from "imagemin";
+import imageMinJPEG from "imagemin-jpegtran";
+import imageMinPNG from "imagemin-pngquant";
 
 export const getImageForUser = async (imgLocation) => {
   const file = initCloudStorage()
@@ -23,6 +26,16 @@ export const handleImageUpload = (file, _id) =>
     sharp(file.buffer)
       .resize(320)
       .toBuffer()
+      .then((buffer) =>
+        imageMin.buffer(buffer, {
+          plugins: [
+            imageMinJPEG(),
+            imageMinPNG({
+              quality: [0.6, 0.7],
+            }),
+          ],
+        })
+      )
       .then((buffer) => {
         const blob = initCloudStorage()
           .bucket(process.env.GOOGLE_CLOUD_BUCKET_NAME)
