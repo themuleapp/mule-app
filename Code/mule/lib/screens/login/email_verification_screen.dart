@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
-import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
 
@@ -45,7 +44,7 @@ class _EmailVerificationState extends State<EmailVerification> {
       // TODO Response data field seems to be of the incorrect type
       ErrorRes _ = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Oh, no...',
-          'Sorry, something went wrong with resending the verification code. Please check your internet conneciton and try again!');
+          'Sorry, something went wrong with resending the verification code. Please check your internet connection and try again!');
     }
   }
 
@@ -72,7 +71,8 @@ class _EmailVerificationState extends State<EmailVerification> {
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).padding.top + 20,
                             left: 16,
-                            right: 16),
+                            right: 16
+                        ),
                         // TODO Image not decompressable error
                         // child: Image.asset('assets/images/Delete.png'),
                       ),
@@ -94,7 +94,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             width: 120,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: AppTheme.lightBlue,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8)),
                               boxShadow: <BoxShadow>[
@@ -122,7 +122,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                                         'Resend',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                          color: AppTheme.white,
                                         ),
                                       ),
                                     ),
@@ -140,7 +140,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             width: 120,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: AppTheme.lightBlue,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8)),
                               boxShadow: <BoxShadow>[
@@ -168,7 +168,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                                         'Verify',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          color: Colors.white,
+                                          color: AppTheme.white,
                                         ),
                                       ),
                                     ),
