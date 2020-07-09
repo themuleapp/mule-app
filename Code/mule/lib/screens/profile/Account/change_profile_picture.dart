@@ -74,7 +74,8 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey),
+                      color: AppTheme.darkGrey
+                  ),
                 ),
               ),
               SizedBox(
@@ -98,58 +99,127 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         children: <Widget>[
           Center(
             child: CircleAvatar(
-                radius: 150.0,
+                radius: 100.0,
                 backgroundImage: _image == null
                     ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                    : FileImage(_image)),
+                    : FileImage(_image)
+            ),
           ),
           SizedBox(
             height: 30.0,
           ),
           Container(
-              height: 45.0,
+              height: 50.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _ButtonWithText("Add with camera", _getImageFromCamera),
+                  _ButtonWithText("Camera", _getImageFromCamera),
                   SizedBox(
-                    width: 30.0,
+                    width: 40.0,
                   ),
-                  _ButtonWithText("Add from gallery", _getImageFromGallery),
+                  _ButtonWithText("Gallery", _getImageFromGallery),
                 ],
-              )),
+              )
+          ),
           SizedBox(
             height: 30.0,
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
-            child: FlatButton(
-              color: AppTheme.lightBlue,
-              child: Text(
-                "SUBMIT",
-                style: TextStyle(color: Colors.white, fontSize: 16.0),
-              ),
-              onPressed: () {
-                _submitImage();
-              },
+            width: 120,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppTheme.secondaryBlue,
+              borderRadius:
+              const BorderRadius.all(Radius.circular(8)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.6),
+                    offset: const Offset(4, 4),
+                    blurRadius: 8.0
+                ),
+              ],
             ),
-          )
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  _submitImage();
+                },
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      "Update",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: GestureDetector(
+              onTap: () {
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(
+                "CANCEL",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.lightText
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _ButtonWithText(String buttonText, Function callback) {
-    return Container(
-      child: FlatButton(
-        color: AppTheme.lightBlue,
-        child: Text(
-          buttonText,
-          style: TextStyle(color: Colors.white, fontSize: 16.0),
+    return Center(
+      child: Container(
+        width: 120,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppTheme.lightBlue,
+          borderRadius:
+          const BorderRadius.all(Radius.circular(8)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.6),
+                offset: const Offset(4, 4),
+                blurRadius: 8.0
+            ),
+          ],
         ),
-        onPressed: () {
-          callback();
-        },
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              callback();
+              },
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  buttonText,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
