@@ -38,6 +38,7 @@ dependencies:
   permission_handler: ^5.0.1
   google_maps_webservice: ^0.0.17
   flutter_typeahead: ^1.8.3
+  image_picker:
 
 dev_dependencies:
   flutter_test:

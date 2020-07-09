@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mule/screens/home/open_settings_for_location_widget.dart';
 
 class MapWidget extends StatefulWidget {
   @override

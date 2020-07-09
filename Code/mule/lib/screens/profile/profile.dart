@@ -6,6 +6,7 @@ import 'package:mule/screens/profile/Account/change_email.dart';
 import 'package:mule/screens/profile/Account/change_password.dart';
 import 'package:mule/screens/profile/Account/change_phone.dart';
 import 'package:mule/screens/profile/Account/delete_account.dart';
+import 'package:mule/screens/profile/Account/change_profile_picture.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class Profile extends StatelessWidget {
@@ -59,10 +60,17 @@ class Profile extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundColor: AppTheme.lightBlue,
                           radius: 20.0,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: AppTheme.white,
-                            size: 22,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.camera_alt,
+                              color: AppTheme.white,
+                              size: 22,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => ChangeProfilePicture())
+                              );
+                            },
                           ),
                         )),
                   ],
