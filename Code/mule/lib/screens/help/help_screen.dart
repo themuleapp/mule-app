@@ -14,6 +14,7 @@ class _HelpScreenState extends State<HelpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: SingleChildScrollView(
@@ -29,41 +30,47 @@ class _HelpScreenState extends State<HelpScreen> {
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).padding.top + 20,
                           left: 16,
-                          right: 16
+                          right: 16),
+                      child: Image.asset(
+                        'assets/images/help.png',
+                        height: screenHeight * 0.48,
                       ),
-                      child: Image.asset('assets/images/help.png'),
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 25),
                       child: Text(
                         'Facing a problem?',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 20, 21, 22, 23, 25, 27, 28, 30),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 10),
-                      child: const Text(
+                      child: Text(
                         'We would love to hear from you',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 14, 15, 16, 18, 19, 20, 22, 24),
                         ),
                       ),
                     ),
-                    _buildComposer(),
+                    _buildComposer(screenHeight),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Center(
                         child: Container(
-                          width: 120,
-                          height: 40,
+                          width: AppTheme.elementSize(screenHeight, 120, 130,
+                              140, 150, 160, 180, 200, 220),
+                          height: AppTheme.elementSize(
+                              screenHeight, 40, 40, 45, 45, 45, 50, 50, 50),
                           decoration: BoxDecoration(
                             color: AppTheme.lightBlue,
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                                const BorderRadius.all(Radius.circular(8)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
                                   color: Colors.grey.withOpacity(0.6),
@@ -86,6 +93,16 @@ class _HelpScreenState extends State<HelpScreen> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white,
+                                      fontSize: AppTheme.elementSize(
+                                          screenHeight,
+                                          14,
+                                          15,
+                                          15,
+                                          17,
+                                          19,
+                                          21,
+                                          22,
+                                          24),
                                     ),
                                   ),
                                 ),
@@ -105,7 +122,7 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 
-  Widget _buildComposer() {
+  Widget _buildComposer(double screenHeight) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 32, right: 32),
       child: Container(
@@ -127,7 +144,7 @@ class _HelpScreenState extends State<HelpScreen> {
             color: AppTheme.white,
             child: SingleChildScrollView(
               padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
                 maxLines: null,
                 onChanged: (String txt) {},
@@ -139,7 +156,11 @@ class _HelpScreenState extends State<HelpScreen> {
                 cursorColor: AppTheme.lightBlue,
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Report a problem...'),
+                    hintText: 'Report a problem...',
+                    hintStyle: TextStyle(
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 16, 17, 19, 21, 23, 25),
+                    )),
               ),
             ),
           ),

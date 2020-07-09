@@ -62,6 +62,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       appBar: AppBar(
@@ -69,7 +70,11 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 28, 30, 33, 25, 26, 27, 29),
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -95,13 +100,15 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           child: Text(
                             "Change Password",
                             style: TextStyle(
-                                fontSize: 30.0,
+                                fontSize: AppTheme.elementSize(screenHeight, 30,
+                                    32, 34, 36, 38, 40, 42, 48),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey),
                           ),
                         ),
                         SizedBox(
-                          height: 40.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 30, 31, 32, 33, 35, 36, 37, 44),
                         ),
                         CustomTextFormField(
                           controller: _oldPasswordController,
@@ -111,7 +118,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           //controller: passwordController,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
                         ),
                         CustomTextFormField(
                           controller: _newPassword1Controller,
@@ -120,7 +128,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           validator: validateNewPassword,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
                         ),
                         CustomTextFormField(
                           controller: _newPassword2Controller,
@@ -130,17 +139,22 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           //controller: passwordController,
                         ),
                         SizedBox(
-                          height: 30.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 30, 32, 34, 36, 38, 40, 42, 48),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 45.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
                           child: FlatButton(
                             color: AppTheme.lightBlue,
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
+                                color: Colors.white,
+                                fontSize: AppTheme.elementSize(screenHeight, 16,
+                                    18, 20, 22, 24, 26, 28, 30),
+                              ),
                             ),
                             onPressed: this._handleSubmitChangePassword,
                           ),
