@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/feedback/feedback_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/feedback/feedback_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/help/help_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/help/help_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_email.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_email.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_password.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_phone.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_phone.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/delete_account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/delete_account.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/profile/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/settings/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/mule/lib/screens/settings/settings.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,22 +82,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593624863317" />
-    <state width="1158" height="208" key="GridCell.Tab.0.bottom" timestamp="1594329866892">
+    <state width="1158" height="208" key="GridCell.Tab.0.bottom" timestamp="1594368692491">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1158" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594329866892" />
-    <state width="1158" height="208" key="GridCell.Tab.0.center" timestamp="1594329866892">
+    <state width="1158" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594368692491" />
+    <state width="1158" height="208" key="GridCell.Tab.0.center" timestamp="1594368692491">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1158" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594329866892" />
-    <state width="1158" height="208" key="GridCell.Tab.0.left" timestamp="1594329866892">
+    <state width="1158" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594368692491" />
+    <state width="1158" height="208" key="GridCell.Tab.0.left" timestamp="1594368692491">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1158" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594329866892" />
-    <state width="1158" height="208" key="GridCell.Tab.0.right" timestamp="1594329866892">
+    <state width="1158" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594368692491" />
+    <state width="1158" height="208" key="GridCell.Tab.0.right" timestamp="1594368692491">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1158" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594329866892" />
+    <state width="1158" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594368692491" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1593309101209">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

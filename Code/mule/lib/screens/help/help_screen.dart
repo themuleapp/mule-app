@@ -18,7 +18,7 @@ class _HelpScreenState extends State<HelpScreen> {
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: SingleChildScrollView(
-        child: Expanded(
+        child: Container(
           child: SafeArea(
             child: Container(
               color: AppTheme.white,
