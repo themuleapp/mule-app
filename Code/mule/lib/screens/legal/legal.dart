@@ -4,6 +4,7 @@ import 'package:mule/config/app_theme.dart';
 class Legal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
@@ -32,11 +33,13 @@ class Legal extends StatelessWidget {
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.darkGrey,
-                fontSize: 30,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 28, 29, 30, 31, 32, 35, 40, 48),
               ),
             ),
             SizedBox(
-              height: 10.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
             ),
             Divider(),
             ListTile(
@@ -44,21 +47,26 @@ class Legal extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Icon(
-                  Icons.security,
-                  color: AppTheme.secondaryBlue
+                Icons.security,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               title: Text(
                 "Privacy Policy",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
               trailing: Icon(
-                  Icons.chevron_right,
-                  color: AppTheme.secondaryBlue
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               /*onTap: () {
                 Navigator.of(context).push(
@@ -71,21 +79,26 @@ class Legal extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Icon(
-                  Icons.verified_user,
-                  color: AppTheme.secondaryBlue
+                Icons.verified_user,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               title: Text(
                 "Terms of Service",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
               trailing: Icon(
-                  Icons.chevron_right,
-                  color: AppTheme.secondaryBlue
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               /*onTap: () {
                 Navigator.of(context).push(
@@ -98,21 +111,26 @@ class Legal extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Icon(
-                  Icons.insert_drive_file,
-                  color: AppTheme.secondaryBlue
+                Icons.insert_drive_file,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               title: Text(
                 "Licenses",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
               trailing: Icon(
-                  Icons.chevron_right,
-                  color: AppTheme.secondaryBlue
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
               ),
               /*onTap: () {
                 Navigator.of(context).push(
@@ -121,7 +139,8 @@ class Legal extends StatelessWidget {
             ),
             Divider(),
             SizedBox(
-              height: 10.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
             ),
           ],
         ),
