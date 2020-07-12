@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map_helper.dart';
 import 'package:mule/screens/home/map_marker.dart';
+import 'package:mule/widgets/loading-animation.dart';
 
 class MapWidget extends StatefulWidget {
   @override
@@ -189,7 +190,7 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     if (!locationIsLoaded) {
-      return Container();
+      return SpinKitDoubleBounce(color: AppTheme.lightBlue);
     }
     return getMap();
   }
