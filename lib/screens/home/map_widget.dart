@@ -129,14 +129,13 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  getMap() {
     return Scaffold(
       body: Stack(
         children: <Widget>[
           // Google Map widget
           Opacity(
-          opacity: _isMapLoading ? 0 : 1,
+            opacity: _isMapLoading ? 0 : 1,
             child: GoogleMap(
               mapType: MapType.normal,
               scrollGesturesEnabled: true,
@@ -165,26 +164,33 @@ class _MapWidgetState extends State<MapWidget> {
           ),
 
           // Map markers loading indicator
-        if (_areMarkersLoading)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Card(
-                elevation: 2,
-                color: Colors.grey.withOpacity(0.9),
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Text(
-                    'Loading',
-                    style: TextStyle(color: AppTheme.black),
+          if (_areMarkersLoading)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Card(
+                  elevation: 2,
+                  color: Colors.grey.withOpacity(0.9),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Text(
+                      'Loading',
+                      style: TextStyle(color: AppTheme.black),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
+  }
+  @override
+  Widget build(BuildContext context) {
+    if (!locationIsLoaded) {
+      return Container();
+    }
+    return getMap();
   }
 }
