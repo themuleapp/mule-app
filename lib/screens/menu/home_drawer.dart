@@ -27,6 +27,7 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
+
   @override
   void initState() {
     setdDrawerListArray();
@@ -82,6 +83,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white.withOpacity(0.5),
       body: Container(
@@ -99,58 +101,65 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 2.0, left: 4.0),
-                        child: AnimatedBuilder(
-                          animation: widget.iconAnimationController,
-                          builder: (BuildContext context, Widget child) {
-                            return ScaleTransition(
-                              scale: AlwaysStoppedAnimation<double>(1.0 -
-                                  (widget.iconAnimationController.value) * 0.2),
-                              child: RotationTransition(
-                                turns: AlwaysStoppedAnimation<double>(
-                                    Tween<double>(begin: 0.0, end: 24.0)
-                                        .animate(CurvedAnimation(
-                                        parent: widget
-                                            .iconAnimationController,
-                                        curve: Curves.fastOutSlowIn))
-                                        .value /
-                                        360),
-                                child: Container(
-                                  height: 120,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: <BoxShadow>[
-                                      BoxShadow(
-                                          color:
-                                          AppTheme.darkGrey.withOpacity(0.6),
-                                          offset: const Offset(2.0, 4.0),
-                                          blurRadius: 8),
-                                    ],
+                      AnimatedBuilder(
+                        animation: widget.iconAnimationController,
+                        builder: (BuildContext context, Widget child) {
+                          return ScaleTransition(
+                            scale: AlwaysStoppedAnimation<double>(1.0 -
+                                (widget.iconAnimationController.value) * 0.2),
+                            child: RotationTransition(
+                              turns: AlwaysStoppedAnimation<double>(
+                                  Tween<double>(begin: 0.0, end: 24.0)
+                                      .animate(CurvedAnimation(
+                                      parent: widget
+                                          .iconAnimationController,
+                                      curve: Curves.fastOutSlowIn))
+                                      .value /
+                                      360),
+                              child: Container(
+                                height: AppTheme.elementSize(screenHeight, 120,
+                                    125, 125, 130, 135, 170, 185, 200),
+                                width: AppTheme.elementSize(screenHeight, 120,
+                                    125, 125, 130, 135, 170, 185, 200),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color:
+                                        AppTheme.darkGrey.withOpacity(0.6),
+                                        offset: const Offset(2.0, 4.0),
+                                        blurRadius: 8),
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(AppTheme.elementSize(
+                                            screenHeight,
+                                            60,
+                                            62.5,
+                                            62.5,
+                                            67.5,
+                                            67.5,
+                                            85,
+                                            92.5,
+                                            100))),
+                                    child: Image.asset(
+                                        'assets/images/profile_photo_nick_miller.jpg'),
                                   ),
-                                  child: GestureDetector(
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(60.0)
-                                      ),
-                                      child: Image.asset(
-                                          'assets/images/profile_photo_nick_miller.jpg'),
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => Profile()));
-                                    },
-                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => Profile()));
+                                  },
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.only(top: 15, left: 4),
                         child: Observer(
                           builder: (_) => GestureDetector(
                             child: Text(
@@ -159,7 +168,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey,
-                                fontSize: 25,
+                                fontSize: AppTheme.elementSize(screenHeight, 25,
+                                    26, 26, 26, 27, 28, 30, 32),
                               ),
                             ),
                             onTap: () {
@@ -169,31 +179,37 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Be a Mule",
-                            style: TextStyle(
-                              fontFamily: AppTheme.fontName,
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.darkGrey,
-                              fontSize: 18,
+                      Padding(
+                        padding:
+                        const EdgeInsets.only(left: 4, top: 0, bottom: 0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Be a Mule",
+                              style: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.darkGrey,
+                                fontSize: AppTheme.elementSize(screenHeight, 18,
+                                    19, 19, 19, 20, 21, 23, 25),
+                              ),
                             ),
-                          ),
-                          Switch(
-                            value: true,
-                            activeColor: AppTheme.lightBlue,
-                            onChanged: (bool state) {},
-                          )
-                        ],
+                            Switch(
+                              value: true,
+                              activeColor: AppTheme.lightBlue,
+                              onChanged: (bool state) {},
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 1,
+            SizedBox(
+              height:
+              AppTheme.elementSize(screenHeight, 1, 1, 2, 2, 4, 6, 8, 10),
             ),
             Divider(
               height: 1,
@@ -205,7 +221,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 padding: const EdgeInsets.all(0.0),
                 itemCount: drawerList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return inkwell(drawerList[index]);
+                  return inkwell(drawerList[index], screenHeight);
                 },
               ),
             ),
@@ -219,10 +235,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     child: Text(
                       "Legal",
                       style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.lightGrey,
-                          fontSize: 14),
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.lightGrey,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 15, 16, 17, 19, 21, 23),
+                      ),
                     ),
                     onTap: () {
                       Navigator.of(context).push(
@@ -232,10 +250,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Text(
                     "v1.0.0",
                     style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.lightGrey,
-                        fontSize: 14),
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.lightGrey,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 15, 16, 17, 19, 21, 23),
+                    ),
                   ),
                 ],
               ),
@@ -252,7 +272,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: TextStyle(
                       fontFamily: AppTheme.fontName,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 16, 16, 17, 17, 18, 20, 22, 24),
                       color: AppTheme.darkText,
                     ),
                     textAlign: TextAlign.left,
@@ -260,6 +281,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   trailing: Icon(
                     Icons.power_settings_new,
                     color: Colors.red,
+                    size: AppTheme.elementSize(
+                        screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
                   ),
                   onTap: this._handleSignOut,
                 ),
@@ -274,7 +297,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  Widget inkwell(DrawerList listData) {
+  Widget inkwell(DrawerList listData, double screenHeight) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -291,7 +314,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 children: <Widget>[
                   Container(
                     width: 6.0,
-                    height: 45.0,
+                    height: AppTheme.elementSize(
+                        screenHeight, 30, 35, 40, 45, 45, 50, 55, 60),
 //                     decoration: BoxDecoration(
 //                       color: widget.screenIndex == listData.index
 //                           ? AppTheme.lightBlue
@@ -316,18 +340,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             ? AppTheme.black
                             : AppTheme.black),
                   )
-                      : Icon(listData.icon.icon,
-                      color: widget.screenIndex == listData.index
-                          ? AppTheme.black
-                          : AppTheme.black),
+                      : Icon(
+                    listData.icon.icon,
+                    color: widget.screenIndex == listData.index
+                        ? AppTheme.black
+                        : AppTheme.black,
+                    size: AppTheme.elementSize(
+                        screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
+                  ),
                   const Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(6),
                   ),
                   Text(
                     listData.labelName,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 16,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 16, 16, 17, 17, 18, 20, 22, 24),
                       color: widget.screenIndex == listData.index
                           ? AppTheme.black
                           : AppTheme.black,
@@ -350,11 +379,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       0.0,
                       0.0),
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 8),
+                    padding: EdgeInsets.only(
+                        top: AppTheme.elementSize(
+                            screenHeight, 5, 5, 5, 6, 7, 8, 8, 8),
+                        bottom: 8),
                     child: Container(
                       width:
                       MediaQuery.of(context).size.width * 0.75 - 64,
-                      height: 46,
+                      height: AppTheme.elementSize(
+                          screenHeight, 38, 40, 41, 46, 46, 51, 56, 61),
                       decoration: BoxDecoration(
                         color: AppTheme.lightBlue.withOpacity(0.5),
                         borderRadius: new BorderRadius.only(

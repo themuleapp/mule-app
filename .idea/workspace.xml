@@ -2,173 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/github-workflow.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_profile_picture.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mule-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mule-app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/Code.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/.eslintrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/.testenv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/config/cronjobs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/middleware/authMiddleware.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/models/tokenBlacklist.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/models/user.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/routes/authentication/authRoutes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/routes/authentication/authValidators.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/routes/profile/profileRoutes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/routes/profile/profileValidators.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/routes/routesExport.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/util/asyncErrorCatcher.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/util/composeErrorResponse.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/util/emailer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/src/util/successResponse.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/backend/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/.metadata" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/kotlin/com/example/mule/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/mule/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/Delete.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/Delete.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/DeleteAccount.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/DeleteAccount.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/feedback.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/feedback.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/google_button_logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/google_button_logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/help.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/help.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/assets/images/profile_photo_nick_miller.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/profile_photo_nick_miller.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ios/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Flutter/AppFrameworkInfo.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/AppFrameworkInfo.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/AppDelegate.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Base.lproj/LaunchScreen.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Base.lproj/Main.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Base.lproj/Main.storyboard" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/ios/Runner/Runner-Bridging-Header.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Runner-Bridging-Header.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/config/app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/config/app_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/config/config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/config/config.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/config/http_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/config/http_client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/mixins/input_validation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mixins/input_validation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/changePassword/change_password_req.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/changePassword/change_password_req.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/deleteAccount/delete_account_req.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/deleteAccount/delete_account_req.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/forgotPassword/forgot_password_req.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/forgotPassword/forgot_password_req.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/login/login_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/login/login_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/signup/signup_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/signup/signup_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/verifyPassword/verify_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/verifyPassword/verify_password.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/res/errorRes/error_res.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/res/errorRes/error_res.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/models/res/profileRes/profile_res.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/res/profileRes/profile_res.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/navigation_home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/navigation_home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/feedback/feedback_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/feedback/feedback_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/help/help_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/help/help_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/home/map_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/map_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/home/open_settings_for_location_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/open_settings_for_location_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/home/slider_form_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/slider_form_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/home/sliding_up_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/sliding_up_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/legal/legal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/legal/legal.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/login/ForgotPassword/email_otp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/email_otp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/login/ForgotPassword/forgot_password_email.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/forgot_password_email.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/login/ForgotPassword/reset_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/reset_password.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/login/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/menu/drawer_user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/menu/drawer_user_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/menu/home_drawer.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_email.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_email.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_password.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/change_phone.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_phone.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/Account/delete_account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/delete_account.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/profile/profile.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/settings/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/settings/settings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/signup/phone_otp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/signup/phone_otp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/signup/signup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/signup/signup_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/screens/welcome_screen.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/splash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/stores/global/user_info_store.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/stores/global/user_info_store.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/stores/global/user_info_store.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/stores/global/user_info_store.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/widgets/alert_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/alert_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/widgets/custom_text_form_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/custom_text_form_field.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/lib/widgets/delayed_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/delayed_animation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/pubspec.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/mule/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/Material_Icons_Google-1/LICENSE-2.0.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/Material_Icons_Google-1/Material_Icons_Google.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/Navigo-UI-kit-final-2.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/Payment_Methods.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-AppIcons-iMessage-iOS.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-AppIcons-iOS.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-Glyph-NavigationBarAndToolbar.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-Glyph-QuickAction.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-Glyph-TabBar.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/Production Templates/Template-PromotionalImages-iOS.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/UI Elements + Design Templates + Guides/UIElements+DesignTemplates+Guides-iPad.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/UI Elements + Design Templates + Guides/UIElements+DesignTemplates+Guides-iPhone8.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/iOS 12 Adobe XD/UI Elements + Design Templates + Guides/UIElements+DesignTemplates+Guides-iPhoneX.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/steve-wolf-animal-icons.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/Assets/stickersheet-components.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/src/Mule.framerx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/src/Mule.xd" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/welcome_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/welcome_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,22 +86,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593624863317" />
-    <state width="1159" height="206" key="GridCell.Tab.0.bottom" timestamp="1594652913398">
+    <state width="1160" height="206" key="GridCell.Tab.0.bottom" timestamp="1594653467009">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1159" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594652913398" />
-    <state width="1159" height="206" key="GridCell.Tab.0.center" timestamp="1594652913398">
+    <state width="1160" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
+    <state width="1160" height="206" key="GridCell.Tab.0.center" timestamp="1594653467009">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1159" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594652913398" />
-    <state width="1159" height="206" key="GridCell.Tab.0.left" timestamp="1594652913398">
+    <state width="1160" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
+    <state width="1160" height="206" key="GridCell.Tab.0.left" timestamp="1594653467009">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1159" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594652913398" />
-    <state width="1159" height="206" key="GridCell.Tab.0.right" timestamp="1594652913398">
+    <state width="1160" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
+    <state width="1160" height="206" key="GridCell.Tab.0.right" timestamp="1594653467009">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1159" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594652913398" />
+    <state width="1160" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1593309101209">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
