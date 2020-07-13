@@ -59,5 +59,3 @@ To better understand our concept, please watch our concept video:
 " target="_blank"><img src="http://img.youtube.com/vi/zdTL0JeCp8Q/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="1" /></a>
 
-
-
