@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +13,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
-  runApp( App());
+  runApp( DevicePreview(builder: (context) => App()));
 }
 
 class App extends StatelessWidget {
@@ -32,6 +33,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
         future: _isAuthenticatedUser,

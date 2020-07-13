@@ -208,8 +208,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
             ),
             SizedBox(
-              height: AppTheme.elementSize(screenHeight, 1,
-                  1, 2, 2, 4, 6, 8, 10),
+              height:
+                  AppTheme.elementSize(screenHeight, 1, 1, 2, 2, 4, 6, 8, 10),
             ),
             Divider(
               height: 1,
@@ -235,11 +235,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     child: Text(
                       "Legal",
                       style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.lightGrey,
-                          fontSize: AppTheme.elementSize(screenHeight, 14,
-                              15, 15, 16, 17, 19, 21, 23),),
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.lightGrey,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 15, 16, 17, 19, 21, 23),
+                      ),
                     ),
                     onTap: () {
                       Navigator.of(context).push(
@@ -249,11 +250,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Text(
                     "v1.0.0",
                     style: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.lightGrey,
-                        fontSize: AppTheme.elementSize(screenHeight, 14,
-                            15, 15, 16, 17, 19, 21, 23),),
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.lightGrey,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 15, 16, 17, 19, 21, 23),
+                    ),
                   ),
                 ],
               ),
@@ -270,8 +272,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: TextStyle(
                       fontFamily: AppTheme.fontName,
                       fontWeight: FontWeight.w600,
-                      fontSize: AppTheme.elementSize(screenHeight, 16,
-                          16, 17, 17, 18, 20, 22, 24),
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 16, 16, 17, 17, 18, 20, 22, 24),
                       color: AppTheme.darkText,
                     ),
                     textAlign: TextAlign.left,
@@ -279,8 +281,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   trailing: Icon(
                     Icons.power_settings_new,
                     color: Colors.red,
-                    size: AppTheme.elementSize(screenHeight, 24,
-                        25, 25, 26, 27, 29, 31, 35),
+                    size: AppTheme.elementSize(
+                        screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
                   ),
                   onTap: this._handleSignOut,
                 ),
@@ -312,8 +314,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 children: <Widget>[
                   Container(
                     width: 6.0,
-                    height: AppTheme.elementSize(screenHeight, 30,
-                        35, 40, 45, 45, 50, 55, 60),
+                    height: AppTheme.elementSize(
+                        screenHeight, 30, 35, 40, 45, 45, 50, 55, 60),
 //                     decoration: BoxDecoration(
 //                       color: widget.screenIndex == listData.index
 //                           ? AppTheme.lightBlue
@@ -338,11 +340,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   ? AppTheme.black
                                   : AppTheme.black),
                         )
-                      : Icon(listData.icon.icon,
+                      : Icon(
+                          listData.icon.icon,
                           color: widget.screenIndex == listData.index
                               ? AppTheme.black
-                              : AppTheme.black, size: AppTheme.elementSize(screenHeight, 24,
-                        25, 25, 26, 27, 29, 31, 35),),
+                              : AppTheme.black,
+                          size: AppTheme.elementSize(
+                              screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
+                        ),
                   const Padding(
                     padding: EdgeInsets.all(6),
                   ),
@@ -350,8 +355,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     listData.labelName,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: AppTheme.elementSize(screenHeight, 16,
-                          16, 17, 17, 18, 20, 22, 24),
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 16, 16, 17, 17, 18, 20, 22, 24),
                       color: widget.screenIndex == listData.index
                           ? AppTheme.black
                           : AppTheme.black,
@@ -374,12 +379,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             0.0,
                             0.0),
                         child: Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: AppTheme.elementSize(
+                                  screenHeight, 5, 5, 5, 6, 7, 8, 8, 8),
+                              bottom: 8),
                           child: Container(
                             width:
                                 MediaQuery.of(context).size.width * 0.75 - 64,
-                            height: AppTheme.elementSize(screenHeight, 31,
-                                36, 41, 46, 46, 51, 56, 61),
+                            height: AppTheme.elementSize(
+                                screenHeight, 38, 40, 41, 46, 46, 51, 56, 61),
                             decoration: BoxDecoration(
                               color: AppTheme.lightBlue.withOpacity(0.5),
                               borderRadius: new BorderRadius.only(
