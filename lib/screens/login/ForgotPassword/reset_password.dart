@@ -15,6 +15,7 @@ class ResetPassword extends StatefulWidget {
 
   const ResetPassword({Key key, @required this.email, @required this.otp})
       : super(key: key);
+
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }
@@ -74,10 +75,12 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios,
+          icon: Icon(
+            Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 28, 30, 33, 35, 40, 45, 50),
-            color: AppTheme.lightBlue,),
+                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+            color: AppTheme.lightBlue,
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -103,8 +106,8 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           child: Text(
                             "Reset Password",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(
-                                    screenHeight, 30, 32, 34, 36, 38, 42, 45, 50),
+                                fontSize: AppTheme.elementSize(screenHeight, 30,
+                                    30, 30, 31, 34, 42, 45, 50),
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGrey),
                           ),
@@ -117,7 +120,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           "Enter a new password",
                           style: TextStyle(
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 17, 19, 21, 23, 25, 27, 31, 35),
+                                  screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
                               fontWeight: FontWeight.w500,
                               color: AppTheme.darkGrey),
                         ),
@@ -147,14 +150,16 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: AppTheme.elementSize(
-                              screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
+                              screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
                           child: FlatButton(
                             color: AppTheme.lightBlue,
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
-                                  color: Colors.white, fontSize: AppTheme.elementSize(
-                                  screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),),
+                                color: Colors.white,
+                                fontSize: AppTheme.elementSize(screenHeight, 16,
+                                    18, 18, 19, 19, 26, 28, 30),
+                              ),
                             ),
                             onPressed: this._handleSubmit,
                           ),

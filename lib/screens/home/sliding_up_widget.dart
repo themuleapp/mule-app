@@ -68,8 +68,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     return SlidingUpPanel(
       borderRadius: radius,
       onPanelSlide: this._handlePanelSlide,
-//      minHeight: AppTheme.elementSize(screenHeight, 200, 210, 230, 350, 360, 380, 400, 420),
-      minHeight: screenHeight / 3,
+      minHeight: screenHeight / 4,
       maxHeight: screenHeight - 120,
       controller: _panelController,
       backdropEnabled: true,

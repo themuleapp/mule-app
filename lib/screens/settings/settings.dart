@@ -27,7 +27,7 @@ class Settings extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 28, 29, 30, 31, 32, 35, 40, 48),
+                      screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
                 ),
               ),
               SizedBox(
@@ -43,7 +43,7 @@ class Settings extends StatelessWidget {
                   Icons.account_circle,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
                 title: Text(
                   "Profile",
@@ -51,7 +51,7 @@ class Settings extends StatelessWidget {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 16, 17, 18, 20, 22, 24, 26, 28),
+                        screenHeight, 16, 17, 18, 19, 20, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
@@ -59,7 +59,7 @@ class Settings extends StatelessWidget {
                   Icons.chevron_right,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
                 onTap: () {
                   Navigator.of(context)
@@ -75,7 +75,7 @@ class Settings extends StatelessWidget {
                   Icons.location_on,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
                 title: Text(
                   "Location",
@@ -83,7 +83,7 @@ class Settings extends StatelessWidget {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 16, 17, 18, 20, 22, 24, 26, 28),
+                        screenHeight, 16, 17, 18, 19, 20, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
@@ -91,7 +91,7 @@ class Settings extends StatelessWidget {
                   Icons.chevron_right,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
               ),
               Divider(),
@@ -103,7 +103,7 @@ class Settings extends StatelessWidget {
                   Icons.notifications,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
                 title: Text(
                   "Notifications",
@@ -111,7 +111,7 @@ class Settings extends StatelessWidget {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 16, 17, 18, 20, 22, 24, 26, 28),
+                        screenHeight, 16, 17, 18, 19, 20, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
@@ -119,7 +119,7 @@ class Settings extends StatelessWidget {
                   Icons.chevron_right,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 28, 30, 36, 38, 40),
                 ),
               ),
               Divider(),

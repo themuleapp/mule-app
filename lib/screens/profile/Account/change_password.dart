@@ -75,7 +75,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 28, 30, 33, 25, 26, 27, 29),
+                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -102,8 +102,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           child: Text(
                             "Change Password",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(screenHeight, 30,
-                                    32, 34, 36, 38, 40, 42, 48),
+                                fontSize: AppTheme.elementSize(
+                                    screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey),
                           ),
@@ -147,15 +147,15 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: AppTheme.elementSize(
-                              screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
+                              screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
                           child: FlatButton(
                             color: AppTheme.lightBlue,
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: AppTheme.elementSize(screenHeight, 16,
-                                    18, 20, 22, 24, 26, 28, 30),
+                                fontSize: AppTheme.elementSize(
+                                    screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
                               ),
                             ),
                             onPressed: this._handleSubmitChangePassword,

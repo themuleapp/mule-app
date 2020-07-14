@@ -24,7 +24,7 @@ class Profile extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 28, 30, 33, 35, 36, 37, 39),
+                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -50,7 +50,7 @@ class Profile extends StatelessWidget {
             ),
             SizedBox(
               height: AppTheme.elementSize(
-                  screenHeight, 30, 32, 34, 36, 38, 40, 42, 44),
+                  screenHeight, 30, 32, 32, 32, 35, 40, 42, 44),
             ),
             Row(
               children: <Widget>[
@@ -59,7 +59,7 @@ class Profile extends StatelessWidget {
                   children: <Widget>[
                     CircleAvatar(
                       radius: AppTheme.elementSize(
-                          screenHeight, 50, 52, 54, 56, 58, 60, 62, 64),
+                          screenHeight, 50, 52, 52, 53, 55, 60, 62, 64),
                       backgroundImage: AssetImage(
                           'assets/images/profile_photo_nick_miller.jpg'),
                     ),
@@ -71,16 +71,15 @@ class Profile extends StatelessWidget {
                         radius: AppTheme.elementSize(
                             screenHeight, 20, 20, 20, 20, 20, 21, 22, 24),
                         child: IconButton(
-                        icon: Icon(
-                        Icons.camera_alt,
-                        color: AppTheme.white,
-                        size: 22,
-                        ),
-                        onPressed: () {
-                        Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ChangeProfilePicture())
-                        );
-                        },
+                          icon: Icon(
+                            Icons.camera_alt,
+                            color: AppTheme.white,
+                            size: 22,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ChangeProfilePicture()));
+                          },
                         ),
                       ),
                     ),
@@ -97,7 +96,7 @@ class Profile extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           color: AppTheme.darkGrey,
                           fontSize: AppTheme.elementSize(
-                              screenHeight, 25, 26, 27, 28, 29, 30, 32, 33),
+                              screenHeight, 25, 25, 26, 27, 29, 30, 32, 33),
                         ),
                       ),
                     ),
@@ -107,7 +106,7 @@ class Profile extends StatelessWidget {
             ),
             SizedBox(
               height: AppTheme.elementSize(
-                  screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
+                  screenHeight, 10, 12, 12, 14, 16, 20, 22, 24),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20.0),
@@ -118,13 +117,13 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 25, 26, 27, 28, 30, 32, 34),
+                      screenHeight, 24, 25, 25, 26, 28, 30, 32, 34),
                 ),
               ),
             ),
             SizedBox(
               height: AppTheme.elementSize(
-                  screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
+                  screenHeight, 10, 12, 12, 13, 15, 20, 22, 24),
             ),
             Divider(),
             ListTile(
@@ -137,7 +136,7 @@ class Profile extends StatelessWidget {
                   Icons.mail,
                   color: AppTheme.secondaryBlue,
                   size: AppTheme.elementSize(
-                      screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                      screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
                 ),
               ),
               title: Text(
@@ -146,7 +145,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
+                      screenHeight, 16, 17, 17, 18, 19, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -157,7 +156,7 @@ class Profile extends StatelessWidget {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 14, 15, 16, 17, 18, 19, 20, 21),
+                        screenHeight, 14, 14, 15, 16, 17, 19, 20, 21),
                     color: AppTheme.lightGrey,
                   ),
                 ),
@@ -166,7 +165,7 @@ class Profile extends StatelessWidget {
                 Icons.chevron_right,
                 color: AppTheme.secondaryBlue,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               onTap: () {
                 Navigator.of(context).push(
@@ -184,7 +183,7 @@ class Profile extends StatelessWidget {
                     Icons.phone,
                     color: AppTheme.secondaryBlue,
                     size: AppTheme.elementSize(
-                        screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                        screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
                   )),
               title: Text(
                 "Phone",
@@ -192,7 +191,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
+                      screenHeight, 16, 17, 17, 18, 19, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -203,7 +202,7 @@ class Profile extends StatelessWidget {
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 14, 15, 16, 17, 18, 19, 20, 21),
+                        screenHeight, 14, 14, 15, 16, 17, 19, 20, 21),
                     color: AppTheme.lightGrey,
                   ),
                 ),
@@ -212,7 +211,7 @@ class Profile extends StatelessWidget {
                 Icons.chevron_right,
                 color: AppTheme.secondaryBlue,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               onTap: () {
                 Navigator.of(context).push(
@@ -229,13 +228,13 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 25, 26, 27, 28, 30, 32, 34),
+                      screenHeight, 24, 25, 25, 26, 28, 30, 32, 34),
                 ),
               ),
             ),
             SizedBox(
               height: AppTheme.elementSize(
-                  screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
+                  screenHeight, 10, 12, 12, 14, 16, 20, 22, 24),
             ),
             Divider(),
             ListTile(
@@ -246,7 +245,7 @@ class Profile extends StatelessWidget {
                 Icons.lock,
                 color: AppTheme.secondaryBlue,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               title: Text(
                 "Change Password",
@@ -254,7 +253,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
+                      screenHeight, 16, 17, 17, 18, 19, 21, 22, 23),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -262,7 +261,7 @@ class Profile extends StatelessWidget {
                 Icons.chevron_right,
                 color: AppTheme.secondaryBlue,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               onTap: () {
                 Navigator.of(context).push(
@@ -278,7 +277,7 @@ class Profile extends StatelessWidget {
                 Icons.delete_forever,
                 color: Colors.red,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               title: Text(
                 "Delete Account",
@@ -286,7 +285,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 17, 18, 19, 20, 21, 22, 23),
+                      screenHeight, 16, 17, 17, 18, 19, 21, 22, 23),
                   color: Colors.red,
                 ),
               ),
@@ -294,7 +293,7 @@ class Profile extends StatelessWidget {
                 Icons.chevron_right,
                 color: Colors.red,
                 size: AppTheme.elementSize(
-                    screenHeight, 25, 28, 30, 32, 34, 36, 38, 40),
+                    screenHeight, 25, 26, 27, 29, 34, 36, 38, 40),
               ),
               onTap: () {
                 Navigator.of(context).push(

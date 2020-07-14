@@ -94,7 +94,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 28, 30, 33, 35, 40, 45, 50),
+                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -117,7 +117,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 style: TextStyle(
                   color: AppTheme.lightBlue,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 18, 20, 22, 24, 26, 30, 34, 40),
+                      screenHeight, 18, 20, 20, 21, 25, 30, 34, 40),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -136,25 +136,25 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   "Sign Up",
                   style: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 32, 34, 36, 38, 42, 45, 50),
+                          screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 32, 34, 38, 40, 43, 46, 50),
+                    screenHeight, 30, 30, 30, 32, 35, 43, 46, 50),
               ),
               _signupForm(screenHeight),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 32, 34, 36, 38, 40, 42, 44),
+                    screenHeight, 30, 30, 30, 30, 34, 40, 42, 44),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: AppTheme.elementSize(
-                    screenHeight, 45, 46, 47, 50, 55, 62, 70, 76),
+                    screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
                 child: FlatButton(
                   color: AppTheme.lightBlue,
                   onPressed: this._handleSubmit,
@@ -164,7 +164,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                         color: AppTheme.white,
                         fontWeight: FontWeight.w500,
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 16, 18, 20, 22, 24, 26, 28, 30),
+                            screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
                     ),
                   ),
                 ),
@@ -202,7 +202,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                screenHeight, 20, 22, 22, 24, 26, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Email",
@@ -212,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                screenHeight, 20, 22, 22, 24, 26, 30, 32, 34),
           ),
           Row(
             children: <Widget>[
@@ -236,7 +236,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                screenHeight, 20, 22, 22, 24, 26, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Password",
@@ -246,7 +246,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                screenHeight, 20, 22, 22, 24, 26, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Confirm Password",
@@ -256,7 +256,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 25, 27, 30, 32, 35, 38, 40, 43),
+                screenHeight, 25, 27, 27, 28, 31, 38, 40, 43),
           ),
           Text(
             "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
@@ -264,7 +264,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               fontWeight: FontWeight.bold,
               color: AppTheme.darkGrey,
               fontSize: AppTheme.elementSize(
-                  screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
+                  screenHeight, 14, 15, 15, 16, 18, 20, 24, 28),
             ),
           )
         ],

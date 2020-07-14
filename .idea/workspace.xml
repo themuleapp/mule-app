@@ -2,8 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/home/sliding_up_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/sliding_up_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/legal/legal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/legal/legal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/email_otp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/email_otp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/forgot_password_email.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/forgot_password_email.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/reset_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/ForgotPassword/reset_password.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/login/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/Account/change_email.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_email.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/Account/change_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_password.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/Account/change_phone.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_phone.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/settings/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/settings/settings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/signup/signup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/signup/signup_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/custom_text_form_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/custom_text_form_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,22 +101,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593624863317" />
-    <state width="1160" height="206" key="GridCell.Tab.0.bottom" timestamp="1594653467009">
+    <state width="1160" height="206" key="GridCell.Tab.0.bottom" timestamp="1594720693177">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1160" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
-    <state width="1160" height="206" key="GridCell.Tab.0.center" timestamp="1594653467009">
+    <state width="1160" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594720693177" />
+    <state width="1160" height="206" key="GridCell.Tab.0.center" timestamp="1594720693176">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1160" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
-    <state width="1160" height="206" key="GridCell.Tab.0.left" timestamp="1594653467009">
+    <state width="1160" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594720693176" />
+    <state width="1160" height="206" key="GridCell.Tab.0.left" timestamp="1594720693176">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1160" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
-    <state width="1160" height="206" key="GridCell.Tab.0.right" timestamp="1594653467009">
+    <state width="1160" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594720693176" />
+    <state width="1160" height="206" key="GridCell.Tab.0.right" timestamp="1594720693177">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1160" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594653467009" />
+    <state width="1160" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594720693177" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1593309101209">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -114,6 +129,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1594652930833" />
+    <state x="267" y="191" key="run.anything.popup" timestamp="1594719438435">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="267" y="191" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1594719438435" />
     <state x="246" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1594329334614">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -35,14 +35,14 @@ class CustomTextFormField extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 14, 15, 16, 17, 19, 22, 24, 26),
+                        screenHeight, 14, 14, 15, 15, 16, 20, 24, 26),
                     color: AppTheme.lightGrey,
                   ),
                 )
               : SizedBox(),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 7, 8, 9, 10, 11, 12, 14, 16),
+                screenHeight, 7, 7, 8, 8, 10, 11, 14, 16),
           ),
           TextFormField(
             keyboardType: keyboardType,
@@ -53,7 +53,7 @@ class CustomTextFormField extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: AppTheme.elementSize(
-                  screenHeight, 15, 16, 17, 20, 22, 24, 26, 28),
+                  screenHeight, 15, 15, 16, 16, 18, 23, 25, 28),
             ),
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
