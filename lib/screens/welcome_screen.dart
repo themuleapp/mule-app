@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage>
                       backgroundColor: Colors.grey[100],
                       child: Image.asset('assets/images/logo.png'),
                       radius: AppTheme.elementSize(
-                          screenHeight, 75, 85, 90, 100, 110, 155, 160, 185),
+                          screenHeight, 75, 85, 90, 95, 100, 155, 160, 185),
                     )
                 ),
               ),
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage>
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
+                          screenHeight, 30, 32, 33, 34, 35, 55, 65, 75),
                       color: color
                   ),
                 ),
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage>
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 32, 33, 35, 40, 55, 65, 75),
+                          screenHeight, 30, 32, 33, 34, 35, 55, 65, 75),
                       color: color
                   ),
                 ),
@@ -88,8 +88,7 @@ class _HomePageState extends State<HomePage>
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 45, 60, 70, 75, 80, 90, 95
-                ),
+                    screenHeight, 30, 50, 60, 70, 75, 80, 90, 95),
               ),
               DelayedAnimation(
                 child: GestureDetector(
@@ -119,7 +118,7 @@ class _HomePageState extends State<HomePage>
                     "I already have an account".toUpperCase(),
                     style: TextStyle(
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 16, 17, 18, 20, 22, 24, 28, 30),
+                            screenHeight, 16, 17, 18, 19, 20, 24, 28, 30),
                         fontWeight: FontWeight.bold,
                         color: color),
                   ),
@@ -147,7 +146,7 @@ class _HomePageState extends State<HomePage>
             'Sign Up',
             style: TextStyle(
               fontSize: AppTheme.elementSize(
-                  screenHeight, 20, 21, 22, 24, 25, 26, 28, 30),
+                  screenHeight, 20, 21, 22, 23, 24, 25, 28, 30),
               fontWeight: FontWeight.bold,
               color: AppTheme.lightBlue,
             ),
