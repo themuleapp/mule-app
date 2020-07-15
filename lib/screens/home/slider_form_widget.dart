@@ -38,6 +38,8 @@ class Suggestion {
 class _SliderFormWidgetState extends State<SliderFormWidget> {
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
+  ScrollPhysics _scrollPhysics;
+  ScrollController _scrollController;
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
     if (searchTerm.isEmpty) {
@@ -60,6 +62,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     if (widget.panelIsOpen) {
       return SingleChildScrollView(
           padding: EdgeInsets.only(left: 10, right: 10),
+          physics: _scrollPhysics,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -79,6 +82,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
               _searchBar(),
               SearchResultList(
                 controller: _searchController,
+                spacing: 10,
               )
             ],
           ));
@@ -280,11 +284,29 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     );
   }
 
+  _scrollListener() {
+    if (_scrollController.position.atEdge &&
+        _scrollController.position.pixels == 0) {
+      setState(() {
+        _scrollPhysics = NeverScrollableScrollPhysics();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
       child: _getFormDependingPanelOpen(),
     );
+  }
+
+  @override
+  void initState() {
+    _scrollPhysics = ScrollPhysics();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+
+    super.initState();
   }
 }
