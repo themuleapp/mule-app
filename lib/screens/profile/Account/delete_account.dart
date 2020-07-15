@@ -87,7 +87,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                           "We're sorry to see you go!",
                           style: TextStyle(
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                              screenHeight, 20, 21, 22, 23, 25, 27, 28, 30),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -156,14 +156,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                           color: Colors.white,
                                           fontSize: AppTheme.elementSize(
                                               screenHeight,
-                                              14,
-                                              15,
-                                              15,
-                                              17,
-                                              19,
-                                              21,
-                                              22,
-                                              24),
+                                              14, 15, 15, 17, 19, 21, 22, 24),
                                         ),
                                       ),
                                     ),
@@ -185,8 +178,8 @@ class _DeleteAccountState extends State<DeleteAccount> {
                           child: Text(
                             "CANCEL",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(screenHeight, 17,
-                                    15, 16, 17, 18, 20, 22, 25),
+                                fontSize: AppTheme.elementSize(screenHeight,
+                                    17, 15, 16, 17, 18, 20, 22, 25),
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.lightText),
                           ),
@@ -242,7 +235,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                   hintText: 'How can we improve...',
                   hintStyle: TextStyle(
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 14, 15, 16, 17, 19, 21, 23, 25),
+                        screenHeight, 14, 15, 16, 17, 18, 20, 24, 26),
                   ),
                 ),
               ),

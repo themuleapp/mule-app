@@ -41,7 +41,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       'Any thoughts or suggestions?',
                       style: TextStyle(
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 20, 20, 21, 21, 22, 23, 24, 25),
+                            screenHeight, 20, 21, 22, 23, 25, 27, 28, 30),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -148,7 +148,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   hintText: 'Enter your feedback...',
                   hintStyle: TextStyle(
                     fontSize: AppTheme.elementSize(
-                        screenHeight, 14, 15, 16, 17, 19, 21, 23, 25),
+                        screenHeight, 14, 15, 16, 17, 18, 20, 24, 26),
                   ),
                 ),
               ),

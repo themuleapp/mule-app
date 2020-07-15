@@ -95,14 +95,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                       color: Colors.white,
                                       fontSize: AppTheme.elementSize(
                                           screenHeight,
-                                          14,
-                                          15,
-                                          15,
-                                          17,
-                                          19,
-                                          21,
-                                          22,
-                                          24),
+                                          14, 15, 15, 17, 19, 21, 22, 24),
                                     ),
                                   ),
                                 ),
@@ -159,8 +152,9 @@ class _HelpScreenState extends State<HelpScreen> {
                     hintText: 'Report a problem...',
                     hintStyle: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 14, 15, 16, 17, 19, 21, 23, 25),
-                    )),
+                          screenHeight, 14, 15, 16, 17, 18, 20, 24, 26),
+                    )
+                ),
               ),
             ),
           ),
