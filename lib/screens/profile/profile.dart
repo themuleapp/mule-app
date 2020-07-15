@@ -65,7 +65,7 @@ class Profile extends StatelessWidget {
                     ),
                     Positioned(
                       bottom: 5,
-                      right: 2,
+                      right: 4,
                       child: CircleAvatar(
                         backgroundColor: AppTheme.lightBlue,
                         radius: AppTheme.elementSize(
@@ -74,8 +74,7 @@ class Profile extends StatelessWidget {
                           icon: Icon(
                             Icons.camera_alt,
                             color: AppTheme.white,
-                            size: AppTheme.elementSize(
-                                screenHeight, 23, 23, 24, 26, 28, 36, 38, 40),
+                            size: 22,
                           ),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(

@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/screens/home/map_helper.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/home/map_marker.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widgets/loading-animation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/home/map_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/map_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/home/open_settings_for_location_widget.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/profile/Account/change_profile_picture.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/Account/change_profile_picture.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mule-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mule-app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +12,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
   </component>
   <component name="ProjectId" id="1dvcn5KXeWI0vKveyrQpjS4deGy" />
   <component name="ProjectViewState">
@@ -64,11 +59,12 @@
       <option name="presentableId" value="Default" />
       <updated>1588106549901</updated>
       <workItem from="1588106552693" duration="9000" />
+      <workItem from="1594842640960" duration="365000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594653299761">
