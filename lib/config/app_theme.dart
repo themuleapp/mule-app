@@ -60,4 +60,6 @@ class AppTheme {
 
   //Heading 1: screenHeight, 24, 26, 28, 30, 32, 40, 45, 50
   //Heading 2: screenHeight, 14, 15, 16, 17, 18, 20, 24, 28
+  //Button 1: screenHeight, 36, 38, 40, 42, 45, 56, 62, 70
+  //Button 1 Text: screenHeight, 14, 15, 16, 17, 18, 26, 28, 30
 }

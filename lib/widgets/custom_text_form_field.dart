@@ -69,7 +69,7 @@ class CustomTextFormField extends StatelessWidget {
               hintStyle: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 14, 14, 14, 16, 21, 23, 25, 27),
+                    screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                 color: AppTheme.lightGrey.withOpacity(0.5),
               ),
             ),

@@ -117,7 +117,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 style: TextStyle(
                   color: AppTheme.lightBlue,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 18, 18, 18, 20, 22, 24, 30, 38),
+                      screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -136,25 +136,25 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   "Sign Up",
                   style: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 46, 50),
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
               _signupForm(screenHeight),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 42, 44),
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(bottom: 30.0),
                 height: AppTheme.elementSize(
-                    screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                    screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                 child: FlatButton(
                   color: AppTheme.lightBlue,
                   onPressed: this._handleSubmit,
@@ -164,7 +164,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                         color: AppTheme.white,
                         fontWeight: FontWeight.w500,
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                            screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                     ),
                   ),
                 ),
@@ -264,7 +264,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               fontWeight: FontWeight.bold,
               color: AppTheme.darkGrey,
               fontSize: AppTheme.elementSize(
-                  screenHeight, 14, 14, 14, 15, 15, 20, 24, 28),
+                  screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
             ),
           )
         ],
