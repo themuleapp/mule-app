@@ -45,12 +45,12 @@ class Profile extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: AppTheme.darkGrey,
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
               ),
             ),
             SizedBox(
               height: AppTheme.elementSize(
-                  screenHeight, 22, 22, 24, 24, 25, 26, 30, 38),
+                  screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
             ),
             Row(
               children: <Widget>[
@@ -74,7 +74,8 @@ class Profile extends StatelessWidget {
                           icon: Icon(
                             Icons.camera_alt,
                             color: AppTheme.white,
-                            size: 22,
+                            size: AppTheme.elementSize(
+                                screenHeight, 23, 23, 24, 26, 28, 36, 38, 40),
                           ),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -117,7 +118,7 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 24, 24, 25, 25, 30, 32, 34),
+                      screenHeight, 22, 22, 23, 23, 25, 30, 32, 34),
                 ),
               ),
             ),
@@ -145,7 +146,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 16, 16, 17, 18, 21, 22, 23),
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -191,7 +192,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 16, 16, 17, 18, 21, 22, 23),
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -228,7 +229,7 @@ class Profile extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 24, 25, 25, 26, 30, 32, 34),
+                      screenHeight, 22, 22, 23, 23, 25, 30, 32, 34),
                 ),
               ),
             ),
@@ -253,7 +254,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 16, 16, 17, 18, 21, 22, 23),
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -285,7 +286,7 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 16, 16, 17, 18, 21, 22, 23),
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: Colors.red,
                 ),
               ),
