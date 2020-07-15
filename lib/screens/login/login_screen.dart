@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                 style: TextStyle(
                   color: AppTheme.lightBlue,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 18, 18, 18, 20, 22, 24, 30, 38),
+                      screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -107,19 +107,19 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                   "Log In",
                   style: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 46, 50),
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
               _loginForm(context, screenHeight),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 30, 36, 42, 44),
+                    screenHeight, 22, 24, 26, 28, 30, 36, 42, 44),
               ),
               Container(
                 child: Column(
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                     ),
                     Container(
                       height: AppTheme.elementSize(
-                          screenHeight, 45, 45, 46, 47, 50, 56, 62, 70),
+                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
                         onPressed: () {},
                         color: AppTheme.facebookBlue,
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: AppTheme.elementSize(screenHeight,
-                                      16, 17, 18, 18, 19, 23, 28, 30),
+                                      14, 15, 16, 16, 17, 23, 28, 30),
                                   color: Colors.white,
                                 ),
                               ),
@@ -172,12 +172,13 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                           border: Border.all(
                             color: Colors.redAccent,
                           ),
-                          borderRadius: BorderRadius.circular(3.0)),
+                          borderRadius: BorderRadius.circular(3.0)
+                      ),
                       margin: EdgeInsets.only(
                         top: 10.0,
                       ),
                       height: AppTheme.elementSize(
-                          screenHeight, 45, 45, 46, 47, 50, 56, 62, 70),
+                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
                         onPressed: () {},
                         color: AppTheme.white,
@@ -196,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: AppTheme.elementSize(screenHeight,
-                                      16, 17, 18, 18, 19, 23, 28, 30),
+                                      14, 15, 16, 16, 17, 23, 28, 30),
                                   color: Colors.redAccent,
                                 ),
                               ),
@@ -247,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
               style: TextStyle(
                   color: AppTheme.darkGrey,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 17, 17, 17, 18, 22, 26, 29),
+                      screenHeight, 14, 15, 16, 17, 18, 22, 26, 29),
                   fontWeight: FontWeight.bold),
             ),
             onTap: () {
@@ -262,7 +263,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
           Container(
             width: MediaQuery.of(context).size.width,
             height: AppTheme.elementSize(
-                screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
             child: FlatButton(
               color: AppTheme.lightBlue,
               onPressed: this.handleSubmt,
@@ -271,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                      screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                 ),
               ),
             ),
