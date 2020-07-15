@@ -38,7 +38,7 @@ class Legal extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: AppTheme.darkGrey,
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
               ),
             ),
             SizedBox(
