@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/search_result_list.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class SliderFormWidget extends StatefulWidget {
@@ -36,6 +37,7 @@ class Suggestion {
 
 class _SliderFormWidgetState extends State<SliderFormWidget> {
   TextEditingController _destinationController = TextEditingController();
+  TextEditingController _searchController = TextEditingController();
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
     if (searchTerm.isEmpty) {
@@ -56,25 +58,30 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   // state of the slider panel
   Widget _getFormDependingPanelOpen() {
     if (widget.panelIsOpen) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _slideIcon(),
-          SizedBox(
-            height: 20,
-          ),
-          _destinationTitle(),
-          _destinationBar(
-            focusNode: widget.destinationFocusNode,
-            controller: _destinationController,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          _searchBarTitle(),
-          _searchBar(),
-        ],
-      );
+      return SingleChildScrollView(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _slideIcon(),
+              SizedBox(
+                height: 20,
+              ),
+              _destinationTitle(),
+              _destinationBar(
+                focusNode: widget.destinationFocusNode,
+                controller: _destinationController,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              _searchBarTitle(),
+              _searchBar(),
+              SearchResultList(
+                controller: _searchController,
+              )
+            ],
+          ));
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,9 +197,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
                 Icons.add_location,
                 color: AppTheme.secondaryBlue,
               ),
-              onPressed: () {
-                print(focusNode == primaryFocus);
-              },
+              onPressed: () {},
             ),
           ),
         ),
@@ -254,6 +259,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
+        controller: _searchController,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
