@@ -103,14 +103,14 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                             "Change Password",
                             style: TextStyle(
                                 fontSize: AppTheme.elementSize(
-                                    screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey),
                           ),
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 30, 30, 32, 32, 33, 36, 37, 44),
+                              screenHeight, 20, 20, 22, 22, 24, 33, 36, 40),
                         ),
                         CustomTextFormField(
                           controller: _oldPasswordController,
@@ -121,7 +121,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 20, 22, 22, 24, 30, 32, 34),
+                              screenHeight, 30, 30, 32, 32, 35, 43, 46, 50),
                         ),
                         CustomTextFormField(
                           controller: _newPassword1Controller,
@@ -131,7 +131,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 20, 22, 22, 24, 30, 32, 34),
+                              screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                         ),
                         CustomTextFormField(
                           controller: _newPassword2Controller,
@@ -147,7 +147,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: AppTheme.elementSize(
-                              screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                              screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                           child: FlatButton(
                             color: AppTheme.lightBlue,
                             child: Text(
@@ -155,7 +155,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: AppTheme.elementSize(
-                                    screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                                    screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                               ),
                             ),
                             onPressed: this._handleSubmitChangePassword,

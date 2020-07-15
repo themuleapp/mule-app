@@ -39,14 +39,22 @@ class ChangeEmail extends StatelessWidget {
                     "Change Email",
                     style: TextStyle(
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                            screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.darkGrey),
                   ),
                 ),
                 SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 30, 30, 30, 32, 32, 36, 37, 38),
+                      screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
+                ),
+                Text(
+                  "You can update your email address",
+                  style: TextStyle(
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.darkGrey),
                 ),
                 _changeEmailForm(context, screenHeight),
                 SizedBox(
@@ -66,14 +74,6 @@ class ChangeEmail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            "You can update your email address",
-            style: TextStyle(
-                fontSize: AppTheme.elementSize(
-                    screenHeight, 17, 17, 18, 18, 19, 26, 30, 35),
-                fontWeight: FontWeight.w500,
-                color: AppTheme.darkGrey),
-          ),
           SizedBox(
             height: AppTheme.elementSize(
                 screenHeight, 20, 20, 22, 22, 23, 26, 27, 50),
@@ -83,12 +83,12 @@ class ChangeEmail extends StatelessWidget {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 30, 30, 32, 32, 34, 36, 37, 39),
+                screenHeight, 20, 20, 22, 22, 24, 30, 36, 40),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
             height: AppTheme.elementSize(
-                screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
             child: FlatButton(
               color: AppTheme.lightBlue,
               child: Text(
@@ -96,7 +96,7 @@ class ChangeEmail extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                      screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                 ),
               ),
               onPressed: () {},
