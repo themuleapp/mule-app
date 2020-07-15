@@ -78,7 +78,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
             color: AppTheme.lightBlue,
           ),
           onPressed: () {
@@ -106,27 +106,27 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           child: Text(
                             "Reset Password",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(screenHeight, 30,
-                                    30, 30, 31, 34, 42, 45, 50),
+                                fontSize: AppTheme.elementSize(
+                                    screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGrey),
                           ),
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 22, 24, 28, 30, 33, 36, 40),
+                              screenHeight, 20, 20, 22, 22, 24, 33, 36, 40),
                         ),
                         Text(
                           "Enter a new password",
                           style: TextStyle(
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
+                                  screenHeight, 17, 17, 18, 18, 19, 24, 30, 35),
                               fontWeight: FontWeight.w500,
                               color: AppTheme.darkGrey),
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 30, 32, 34, 38, 40, 43, 46, 50),
+                              screenHeight, 30, 30, 32, 32, 35, 43, 46, 50),
                         ),
                         CustomTextFormField(
                           controller: _firstPassController,
@@ -136,7 +136,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 22, 24, 28, 30, 33, 36, 40),
+                              screenHeight, 20, 20, 22, 22, 24, 33, 36, 40),
                         ),
                         CustomTextFormField(
                           controller: _secondPassController,
@@ -145,7 +145,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 30, 32, 34, 38, 40, 43, 46, 50),
+                              screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,

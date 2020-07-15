@@ -40,19 +40,19 @@ class ChangePhone extends StatelessWidget {
                     "Change Phone Number",
                     style: TextStyle(
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
+                            screenHeight, 28, 28, 28, 28, 30, 35, 42, 50),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.darkGrey),
                   ),
                 ),
                 SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 30, 31, 32, 32, 35, 40, 42, 44),
+                      screenHeight, 25, 26, 27, 28, 34, 40, 42, 44),
                 ),
                 _changePhoneNumberForm(context, screenHeight),
                 SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 30, 32, 34, 36, 38, 40, 42, 44),
+                      screenHeight, 30, 30, 32, 32, 34, 40, 42, 44),
                 ),
               ],
             ),
@@ -70,7 +70,7 @@ class ChangePhone extends StatelessWidget {
           "You can update your phone number and we'll send you a verification code",
           style: TextStyle(
               fontSize: AppTheme.elementSize(
-                  screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
+                  screenHeight, 16, 16, 16, 16, 18, 26, 30, 35),
               fontWeight: FontWeight.w500,
               color: AppTheme.darkGrey),
         ),

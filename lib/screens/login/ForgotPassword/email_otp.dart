@@ -68,7 +68,7 @@ class _OtpVerificationState extends State<OtpVerification>
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
             color: AppTheme.lightBlue,
           ),
           onPressed: () {
@@ -93,20 +93,20 @@ class _OtpVerificationState extends State<OtpVerification>
                         "Verify Email",
                         style: TextStyle(
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
+                                screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
                             fontWeight: FontWeight.bold,
                             color: AppTheme.darkGrey),
                       ),
                     ),
                     SizedBox(
                       height: AppTheme.elementSize(
-                          screenHeight, 30, 32, 34, 38, 40, 43, 46, 50),
+                          screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                     ),
                     Text(
                       "Please enter the code we have emailed you",
                       style: TextStyle(
                           fontSize: AppTheme.elementSize(
-                              screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
+                              screenHeight, 17, 17, 18, 18, 20, 26, 30, 35),
                           fontWeight: FontWeight.w500,
                           color: AppTheme.darkGrey),
                     ),
@@ -122,7 +122,7 @@ class _OtpVerificationState extends State<OtpVerification>
                     ),
                     SizedBox(
                       height: AppTheme.elementSize(
-                          screenHeight, 20, 22, 24, 28, 30, 33, 36, 40),
+                          screenHeight, 20, 20, 22, 22, 24, 30, 36, 40),
                     ),
                     Row(
                       children: <Widget>[
@@ -131,12 +131,12 @@ class _OtpVerificationState extends State<OtpVerification>
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 15, 16, 16, 17, 18, 22, 24, 26),
+                                screenHeight, 15, 15, 16, 16, 18, 22, 24, 26),
                           ),
                         ),
                         SizedBox(
                           width: AppTheme.elementSize(
-                              screenHeight, 10, 11, 12, 13, 14, 15, 16, 17),
+                              screenHeight, 10, 10, 12, 12, 13, 15, 16, 17),
                         ),
                         GestureDetector(
                           child: Text(
@@ -144,7 +144,7 @@ class _OtpVerificationState extends State<OtpVerification>
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 15, 16, 16, 17, 18, 22, 24, 26),
+                                  screenHeight, 15, 15, 16, 16, 17, 22, 24, 26),
                               color: AppTheme.lightBlue,
                             ),
                           ),
@@ -154,7 +154,7 @@ class _OtpVerificationState extends State<OtpVerification>
                     ),
                     SizedBox(
                       height: AppTheme.elementSize(
-                          screenHeight, 30, 32, 32, 34, 38, 43, 46, 50),
+                          screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,

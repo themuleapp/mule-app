@@ -51,7 +51,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
             color: AppTheme.lightBlue,
           ),
           onPressed: () {
@@ -75,7 +75,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
                 style: TextStyle(
                   color: AppTheme.lightBlue,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 18, 20, 20, 21, 25, 30, 34, 40),
+                      screenHeight, 18, 18, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -94,19 +94,19 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
                   "Forgot Password",
                   style: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
+                          screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
                       fontWeight: FontWeight.bold,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 32, 32, 34, 38, 43, 46, 50),
+                    screenHeight, 30, 30, 30, 30, 32, 40, 46, 50),
               ),
               _forgotPasswordForm(context, screenHeight),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 32, 32, 34, 38, 43, 46, 50),
+                    screenHeight, 30, 30, 30, 30, 32, 40, 42, 44),
               ),
             ],
           ),
@@ -125,13 +125,13 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
             "Enter your email to receive a code",
             style: TextStyle(
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
+                    screenHeight, 17, 17, 17, 17, 17, 25, 30, 35),
                 fontWeight: FontWeight.w500,
                 color: AppTheme.darkGrey),
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 22, 22, 24, 29, 33, 36, 40),
+                screenHeight, 20, 20, 22, 22, 24, 33, 36, 40),
           ),
           CustomTextFormField(
             keyboardType: TextInputType.emailAddress,
@@ -141,7 +141,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 30, 32, 32, 34, 36, 40, 42, 44),
+                screenHeight, 30, 30, 32, 32, 33, 40, 42, 44),
           ),
           Container(
             width: MediaQuery.of(context).size.width,

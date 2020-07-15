@@ -17,7 +17,7 @@ class ChangeEmail extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -39,19 +39,19 @@ class ChangeEmail extends StatelessWidget {
                     "Change Email",
                     style: TextStyle(
                         fontSize: AppTheme.elementSize(
-                            screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
+                            screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.darkGrey),
                   ),
                 ),
                 SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 30, 31, 32, 33, 35, 36, 37, 38),
+                      screenHeight, 30, 30, 30, 32, 32, 36, 37, 38),
                 ),
                 _changeEmailForm(context, screenHeight),
                 SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 30, 31, 32, 33, 35, 36, 37, 38),
+                      screenHeight, 30, 30, 30, 32, 32, 36, 37, 38),
                 ),
               ],
             ),
@@ -70,20 +70,20 @@ class ChangeEmail extends StatelessWidget {
             "You can update your email address",
             style: TextStyle(
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 17, 18, 18, 19, 21, 26, 30, 35),
+                    screenHeight, 17, 17, 18, 18, 19, 26, 30, 35),
                 fontWeight: FontWeight.w500,
                 color: AppTheme.darkGrey),
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 20, 21, 22, 23, 25, 26, 27, 50),
+                screenHeight, 20, 20, 22, 22, 23, 26, 27, 50),
           ),
           CustomTextFormField(
             hintText: "Email",
           ),
           SizedBox(
             height: AppTheme.elementSize(
-                screenHeight, 30, 31, 32, 33, 35, 36, 37, 39),
+                screenHeight, 30, 30, 32, 32, 34, 36, 37, 39),
           ),
           Container(
             width: MediaQuery.of(context).size.width,

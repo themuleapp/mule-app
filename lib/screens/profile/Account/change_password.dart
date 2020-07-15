@@ -75,7 +75,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
           icon: Icon(
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
-                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -103,14 +103,14 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                             "Change Password",
                             style: TextStyle(
                                 fontSize: AppTheme.elementSize(
-                                    screenHeight, 30, 30, 30, 31, 34, 42, 45, 50),
+                                    screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey),
                           ),
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 30, 31, 32, 33, 35, 36, 37, 44),
+                              screenHeight, 30, 30, 32, 32, 33, 36, 37, 44),
                         ),
                         CustomTextFormField(
                           controller: _oldPasswordController,
@@ -121,7 +121,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                              screenHeight, 20, 20, 22, 22, 24, 30, 32, 34),
                         ),
                         CustomTextFormField(
                           controller: _newPassword1Controller,
@@ -131,7 +131,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 20, 22, 24, 26, 28, 30, 32, 34),
+                              screenHeight, 20, 20, 22, 22, 24, 30, 32, 34),
                         ),
                         CustomTextFormField(
                           controller: _newPassword2Controller,
@@ -142,7 +142,7 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                         ),
                         SizedBox(
                           height: AppTheme.elementSize(
-                              screenHeight, 30, 32, 34, 36, 38, 40, 42, 48),
+                              screenHeight, 30, 30, 32, 32, 34, 40, 42, 48),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
