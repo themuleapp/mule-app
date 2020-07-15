@@ -93,7 +93,7 @@ class _OtpVerificationState extends State<OtpVerification>
                         "Verify Email",
                         style: TextStyle(
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                                screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                             fontWeight: FontWeight.bold,
                             color: AppTheme.darkGrey),
                       ),
@@ -106,7 +106,7 @@ class _OtpVerificationState extends State<OtpVerification>
                       "Please enter the code we have emailed you",
                       style: TextStyle(
                           fontSize: AppTheme.elementSize(
-                              screenHeight, 17, 17, 18, 18, 20, 26, 30, 35),
+                              screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                           fontWeight: FontWeight.w500,
                           color: AppTheme.darkGrey),
                     ),
@@ -117,7 +117,6 @@ class _OtpVerificationState extends State<OtpVerification>
                         validator: validateNotEmptyInput,
                         controller: _otpController,
                         hintText: "",
-                        verticalPadding: 25.0,
                       ),
                     ),
                     SizedBox(
@@ -131,7 +130,7 @@ class _OtpVerificationState extends State<OtpVerification>
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 15, 15, 16, 16, 18, 22, 24, 26),
+                                screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                           ),
                         ),
                         SizedBox(
@@ -144,7 +143,7 @@ class _OtpVerificationState extends State<OtpVerification>
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 15, 15, 16, 16, 17, 22, 24, 26),
+                                  screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                               color: AppTheme.lightBlue,
                             ),
                           ),
@@ -159,7 +158,7 @@ class _OtpVerificationState extends State<OtpVerification>
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: AppTheme.elementSize(
-                          screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
                         color: AppTheme.lightBlue,
                         child: Text(
@@ -167,7 +166,7 @@ class _OtpVerificationState extends State<OtpVerification>
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: AppTheme.elementSize(
-                                screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                                screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                           ),
                         ),
                         onPressed: this._handleVerify,

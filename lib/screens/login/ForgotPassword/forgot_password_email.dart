@@ -75,7 +75,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
                 style: TextStyle(
                   color: AppTheme.lightBlue,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 18, 18, 18, 20, 22, 24, 30, 38),
+                      screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -94,19 +94,19 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
                   "Forgot Password",
                   style: TextStyle(
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 30, 30, 30, 30, 32, 40, 45, 50),
+                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                       fontWeight: FontWeight.bold,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 46, 50),
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
               _forgotPasswordForm(context, screenHeight),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 30, 30, 30, 30, 32, 40, 42, 44),
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
             ],
           ),
@@ -125,7 +125,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
             "Enter your email to receive a code",
             style: TextStyle(
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 17, 17, 17, 17, 17, 25, 30, 35),
+                    screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                 fontWeight: FontWeight.w500,
                 color: AppTheme.darkGrey),
           ),
@@ -146,7 +146,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
           Container(
             width: MediaQuery.of(context).size.width,
             height: AppTheme.elementSize(
-                screenHeight, 45, 45, 45, 45, 47, 56, 63, 70),
+                screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
             child: FlatButton(
               color: AppTheme.lightBlue,
               child: Text(
@@ -154,7 +154,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 18, 18, 19, 19, 26, 28, 30),
+                      screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                 ),
               ),
               onPressed: this._handleForgotPassword,
