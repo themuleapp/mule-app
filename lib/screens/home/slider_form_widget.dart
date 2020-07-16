@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/search_result_list.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class SliderFormWidget extends StatefulWidget {
@@ -35,7 +37,10 @@ class Suggestion {
 }
 
 class _SliderFormWidgetState extends State<SliderFormWidget> {
+  FocusNode _searchFocusNode = FocusNode();
+
   TextEditingController _destinationController = TextEditingController();
+  TextEditingController _searchController = TextEditingController();
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
     if (searchTerm.isEmpty) {
@@ -73,6 +78,11 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           ),
           _searchBarTitle(),
           _searchBar(),
+          SearchResultList(
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            spacing: 10,
+          )
         ],
       );
     } else {
@@ -190,9 +200,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
                 Icons.add_location,
                 color: AppTheme.secondaryBlue,
               ),
-              onPressed: () {
-                print(focusNode == primaryFocus);
-              },
+              onPressed: () {},
             ),
           ),
         ),
@@ -254,6 +262,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
+        // focusNode: _searchFocusNode,
+        controller: _searchController,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
@@ -280,5 +290,10 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
       child: _getFormDependingPanelOpen(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }

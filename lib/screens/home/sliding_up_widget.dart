@@ -61,6 +61,17 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     super.initState();
   }
 
+  Widget _panel(ScrollController sc) {
+    return SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        controller: sc,
+        child: SliderFormWidget(
+          panelIsOpen: panelIsOpen,
+          destinationFocusNode: _destinationFocusNode,
+          fakeFocusNode: _fakeFocusNode,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SlidingUpPanel(
@@ -70,11 +81,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       maxHeight: MediaQuery.of(context).size.height - 120,
       controller: _panelController,
       backdropEnabled: true,
-      panel: SliderFormWidget(
-        panelIsOpen: panelIsOpen,
-        destinationFocusNode: _destinationFocusNode,
-        fakeFocusNode: _fakeFocusNode,
-      ),
+      panelBuilder: (sc) => _panel(sc),
       body: Center(
         child: MapWidget(),
       ),
