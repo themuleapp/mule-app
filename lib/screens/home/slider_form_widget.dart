@@ -262,7 +262,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
-        // focusNode: _searchFocusNode,
+        focusNode: _searchFocusNode,
         controller: _searchController,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
