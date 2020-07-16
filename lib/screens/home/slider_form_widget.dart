@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
@@ -36,10 +37,10 @@ class Suggestion {
 }
 
 class _SliderFormWidgetState extends State<SliderFormWidget> {
+  FocusNode _searchFocusNode = FocusNode();
+
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
-  ScrollPhysics _scrollPhysics;
-  ScrollController _scrollController;
 
   Future<List<Suggestion>> _handleSearchDestination(String searchTerm) async {
     if (searchTerm.isEmpty) {
@@ -60,32 +61,30 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   // state of the slider panel
   Widget _getFormDependingPanelOpen() {
     if (widget.panelIsOpen) {
-      return SingleChildScrollView(
-          padding: EdgeInsets.only(left: 10, right: 10),
-          physics: _scrollPhysics,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _slideIcon(),
-              SizedBox(
-                height: 20,
-              ),
-              _destinationTitle(),
-              _destinationBar(
-                focusNode: widget.destinationFocusNode,
-                controller: _destinationController,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              _searchBarTitle(),
-              _searchBar(),
-              SearchResultList(
-                controller: _searchController,
-                spacing: 10,
-              )
-            ],
-          ));
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _slideIcon(),
+          SizedBox(
+            height: 20,
+          ),
+          _destinationTitle(),
+          _destinationBar(
+            focusNode: widget.destinationFocusNode,
+            controller: _destinationController,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          _searchBarTitle(),
+          _searchBar(),
+          SearchResultList(
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            spacing: 10,
+          )
+        ],
+      );
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,6 +262,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         ],
       ),
       child: TextFormField(
+        // focusNode: _searchFocusNode,
         controller: _searchController,
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
@@ -284,15 +284,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     );
   }
 
-  _scrollListener() {
-    if (_scrollController.position.atEdge &&
-        _scrollController.position.pixels == 0) {
-      setState(() {
-        _scrollPhysics = NeverScrollableScrollPhysics();
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -303,10 +294,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
 
   @override
   void initState() {
-    _scrollPhysics = ScrollPhysics();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-
     super.initState();
   }
 }
