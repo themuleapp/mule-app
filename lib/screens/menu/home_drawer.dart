@@ -93,7 +93,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 33.0),
+              padding: EdgeInsets.only(top: AppTheme.elementSize(screenHeight, 0, 0, 15, 15, 20, 25, 30, 35)),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
@@ -181,7 +181,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(left: 4, top: 0, bottom: 0),
+                        const EdgeInsets.only(left: 4, top: 4, bottom: 0),
                         child: Row(
                           children: <Widget>[
                             Text(
@@ -190,12 +190,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.darkGrey,
-                                fontSize: AppTheme.elementSize(screenHeight, 16,
-                                    17, 18, 19, 20, 21, 23, 25),
+                                fontSize: AppTheme.elementSize(screenHeight, 14,
+                                    15, 16, 19, 20, 21, 23, 25),
                               ),
                             ),
                             Container(
-                              height: 35,
+                              height: AppTheme.elementSize(screenHeight, 25, 25, 25, 25, 25, 30, 30, 35),
                               child: Switch(
                                 value: true,
                                 activeColor: AppTheme.lightBlue,
