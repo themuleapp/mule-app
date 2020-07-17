@@ -93,7 +93,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 40.0),
+              padding: const EdgeInsets.only(top: 33.0),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
@@ -117,10 +117,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                       .value /
                                       360),
                               child: Container(
-                                height: AppTheme.elementSize(screenHeight, 120,
-                                    120, 120, 120, 120, 140, 150, 170),
-                                width: AppTheme.elementSize(screenHeight, 120,
-                                    120, 120, 120, 120, 140, 150, 170),
+                                height: AppTheme.elementSize(screenHeight, 100,
+                                    115, 125, 130, 135, 170, 185, 200),
+                                width: AppTheme.elementSize(screenHeight, 100,
+                                    115, 125, 130, 135, 170, 185, 200),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   boxShadow: <BoxShadow>[
@@ -136,13 +136,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(AppTheme.elementSize(
                                             screenHeight,
+                                            56,
+                                            57,
                                             60,
-                                            60,
-                                            60,
-                                            60,
-                                            60,
-                                            65,
-                                            80,
+                                            62.5,
+                                            66,
+                                            85,
+                                            92.5,
                                             100))),
                                     child: Image.asset(
                                         'assets/images/profile_photo_nick_miller.jpg'),
@@ -159,7 +159,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 13, left: 4),
+                        padding: const EdgeInsets.only(top: 15, left: 4),
                         child: Observer(
                           builder: (_) => GestureDetector(
                             child: Text(
@@ -168,8 +168,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey,
-                                fontSize: AppTheme.elementSize(screenHeight, 25,
-                                    25, 25, 25, 25, 26, 28, 30),
+                                fontSize: AppTheme.elementSize(screenHeight, 21,
+                                    22, 24, 26, 27, 28, 30, 32),
                               ),
                             ),
                             onTap: () {
@@ -190,14 +190,17 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.darkGrey,
-                                fontSize: AppTheme.elementSize(screenHeight, 18,
-                                    18, 18, 18, 18, 19, 21, 23),
+                                fontSize: AppTheme.elementSize(screenHeight, 16,
+                                    17, 18, 19, 20, 21, 23, 25),
                               ),
                             ),
-                            Switch(
-                              value: true,
-                              activeColor: AppTheme.lightBlue,
-                              onChanged: (bool state) {},
+                            Container(
+                              height: 35,
+                              child: Switch(
+                                value: true,
+                                activeColor: AppTheme.lightBlue,
+                                onChanged: (bool state) {},
+                              ),
                             )
                           ],
                         ),
@@ -209,7 +212,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             SizedBox(
               height:
-              AppTheme.elementSize(screenHeight, 1, 1, 1, 1, 1, 3, 5, 8),
+              AppTheme.elementSize(screenHeight, 0, 0, 0, 1, 3, 6, 8, 10),
             ),
             Divider(
               height: 1,
@@ -315,7 +318,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: AppTheme.elementSize(
-                        screenHeight, 30, 35, 35, 40, 45, 50, 55, 60),
+                        screenHeight, 30, 35, 40, 45, 45, 50, 55, 60),
 //                     decoration: BoxDecoration(
 //                       color: widget.screenIndex == listData.index
 //                           ? AppTheme.lightBlue
