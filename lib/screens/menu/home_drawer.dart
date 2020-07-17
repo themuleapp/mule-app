@@ -118,9 +118,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                       360),
                               child: Container(
                                 height: AppTheme.elementSize(screenHeight, 120,
-                                    125, 125, 130, 135, 170, 185, 200),
+                                    120, 120, 120, 120, 140, 150, 170),
                                 width: AppTheme.elementSize(screenHeight, 120,
-                                    125, 125, 130, 135, 170, 185, 200),
+                                    120, 120, 120, 120, 140, 150, 170),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   boxShadow: <BoxShadow>[
@@ -137,12 +137,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                         Radius.circular(AppTheme.elementSize(
                                             screenHeight,
                                             60,
-                                            62.5,
-                                            62.5,
-                                            67.5,
-                                            67.5,
-                                            85,
-                                            92.5,
+                                            60,
+                                            60,
+                                            60,
+                                            60,
+                                            65,
+                                            80,
                                             100))),
                                     child: Image.asset(
                                         'assets/images/profile_photo_nick_miller.jpg'),
@@ -159,7 +159,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 15, left: 4),
+                        padding: const EdgeInsets.only(top: 13, left: 4),
                         child: Observer(
                           builder: (_) => GestureDetector(
                             child: Text(
@@ -169,7 +169,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey,
                                 fontSize: AppTheme.elementSize(screenHeight, 25,
-                                    26, 26, 26, 27, 28, 30, 32),
+                                    25, 25, 25, 25, 26, 28, 30),
                               ),
                             ),
                             onTap: () {
@@ -191,7 +191,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.darkGrey,
                                 fontSize: AppTheme.elementSize(screenHeight, 18,
-                                    19, 19, 19, 20, 21, 23, 25),
+                                    18, 18, 18, 18, 19, 21, 23),
                               ),
                             ),
                             Switch(
@@ -209,7 +209,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             SizedBox(
               height:
-              AppTheme.elementSize(screenHeight, 1, 1, 2, 2, 4, 6, 8, 10),
+              AppTheme.elementSize(screenHeight, 1, 1, 1, 1, 1, 3, 5, 8),
             ),
             Divider(
               height: 1,
@@ -315,7 +315,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Container(
                     width: 6.0,
                     height: AppTheme.elementSize(
-                        screenHeight, 30, 35, 40, 45, 45, 50, 55, 60),
+                        screenHeight, 30, 35, 35, 40, 45, 50, 55, 60),
 //                     decoration: BoxDecoration(
 //                       color: widget.screenIndex == listData.index
 //                           ? AppTheme.lightBlue
