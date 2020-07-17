@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f83457-36b1-46cb-a2da-d3298caf7dc4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/menu/home_drawer.dart" afterDir="false" />
     </list>
@@ -10,7 +12,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -88,33 +89,33 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1593624863317" />
-    <state width="1160" height="206" key="GridCell.Tab.0.bottom" timestamp="1594997609553">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1429" height="249" key="GridCell.Tab.0.bottom" timestamp="1595002118286">
+      <screen x="1680" y="66" width="1920" height="1057" />
     </state>
     <state width="1160" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1594997609553" />
-    <state width="1429" height="247" key="GridCell.Tab.0.bottom/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594828878432" />
-    <state width="1429" height="247" key="GridCell.Tab.0.bottom/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1594831659245" />
+    <state width="1429" height="249" key="GridCell.Tab.0.bottom/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594999413030" />
+    <state width="1429" height="249" key="GridCell.Tab.0.bottom/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1595002118286" />
     <state width="1429" height="247" key="GridCell.Tab.0.bottom/1680.66.1920.1057/0.23.1680.958@1680.66.1920.1057" timestamp="1594838350779" />
-    <state width="1160" height="206" key="GridCell.Tab.0.center" timestamp="1594997609553">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1429" height="249" key="GridCell.Tab.0.center" timestamp="1595002118284">
+      <screen x="1680" y="66" width="1920" height="1057" />
     </state>
     <state width="1160" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1594997609553" />
-    <state width="1429" height="247" key="GridCell.Tab.0.center/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594828878431" />
-    <state width="1429" height="247" key="GridCell.Tab.0.center/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1594831659243" />
+    <state width="1429" height="249" key="GridCell.Tab.0.center/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594999413029" />
+    <state width="1429" height="249" key="GridCell.Tab.0.center/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1595002118284" />
     <state width="1429" height="247" key="GridCell.Tab.0.center/1680.66.1920.1057/0.23.1680.958@1680.66.1920.1057" timestamp="1594838350778" />
-    <state width="1160" height="206" key="GridCell.Tab.0.left" timestamp="1594997609553">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1429" height="249" key="GridCell.Tab.0.left" timestamp="1595002118283">
+      <screen x="1680" y="66" width="1920" height="1057" />
     </state>
     <state width="1160" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1594997609553" />
-    <state width="1429" height="247" key="GridCell.Tab.0.left/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594828878430" />
-    <state width="1429" height="247" key="GridCell.Tab.0.left/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1594831659243" />
+    <state width="1429" height="249" key="GridCell.Tab.0.left/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594999413028" />
+    <state width="1429" height="249" key="GridCell.Tab.0.left/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1595002118283" />
     <state width="1429" height="247" key="GridCell.Tab.0.left/1680.66.1920.1057/0.23.1680.958@1680.66.1920.1057" timestamp="1594838350777" />
-    <state width="1160" height="206" key="GridCell.Tab.0.right" timestamp="1594997609553">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1429" height="249" key="GridCell.Tab.0.right" timestamp="1595002118285">
+      <screen x="1680" y="66" width="1920" height="1057" />
     </state>
     <state width="1160" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1594997609553" />
-    <state width="1429" height="247" key="GridCell.Tab.0.right/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594828878432" />
-    <state width="1429" height="247" key="GridCell.Tab.0.right/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1594831659244" />
+    <state width="1429" height="249" key="GridCell.Tab.0.right/1680.66.1920.1057/0.23.1680.955@1680.66.1920.1057" timestamp="1594999413030" />
+    <state width="1429" height="249" key="GridCell.Tab.0.right/1680.66.1920.1057/0.23.1680.956@1680.66.1920.1057" timestamp="1595002118285" />
     <state width="1429" height="247" key="GridCell.Tab.0.right/1680.66.1920.1057/0.23.1680.958@1680.66.1920.1057" timestamp="1594838350778" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1593309101209">
       <screen x="0" y="0" width="1536" height="824" />
