@@ -5,7 +5,6 @@ import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
-import 'package:mule/widgets/custom_text_form_field.dart';
 import 'package:mule/widgets/number_code_form.dart';
 
 class EmailVerification extends StatelessWidget {
@@ -22,9 +21,6 @@ class EmailVerification extends StatelessWidget {
   }
 
   Future<dynamic> _checkVerificationCode(BuildContext context) async {
-    numberCodeForm.submitForm();
-    print(codeController.text);
-
     final Response res =
         await httpClient.handleEmailVerificationCode(codeController.text);
 
@@ -37,7 +33,7 @@ class EmailVerification extends StatelessWidget {
       );
     } else {
       // TODO Response data field seems to be of the incorrect type
-      ErrorRes _ = ErrorRes.fromJson(res.data);
+      // ErrorRes _ = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', 'Please try again');
     }
   }

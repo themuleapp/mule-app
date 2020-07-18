@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mule/config/app_theme.dart';
 
-class NumberCodeForm extends StatelessWidget {
+class NumberCodeForm extends StatefulWidget {
   final int numberOfFields;
   final TextEditingController controller;
   final double spacing;
   final EdgeInsets padding;
   final Function validator;
-
-  final List<TextEditingController> _controllerList = [];
 
   NumberCodeForm({
     @required this.numberOfFields,
@@ -19,17 +17,25 @@ class NumberCodeForm extends StatelessWidget {
     this.validator,
   });
 
+  @override
+  State<StatefulWidget> createState() => NumberCodeFormState();
+}
+
+class NumberCodeFormState extends State<NumberCodeForm> {
+  final List<TextEditingController> _controllerList = [];
+
   Widget _singleNumberField() {
     TextEditingController controller = TextEditingController();
+    controller.addListener(_applyToController);
 
-    this._controllerList.add(controller);
+    _controllerList.add(controller);
 
     return Expanded(
         child: TextFormField(
       inputFormatters: [LengthLimitingTextInputFormatter(1)],
       textAlign: TextAlign.center,
       controller: controller,
-      validator: validator,
+      validator: widget.validator,
       style: TextStyle(
         fontWeight: FontWeight.bold,
       ),
@@ -59,6 +65,7 @@ class NumberCodeForm extends StatelessWidget {
       ));
     }
     fields.removeLast();
+
     return Row(
       children: fields,
     );
@@ -68,33 +75,30 @@ class NumberCodeForm extends StatelessWidget {
     _controllerList.forEach((controller) => controller.text = "");
   }
 
-  _submitForm(TextEditingController controller) {
+  _applyToController() {
     String formContent =
         _controllerList.map((controller) => controller.text).toList().join();
-    String validatorMessage;
+    // String validatorMessage;
 
-    try {
-      validatorMessage = this.validator(formContent);
-    } catch (_) {
-      // Catch validator not implemented
-      validatorMessage = null;
-    }
-    if (validatorMessage == null) {
-      this.controller.text = formContent;
-    } else {
-      _clearForm();
-    }
-  }
-
-  submitForm() {
-    _submitForm(this.controller);
+    // try {
+    //   validatorMessage = widget.validator(formContent);
+    // } catch (_) {
+    //   // Catch validator not implemented
+    //   validatorMessage = null;
+    // }
+    // if (validatorMessage == null) {
+    //   widget.controller.text = formContent;
+    // } else {
+    //   _clearForm();
+    // }
+    widget.controller.text = formContent;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: this.padding,
-      child: _buildNumberFields(this.numberOfFields, this.spacing),
+      padding: widget.padding,
+      child: _buildNumberFields(widget.numberOfFields, widget.spacing),
     );
   }
 }
