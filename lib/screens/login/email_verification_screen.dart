@@ -48,85 +48,90 @@ class EmailVerification extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.white,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
         backgroundColor: AppTheme.white,
-        elevation: 0,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "Verify Email",
+        body: Container(
+          padding: EdgeInsets.only(top: 100.0, left: 20, right: 20, bottom: 20),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "Verify Email",
+                        style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.darkGrey),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      "Please enter verification code we've sent you",
                       style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17.0,
                           color: AppTheme.darkGrey),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Text(
-                    "Please enter verification code we've sent you",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17.0,
-                        color: AppTheme.darkGrey),
-                  ),
-                  numberCodeForm,
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        "Didn't receive a code?",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 15),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Resend Code",
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    NumberCodeForm(
+                      spacing: 10,
+                      numberOfFields: 5,
+                      controller: codeController,
+                      padding: EdgeInsets.all(50),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Didn't receive a code?",
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: AppTheme.lightBlue,
+                              fontWeight: FontWeight.w600, fontSize: 15),
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            "Resend Code",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: AppTheme.lightBlue,
+                            ),
                           ),
+                          onTap: () async => await _resendVerificationCode(),
                         ),
-                        onTap: () async => await _resendVerificationCode(),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 45.0,
-                      child: FlatButton(
-                        color: AppTheme.lightBlue,
-                        child: Text(
-                          "VERIFY",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
-                        ),
-                        onPressed: () async =>
-                            await _checkVerificationCode(context),
-                      ))
-                ],
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 45.0,
+                        child: FlatButton(
+                          color: AppTheme.lightBlue,
+                          child: Text(
+                            "VERIFY",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
+                          onPressed: () async =>
+                              await _checkVerificationCode(context),
+                        ))
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

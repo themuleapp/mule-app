@@ -23,16 +23,21 @@ class NumberCodeForm extends StatefulWidget {
 
 class NumberCodeFormState extends State<NumberCodeForm> {
   final List<TextEditingController> _controllerList = [];
+  final FocusScopeNode _formFocus = FocusScopeNode();
 
   Widget _singleNumberField() {
     TextEditingController controller = TextEditingController();
-    controller.addListener(_applyToController);
+    controller.addListener(() {
+      // Go to next field when typed a character
+      _applyToController();
+    });
 
     _controllerList.add(controller);
 
     return Expanded(
         child: TextFormField(
       inputFormatters: [LengthLimitingTextInputFormatter(1)],
+      textInputAction: TextInputAction.next,
       textAlign: TextAlign.center,
       controller: controller,
       validator: widget.validator,
@@ -52,6 +57,7 @@ class NumberCodeFormState extends State<NumberCodeForm> {
           color: AppTheme.lightGrey.withOpacity(0.5),
         ),
       ),
+      onEditingComplete: () => _formFocus.nextFocus(),
     ));
   }
 
@@ -66,8 +72,11 @@ class NumberCodeFormState extends State<NumberCodeForm> {
     }
     fields.removeLast();
 
-    return Row(
-      children: fields,
+    return FocusScope(
+      node: _formFocus,
+      child: Row(
+        children: fields,
+      ),
     );
   }
 
