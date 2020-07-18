@@ -5,22 +5,28 @@ import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/custom_text_form_field.dart';
+import 'package:mule/widgets/number_code_form.dart';
 
-class EmailVerification extends StatefulWidget {
-  @override
-  _EmailVerificationState createState() => _EmailVerificationState();
-}
+class EmailVerification extends StatelessWidget {
+  final TextEditingController codeController = TextEditingController();
+  NumberCodeForm numberCodeForm;
 
-class _EmailVerificationState extends State<EmailVerification> {
-  String code = "";
-
-  @override
-  void initState() {
-    super.initState();
+  EmailVerification() {
+    this.numberCodeForm = NumberCodeForm(
+      spacing: 10,
+      numberOfFields: 5,
+      controller: codeController,
+      padding: EdgeInsets.all(50),
+    );
   }
 
-  _checkVerificationCode() async {
-    final Response res = await httpClient.handleEmailVerificationCode(code);
+  Future<dynamic> _checkVerificationCode(BuildContext context) async {
+    numberCodeForm.submitForm();
+    print(codeController.text);
+
+    final Response res =
+        await httpClient.handleEmailVerificationCode(codeController.text);
 
     if (res.statusCode == 200) {
       // TODO show a little reminder that it successded
@@ -36,199 +42,95 @@ class _EmailVerificationState extends State<EmailVerification> {
     }
   }
 
-  _resendVerificationEmail() async {
+  Future<dynamic> _resendVerificationCode() async {
     final Response res = await httpClient.handleEmailVerificationResend();
 
     if (res.statusCode != 200) {
       // TODO Response data field seems to be of the incorrect type
       ErrorRes _ = ErrorRes.fromJson(res.data);
-      createDialogWidget(context, 'Oh, no...',
-          'Sorry, something went wrong with resending the verification code. Please check your internet connection and try again!');
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.white,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
-        automaticallyImplyLeading: false,
-        elevation: 0.0,
+        elevation: 0,
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: SafeArea(
-              child: Container(
-                color: AppTheme.white,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "Verify Email",
+                      style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkGrey),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Text(
+                    "Please enter verification code we've sent you",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17.0,
+                        color: AppTheme.darkGrey),
+                  ),
+                  numberCodeForm,
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Row(
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 20,
-                            left: 16,
-                            right: 16
-                        ),
-                        // TODO Image not decompressable error
-                        // child: Image.asset('assets/images/Delete.png'),
+                      Text(
+                        "Didn't receive a code?",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15),
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 25),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      GestureDetector(
                         child: Text(
-                          "Please verify your email",
+                          "Resend Code",
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                            color: AppTheme.lightBlue,
                           ),
                         ),
-                      ),
-                      _buildComposer(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Center(
-                          child: Container(
-                            width: 120,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.lightBlue,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.6),
-                                    offset: const Offset(4, 4),
-                                    blurRadius: 8.0),
-                              ],
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        _resendVerificationEmail();
-                                      },
-                                      child: Text(
-                                        'Resend',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppTheme.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Center(
-                          child: Container(
-                            width: 120,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppTheme.lightBlue,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(0.6),
-                                    offset: const Offset(4, 4),
-                                    blurRadius: 8.0),
-                              ],
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        _checkVerificationCode();
-                                      },
-                                      child: Text(
-                                        'Verify',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppTheme.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        onTap: () async => await _resendVerificationCode(),
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 45.0,
+                      child: FlatButton(
+                        color: AppTheme.lightBlue,
+                        child: Text(
+                          "VERIFY",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                        onPressed: () async =>
+                            await _checkVerificationCode(context),
+                      ))
+                ],
               ),
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildComposer() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 32, right: 32),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.8),
-                offset: const Offset(4, 4),
-                blurRadius: 8),
           ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Container(
-            padding: const EdgeInsets.all(4.0),
-            constraints: const BoxConstraints(minHeight: 80, maxHeight: 160),
-            color: AppTheme.white,
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-              child: TextField(
-                maxLines: null,
-                onChanged: (String code) {
-                  this.code = code;
-                },
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontSize: 16,
-                  color: AppTheme.darkGrey,
-                ),
-                cursorColor: AppTheme.lightBlue,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Please enter your code here'),
-              ),
-            ),
-          ),
         ),
       ),
     );
