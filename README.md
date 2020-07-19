@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" height="200" src="https://github.com/whisperingmule/mule-app/blob/update-readme/assets/images/logo.png">
+  <img width="200" height="200" src="./assets/images/logo.png">
 </p>
 
 # Mule
