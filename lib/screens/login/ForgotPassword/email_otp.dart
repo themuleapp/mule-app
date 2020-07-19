@@ -56,6 +56,7 @@ class _OtpVerificationState extends State<OtpVerification>
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       backgroundColor: AppTheme.white,
@@ -64,7 +65,12 @@ class _OtpVerificationState extends State<OtpVerification>
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
+            color: AppTheme.lightBlue,
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -86,18 +92,21 @@ class _OtpVerificationState extends State<OtpVerification>
                       child: Text(
                         "Verify Email",
                         style: TextStyle(
-                            fontSize: 30.0,
+                            fontSize: AppTheme.elementSize(
+                                screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                             fontWeight: FontWeight.bold,
                             color: AppTheme.darkGrey),
                       ),
                     ),
                     SizedBox(
-                      height: 30.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                     ),
                     Text(
                       "Please enter the code we have emailed you",
                       style: TextStyle(
-                          fontSize: 17.0,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                           fontWeight: FontWeight.w500,
                           color: AppTheme.darkGrey),
                     ),
@@ -108,28 +117,33 @@ class _OtpVerificationState extends State<OtpVerification>
                         validator: validateNotEmptyInput,
                         controller: _otpController,
                         hintText: "",
-                        verticalPadding: 25.0,
                       ),
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 20, 20, 22, 22, 24, 30, 36, 40),
                     ),
                     Row(
                       children: <Widget>[
                         Text(
                           "Didn't receive a code?",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 15),
+                            fontWeight: FontWeight.w600,
+                            fontSize: AppTheme.elementSize(
+                                screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
+                          ),
                         ),
                         SizedBox(
-                          width: 10.0,
+                          width: AppTheme.elementSize(
+                              screenHeight, 10, 10, 12, 12, 13, 15, 16, 17),
                         ),
                         GestureDetector(
                           child: Text(
                             "Resend Code",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 15,
+                              fontSize: AppTheme.elementSize(
+                                  screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                               color: AppTheme.lightBlue,
                             ),
                           ),
@@ -138,16 +152,22 @@ class _OtpVerificationState extends State<OtpVerification>
                       ],
                     ),
                     SizedBox(
-                      height: 30.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 45.0,
+                      height: AppTheme.elementSize(
+                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
                         color: AppTheme.lightBlue,
                         child: Text(
                           "VERIFY",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: AppTheme.elementSize(
+                                screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
+                          ),
                         ),
                         onPressed: this._handleVerify,
                       ),

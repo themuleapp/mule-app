@@ -12,6 +12,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
@@ -20,7 +21,11 @@ class Profile extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -39,11 +44,13 @@ class Profile extends StatelessWidget {
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w700,
                 color: AppTheme.darkGrey,
-                fontSize: 30,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
               ),
             ),
             SizedBox(
-              height: 30.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
             ),
             Row(
               children: <Widget>[
@@ -51,28 +58,31 @@ class Profile extends StatelessWidget {
                   fit: StackFit.loose,
                   children: <Widget>[
                     CircleAvatar(
-                      radius: 50.0,
+                      radius: AppTheme.elementSize(
+                          screenHeight, 50, 50, 52, 52, 53, 60, 62, 64),
                       backgroundImage: AssetImage(
                           'assets/images/profile_photo_nick_miller.jpg'),
                     ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 60.0, left: 70.0),
-                        child: CircleAvatar(
-                          backgroundColor: AppTheme.lightBlue,
-                          radius: 20.0,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.camera_alt,
-                              color: AppTheme.white,
-                              size: 22,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => ChangeProfilePicture())
-                              );
-                            },
+                    Positioned(
+                      bottom: 5,
+                      right: 4,
+                      child: CircleAvatar(
+                        backgroundColor: AppTheme.lightBlue,
+                        radius: AppTheme.elementSize(
+                            screenHeight, 20, 20, 20, 20, 20, 21, 22, 24),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.camera_alt,
+                            color: AppTheme.white,
+                            size: 22,
                           ),
-                        )),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ChangeProfilePicture()));
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 Expanded(
@@ -85,7 +95,8 @@ class Profile extends StatelessWidget {
                           fontFamily: AppTheme.fontName,
                           fontWeight: FontWeight.w600,
                           color: AppTheme.darkGrey,
-                          fontSize: 25,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 25, 25, 25, 26, 26, 30, 32, 33),
                         ),
                       ),
                     ),
@@ -94,7 +105,8 @@ class Profile extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 10.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 10, 12, 12, 14, 20, 22, 24),
             ),
             Padding(
               padding: EdgeInsets.only(top: 20.0),
@@ -104,12 +116,14 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
-                  fontSize: 24,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 22, 22, 23, 23, 25, 30, 32, 34),
                 ),
               ),
             ),
             SizedBox(
-              height: 10.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 10, 10, 12, 13, 20, 22, 24),
             ),
             Divider(),
             ListTile(
@@ -118,14 +132,20 @@ class Profile extends StatelessWidget {
               ),
               leading: Padding(
                 padding: EdgeInsets.only(top: 7.0),
-                child: Icon(Icons.mail, color: AppTheme.secondaryBlue),
+                child: Icon(
+                  Icons.mail,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
               ),
               title: Text(
                 "Email",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -135,13 +155,18 @@ class Profile extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 15, 19, 20, 21),
                     color: AppTheme.lightGrey,
                   ),
                 ),
               ),
-              trailing:
-                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangeEmail()));
@@ -154,13 +179,19 @@ class Profile extends StatelessWidget {
               ),
               leading: Padding(
                   padding: EdgeInsets.only(top: 7.0),
-                  child: Icon(Icons.phone, color: AppTheme.secondaryBlue)),
+                  child: Icon(
+                    Icons.phone,
+                    color: AppTheme.secondaryBlue,
+                    size: AppTheme.elementSize(
+                        screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                  )),
               title: Text(
                 "Phone",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
@@ -170,13 +201,18 @@ class Profile extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 15, 19, 20, 21),
                     color: AppTheme.lightGrey,
                   ),
                 ),
               ),
-              trailing:
-                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePhone()));
@@ -191,30 +227,42 @@ class Profile extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
-                  fontSize: 24,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 22, 22, 23, 23, 25, 30, 32, 34),
                 ),
               ),
             ),
             SizedBox(
-              height: 10.0,
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 10, 10, 12, 14, 20, 22, 24),
             ),
             Divider(),
             ListTile(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.lock, color: AppTheme.secondaryBlue),
+              leading: Icon(
+                Icons.lock,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               title: Text(
                 "Change Password",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: AppTheme.darkGrey,
                 ),
               ),
-              trailing:
-                  Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: AppTheme.secondaryBlue,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ChangePassword()));
@@ -225,17 +273,28 @@ class Profile extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
-              leading: Icon(Icons.delete_forever, color: Colors.red),
+              leading: Icon(
+                Icons.delete_forever,
+                color: Colors.red,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               title: Text(
                 "Delete Account",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                   color: Colors.red,
                 ),
               ),
-              trailing: Icon(Icons.chevron_right, color: Colors.red),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: Colors.red,
+                size: AppTheme.elementSize(
+                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              ),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => DeleteAccount()));

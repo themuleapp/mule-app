@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
@@ -81,6 +82,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
   @override
   Widget build(BuildContext context) {
     //final ThemeData _theme = Theme.of(context);
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: true,
@@ -89,7 +91,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -110,7 +116,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 "Log In",
                 style: TextStyle(
                   color: AppTheme.lightBlue,
-                  fontSize: 18.0,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -128,22 +135,26 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 child: Text(
                   "Sign Up",
                   style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
-                height: 30.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
-              _signupForm(),
+              _signupForm(screenHeight),
               SizedBox(
-                height: 30.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(bottom: 30.0),
-                height: 45.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                 child: FlatButton(
                   color: AppTheme.lightBlue,
                   onPressed: this._handleSubmit,
@@ -152,7 +163,9 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                     style: TextStyle(
                         color: AppTheme.white,
                         fontWeight: FontWeight.w500,
-                        fontSize: 16.0),
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
+                    ),
                   ),
                 ),
               )
@@ -163,7 +176,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     );
   }
 
-  Widget _signupForm() {
+  Widget _signupForm(double screenHeight) {
     return Form(
       key: _formKey,
       child: Column(
@@ -188,7 +201,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             ],
           ),
           SizedBox(
-            height: 20.0,
+            height: AppTheme.elementSize(
+                screenHeight, 20, 20, 20, 22, 22, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Email",
@@ -197,7 +211,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             keyboardType: TextInputType.emailAddress,
           ),
           SizedBox(
-            height: 20.0,
+            height: AppTheme.elementSize(
+                screenHeight, 20, 20, 20, 22, 22, 30, 32, 34),
           ),
           Row(
             children: <Widget>[
@@ -220,7 +235,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             ],
           ),
           SizedBox(
-            height: 20.0,
+            height: AppTheme.elementSize(
+                screenHeight, 20, 20, 20, 22, 22, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Password",
@@ -229,7 +245,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             validator: validateNewPassword,
           ),
           SizedBox(
-            height: 20.0,
+            height: AppTheme.elementSize(
+                screenHeight, 20, 20, 20, 22, 22, 30, 32, 34),
           ),
           CustomTextFormField(
             hintText: "Confirm Password",
@@ -238,12 +255,17 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             validator: validateNewPassword,
           ),
           SizedBox(
-            height: 25.0,
+            height: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 26, 26, 35, 40, 43),
           ),
           Text(
             "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: AppTheme.darkGrey),
+              fontWeight: FontWeight.bold,
+              color: AppTheme.darkGrey,
+              fontSize: AppTheme.elementSize(
+                  screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+            ),
           )
         ],
       ),

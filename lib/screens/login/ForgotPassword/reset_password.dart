@@ -15,6 +15,7 @@ class ResetPassword extends StatefulWidget {
 
   const ResetPassword({Key key, @required this.email, @required this.otp})
       : super(key: key);
+
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }
@@ -65,6 +66,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       backgroundColor: AppTheme.white,
@@ -73,7 +75,12 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
         automaticallyImplyLeading: false,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
+            color: AppTheme.lightBlue,
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -99,23 +106,27 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           child: Text(
                             "Reset Password",
                             style: TextStyle(
-                                fontSize: 30.0,
+                                fontSize: AppTheme.elementSize(
+                                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGrey),
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 20, 20, 22, 22, 24, 33, 36, 40),
                         ),
                         Text(
                           "Enter a new password",
                           style: TextStyle(
-                              fontSize: 17.0,
+                              fontSize: AppTheme.elementSize(
+                                  screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                               fontWeight: FontWeight.w500,
                               color: AppTheme.darkGrey),
                         ),
                         SizedBox(
-                          height: 40.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 30, 30, 32, 32, 35, 43, 46, 50),
                         ),
                         CustomTextFormField(
                           controller: _firstPassController,
@@ -124,7 +135,8 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           validator: validateNewPassword,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                         ),
                         CustomTextFormField(
                           controller: _secondPassController,
@@ -132,17 +144,22 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           obscureText: true,
                         ),
                         SizedBox(
-                          height: 30.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 45.0,
+                          height: AppTheme.elementSize(
+                              screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                           child: FlatButton(
                             color: AppTheme.lightBlue,
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
+                                color: Colors.white,
+                                fontSize: AppTheme.elementSize(screenHeight,
+                                    14, 15, 16, 17, 18, 26, 28, 30),
+                              ),
                             ),
                             onPressed: this._handleSubmit,
                           ),

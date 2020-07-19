@@ -5,6 +5,7 @@ import 'package:mule/screens/profile/profile.dart';
 class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: false,
@@ -25,30 +26,41 @@ class Settings extends StatelessWidget {
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w700,
                   color: AppTheme.darkGrey,
-                  fontSize: 30,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                 ),
               ),
               SizedBox(
-                height: 10.0,
+                height: AppTheme.elementSize(
+                    screenHeight, 10, 10, 12, 12, 14, 20, 20, 22),
               ),
               Divider(),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0.0,
                 ),
-                leading:
-                    Icon(Icons.account_circle, color: AppTheme.secondaryBlue),
+                leading: Icon(
+                  Icons.account_circle,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
                 title: Text(
                   "Profile",
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
-                trailing:
-                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => Profile()));
@@ -59,37 +71,56 @@ class Settings extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0.0,
                 ),
-                leading: Icon(Icons.location_on, color: AppTheme.secondaryBlue),
+                leading: Icon(
+                  Icons.location_on,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
                 title: Text(
                   "Location",
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
-                trailing:
-                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
               ),
               Divider(),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0.0,
                 ),
-                leading:
-                    Icon(Icons.notifications, color: AppTheme.secondaryBlue),
+                leading: Icon(
+                  Icons.notifications,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
                 title: Text(
                   "Notifications",
                   style: TextStyle(
                     fontFamily: AppTheme.fontName,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
                     color: AppTheme.darkGrey,
                   ),
                 ),
-                trailing:
-                    Icon(Icons.chevron_right, color: AppTheme.secondaryBlue),
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: AppTheme.secondaryBlue,
+                  size: AppTheme.elementSize(
+                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                ),
               ),
               Divider(),
               SizedBox(

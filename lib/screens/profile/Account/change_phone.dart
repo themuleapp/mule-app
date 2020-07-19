@@ -6,6 +6,7 @@ import 'package:mule/widgets/custom_text_form_field.dart';
 class ChangePhone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomPadding: true,
@@ -14,7 +15,11 @@ class ChangePhone extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 26, 26, 30, 35, 40, 45),
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
@@ -34,17 +39,28 @@ class ChangePhone extends StatelessWidget {
                   child: Text(
                     "Change Phone Number",
                     style: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.darkGrey),
                   ),
                 ),
                 SizedBox(
-                  height: 30.0,
+                  height: AppTheme.elementSize(
+                      screenHeight, 30, 30, 32, 32, 34, 43, 46, 50),
                 ),
-                _changePhoneNumberForm(context),
+                Text(
+                  "You can update your phone number and we'll send you a verification code",
+                  style: TextStyle(
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.darkGrey),
+                ),
+                _changePhoneNumberForm(context, screenHeight),
                 SizedBox(
-                  height: 30.0,
+                  height: AppTheme.elementSize(
+                      screenHeight, 30, 30, 32, 32, 34, 40, 42, 44),
                 ),
               ],
             ),
@@ -54,19 +70,13 @@ class ChangePhone extends StatelessWidget {
     );
   }
 
-  Widget _changePhoneNumberForm(BuildContext context) {
+  Widget _changePhoneNumberForm(BuildContext context, double screenHeight) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          "You can update your phone number and we'll send you a verification code",
-          style: TextStyle(
-              fontSize: 17.0,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.darkGrey),
-        ),
         SizedBox(
-          height: 40.0,
+          height: AppTheme.elementSize(
+              screenHeight, 20, 20, 22, 22, 23, 26, 27, 50),
         ),
         Row(
           children: <Widget>[
@@ -85,16 +95,22 @@ class ChangePhone extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 30.0,
+          height: AppTheme.elementSize(
+              screenHeight, 30, 32, 34, 36, 38, 40, 42, 44),
         ),
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 45.0,
+          height: AppTheme.elementSize(
+              screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
           child: FlatButton(
             color: AppTheme.lightBlue,
             child: Text(
               "SUBMIT",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
+              ),
             ),
             onPressed: () {
               Navigator.of(context)
