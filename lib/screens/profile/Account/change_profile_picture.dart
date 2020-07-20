@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mule/config/config.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
   @override
@@ -32,7 +33,9 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
   }
 
   Future _getCurrentImage() async {
-    // TODO get current image from server
+    final String token = await Config.getToken();
+    NetworkImage('${Config.BASE_URL}profile/profile-image',
+        headers: {'Authorization': token});
   }
 
   Future _updateImage() async {
@@ -99,7 +102,8 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 radius: 120.0,
                 backgroundImage: _image == null
                     ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                    : FileImage(_image)),
+                    : FileImage(_image)
+            ),
           ),
           SizedBox(
             height: 30.0,
