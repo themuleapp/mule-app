@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,12 +35,24 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
 
   Future _getCurrentImage() async {
     final String token = await Config.getToken();
-    NetworkImage('${Config.BASE_URL}profile/profile-image',
+    NetworkImage currentImage = NetworkImage('${Config.BASE_URL}profile/profile-image',
         headers: {'Authorization': token});
   }
 
   Future _updateImage() async {
-    // TODO update image
+    Dio dio = new Dio();
+    final String token = await Config.getToken();
+    var formData = {"image": await MultipartFile.fromString(_image.readAsStringSync())};
+    var res = await dio.post(
+        '${Config.BASE_URL}profile/upload-image',
+        data: FormData.fromMap(formData),
+        options: Options(
+            headers: {
+              'Authorization': token,
+              'Content-Type': 'application/x-www-form-urlencoded'
+            })
+    );
+    print(res.data);
   }
 
 
