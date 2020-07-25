@@ -35,26 +35,32 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
 
   Future _getCurrentImage() async {
     final String token = await Config.getToken();
-    NetworkImage currentImage = NetworkImage('${Config.BASE_URL}profile/profile-image',
+    NetworkImage currentImage = NetworkImage(
+        '${Config.BASE_URL}profile/profile-image',
         headers: {'Authorization': token});
   }
 
   Future _updateImage() async {
-    Dio dio = new Dio();
-    final String token = await Config.getToken();
-    var formData = {"image": await MultipartFile.fromString(_image.readAsStringSync())};
-    var res = await dio.post(
-        '${Config.BASE_URL}profile/upload-image',
-        data: FormData.fromMap(formData),
-        options: Options(
-            headers: {
-              'Authorization': token,
-              'Content-Type': 'application/x-www-form-urlencoded'
-            })
+    Dio dio = Dio(
+      BaseOptions(
+        baseUrl: Config.BASE_URL,
+        // We don't need to validate the state of any reques that is made because we want to react to non-success statusses.
+        validateStatus: (status) => true,
+      ),
     );
+    final String token = await Config.getToken();
+    var formData = {
+      "image": await MultipartFile.fromBytes(_image.readAsBytesSync(),
+          filename: 'image')
+    };
+    var res = await dio.post('/profile/upload-image',
+        data: FormData.fromMap(formData),
+        options: Options(headers: {
+          'Authorization': token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }));
     print(res.data);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +93,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey
-                  ),
+                      color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
@@ -115,8 +120,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 radius: 120.0,
                 backgroundImage: _image == null
                     ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                    : FileImage(_image)
-            ),
+                    : FileImage(_image)),
           ),
           SizedBox(
             height: 30.0,
@@ -127,22 +131,18 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _ButtonWithText(
-                      "Camera", _getImageFromCamera, AppTheme.lightBlue
-                  ),
+                      "Camera", _getImageFromCamera, AppTheme.lightBlue),
                   SizedBox(
                     width: 40.0,
                   ),
                   _ButtonWithText(
-                      "Gallery", _getImageFromGallery, AppTheme.lightBlue
-                  ),
+                      "Gallery", _getImageFromGallery, AppTheme.lightBlue),
                 ],
-              )
-          ),
+              )),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: _ButtonWithText(
-                "Update", _updateImage, AppTheme.secondaryBlue
-            ),
+            child:
+                _ButtonWithText("Update", _updateImage, AppTheme.secondaryBlue),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
@@ -157,8 +157,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.lightText
-                ),
+                    color: AppTheme.lightText),
               ),
             ),
           ),
@@ -176,8 +175,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
           height: 40,
           decoration: BoxDecoration(
             color: color,
-            borderRadius:
-            const BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.grey.withOpacity(0.6),
@@ -189,8 +187,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                FocusScope.of(context)
-                    .requestFocus(FocusNode());
+                FocusScope.of(context).requestFocus(FocusNode());
               },
               child: Center(
                 child: Padding(
