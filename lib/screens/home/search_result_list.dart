@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -20,6 +21,15 @@ class SearchResultList extends StatefulWidget {
       focusNode: this.focusNode);
 }
 
+class Suggestion {
+  String description;
+  String placeId;
+
+  Suggestion.fromJson(Map<String, dynamic> json)
+      : description = json['description'],
+        placeId = json['place_id'];
+}
+
 class _SearchResultListState extends State<SearchResultList> {
   List<Widget> children = [];
 
@@ -27,8 +37,27 @@ class _SearchResultListState extends State<SearchResultList> {
   final FocusNode focusNode;
   final double spacing;
 
+  static const lat = 40.793429;
+  static const lng = -77.860314;
+  String searchTerm = 'coffee';
+
   _SearchResultListState(
       {@required this.controller, @required this.focusNode, this.spacing});
+
+  Future<List<Suggestion>> getNearbyPlaces(String searchTerm) async {
+    if (searchTerm.isEmpty) {
+      return null;
+    }
+    String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+    String request = '$baseURL?location=$lat,$lng&radius=1500&keyword=$searchTerm&key=$API_KEY';
+
+    Response res = await Dio().get(request);
+    return res.data['predictions']
+        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
+        .toList();
+  }
 
   @override
   void initState() {
