@@ -89,7 +89,7 @@ class _SearchResultListState extends State<SearchResultList> {
   _createSearchResultList(Suggestion suggestion, double spacing) {
     List results = <Widget>[];
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < controller.text.length; i++) { //replace with number of suggestions
       results.add(Card(
         margin: EdgeInsets.only(top: 10),
         elevation: 7,
@@ -100,7 +100,7 @@ class _SearchResultListState extends State<SearchResultList> {
           borderRadius: BorderRadius.circular(8),
           onTap: () {},
           child: ListTile(
-            title: Text(suggestion.description),
+            title: Text(controller.text), //replace with suggestion.description
             leading: Icon(Icons.satellite),
             subtitle: Text("More text"),
           ),
