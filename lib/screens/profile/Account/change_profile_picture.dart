@@ -20,7 +20,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = pickedFile == null ? null : File(pickedFile.path);
     });
   }
 
@@ -118,12 +118,11 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
-              child: Container(
-            height: 250,
-            child: ClipOval(
-                child: _image == null
-                    ? GetIt.I.get<UserInfoStore>().profilePicture
-                    : _image),
+              child: CircleAvatar(
+            radius: 120,
+            backgroundImage: _image == null
+                ? GetIt.I.get<UserInfoStore>().profilePicture
+                : FileImage(_image),
           )),
           SizedBox(
             height: 30.0,

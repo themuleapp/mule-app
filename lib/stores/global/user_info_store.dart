@@ -23,7 +23,7 @@ abstract class _UserInfoStore with Store {
   String _phoneNumber = '';
 
   @observable
-  Image _profilePicture = Image.asset(_defaultImagePath);
+  ImageProvider _profilePicture = AssetImage(_defaultImagePath);
 
   @action
   void updateEmail(String email) {
@@ -60,5 +60,5 @@ abstract class _UserInfoStore with Store {
   String get email => this._email;
   String get phoneNumber => this._phoneNumber;
   String get firstName => this._firstName;
-  Image get profilePicture => this._profilePicture;
+  ImageProvider get profilePicture => this._profilePicture;
 }

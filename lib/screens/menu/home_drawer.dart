@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
@@ -140,8 +141,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                     ],
                                   ),
                                   child: GestureDetector(
-                                    child: ClipOval(
-                                      child: GetIt.I
+                                    child: CircleAvatar(
+                                      backgroundImage: GetIt.I
                                           .get<UserInfoStore>()
                                           .profilePicture,
                                     ),
