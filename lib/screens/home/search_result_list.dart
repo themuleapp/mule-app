@@ -46,7 +46,7 @@ class _SearchResultListState extends State<SearchResultList> {
       {@required this.controller, @required this.focusNode, this.spacing,
         this.suggestion});
 
-  Future<List<Suggestion>> getNearbyPlaces(String searchTerm) async {
+  Future<List<Suggestion>> getNearbyPlacesByKeyword(String searchTerm) async {
     if (searchTerm.isEmpty) {
       return null;
     }
@@ -56,6 +56,25 @@ class _SearchResultListState extends State<SearchResultList> {
     String request = '$baseURL?location=$lat,$lng&radius=1500&keyword=$searchTerm&key=$API_KEY';
 
     Response res = await Dio().get(request);
+    if (res == null)
+      return null;
+    return res.data['predictions']
+        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
+        .toList();
+  }
+
+  Future<List<Suggestion>> getNearbyPlacesByAddress(String searchTerm) async {
+    if (searchTerm.isEmpty) {
+      return null;
+    }
+    String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+    String request = '$baseURL?input=$searchTerm&key=$API_KEY&location=40.793429,-77.860314&radius=4000&strictbounds&type=establishment';
+
+    Response res = await Dio().get(request);
+    if (res == null)
+      return null;
     return res.data['predictions']
         .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
         .toList();
@@ -63,9 +82,10 @@ class _SearchResultListState extends State<SearchResultList> {
 
   @override
   void initState() {
-    controller.addListener(() {
-      _createSearchResultList(suggestion, spacing);
-      getNearbyPlaces(controller.text);
+    controller.addListener(() async {
+      List<Suggestion> suggestions = await getNearbyPlacesByAddress(controller.text);
+      //getNearbyPlacesByAddress(controller.text);
+      _createSearchResultList(suggestions, spacing);
     });
     focusNode.addListener(() {
       _focusHandler();
@@ -86,10 +106,13 @@ class _SearchResultListState extends State<SearchResultList> {
     }
   }
 
-  _createSearchResultList(Suggestion suggestion, double spacing) {
+  _createSearchResultList(List<Suggestion> suggestions, double spacing) {
     List results = <Widget>[];
 
-    for (int i = 0; i < controller.text.length; i++) { //replace with number of suggestions
+    if (suggestions == null) {
+      return results;
+    }
+    for (Suggestion suggestion in suggestions) {
       results.add(Card(
         margin: EdgeInsets.only(top: 10),
         elevation: 7,
@@ -100,7 +123,7 @@ class _SearchResultListState extends State<SearchResultList> {
           borderRadius: BorderRadius.circular(8),
           onTap: () {},
           child: ListTile(
-            title: Text(controller.text), //replace with suggestion.description
+            title: Text(suggestion.description),
             leading: Icon(Icons.satellite),
             subtitle: Text("More text"),
           ),
