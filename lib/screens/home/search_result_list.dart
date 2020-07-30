@@ -36,13 +36,15 @@ class _SearchResultListState extends State<SearchResultList> {
   final TextEditingController controller;
   final FocusNode focusNode;
   final double spacing;
+  final Suggestion suggestion;
 
   static const lat = 40.793429;
   static const lng = -77.860314;
   String searchTerm = 'coffee';
 
   _SearchResultListState(
-      {@required this.controller, @required this.focusNode, this.spacing});
+      {@required this.controller, @required this.focusNode, this.spacing,
+        this.suggestion});
 
   Future<List<Suggestion>> getNearbyPlaces(String searchTerm) async {
     if (searchTerm.isEmpty) {
@@ -62,7 +64,8 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   void initState() {
     controller.addListener(() {
-      _createSearchResultList(controller.text, spacing);
+      _createSearchResultList(suggestion, spacing);
+      getNearbyPlaces(controller.text);
     });
     focusNode.addListener(() {
       _focusHandler();
@@ -83,10 +86,10 @@ class _SearchResultListState extends State<SearchResultList> {
     }
   }
 
-  _createSearchResultList(String text, double spacing) {
+  _createSearchResultList(Suggestion suggestion, double spacing) {
     List results = <Widget>[];
 
-    for (int i = 0; i < text.length; i++) {
+    for (int i = 0; i < 4; i++) {
       results.add(Card(
         margin: EdgeInsets.only(top: 10),
         elevation: 7,
@@ -97,7 +100,7 @@ class _SearchResultListState extends State<SearchResultList> {
           borderRadius: BorderRadius.circular(8),
           onTap: () {},
           child: ListTile(
-            title: Text("A Title"),
+            title: Text(suggestion.description),
             leading: Icon(Icons.satellite),
             subtitle: Text("More text"),
           ),
