@@ -57,12 +57,11 @@ class Profile extends StatelessWidget {
                 Stack(
                   fit: StackFit.loose,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: AppTheme.elementSize(
-                          screenHeight, 50, 50, 52, 52, 53, 60, 62, 64),
-                      backgroundImage: AssetImage(
-                          'assets/images/profile_photo_nick_miller.jpg'),
-                    ),
+                    Container(
+                        width: 100,
+                        child: ClipOval(
+                          child: GetIt.I.get<UserInfoStore>().profilePicture,
+                        )),
                     Positioned(
                       bottom: 5,
                       right: 4,

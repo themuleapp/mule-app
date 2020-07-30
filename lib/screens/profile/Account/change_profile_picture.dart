@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mule/config/config.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
   @override
@@ -116,12 +118,12 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: CircleAvatar(
-                radius: 120.0,
-                backgroundImage: _image == null
-                    ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                    : FileImage(_image)),
-          ),
+              child: Container(
+            height: 250,
+            child: ClipOval(
+              child: GetIt.I.get<UserInfoStore>().profilePicture,
+            ),
+          )),
           SizedBox(
             height: 30.0,
           ),
