@@ -121,8 +121,9 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
               child: Container(
             height: 250,
             child: ClipOval(
-              child: GetIt.I.get<UserInfoStore>().profilePicture,
-            ),
+                child: _image == null
+                    ? GetIt.I.get<UserInfoStore>().profilePicture
+                    : _image),
           )),
           SizedBox(
             height: 30.0,
