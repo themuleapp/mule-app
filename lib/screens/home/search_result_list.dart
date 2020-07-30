@@ -40,7 +40,6 @@ class _SearchResultListState extends State<SearchResultList> {
 
   static const lat = 40.793429;
   static const lng = -77.860314;
-  String searchTerm = 'coffee';
 
   _SearchResultListState(
       {@required this.controller, @required this.focusNode, this.spacing,
@@ -83,8 +82,9 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   void initState() {
     controller.addListener(() async {
-      List<Suggestion> suggestions = await getNearbyPlacesByAddress(controller.text);
-      //getNearbyPlacesByAddress(controller.text);
+      List<Suggestion>addressSuggestions = await getNearbyPlacesByAddress(controller.text);
+      List<Suggestion>keywordSuggestions = await getNearbyPlacesByKeyword(controller.text);
+      List<Suggestion>suggestions = _mergeResults(keywordSuggestions, addressSuggestions);
       _createSearchResultList(suggestions, spacing);
     });
     focusNode.addListener(() {
@@ -92,6 +92,8 @@ class _SearchResultListState extends State<SearchResultList> {
     });
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,11 @@ class _SearchResultListState extends State<SearchResultList> {
     if (focusNode.hasFocus == false) {
       _clear();
     }
+  }
+
+  List<Suggestion>_mergeResults(List<Suggestion>keywordSuggestions, List<Suggestion>addressSuggestions) {
+    List<Suggestion>suggestions = keywordSuggestions + addressSuggestions;
+    return suggestions;
   }
 
   _createSearchResultList(List<Suggestion> suggestions, double spacing) {
