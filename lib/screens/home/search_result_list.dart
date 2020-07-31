@@ -23,11 +23,13 @@ class SearchResultList extends StatefulWidget {
 
 class Suggestion {
   String description;
-  String placeId;
+  String vicinity;
 
-  Suggestion.fromJson(Map<String, dynamic> json)
-      : description = json['description'],
-        placeId = json['place_id'];
+  Suggestion(String description, String vicinity)
+      : description = description, vicinity = vicinity;
+
+//  Suggestion.fromJson(Map<String, dynamic> json)
+//      : description = json['description'];
 }
 
 class _SearchResultListState extends State<SearchResultList> {
@@ -45,7 +47,7 @@ class _SearchResultListState extends State<SearchResultList> {
       {@required this.controller, @required this.focusNode, this.spacing,
         this.suggestion});
 
-  Future<List<Suggestion>> getNearbyPlacesByKeyword(String searchTerm) async {
+  Future<List<Suggestion>> getNearbyPlaces(String searchTerm) async {
     if (searchTerm.isEmpty) {
       return null;
     }
@@ -57,34 +59,20 @@ class _SearchResultListState extends State<SearchResultList> {
     Response res = await Dio().get(request);
     if (res == null)
       return null;
-    return res.data['predictions']
-        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
-        .toList();
-  }
-
-  Future<List<Suggestion>> getNearbyPlacesByAddress(String searchTerm) async {
-    if (searchTerm.isEmpty) {
-      return null;
-    }
-    String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
-    String baseURL =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String request = '$baseURL?input=$searchTerm&key=$API_KEY&location=40.793429,-77.860314&radius=4000&strictbounds&type=establishment';
-
-    Response res = await Dio().get(request);
-    if (res == null)
-      return null;
-    return res.data['predictions']
-        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
+    return res.data['results']
+        .map<Suggestion>((singleData) {
+          return Suggestion(singleData['name'], singleData['vicinity']);
+        })
         .toList();
   }
 
   @override
   void initState() {
     controller.addListener(() async {
-      List<Suggestion>addressSuggestions = await getNearbyPlacesByAddress(controller.text);
-      List<Suggestion>keywordSuggestions = await getNearbyPlacesByKeyword(controller.text);
-      List<Suggestion>suggestions = _mergeResults(keywordSuggestions, addressSuggestions);
+      if (controller.text.isEmpty) {
+       _clear();
+      }
+      List<Suggestion>suggestions = await getNearbyPlaces(controller.text);
       _createSearchResultList(suggestions, spacing);
     });
     focusNode.addListener(() {
@@ -92,8 +80,6 @@ class _SearchResultListState extends State<SearchResultList> {
     });
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,11 +92,6 @@ class _SearchResultListState extends State<SearchResultList> {
     if (focusNode.hasFocus == false) {
       _clear();
     }
-  }
-
-  List<Suggestion>_mergeResults(List<Suggestion>keywordSuggestions, List<Suggestion>addressSuggestions) {
-    List<Suggestion>suggestions = keywordSuggestions + addressSuggestions;
-    return suggestions;
   }
 
   _createSearchResultList(List<Suggestion> suggestions, double spacing) {
@@ -132,7 +113,7 @@ class _SearchResultListState extends State<SearchResultList> {
           child: ListTile(
             title: Text(suggestion.description),
             leading: Icon(Icons.satellite),
-            subtitle: Text("More text"),
+            subtitle: Text(suggestion.vicinity),
           ),
         ),
       ));
