@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mule/config/app_theme.dart';
 
 class SearchResultList extends StatefulWidget {
   final TextEditingController controller;
@@ -112,8 +113,10 @@ class _SearchResultListState extends State<SearchResultList> {
           onTap: () {},
           child: ListTile(
             title: Text(suggestion.description),
-            leading: Icon(Icons.satellite),
             subtitle: Text(suggestion.vicinity),
+            trailing: Icon(Icons.info_outline,
+              color: AppTheme.secondaryBlue,
+            ),
           ),
         ),
       ));
