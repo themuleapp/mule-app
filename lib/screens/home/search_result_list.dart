@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mule/config/app_theme.dart';
 
 class SearchResultList extends StatefulWidget {
   final TextEditingController controller;
@@ -20,20 +22,59 @@ class SearchResultList extends StatefulWidget {
       focusNode: this.focusNode);
 }
 
+class Suggestion {
+  String description;
+  String vicinity;
+
+  Suggestion(String description, String vicinity)
+      : description = description, vicinity = vicinity;
+
+//  Suggestion.fromJson(Map<String, dynamic> json)
+//      : description = json['description'];
+}
+
 class _SearchResultListState extends State<SearchResultList> {
   List<Widget> children = [];
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final double spacing;
+  final Suggestion suggestion;
+
+  static const lat = 40.793429;
+  static const lng = -77.860314;
 
   _SearchResultListState(
-      {@required this.controller, @required this.focusNode, this.spacing});
+      {@required this.controller, @required this.focusNode, this.spacing,
+        this.suggestion});
+
+  Future<List<Suggestion>> getNearbyPlaces(String searchTerm) async {
+    if (searchTerm.isEmpty) {
+      return null;
+    }
+    String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
+    String baseURL =
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+    String request = '$baseURL?location=$lat,$lng&radius=1500&keyword=$searchTerm&key=$API_KEY';
+
+    Response res = await Dio().get(request);
+    if (res == null)
+      return null;
+    return res.data['results']
+        .map<Suggestion>((singleData) {
+          return Suggestion(singleData['name'], singleData['vicinity']);
+        })
+        .toList();
+  }
 
   @override
   void initState() {
-    controller.addListener(() {
-      _createSearchResultList(controller.text, spacing);
+    controller.addListener(() async {
+      if (controller.text.isEmpty) {
+       _clear();
+      }
+      List<Suggestion>suggestions = await getNearbyPlaces(controller.text);
+      _createSearchResultList(suggestions, spacing);
     });
     focusNode.addListener(() {
       _focusHandler();
@@ -54,23 +95,40 @@ class _SearchResultListState extends State<SearchResultList> {
     }
   }
 
-  _createSearchResultList(String text, double spacing) {
+  _createSearchResultList(List<Suggestion> suggestions, double spacing) {
     List results = <Widget>[];
 
-    for (int i = 0; i < text.length; i++) {
+    if (suggestions == null) {
+      return results;
+    }
+    for (Suggestion suggestion in suggestions) {
       results.add(Card(
         margin: EdgeInsets.only(top: 10),
         elevation: 7,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
         ),
+        shadowColor: AppTheme.darkGrey.withOpacity(0.5),
         child: InkWell(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
           onTap: () {},
           child: ListTile(
-            title: Text("A Title"),
-            leading: Icon(Icons.satellite),
-            subtitle: Text("More text"),
+            title: Text(suggestion.description),
+            subtitle: Text(suggestion.vicinity),
+            trailing: Icon(
+              Icons.info_outline,
+              color: AppTheme.secondaryBlue,
+            ),
           ),
         ),
       ));
