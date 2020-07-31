@@ -106,15 +106,27 @@ class _SearchResultListState extends State<SearchResultList> {
         margin: EdgeInsets.only(top: 10),
         elevation: 7,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
         ),
+        shadowColor: AppTheme.darkGrey.withOpacity(0.5),
         child: InkWell(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)
+          ),
           onTap: () {},
           child: ListTile(
             title: Text(suggestion.description),
             subtitle: Text(suggestion.vicinity),
-            trailing: Icon(Icons.info_outline,
+            trailing: Icon(
+              Icons.info_outline,
               color: AppTheme.secondaryBlue,
             ),
           ),
