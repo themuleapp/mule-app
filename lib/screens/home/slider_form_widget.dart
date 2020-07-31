@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/search_result_list.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/screens/home/map_widget.dart';
 
 class SliderFormWidget extends StatefulWidget {
   final bool panelIsOpen;
@@ -49,7 +50,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String request = '$baseURL?input=$searchTerm&key=$API_KEY&type=address';
+    String request = '$baseURL?input=$searchTerm&key=$API_KEY&location=40.793429,-77.860314&radius=4000&strictbounds';
 
     Response res = await Dio().get(request);
     return res.data['predictions']
