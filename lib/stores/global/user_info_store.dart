@@ -53,7 +53,7 @@ abstract class _UserInfoStore with Store {
 
   // TODO finish
   @action
-  void updateProfilePicture() async {
+  Future<void> updateProfilePicture() async {
     final String token = await Config.getToken();
 
     this._profilePicture = CachedNetworkImageProvider(
