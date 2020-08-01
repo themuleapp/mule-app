@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mule/config/config.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
 
@@ -51,8 +53,20 @@ abstract class _UserInfoStore with Store {
 
   // TODO finish
   @action
-  void updateProfilePicture(dynamic res) {
-    return;
+  void updateProfilePicture() async {
+    final String token = await Config.getToken();
+
+    this._profilePicture = CachedNetworkImageProvider(
+      "${Config.BASE_URL}profile/profile-image",
+      scale: 1.0,
+      headers: {'Authorization': token},
+    );
+    // var oldImg = this._profilePicture;
+    // this._profilePicture = NetworkImage(
+    //     '${Config.BASE_URL}profile/profile-image',
+    //     headers: {'Authorization': token});
+
+    // print('They equal? ${oldImg == this._profilePicture}');
   }
 
   @computed

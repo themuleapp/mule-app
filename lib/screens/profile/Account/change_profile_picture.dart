@@ -48,6 +48,11 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     // TODO: use this boolean to show a notification and navvigate back when the image is uploaded
 
     print('Was it successful? $isSuccessfulUpload');
+    if (isSuccessfulUpload) {
+      await GetIt.I.get<UserInfoStore>().updateProfilePicture();
+    } else {
+      print('Shiiit');
+    }
   }
 
   @override
