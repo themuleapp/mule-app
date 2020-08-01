@@ -5,6 +5,7 @@ import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mule/config/config.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/config/http_client.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
@@ -43,25 +44,10 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
   }
 
   Future _updateImage() async {
-    Dio dio = Dio(
-      BaseOptions(
-        baseUrl: Config.BASE_URL,
-        // We don't need to validate the state of any reques that is made because we want to react to non-success statusses.
-        validateStatus: (status) => true,
-      ),
-    );
-    final String token = await Config.getToken();
-    var formData = {
-      "image": await MultipartFile.fromBytes(_image.readAsBytesSync(),
-          filename: 'image')
-    };
-    var res = await dio.post('/profile/upload-image',
-        data: FormData.fromMap(formData),
-        options: Options(headers: {
-          'Authorization': token,
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }));
-    print(res.data);
+    bool isSuccessfulUpload = await httpClient.uploadProfilePicture(_image);
+    // TODO: use this boolean to show a notification and navvigate back when the image is uploaded
+
+    print('Was it successful? $isSuccessfulUpload');
   }
 
   @override

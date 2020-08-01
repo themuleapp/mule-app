@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
@@ -131,7 +133,6 @@ class HttpClient {
 
   Future<Response> handleDeleteAccount(
       DeleteAccountReq deleteAccountReq) async {
-
     String token = await Config.getToken();
 
     return await _dio.delete(
@@ -147,6 +148,22 @@ class HttpClient {
 
   Future<Response> handleGetProfileData() async {
     return _makeAuthenticatedGetRequest('/profile');
+  }
+
+  Future<bool> uploadProfilePicture(File img) async {
+    final String token = await Config.getToken();
+    var formData = {
+      "image": await MultipartFile.fromBytes(img.readAsBytesSync(),
+          filename: 'image')
+    };
+    var res = await _dio.post('/profile/upload-image',
+        data: FormData.fromMap(formData),
+        options: Options(headers: {
+          'Authorization': token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }));
+    print(res.data);
+    return res.statusCode == 200 ? true : false;
   }
 }
 
