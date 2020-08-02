@@ -97,6 +97,30 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
     });
   }
 
+  final _$_profilePictureAtom = Atom(name: '_UserInfoStore._profilePicture');
+
+  @override
+  ImageProvider<dynamic> get _profilePicture {
+    _$_profilePictureAtom.reportRead();
+    return super._profilePicture;
+  }
+
+  @override
+  set _profilePicture(ImageProvider<dynamic> value) {
+    _$_profilePictureAtom.reportWrite(value, super._profilePicture, () {
+      super._profilePicture = value;
+    });
+  }
+
+  final _$updateProfilePictureAsyncAction =
+      AsyncAction('_UserInfoStore.updateProfilePicture');
+
+  @override
+  Future<void> updateProfilePicture() {
+    return _$updateProfilePictureAsyncAction
+        .run(() => super.updateProfilePicture());
+  }
+
   final _$_UserInfoStoreActionController =
       ActionController(name: '_UserInfoStore');
 

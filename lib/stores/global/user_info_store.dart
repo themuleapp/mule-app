@@ -1,11 +1,17 @@
 import 'package:mobx/mobx.dart';
+import 'package:mule/config/config.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
+import 'package:flutter/material.dart';
+import 'dart:math';
 
 part 'user_info_store.g.dart';
 
 class UserInfoStore = _UserInfoStore with _$UserInfoStore;
 
 abstract class _UserInfoStore with Store {
+  static final String _defaultImagePath =
+      'assets/images/profile_picture_placeholder.png';
+
   @observable
   String _firstName = '';
 
@@ -17,6 +23,9 @@ abstract class _UserInfoStore with Store {
 
   @observable
   String _phoneNumber = '';
+
+  @observable
+  ImageProvider _profilePicture = AssetImage(_defaultImagePath);
 
   @action
   void updateEmail(String email) {
@@ -42,6 +51,19 @@ abstract class _UserInfoStore with Store {
     this._phoneNumber = res.phoneNumber;
   }
 
+  @action
+  Future<void> updateProfilePicture() async {
+    final String token = await Config.getToken();
+    Random rng = Random();
+    int number = rng.nextInt(100);
+
+    this._profilePicture = await NetworkImage(
+      "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
+      scale: 1.0,
+      headers: {'Authorization': token},
+    );
+  }
+
   @computed
   String get fullName => '$_firstName $_lastName';
   @computed
@@ -50,4 +72,5 @@ abstract class _UserInfoStore with Store {
   String get phoneNumber => this._phoneNumber;
   @computed
   String get firstName => this._firstName;
+  ImageProvider get profilePicture => this._profilePicture;
 }
