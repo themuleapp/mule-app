@@ -52,20 +52,21 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       return;
     }
     switch (drawerIndexData) {
-      case DrawerIndex.HOME:
-        setState(() => screenView = const MyHomePage());
-        break;
       case DrawerIndex.Settings:
-        setState(() => screenView = Settings());
+        _pushInContext(context, Settings());
         break;
       case DrawerIndex.Feedback:
-        setState(() => screenView = FeedbackScreen());
+        _pushInContext(context, FeedbackScreen());
         break;
       case DrawerIndex.Help:
-        setState(() => screenView = HelpScreen());
+        _pushInContext(context, HelpScreen());
         break;
       default:
         throw UnimplementedError("Called screen not currently implemented");
     }
+  }
+
+  _pushInContext(BuildContext context, Widget screen) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen));
   }
 }
