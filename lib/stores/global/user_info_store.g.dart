@@ -16,6 +16,26 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
       (_$fullNameComputed ??= Computed<String>(() => super.fullName,
               name: '_UserInfoStore.fullName'))
           .value;
+  Computed<String> _$emailComputed;
+
+  @override
+  String get email => (_$emailComputed ??=
+          Computed<String>(() => super.email, name: '_UserInfoStore.email'))
+      .value;
+  Computed<String> _$phoneNumberComputed;
+
+  @override
+  String get phoneNumber =>
+      (_$phoneNumberComputed ??= Computed<String>(() => super.phoneNumber,
+              name: '_UserInfoStore.phoneNumber'))
+          .value;
+  Computed<String> _$firstNameComputed;
+
+  @override
+  String get firstName =>
+      (_$firstNameComputed ??= Computed<String>(() => super.firstName,
+              name: '_UserInfoStore.firstName'))
+          .value;
 
   final _$_firstNameAtom = Atom(name: '_UserInfoStore._firstName');
 
@@ -151,7 +171,10 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   @override
   String toString() {
     return '''
-fullName: ${fullName}
+fullName: ${fullName},
+email: ${email},
+phoneNumber: ${phoneNumber},
+firstName: ${firstName}
     ''';
   }
 }

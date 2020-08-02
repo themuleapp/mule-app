@@ -66,8 +66,11 @@ abstract class _UserInfoStore with Store {
 
   @computed
   String get fullName => '$_firstName $_lastName';
+  @computed
   String get email => this._email;
+  @computed
   String get phoneNumber => this._phoneNumber;
+  @computed
   String get firstName => this._firstName;
   ImageProvider get profilePicture => this._profilePicture;
 }
