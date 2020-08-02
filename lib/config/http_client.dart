@@ -151,6 +151,9 @@ class HttpClient {
   }
 
   Future<bool> uploadProfilePicture(File img) async {
+    if (img == null) {
+      return false;
+    }
     final String token = await Config.getToken();
     var formData = {
       "image": await MultipartFile.fromBytes(img.readAsBytesSync(),
