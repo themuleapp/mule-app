@@ -47,28 +47,25 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     );
   }
 
-  void changeIndex(DrawerIndex drawerIndexdata) {
-    if (drawerIndex != drawerIndexdata) {
-      drawerIndex = drawerIndexdata;
-      if (drawerIndex == DrawerIndex.HOME) {
-        setState(() {
-          screenView = const MyHomePage();
-        });
-      } else if (drawerIndex == DrawerIndex.Settings) {
-        setState(() {
-          screenView = Settings();
-        });
-      } else if (drawerIndex == DrawerIndex.Feedback) {
-        setState(() {
-          screenView = FeedbackScreen();
-        });
-      } else if (drawerIndex == DrawerIndex.Help) {
-        setState(() {
-          screenView = HelpScreen();
-        });
-      } else {
-        //do in your way......
-      }
+  void changeIndex(DrawerIndex drawerIndexData) {
+    if (drawerIndex == drawerIndexData) {
+      return;
+    }
+    switch (drawerIndexData) {
+      case DrawerIndex.HOME:
+        setState(() => screenView = const MyHomePage());
+        break;
+      case DrawerIndex.Settings:
+        setState(() => screenView = Settings());
+        break;
+      case DrawerIndex.Feedback:
+        setState(() => screenView = FeedbackScreen());
+        break;
+      case DrawerIndex.Help:
+        setState(() => screenView = HelpScreen());
+        break;
+      default:
+        throw UnimplementedError("Called screen not currently implemented");
     }
   }
 }
