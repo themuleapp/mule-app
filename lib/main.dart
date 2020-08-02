@@ -12,7 +12,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
-  runApp( App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -23,6 +23,7 @@ class App extends StatelessWidget {
       if (res.statusCode == 200) {
         ProfileRes profileRes = ProfileRes.fromJson(res.data);
         GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(profileRes);
+        GetIt.I.get<UserInfoStore>().updateProfilePicture();
         return true;
       }
     }

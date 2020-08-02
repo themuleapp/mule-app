@@ -57,10 +57,12 @@ class Profile extends StatelessWidget {
                 Stack(
                   fit: StackFit.loose,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage:
-                          GetIt.I.get<UserInfoStore>().profilePicture,
+                    Observer(
+                      builder: (_) => CircleAvatar(
+                        radius: 50,
+                        backgroundImage:
+                            GetIt.I.get<UserInfoStore>().profilePicture,
+                      ),
                     ),
                     Positioned(
                       bottom: 5,
