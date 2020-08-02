@@ -40,6 +40,7 @@ dependencies:
   flutter_typeahead: ^1.8.3
   image_picker:
   fluster: ^1.1.2
+  flutter_cache_manager: ^1.1.1
 
 dev_dependencies:
   flutter_test:
