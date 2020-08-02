@@ -3,7 +3,9 @@ import 'package:mule/config/app_theme.dart';
 
 class StylizedTextField extends StatelessWidget {
   double screenHeight;
-  StylizedTextField({this.screenHeight});
+  TextEditingController controller;
+
+  StylizedTextField({@required this.screenHeight, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class StylizedTextField extends StatelessWidget {
               padding:
                   const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
+                controller: controller,
                 maxLines: null,
                 onChanged: (String txt) {},
                 style: TextStyle(
