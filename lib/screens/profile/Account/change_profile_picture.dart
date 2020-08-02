@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mule/config/config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
   @override
@@ -36,22 +35,18 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     });
   }
 
-  Future _getCurrentImage() async {
-    final String token = await Config.getToken();
-    NetworkImage currentImage = NetworkImage(
-        '${Config.BASE_URL}profile/profile-image',
-        headers: {'Authorization': token});
-  }
-
   Future _updateImage() async {
     bool isSuccessfulUpload = await httpClient.uploadProfilePicture(_image);
-    // TODO: use this boolean to show a notification and navvigate back when the image is uploaded
 
-    print('Was it successful? $isSuccessfulUpload');
     if (isSuccessfulUpload) {
       await GetIt.I.get<UserInfoStore>().updateProfilePicture();
+
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
     } else {
-      print('Shiiit');
+      createDialogWidget(context, "Something went wrong while uploading...",
+          "Please try again");
     }
   }
 
@@ -179,22 +174,15 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
+              onTap: callback,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      callback();
-                    },
-                    child: Text(
-                      buttonText,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                  child: Text(
+                    buttonText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
                   ),
                 ),
