@@ -127,7 +127,9 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                                 : widget.screenIndex,
                             iconAnimationController: iconAnimationController,
                             callBackIndex: (DrawerIndex indexType) {
-                              onDrawerClick();
+                              if (indexType == DrawerIndex.HOME) {
+                                onDrawerClick();
+                              }
                               try {
                                 widget.onDrawerCall(indexType);
                               } catch (e) {}
@@ -181,8 +183,8 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: AppTheme.white,
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
                                         color: Colors.grey.withOpacity(0.6),
