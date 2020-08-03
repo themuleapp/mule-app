@@ -162,16 +162,16 @@ class _MapWidgetState extends State<MapWidget> {
               onMapCreated: (controller) => _onMapCreated(controller),
               onCameraMove: (position) => _updateMarkers(position.zoom),
               gestureRecognizers: Set()
-                ..add(
-                    Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+                ..add(Factory<PanGestureRecognizer>(
+                        () => PanGestureRecognizer()))
                 ..add(Factory<ScaleGestureRecognizer>(
-                    () => ScaleGestureRecognizer()))
-                ..add(
-                    Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
+                        () => ScaleGestureRecognizer()))
+                ..add(Factory<TapGestureRecognizer>(
+                        () => TapGestureRecognizer()))
                 ..add(Factory<HorizontalDragGestureRecognizer>(
-                    () => HorizontalDragGestureRecognizer()))
+                        () => HorizontalDragGestureRecognizer()))
                 ..add(Factory<VerticalDragGestureRecognizer>(
-                    () => VerticalDragGestureRecognizer())),
+                        () => VerticalDragGestureRecognizer())),
               initialCameraPosition: CameraPosition(
                 target: LatLng(_position.latitude, _position.longitude),
                 zoom: 15.0,
