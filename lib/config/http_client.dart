@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
+import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
@@ -9,6 +10,7 @@ import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
+import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 
 class HttpClient {
   Dio _dio;
@@ -147,7 +149,27 @@ class HttpClient {
   }
 
   Future<Response> handleGetProfileData() async {
-    return _makeAuthenticatedGetRequest('/profile');
+    return await _makeAuthenticatedGetRequest('/profile');
+  }
+
+  Future<bool> handleUpdateLocation(LocationData locationData) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/location/update', locationData.toMap());
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  getMulesAroundMeLocation(LocationData locationData) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/location/mules-nearby', locationData.toMap());
+    if (res.statusCode != 200) {
+      return null;
+    }
+
+    MulesAroundRes mulesAroundRes = MulesAroundRes.fromJson(res.data);
+    return mulesAroundRes;
   }
 
   Future<bool> uploadProfilePicture(File img) async {

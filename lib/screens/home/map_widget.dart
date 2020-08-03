@@ -9,9 +9,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map_helper.dart';
 import 'package:mule/screens/home/map_marker.dart';
-import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
@@ -38,18 +40,7 @@ class _MapWidgetState extends State<MapWidget> {
   final Color _clusterColor = AppTheme.lightBlue;
   final Color _clusterTextColor = AppTheme.white;
 
-  final List<LatLng> _markerLocations = [
-    LatLng(40.793429, -77.860314),
-    LatLng(40.793451, -77.860332),
-    LatLng(40.793488, -77.860263),
-    LatLng(40.793489, -77.860422),
-    LatLng(40.792987, -77.860889),
-    LatLng(40.793286, -77.860145),
-    LatLng(40.793814, -77.859794),
-    LatLng(40.793280, -77.859799),
-    LatLng(40.792739, -77.859506),
-    LatLng(40.793416, -77.860535),
-  ];
+  List<LatLng> _markerLocations;
 
   @override
   void initState() {
@@ -63,10 +54,38 @@ class _MapWidgetState extends State<MapWidget> {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      GetIt.I.get<LocationStore>().updateLocation(position);
-    } catch (_) {
-      print('print exception');
+      StreamSubscription<Position> positionStream = Geolocator()
+          .getPositionStream(LocationOptions(
+              accuracy: LocationAccuracy.high, distanceFilter: 30))
+          .listen((Position position) async {
+        if (position != null) {
+          await updateLocationOnServerAndGetMulesAround(position);
+        }
+      });
+
+      await updateLocationOnServerAndGetMulesAround(position);
+    } catch (e) {
+      print(e);
     }
+  }
+
+  Future updateLocationOnServerAndGetMulesAround(Position position) async {
+    LocationData locationData =
+        LocationData(lng: position.longitude, lat: position.latitude);
+    bool updatedSuccessfully =
+        await httpClient.handleUpdateLocation(locationData);
+    if (!updatedSuccessfully) {
+      print('Location not updated successfully');
+    }
+    MulesAroundRes mulesAround =
+        await httpClient.getMulesAroundMeLocation(locationData);
+    GetIt.I.get<LocationStore>().updateLocation(position);
+
+    setState(() {
+      _markerLocations =
+          mulesAround.mules.map((e) => LatLng(e.lat, e.lng)).toList();
+    });
+    _initMarkers();
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -74,8 +93,6 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
-
-    _initMarkers();
   }
 
   void _initMarkers() async {
