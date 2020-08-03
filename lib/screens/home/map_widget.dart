@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map_helper.dart';
 import 'package:mule/screens/home/map_marker.dart';
 import 'package:mule/widgets/loading-animation.dart';
@@ -36,18 +39,7 @@ class _MapWidgetState extends State<MapWidget> {
   final Color _clusterColor = AppTheme.lightBlue;
   final Color _clusterTextColor = AppTheme.white;
 
-  final List<LatLng> _markerLocations = [
-    LatLng(40.793429, -77.860314),
-    LatLng(40.793451, -77.860332),
-    LatLng(40.793488, -77.860263),
-    LatLng(40.793489, -77.860422),
-    LatLng(40.792987, -77.860889),
-    LatLng(40.793286, -77.860145),
-    LatLng(40.793814, -77.859794),
-    LatLng(40.793280, -77.859799),
-    LatLng(40.792739, -77.859506),
-    LatLng(40.793416, -77.860535),
-  ];
+  List<LatLng> _markerLocations;
 
   @override
   void initState() {
@@ -63,8 +55,22 @@ class _MapWidgetState extends State<MapWidget> {
         locationIsLoaded = true;
         _position = position;
       });
-    } catch (_) {
-      print('print exception');
+      LocationData locationData =
+          LocationData(lng: position.longitude, lat: position.latitude);
+      bool updatedSuccessfully =
+          await httpClient.handleUpdateLocation(locationData);
+      if (!updatedSuccessfully) {
+        print('Shiiiit location not updated successfully');
+      }
+      MulesAroundRes mulesAround =
+          await httpClient.getMulesAroundMeLocation(locationData);
+      setState(() {
+        _markerLocations =
+            mulesAround.mules.map((e) => LatLng(e.lat, e.lng)).toList();
+        _initMarkers();
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -73,8 +79,6 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
-
-    _initMarkers();
   }
 
   void _initMarkers() async {
@@ -82,7 +86,7 @@ class _MapWidgetState extends State<MapWidget> {
 
     for (LatLng markerLocation in _markerLocations) {
       final BitmapDescriptor markerImage =
-      await MapHelper.getMarkerImageFromUrl(_markerImageUrl);
+          await MapHelper.getMarkerImageFromUrl(_markerImageUrl);
 
       markers.add(
         MapMarker(
@@ -146,13 +150,16 @@ class _MapWidgetState extends State<MapWidget> {
               onMapCreated: (controller) => _onMapCreated(controller),
               onCameraMove: (position) => _updateMarkers(position.zoom),
               gestureRecognizers: Set()
-                ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-                ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
-                ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
+                ..add(
+                    Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+                ..add(Factory<ScaleGestureRecognizer>(
+                    () => ScaleGestureRecognizer()))
+                ..add(
+                    Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
                 ..add(Factory<HorizontalDragGestureRecognizer>(
-                        () => HorizontalDragGestureRecognizer()))
+                    () => HorizontalDragGestureRecognizer()))
                 ..add(Factory<VerticalDragGestureRecognizer>(
-                        () => VerticalDragGestureRecognizer())),
+                    () => VerticalDragGestureRecognizer())),
               initialCameraPosition: CameraPosition(
                 target: LatLng(_position.latitude, _position.longitude),
                 zoom: 15.0,
@@ -187,6 +194,7 @@ class _MapWidgetState extends State<MapWidget> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     if (!locationIsLoaded) {
