@@ -2,6 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
   @override
@@ -16,7 +20,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = pickedFile == null ? null : File(pickedFile.path);
     });
   }
 
@@ -31,14 +35,20 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     });
   }
 
-  Future _getCurrentImage() async {
-    // TODO get current image from server
-  }
-
   Future _updateImage() async {
-    // TODO update image
-  }
+    bool isSuccessfulUpload = await httpClient.uploadProfilePicture(_image);
 
+    if (isSuccessfulUpload) {
+      await GetIt.I.get<UserInfoStore>().updateProfilePicture();
+
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
+    } else {
+      createDialogWidget(context, "Something went wrong while uploading...",
+          "Please try again");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +81,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                   style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkGrey
-                  ),
+                      color: AppTheme.darkGrey),
                 ),
               ),
               SizedBox(
@@ -95,12 +104,12 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: CircleAvatar(
-                radius: 120.0,
-                backgroundImage: _image == null
-                    ? AssetImage('assets/images/profile_photo_nick_miller.jpg')
-                    : FileImage(_image)),
-          ),
+              child: CircleAvatar(
+            radius: 120,
+            backgroundImage: _image == null
+                ? GetIt.I.get<UserInfoStore>().profilePicture
+                : FileImage(_image),
+          )),
           SizedBox(
             height: 30.0,
           ),
@@ -110,22 +119,18 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _ButtonWithText(
-                      "Camera", _getImageFromCamera, AppTheme.lightBlue
-                  ),
+                      "Camera", _getImageFromCamera, AppTheme.lightBlue),
                   SizedBox(
                     width: 40.0,
                   ),
                   _ButtonWithText(
-                      "Gallery", _getImageFromGallery, AppTheme.lightBlue
-                  ),
+                      "Gallery", _getImageFromGallery, AppTheme.lightBlue),
                 ],
-              )
-          ),
+              )),
           Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: _ButtonWithText(
-                "Update", _updateImage, AppTheme.secondaryBlue
-            ),
+            child:
+                _ButtonWithText("Update", _updateImage, AppTheme.secondaryBlue),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
@@ -140,8 +145,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                 style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.lightText
-                ),
+                    color: AppTheme.lightText),
               ),
             ),
           ),
@@ -159,8 +163,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
           height: 40,
           decoration: BoxDecoration(
             color: color,
-            borderRadius:
-            const BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.grey.withOpacity(0.6),
@@ -171,23 +174,15 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {
-                FocusScope.of(context)
-                    .requestFocus(FocusNode());
-              },
+              onTap: callback,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      callback();
-                    },
-                    child: Text(
-                      buttonText,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                  child: Text(
+                    buttonText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
                   ),
                 ),

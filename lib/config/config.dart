@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/stores/location/location_store.dart';
 
 class Config {
   static final BASE_URL = 'https://whisperingmule.herokuapp.com/api/';
@@ -9,6 +10,7 @@ class Config {
 
   static void registerStoresWithGetIt() {
     GetIt.I.registerSingleton<UserInfoStore>(UserInfoStore());
+    GetIt.I.registerSingleton<LocationStore>(LocationStore());
   }
 
   static Future<void> saveToken(token) async {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/data/location_data.dart';
@@ -168,6 +170,25 @@ class HttpClient {
 
     MulesAroundRes mulesAroundRes = MulesAroundRes.fromJson(res.data);
     return mulesAroundRes;
+  }
+
+  Future<bool> uploadProfilePicture(File img) async {
+    if (img == null) {
+      return false;
+    }
+    final String token = await Config.getToken();
+    var formData = {
+      "image": await MultipartFile.fromBytes(img.readAsBytesSync(),
+          filename: 'image')
+    };
+    var res = await _dio.post('/profile/upload-image',
+        data: FormData.fromMap(formData),
+        options: Options(headers: {
+          'Authorization': token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }));
+    print(res.data);
+    return res.statusCode == 200 ? true : false;
   }
 }
 

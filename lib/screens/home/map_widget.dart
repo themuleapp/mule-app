@@ -4,7 +4,9 @@ import 'package:fluster/fluster.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
@@ -12,6 +14,8 @@ import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map_helper.dart';
 import 'package:mule/screens/home/map_marker.dart';
+import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
 class MapWidget extends StatefulWidget {
@@ -20,11 +24,9 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  Position _position;
   double _currentZoom = 15;
   bool _isMapLoading = true;
   bool _areMarkersLoading = true;
-  bool locationIsLoaded = false;
 
   Completer<GoogleMapController> _mapCompleter = Completer();
   Fluster<MapMarker> _clusterManager;
@@ -44,14 +46,15 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   void initState() {
     super.initState();
-    getCurrentLocation();
+    if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
+      getCurrentLocation();
+    }
   }
 
   void getCurrentLocation() async {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
       StreamSubscription<Position> positionStream = Geolocator()
           .getPositionStream(LocationOptions(
               accuracy: LocationAccuracy.high, distanceFilter: 30))
@@ -64,6 +67,8 @@ class _MapWidgetState extends State<MapWidget> {
       await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
       print(e);
+    } catch (_) {
+      print('print exception');
     }
   }
 
@@ -77,9 +82,9 @@ class _MapWidgetState extends State<MapWidget> {
     }
     MulesAroundRes mulesAround =
         await httpClient.getMulesAroundMeLocation(locationData);
+    GetIt.I.get<LocationStore>().updateLocation(position);
+
     setState(() {
-      locationIsLoaded = true;
-      _position = position;
       _markerLocations =
           mulesAround.mules.map((e) => LatLng(e.lat, e.lng)).toList();
     });
@@ -153,28 +158,33 @@ class _MapWidgetState extends State<MapWidget> {
           // Google Map widget
           Opacity(
             opacity: _isMapLoading ? 0 : 1,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              scrollGesturesEnabled: true,
-              zoomGesturesEnabled: true,
-              myLocationEnabled: true,
-              markers: _markers,
-              onMapCreated: (controller) => _onMapCreated(controller),
-              onCameraMove: (position) => _updateMarkers(position.zoom),
-              gestureRecognizers: Set()
-                ..add(Factory<PanGestureRecognizer>(
-                        () => PanGestureRecognizer()))
-                ..add(Factory<ScaleGestureRecognizer>(
-                        () => ScaleGestureRecognizer()))
-                ..add(Factory<TapGestureRecognizer>(
-                        () => TapGestureRecognizer()))
-                ..add(Factory<HorizontalDragGestureRecognizer>(
-                        () => HorizontalDragGestureRecognizer()))
-                ..add(Factory<VerticalDragGestureRecognizer>(
-                        () => VerticalDragGestureRecognizer())),
-              initialCameraPosition: CameraPosition(
-                target: LatLng(_position.latitude, _position.longitude),
-                zoom: 15.0,
+            child: Observer(
+              builder: (_) => GoogleMap(
+                mapType: MapType.normal,
+                scrollGesturesEnabled: true,
+                zoomGesturesEnabled: true,
+                myLocationEnabled: true,
+                markers: _markers,
+                onMapCreated: (controller) => _onMapCreated(controller),
+                onCameraMove: (position) => _updateMarkers(position.zoom),
+                gestureRecognizers: Set()
+                  ..add(Factory<PanGestureRecognizer>(
+                      () => PanGestureRecognizer()))
+                  ..add(Factory<ScaleGestureRecognizer>(
+                      () => ScaleGestureRecognizer()))
+                  ..add(Factory<TapGestureRecognizer>(
+                      () => TapGestureRecognizer()))
+                  ..add(Factory<HorizontalDragGestureRecognizer>(
+                      () => HorizontalDragGestureRecognizer()))
+                  ..add(Factory<VerticalDragGestureRecognizer>(
+                      () => VerticalDragGestureRecognizer())),
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                    GetIt.I.get<LocationStore>().lat,
+                    GetIt.I.get<LocationStore>().lng,
+                  ),
+                  zoom: 15.0,
+                ),
               ),
             ),
           ),
@@ -209,9 +219,13 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!locationIsLoaded) {
-      return SpinKitDoubleBounce(color: AppTheme.lightBlue);
-    }
-    return getMap();
+    return Observer(
+      builder: (_) {
+        if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
+          return SpinKitDoubleBounce(color: AppTheme.lightBlue);
+        }
+        return getMap();
+      },
+    );
   }
 }

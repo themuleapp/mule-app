@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
@@ -12,9 +13,9 @@ import 'package:mule/stores/global/user_info_store.dart';
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
       {Key key,
-        this.screenIndex,
-        this.iconAnimationController,
-        this.callBackIndex})
+      this.screenIndex,
+      this.iconAnimationController,
+      this.callBackIndex})
       : super(key: key);
 
   final AnimationController iconAnimationController;
@@ -93,9 +94,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: EdgeInsets.only(top: AppTheme.elementSize(screenHeight,
-                  5, 10, 20, 40, 45, 50, 60, 70)
-              ),
+              padding: EdgeInsets.only(
+                  top: AppTheme.elementSize(
+                      screenHeight, 5, 10, 20, 40, 45, 50, 60, 70)),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
@@ -112,44 +113,38 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: RotationTransition(
                               turns: AlwaysStoppedAnimation<double>(
                                   Tween<double>(begin: 0.0, end: 24.0)
-                                      .animate(CurvedAnimation(
-                                      parent: widget
-                                          .iconAnimationController,
-                                      curve: Curves.fastOutSlowIn))
-                                      .value /
+                                          .animate(CurvedAnimation(
+                                              parent: widget
+                                                  .iconAnimationController,
+                                              curve: Curves.fastOutSlowIn))
+                                          .value /
                                       360),
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    left: AppTheme.elementSize(screenHeight,
-                                        4, 4.5, 4.5, 5, 5, 6, 7, 8),
-                                    top: AppTheme.elementSize(screenHeight,
-                                        1, 1.5, 1.5, 2, 2, 3, 3.5, 4)
-                                ),
+                                    left: AppTheme.elementSize(screenHeight, 4,
+                                        4.5, 4.5, 5, 5, 6, 7, 8),
+                                    top: AppTheme.elementSize(screenHeight, 1,
+                                        1.5, 1.5, 2, 2, 3, 3.5, 4)),
                                 child: Container(
                                   height: AppTheme.elementSize(screenHeight,
                                       100, 115, 125, 130, 135, 170, 185, 200),
-                                  width: AppTheme.elementSize(screenHeight,
-                                      100, 115, 125, 130, 135, 170, 185, 200),
+                                  width: AppTheme.elementSize(screenHeight, 100,
+                                      115, 125, 130, 135, 170, 185, 200),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     boxShadow: <BoxShadow>[
                                       BoxShadow(
-                                          color:
-                                          AppTheme.darkGrey.withOpacity(0.6),
+                                          color: AppTheme.darkGrey
+                                              .withOpacity(0.6),
                                           offset: const Offset(2.0, 4.0),
                                           blurRadius: 8),
                                     ],
                                   ),
                                   child: GestureDetector(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(AppTheme.elementSize(
-                                              screenHeight, 56, 57, 60, 62.5, 66,
-                                              85, 92.5, 100)
-                                          )
-                                      ),
-                                      child: Image.asset(
-                                          'assets/images/profile_photo_nick_miller.jpg'),
+                                    child: CircleAvatar(
+                                      backgroundImage: GetIt.I
+                                          .get<UserInfoStore>()
+                                          .profilePicture,
                                     ),
                                     onTap: () {
                                       Navigator.of(context).push(
@@ -173,8 +168,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey,
-                                fontSize: AppTheme.elementSize(screenHeight,
-                                    19, 21, 22, 24, 25, 28, 30, 32),
+                                fontSize: AppTheme.elementSize(screenHeight, 19,
+                                    21, 22, 24, 25, 28, 30, 32),
                               ),
                             ),
                             onTap: () {
@@ -185,8 +180,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                         ),
                       ),
                       Padding(
-                        padding:
-                        const EdgeInsets.only(top: 4),
+                        padding: const EdgeInsets.only(top: 4),
                         child: Row(
                           children: <Widget>[
                             Text(
@@ -195,13 +189,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 fontFamily: AppTheme.fontName,
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.darkGrey,
-                                fontSize: AppTheme.elementSize(screenHeight,
-                                    15, 16, 18, 19, 20, 22, 24, 26),
+                                fontSize: AppTheme.elementSize(screenHeight, 15,
+                                    16, 18, 19, 20, 22, 24, 26),
                               ),
                             ),
                             Container(
-                              height: AppTheme.elementSize(screenHeight,
-                                  25, 25, 25, 25, 25, 30, 30, 35),
+                              height: AppTheme.elementSize(
+                                  screenHeight, 25, 25, 25, 25, 25, 30, 30, 35),
                               child: Switch(
                                 value: true,
                                 activeColor: AppTheme.lightBlue,
@@ -217,8 +211,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
             ),
             SizedBox(
-              height: AppTheme.elementSize(
-                  screenHeight, 0, 0, 0, 1, 3, 6, 8, 10),
+              height:
+                  AppTheme.elementSize(screenHeight, 0, 0, 0, 1, 3, 6, 8, 10),
             ),
             Divider(
               height: 1,
@@ -236,7 +230,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             Padding(
               padding:
-              EdgeInsets.only(top: 10.0, left: 15, right: 15, bottom: 10),
+                  EdgeInsets.only(top: 10.0, left: 15, right: 15, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -342,21 +336,21 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   listData.isAssetsImage
                       ? Container(
-                    width: 24,
-                    height: 24,
-                    child: Image.asset(listData.imageName,
-                        color: widget.screenIndex == listData.index
-                            ? AppTheme.black
-                            : AppTheme.black),
-                  )
+                          width: 24,
+                          height: 24,
+                          child: Image.asset(listData.imageName,
+                              color: widget.screenIndex == listData.index
+                                  ? AppTheme.black
+                                  : AppTheme.black),
+                        )
                       : Icon(
-                    listData.icon.icon,
-                    color: widget.screenIndex == listData.index
-                        ? AppTheme.black
-                        : AppTheme.black,
-                    size: AppTheme.elementSize(
-                        screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
-                  ),
+                          listData.icon.icon,
+                          color: widget.screenIndex == listData.index
+                              ? AppTheme.black
+                              : AppTheme.black,
+                          size: AppTheme.elementSize(
+                              screenHeight, 24, 25, 25, 26, 27, 29, 31, 35),
+                        ),
                   const Padding(
                     padding: EdgeInsets.all(6),
                   ),
@@ -377,40 +371,40 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             widget.screenIndex == listData.index
                 ? AnimatedBuilder(
-              animation: widget.iconAnimationController,
-              builder: (BuildContext context, Widget child) {
-                return Transform(
-                  transform: Matrix4.translationValues(
-                      (MediaQuery.of(context).size.width * 0.75 - 64) *
-                          (1.0 -
-                              widget.iconAnimationController.value -
-                              1.0),
-                      0.0,
-                      0.0),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: AppTheme.elementSize(
-                            screenHeight, 5, 5, 5, 6, 7, 8, 8, 8),
-                        bottom: 8),
-                    child: Container(
-                      width:
-                      MediaQuery.of(context).size.width * 0.75 - 64,
-                      height: AppTheme.elementSize(
-                          screenHeight, 38, 40, 41, 46, 46, 51, 56, 61),
-                      decoration: BoxDecoration(
-                        color: AppTheme.lightBlue.withOpacity(0.5),
-                        borderRadius: new BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(28),
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(28),
+                    animation: widget.iconAnimationController,
+                    builder: (BuildContext context, Widget child) {
+                      return Transform(
+                        transform: Matrix4.translationValues(
+                            (MediaQuery.of(context).size.width * 0.75 - 64) *
+                                (1.0 -
+                                    widget.iconAnimationController.value -
+                                    1.0),
+                            0.0,
+                            0.0),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: AppTheme.elementSize(
+                                  screenHeight, 5, 5, 5, 6, 7, 8, 8, 8),
+                              bottom: 8),
+                          child: Container(
+                            width:
+                                MediaQuery.of(context).size.width * 0.75 - 64,
+                            height: AppTheme.elementSize(
+                                screenHeight, 38, 40, 41, 46, 46, 51, 56, 61),
+                            decoration: BoxDecoration(
+                              color: AppTheme.lightBlue.withOpacity(0.5),
+                              borderRadius: new BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(28),
+                                bottomLeft: Radius.circular(0),
+                                bottomRight: Radius.circular(28),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
+                      );
+                    },
+                  )
                 : const SizedBox()
           ],
         ),
