@@ -99,7 +99,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
           body: SingleChildScrollView(
             controller: scrollController,
             scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(parent: ClampingScrollPhysics()),
+            physics: const PageScrollPhysics(parent: NeverScrollableScrollPhysics()),
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width + widget.drawerWidth,
