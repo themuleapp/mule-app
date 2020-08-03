@@ -167,8 +167,6 @@ class HttpClient {
     }
 
     MulesAroundRes mulesAroundRes = MulesAroundRes.fromJson(res.data);
-    print(mulesAroundRes.numMules);
-    print(mulesAroundRes.mules);
     return mulesAroundRes;
   }
 }

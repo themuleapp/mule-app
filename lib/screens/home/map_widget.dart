@@ -51,27 +51,39 @@ class _MapWidgetState extends State<MapWidget> {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        locationIsLoaded = true;
-        _position = position;
+
+      StreamSubscription<Position> positionStream = Geolocator()
+          .getPositionStream(LocationOptions(
+              accuracy: LocationAccuracy.high, distanceFilter: 30))
+          .listen((Position position) async {
+        if (position != null) {
+          await updateLocationOnServerAndGetMulesAround(position);
+        }
       });
-      LocationData locationData =
-          LocationData(lng: position.longitude, lat: position.latitude);
-      bool updatedSuccessfully =
-          await httpClient.handleUpdateLocation(locationData);
-      if (!updatedSuccessfully) {
-        print('Shiiiit location not updated successfully');
-      }
-      MulesAroundRes mulesAround =
-          await httpClient.getMulesAroundMeLocation(locationData);
-      setState(() {
-        _markerLocations =
-            mulesAround.mules.map((e) => LatLng(e.lat, e.lng)).toList();
-        _initMarkers();
-      });
+
+      await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
       print(e);
     }
+  }
+
+  Future updateLocationOnServerAndGetMulesAround(Position position) async {
+    LocationData locationData =
+        LocationData(lng: position.longitude, lat: position.latitude);
+    bool updatedSuccessfully =
+        await httpClient.handleUpdateLocation(locationData);
+    if (!updatedSuccessfully) {
+      print('Shiiiit location not updated successfully');
+    }
+    MulesAroundRes mulesAround =
+        await httpClient.getMulesAroundMeLocation(locationData);
+    setState(() {
+      locationIsLoaded = true;
+      _position = position;
+      _markerLocations =
+          mulesAround.mules.map((e) => LatLng(e.lat, e.lng)).toList();
+    });
+    _initMarkers();
   }
 
   void _onMapCreated(GoogleMapController controller) {
