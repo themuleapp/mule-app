@@ -73,7 +73,7 @@ class _MapWidgetState extends State<MapWidget> {
     bool updatedSuccessfully =
         await httpClient.handleUpdateLocation(locationData);
     if (!updatedSuccessfully) {
-      print('Shiiiit location not updated successfully');
+      print('Location not updated successfully');
     }
     MulesAroundRes mulesAround =
         await httpClient.getMulesAroundMeLocation(locationData);
