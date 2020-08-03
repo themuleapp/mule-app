@@ -14,7 +14,6 @@ import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map_helper.dart';
 import 'package:mule/screens/home/map_marker.dart';
-import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
@@ -67,8 +66,6 @@ class _MapWidgetState extends State<MapWidget> {
       await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
       print(e);
-    } catch (_) {
-      print('print exception');
     }
   }
 
