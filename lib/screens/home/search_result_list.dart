@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/models/data/suggestions.dart';
+import 'package:mule/stores/location/location_store.dart';
 
 class SearchResultList extends StatefulWidget {
   final TextEditingController controller;
@@ -20,17 +23,6 @@ class SearchResultList extends StatefulWidget {
       spacing: this.spacing,
       controller: this.controller,
       focusNode: this.focusNode);
-}
-
-class Suggestion {
-  String description;
-  String vicinity;
-
-  Suggestion(String description, String vicinity)
-      : description = description, vicinity = vicinity;
-
-//  Suggestion.fromJson(Map<String, dynamic> json)
-//      : description = json['description'];
 }
 
 class _SearchResultListState extends State<SearchResultList> {
@@ -121,9 +113,13 @@ class _SearchResultListState extends State<SearchResultList> {
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10)
           ),
-          onTap: () {},
+          onTap: () {
+            GetIt.I.get<LocationStore>().updatePlace(suggestion);
+            controller.text = suggestion.name;
+            _update([]);
+          },
           child: ListTile(
-            title: Text(suggestion.description),
+            title: Text(suggestion.name),
             subtitle: Text(suggestion.vicinity),
             trailing: Icon(
               Icons.info_outline,

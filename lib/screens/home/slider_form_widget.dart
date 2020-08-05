@@ -8,9 +8,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/models/data/suggestions.dart';
 import 'package:mule/screens/home/search_result_list.dart';
 import 'package:mule/stores/global/user_info_store.dart';
-import 'package:mule/screens/home/map_widget.dart';
+import 'package:mule/stores/location/location_store.dart';
 
 class SliderFormWidget extends StatefulWidget {
   final bool panelIsOpen;
@@ -26,15 +27,6 @@ class SliderFormWidget extends StatefulWidget {
 
   @override
   _SliderFormWidgetState createState() => _SliderFormWidgetState();
-}
-
-class Suggestion {
-  String description;
-  String placeId;
-
-  Suggestion.fromJson(Map<String, dynamic> json)
-      : description = json['description'],
-        placeId = json['place_id'];
 }
 
 class _SliderFormWidgetState extends State<SliderFormWidget> {
@@ -54,7 +46,9 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
 
     Response res = await Dio().get(request);
     return res.data['predictions']
-        .map<Suggestion>((singleData) => Suggestion.fromJson(singleData))
+        .map<Suggestion>((singleData) => Suggestion(
+        singleData["structured_formatting"]["main_text"],
+        singleData["structured_formatting"]["secondary_text"]))
         .toList();
   }
 
@@ -213,11 +207,13 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           return (suggestion == null)
               ? null
               : ListTile(
-                  title: Text(suggestion.description),
+                  title: Text(suggestion.name),
+                  subtitle: Text(suggestion.vicinity),
                 );
         },
         onSuggestionSelected: (Suggestion suggestion) {
-          controller.text = suggestion.description;
+          controller.text = suggestion.name;
+          GetIt.I.get<LocationStore>().updateDestination(suggestion);
         },
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
             elevation: 0.7,
