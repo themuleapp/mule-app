@@ -8,6 +8,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/config.dart';
+import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/suggestions.dart';
 import 'package:mule/screens/home/search_result_list.dart';
 import 'package:mule/stores/global/user_info_store.dart';
@@ -42,14 +44,27 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     String API_KEY = "AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs";
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String request = '$baseURL?input=$searchTerm&key=$API_KEY&location=40.793429,-77.860314&radius=4000&strictbounds';
+    String request =
+        '$baseURL?input=$searchTerm&key=$API_KEY&location=${Config.penstateLocation.lat},${Config.penstateLocation.lng}&radius=4000&strictbounds';
 
     Response res = await Dio().get(request);
-    return res.data['predictions']
-        .map<Suggestion>((singleData) => Suggestion(
-        singleData["structured_formatting"]["main_text"],
-        singleData["structured_formatting"]["secondary_text"]))
-        .toList();
+    List<Suggestion> suggestions = [];
+
+    for (Map<String, dynamic> singleData in res.data['predictions']) {
+      String bla =
+          "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${singleData['description']}&inputtype=textquery&fields=geometry&key=$API_KEY";
+      Response locationRes = await Dio().get(bla);
+      if (locationRes.data['candidates'].length < 1) {
+        print('Ohno there are no candidates');
+      }
+      suggestions.add(Suggestion(
+          singleData["structured_formatting"]["main_text"],
+          singleData["structured_formatting"]["secondary_text"],
+          LocationData.fromJson(
+              locationRes.data['candidates'][0]['geometry']['location'])));
+    }
+
+    return suggestions;
   }
 
   // Shows only destination bar, or complete form depending on the
