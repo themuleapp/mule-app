@@ -49,7 +49,7 @@ class _SearchResultListState extends State<SearchResultList> {
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     String request =
-        '$baseURL?location=${Config.penstateLocation.lat},${Config.penstateLocation.lng}&radius=1500&keyword=$searchTerm&key=$API_KEY';
+        '$baseURL?location=${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}&radius=1500&keyword=$searchTerm&key=$API_KEY';
 
     Response res = await Dio().get(request);
     if (res == null) return null;

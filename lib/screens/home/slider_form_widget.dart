@@ -45,7 +45,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$searchTerm&key=$API_KEY&location=${Config.penstateLocation.lat},${Config.penstateLocation.lng}&radius=4000&strictbounds';
+        '$baseURL?input=$searchTerm&key=$API_KEY&location=${Config.pennStateLocation.lat},${Config.pennStateLocation.lng}&radius=4000&strictbounds';
 
     Response res = await Dio().get(request);
     List<Suggestion> suggestions = [];
