@@ -77,6 +77,10 @@ class _MapWidgetState extends State<MapWidget> {
     if (!updatedSuccessfully) {
       print('Location not updated successfully');
     }
+    await getMulesAround(locationData, position);
+  }
+
+  Future getMulesAround(LocationData locationData, Position position) async {
     MulesAroundRes mulesAround =
         await httpClient.getMulesAroundMeLocation(locationData);
     GetIt.I.get<LocationStore>().updateLocation(position);
@@ -88,8 +92,14 @@ class _MapWidgetState extends State<MapWidget> {
     _initMarkers();
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     _mapCompleter.complete(controller);
+    if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
+      await getCurrentLocation();
+    }
+    await updateLocationOnServerAndGetMulesAround(Position(
+        latitude: GetIt.I.get<LocationStore>().lat,
+        longitude: GetIt.I.get<LocationStore>().lng));
     setState(() {
       _isMapLoading = false;
     });
