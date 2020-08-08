@@ -48,20 +48,23 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
         '$baseURL?input=$searchTerm&key=$API_KEY&location=${Config.penstateLocation.lat},${Config.penstateLocation.lng}&radius=4000&strictbounds';
 
     Response res = await Dio().get(request);
-    return res.data['predictions'].map<Suggestion>((singleData) async {
-      //
+    List<Suggestion> suggestions = [];
+
+    for (Map<String, dynamic> singleData in res.data['predictions']) {
       String bla =
           "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${singleData['description']}&inputtype=textquery&fields=geometry&key=$API_KEY";
       Response locationRes = await Dio().get(bla);
       if (locationRes.data['candidates'].length < 1) {
         print('Ohno there are no candidates');
       }
-      return Suggestion(
+      suggestions.add(Suggestion(
           singleData["structured_formatting"]["main_text"],
           singleData["structured_formatting"]["secondary_text"],
           LocationData.fromJson(
-              singleData['candidates']['geometry']['location']));
-    }).toList();
+              locationRes.data['candidates'][0]['geometry']['location'])));
+    }
+
+    return suggestions;
   }
 
   // Shows only destination bar, or complete form depending on the
