@@ -1,10 +1,12 @@
+import 'package:mule/models/data/location_data.dart';
+
 class Suggestion {
-  String name;
-  String vicinity;
+  final String name;
+  final String vicinity;
+  final LocationData location;
 
-  Suggestion(String name, String vicinity)
-      : name = name, vicinity = vicinity;
-
-//  Suggestion.fromJson(Map<String, dynamic> json)
-//      : description = json['description'];
+  Suggestion(String name, String vicinity, LocationData location)
+      : name = name,
+        vicinity = vicinity,
+        location = location;
 }
