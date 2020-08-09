@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map_widget.dart';
 import 'package:mule/screens/home/slider_form_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -10,7 +9,7 @@ class SlidingUpWidget extends StatefulWidget {
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
-  final FocusNode _fakeFocusNode = FocusNode();
+  // final FocusNode _fakeFocusNode = FocusNode();
   final FocusNode _destinationFocusNode = FocusNode();
   final PanelController _panelController = PanelController();
   final BorderRadiusGeometry radius = BorderRadius.only(
@@ -32,16 +31,15 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           programmaticallyOpeningOrClosing = false;
           panelIsOpen = false;
         }));
+    _destinationFocusNode.unfocus();
   }
 
   _handleSearchFocus() {
-    if (_fakeFocusNode.hasFocus) {
+    if (_destinationFocusNode.hasFocus) {
       setState(() {
         programmaticallyOpeningOrClosing = true;
       });
       this._openPanel();
-      _destinationFocusNode.requestFocus();
-      _fakeFocusNode.unfocus();
     }
   }
 
@@ -58,7 +56,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   void initState() {
-    _fakeFocusNode.addListener(_handleSearchFocus);
+    _destinationFocusNode.addListener(_handleSearchFocus);
     super.initState();
   }
 
@@ -69,7 +67,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         child: SliderFormWidget(
           panelIsOpen: panelIsOpen,
           destinationFocusNode: _destinationFocusNode,
-          fakeFocusNode: _fakeFocusNode,
         ));
   }
 
