@@ -11,9 +11,7 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
   final double infoHeight = 364.0;
   AnimationController animationController;
   Animation<double> animation;
-  double opacity1 = 0.0;
-  double opacity2 = 0.0;
-  double opacity3 = 0.0;
+  double opacity = 0.0;
   @override
   void initState() {
     animationController = AnimationController(
@@ -29,15 +27,7 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
     animationController.forward();
     await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     setState(() {
-      opacity1 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity2 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity3 = 1.0;
+      opacity = 1.0;
     });
   }
 
@@ -79,30 +69,94 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 32.0, left: 18, right: 16),
-                          child: Text(
-                            'Confirm Details',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 22,
-                              letterSpacing: 0.27,
-                              color: AppTheme.darkerText,
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: opacity,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 32.0, left: 18, right: 16),
+                            child: Text(
+                              'Confirm Details',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 22,
+                                letterSpacing: 0.27,
+                                color: AppTheme.darkerText,
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
+                            opacity: opacity,
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 16, right: 16, top: 8, bottom: 8),
                               child: Column(
                                 children: <Widget>[
-                                  //Add Two bars - destination and place
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppTheme.lightGrey.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(top: 15),
+                                        hintText: "From here - address",
+                                        prefixIcon: IconButton(
+                                          splashColor: AppTheme.lightBlue,
+                                          icon: Icon(
+                                            Icons.my_location,
+                                            color: AppTheme.secondaryBlue,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppTheme.lightGrey.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(top: 15),
+                                        hintText: "To here - address",
+                                        prefixIcon: IconButton(
+                                          splashColor: AppTheme.lightBlue,
+                                          icon: Icon(
+                                            Icons.place,
+                                            color: AppTheme.secondaryBlue,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -110,7 +164,7 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
                         ),
                         AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
-                          opacity: opacity3,
+                          opacity: opacity,
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 16, bottom: 16, right: 16),
