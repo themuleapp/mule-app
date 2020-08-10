@@ -40,12 +40,6 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   final Function suggestionCallback;
   final FocusNode focusNode;
 
-  // DEBUG ONLY
-  final LocationData dummyLocationData =
-      LocationData(lat: 40.793429, lng: -77.860314);
-  final int searchRadius = 4000;
-  // DEBUG ONLY
-
   _SuggestionSearchBarState({
     @required this.controller,
     @required this.suggestionCallback,
@@ -75,8 +69,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
       _clear();
       return;
     }
-    List<Suggestion> suggestions = await suggestionCallback(
-        controller.text, dummyLocationData, searchRadius);
+    List<Suggestion> suggestions = await suggestionCallback(controller.text);
     _createSearchResultList(suggestions);
   }
 
@@ -156,7 +149,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
 
     if (suggestion is PlacesSuggestion) {
       tile = _placesTile(suggestion);
-    } else if (suggestion is LocationSuggestion) {
+    } else if (suggestion is DestinationSuggestion) {
       tile = _locationTile(suggestion);
     } else {
       throw UnimplementedError("Type of suggestion not implemented");
@@ -175,7 +168,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         onTap: widget.cardCallback == null
-            ? () => _autocompleteOnTap(suggestion.description)
+            ? () => _autocompleteOnTap(suggestion.vicinity)
             : () => widget.cardCallback,
         child: tile,
       ),
@@ -187,7 +180,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   Widget _placesTile(PlacesSuggestion suggestion) {
     return ListTile(
       title: Text(suggestion.name),
-      subtitle: Text(suggestion.description),
+      subtitle: Text(suggestion.vicinity),
       trailing: Icon(
         Icons.info_outline,
         color: AppTheme.secondaryBlue,
@@ -195,9 +188,10 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
     );
   }
 
-  Widget _locationTile(LocationSuggestion suggestion) {
+  Widget _locationTile(DestinationSuggestion suggestion) {
     return ListTile(
-      title: Text(suggestion.description),
+      title: Text(suggestion.name),
+      subtitle: Text(suggestion.vicinity),
     );
   }
 }

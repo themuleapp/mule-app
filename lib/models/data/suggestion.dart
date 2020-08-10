@@ -1,28 +1,36 @@
-import 'package:flutter/cupertino.dart';
-import 'package:google_maps_webservice/places.dart';
+import 'location_data.dart';
 
 class Suggestion {
-  String description;
+  String name;
+  String vicinity;
+  LocationData location;
+
+  Suggestion(this.name, this.vicinity, this.location);
+  Suggestion.fromJson();
 }
 
-class LocationSuggestion extends Suggestion {
-  String placeId;
-  String description;
+class DestinationSuggestion extends Suggestion {
+  DestinationSuggestion(String name, String vicinity, LocationData location)
+      : super(name, vicinity, location);
 
-  LocationSuggestion({this.placeId, this.description});
+  // todo
+  DestinationSuggestion.fromJson(Map<String, dynamic> json)
+      : super(json["structured_formatting"]["main_text"],
+            json["structured_formatting"]["secondary_text"], null);
 
-  LocationSuggestion.fromJson(Map<String, dynamic> json)
-      : this.description = json['description'],
-        this.placeId = json['place_id'];
+  String get description => "$name, $vicinity";
+
+  void set location(LocationData locationData) {
+    this.location = locationData;
+  }
 }
 
 class PlacesSuggestion extends Suggestion {
-  String name;
-  String description;
+  PlacesSuggestion(String name, String vicinity, LocationData location)
+      : super(name, vicinity, location);
 
-  PlacesSuggestion({this.name, this.description});
-
+  // TODO
   PlacesSuggestion.fromJson(Map<String, dynamic> json)
-      : this.name = json['name'],
-        this.description = json['vicinity'];
+      : super(json['name'], json['vicinity'],
+            LocationData.fromJson(json['geometry']['location']));
 }

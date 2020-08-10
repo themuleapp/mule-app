@@ -8,8 +8,10 @@ class Config {
   static final BASE_URL = 'https://whisperingmule.herokuapp.com/api/';
   // static final BASE_URL = 'http://10.0.2.2:3000/api/';
   static final TOKEN_KEY = 'token';
-  static final LocationData penstateLocation =
+  static final LocationData pennStateLocation =
       LocationData(lat: 40.793429, lng: -77.860314);
+  static final PLACES_SEARCH_RADIUS = 1500;
+  static final DESTINATION_SEARCH_RADIUS = 4000;
 
   static void registerStoresWithGetIt() {
     GetIt.I.registerSingleton<UserInfoStore>(UserInfoStore());

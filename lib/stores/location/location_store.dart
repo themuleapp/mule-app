@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
-import 'package:mule/models/data/suggestions.dart';
+import 'package:mule/models/data/suggestion.dart';
 
 part 'location_store.g.dart';
 
