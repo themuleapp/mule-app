@@ -137,7 +137,7 @@ class HttpClient {
       DeleteAccountReq deleteAccountReq) async {
     String token = await Config.getToken();
 
-    return await _dio.delete(
+    Response res = await _dio.delete(
       '/authentication/delete-account',
       data: deleteAccountReq.toMap(),
       options: Options(
@@ -146,6 +146,7 @@ class HttpClient {
         },
       ),
     );
+    await Config.deleteToken();
   }
 
   Future<Response> handleGetProfileData() async {
