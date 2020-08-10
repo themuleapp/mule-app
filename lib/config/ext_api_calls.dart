@@ -49,4 +49,17 @@ class ExternalApi {
             (singleData) => PlacesSuggestion.fromJson(singleData))
         .toList();
   }
+
+  static getCoordinatesForDestination(
+      DestinationSuggestion destinationSuggestion) async {
+    String baseURL =
+        "https://maps.googleapis.com/maps/api/place/findplacefromtext/json" +
+            "?input=${destinationSuggestion.description}&inputtype=textquery&fields=geometry&key=$googleApiKey";
+    Response locationRes = await Dio().get(baseURL);
+    if (locationRes.data['candidates'].length < 1) {
+      print('Ohno there are no candidates for the destination coordinates');
+    }
+    destinationSuggestion.location = LocationData.fromJson(
+        locationRes.data['candidates'][0]['geometry']['location']);
+  }
 }

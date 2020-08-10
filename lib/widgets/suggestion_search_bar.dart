@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 
 class SuggestionSearchBar extends StatefulWidget {
@@ -90,8 +89,9 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
     setState(() => children = []);
   }
 
-  _autocompleteOnTap(String passthoughValue) {
-    controller.text = passthoughValue;
+  _autocompleteOnTap(String selectedValue, Suggestion suggestion) async {
+    await suggestion.chooseLocation();
+    controller.text = selectedValue;
   }
 
   Widget _searchBar(FocusNode focusNode, TextEditingController controller) {
@@ -168,7 +168,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         onTap: widget.cardCallback == null
-            ? () => _autocompleteOnTap(suggestion.vicinity)
+            ? () => _autocompleteOnTap(suggestion.description, suggestion)
             : () => widget.cardCallback,
         child: tile,
       ),
