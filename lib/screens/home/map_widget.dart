@@ -83,7 +83,7 @@ class _MapWidgetState extends State<MapWidget> {
   Future getMulesAround(LocationData locationData, Position position) async {
     MulesAroundRes mulesAround =
         await httpClient.getMulesAroundMeLocation(locationData);
-    GetIt.I.get<LocationStore>().updateLocation(position);
+    GetIt.I.get<LocationStore>().updateCurrentLocation(position);
 
     setState(() {
       _markerLocations =
@@ -97,9 +97,9 @@ class _MapWidgetState extends State<MapWidget> {
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       await getCurrentLocation();
     }
+    LocationData currentLocation = GetIt.I.get<LocationStore>().currentLocation;
     await updateLocationOnServerAndGetMulesAround(Position(
-        latitude: GetIt.I.get<LocationStore>().lat,
-        longitude: GetIt.I.get<LocationStore>().lng));
+        latitude: currentLocation.lat, longitude: currentLocation.lng));
     setState(() {
       _isMapLoading = false;
     });
@@ -187,8 +187,8 @@ class _MapWidgetState extends State<MapWidget> {
                       () => VerticalDragGestureRecognizer())),
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
-                    GetIt.I.get<LocationStore>().lat,
-                    GetIt.I.get<LocationStore>().lng,
+                    GetIt.I.get<LocationStore>().currentLocation.lat,
+                    GetIt.I.get<LocationStore>().currentLocation.lng,
                   ),
                   zoom: 15.0,
                 ),
