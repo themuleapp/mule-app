@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
-import 'package:mule/models/data/suggestions.dart';
+import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/data/suggestion.dart';
 
 part 'location_store.g.dart';
 
@@ -8,18 +9,15 @@ class LocationStore = _LocationStore with _$LocationStore;
 
 abstract class _LocationStore with Store {
   @observable
-  double lat = null;
-  @observable
-  double lng = null;
+  LocationData currentLocation = null;
   @observable
   Suggestion destination = null;
   @observable
   Suggestion place = null;
 
   @action
-  void updateLocation(Position newPos) {
-    lat = newPos.latitude;
-    lng = newPos.longitude;
+  void updateCurrentLocation(Position newPos) {
+    currentLocation = LocationData(lat: newPos.latitude, lng: newPos.longitude);
   }
 
   @action
@@ -33,5 +31,5 @@ abstract class _LocationStore with Store {
   }
 
   @computed
-  bool get isLocationLoaded => lat != null && lng != null;
+  bool get isLocationLoaded => currentLocation != null;
 }

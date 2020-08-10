@@ -10,6 +10,8 @@ class Config {
   static final TOKEN_KEY = 'token';
   static final LocationData pennStateLocation =
       LocationData(lat: 40.793429, lng: -77.860314);
+  static final PLACES_SEARCH_RADIUS = 1500;
+  static final DESTINATION_SEARCH_RADIUS = 4000;
 
   static void registerStoresWithGetIt() {
     GetIt.I.registerSingleton<UserInfoStore>(UserInfoStore());

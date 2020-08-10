@@ -17,33 +17,18 @@ mixin _$LocationStore on _LocationStore, Store {
           name: '_LocationStore.isLocationLoaded'))
       .value;
 
-  final _$latAtom = Atom(name: '_LocationStore.lat');
+  final _$currentLocationAtom = Atom(name: '_LocationStore.currentLocation');
 
   @override
-  double get lat {
-    _$latAtom.reportRead();
-    return super.lat;
+  LocationData get currentLocation {
+    _$currentLocationAtom.reportRead();
+    return super.currentLocation;
   }
 
   @override
-  set lat(double value) {
-    _$latAtom.reportWrite(value, super.lat, () {
-      super.lat = value;
-    });
-  }
-
-  final _$lngAtom = Atom(name: '_LocationStore.lng');
-
-  @override
-  double get lng {
-    _$lngAtom.reportRead();
-    return super.lng;
-  }
-
-  @override
-  set lng(double value) {
-    _$lngAtom.reportWrite(value, super.lng, () {
-      super.lng = value;
+  set currentLocation(LocationData value) {
+    _$currentLocationAtom.reportWrite(value, super.currentLocation, () {
+      super.currentLocation = value;
     });
   }
 
@@ -81,11 +66,11 @@ mixin _$LocationStore on _LocationStore, Store {
       ActionController(name: '_LocationStore');
 
   @override
-  void updateLocation(Position newPos) {
+  void updateCurrentLocation(Position newPos) {
     final _$actionInfo = _$_LocationStoreActionController.startAction(
-        name: '_LocationStore.updateLocation');
+        name: '_LocationStore.updateCurrentLocation');
     try {
-      return super.updateLocation(newPos);
+      return super.updateCurrentLocation(newPos);
     } finally {
       _$_LocationStoreActionController.endAction(_$actionInfo);
     }
@@ -116,8 +101,7 @@ mixin _$LocationStore on _LocationStore, Store {
   @override
   String toString() {
     return '''
-lat: ${lat},
-lng: ${lng},
+currentLocation: ${currentLocation},
 destination: ${destination},
 place: ${place},
 isLocationLoaded: ${isLocationLoaded}
