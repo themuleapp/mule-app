@@ -25,7 +25,7 @@ class DestinationSuggestion extends Suggestion {
       : super(json["structured_formatting"]["main_text"],
             json["structured_formatting"]["secondary_text"], null);
 
-  void set location(LocationData locationData) {
+  void set newLocation(LocationData locationData) {
     this.location = locationData;
   }
 

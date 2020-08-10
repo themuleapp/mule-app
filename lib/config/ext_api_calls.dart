@@ -57,9 +57,9 @@ class ExternalApi {
             "?input=${destinationSuggestion.description}&inputtype=textquery&fields=geometry&key=$googleApiKey";
     Response locationRes = await Dio().get(baseURL);
     if (locationRes.data['candidates'].length < 1) {
-      print('Ohno there are no candidates for the destination coordinates');
+      print('Oh no there are no candidates for the destination coordinates');
     }
-    destinationSuggestion.location = LocationData.fromJson(
+    destinationSuggestion.newLocation = LocationData.fromJson(
         locationRes.data['candidates'][0]['geometry']['location']);
   }
 }
