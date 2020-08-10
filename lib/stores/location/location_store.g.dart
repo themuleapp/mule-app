@@ -47,6 +47,36 @@ mixin _$LocationStore on _LocationStore, Store {
     });
   }
 
+  final _$destinationAtom = Atom(name: '_LocationStore.destination');
+
+  @override
+  Suggestion get destination {
+    _$destinationAtom.reportRead();
+    return super.destination;
+  }
+
+  @override
+  set destination(Suggestion value) {
+    _$destinationAtom.reportWrite(value, super.destination, () {
+      super.destination = value;
+    });
+  }
+
+  final _$placeAtom = Atom(name: '_LocationStore.place');
+
+  @override
+  Suggestion get place {
+    _$placeAtom.reportRead();
+    return super.place;
+  }
+
+  @override
+  set place(Suggestion value) {
+    _$placeAtom.reportWrite(value, super.place, () {
+      super.place = value;
+    });
+  }
+
   final _$_LocationStoreActionController =
       ActionController(name: '_LocationStore');
 
@@ -62,10 +92,34 @@ mixin _$LocationStore on _LocationStore, Store {
   }
 
   @override
+  void updateDestination(Suggestion newDestination) {
+    final _$actionInfo = _$_LocationStoreActionController.startAction(
+        name: '_LocationStore.updateDestination');
+    try {
+      return super.updateDestination(newDestination);
+    } finally {
+      _$_LocationStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updatePlace(Suggestion newPlace) {
+    final _$actionInfo = _$_LocationStoreActionController.startAction(
+        name: '_LocationStore.updatePlace');
+    try {
+      return super.updatePlace(newPlace);
+    } finally {
+      _$_LocationStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 lat: ${lat},
 lng: ${lng},
+destination: ${destination},
+place: ${place},
 isLocationLoaded: ${isLocationLoaded}
     ''';
   }
