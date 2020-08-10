@@ -5,6 +5,7 @@ import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/navigation_home_screen.dart';
+import 'package:mule/screens/request/make_request.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/splash_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
@@ -38,7 +39,7 @@ class App extends StatelessWidget {
         future: _isAuthenticatedUser,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data) {
-            return NavigationHomeScreen();
+            return MakeRequestScreen();
           } else if (!snapshot.hasData) {
             return SplashScreen();
           }
