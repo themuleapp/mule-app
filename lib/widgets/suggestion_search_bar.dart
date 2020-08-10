@@ -102,23 +102,37 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   }
 
   Widget _searchBar(FocusNode focusNode, TextEditingController controller) {
-    return TextField(
-      focusNode: focusNode,
-      controller: controller,
-      cursorColor: AppTheme.lightBlue,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.go,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: 15),
-        hintText: widget.hintText,
-        prefixIcon: IconButton(
-          splashColor: AppTheme.lightBlue,
-          icon: Icon(
-            Icons.search,
-            color: AppTheme.secondaryBlue,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppTheme.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.lightGrey.withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
           ),
-          onPressed: () {},
+        ],
+      ),
+      child: TextField(
+        focusNode: focusNode,
+        controller: controller,
+        cursorColor: AppTheme.lightBlue,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.go,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 15),
+          hintText: widget.hintText,
+          prefixIcon: IconButton(
+            splashColor: AppTheme.lightBlue,
+            icon: Icon(
+              Icons.search,
+              color: AppTheme.secondaryBlue,
+            ),
+            onPressed: () {},
+          ),
         ),
       ),
     );

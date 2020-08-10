@@ -140,24 +140,6 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     );
   }
 
-  Widget _searchBarContainer(SuggestionSearchBar searchbar) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppTheme.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.lightGrey.withOpacity(0.3),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: searchbar,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
