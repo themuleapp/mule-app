@@ -147,6 +147,7 @@ class HttpClient {
       ),
     );
     await Config.deleteToken();
+    return res;
   }
 
   Future<Response> handleGetProfileData() async {
