@@ -8,7 +8,6 @@ class MakeRequestScreen extends StatefulWidget {
 
 class _MakeRequestScreenState extends State<MakeRequestScreen>
     with TickerProviderStateMixin {
-  final double infoHeight = 364.0;
   AnimationController animationController;
   Animation<double> animation;
   double opacity = 0.0;
@@ -41,7 +40,7 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
         body: Stack(
           children: <Widget>[
             Positioned(
-              top: (MediaQuery.of(context).size.height / 1.5),
+              top: (MediaQuery.of(context).size.height / 1.6),
               bottom: 0,
               left: 0,
               right: 0,
@@ -85,6 +84,45 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
                                 color: AppTheme.darkerText,
                               ),
                             ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 8, top: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.people,
+                                      color: AppTheme.secondaryBlue,
+                                      size: 24,
+                                    ),
+                                    Text(
+                                      ' 12 ',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 21,
+                                        color: AppTheme.lightGrey,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Mules around',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 21,
+                                        color: AppTheme.lightGrey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Expanded(
@@ -161,12 +199,15 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
                             ),
                           ),
                         ),
+                        SizedBox (
+                            height: 10
+                        ),
                         AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
                           opacity: opacity,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 16, bottom: 16, right: 16),
+                                left: 16, bottom: 8, right: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -246,7 +287,7 @@ class _MakeRequestScreenState extends State<MakeRequestScreen>
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.height / 1.2) - 185,
+              top: (MediaQuery.of(context).size.height / 1.2) - 220,
               right: 35,
               child: ScaleTransition(
                 alignment: Alignment.center,
