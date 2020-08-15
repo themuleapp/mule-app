@@ -1,57 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mule/screens/home/make_request_panel.dart';
 import 'package:mule/screens/home/map_widget.dart';
-import 'package:mule/screens/home/slider_form_widget.dart';
+import 'package:mule/screens/home/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   @override
-  _SlidingUpWidgetState createState() => _SlidingUpWidgetState();
+  SlidingUpWidgetState createState() => SlidingUpWidgetState();
 }
 
-class _SlidingUpWidgetState extends State<SlidingUpWidget> {
+class SlidingUpWidgetState extends State<SlidingUpWidget> {
   final FocusNode _destinationFocusNode = FocusNode();
   final PanelController _panelController = PanelController();
   final double radius = 20.0;
 
-  bool panelIsOpen = false;
-  bool programmaticallyOpeningOrClosing = false;
-
+  double _snapValue = null;
+  SlidingUpPanel _slidingUpPanel;
   PanelIndex panelIndex;
   Widget _currentPanel;
 
-  _openPanel() {
-    _panelController.open().then((value) => setState(() {
-          programmaticallyOpeningOrClosing = false;
-          panelIsOpen = true;
-        }));
-  }
-
-  _closePanel() {
-    _panelController.close().then((value) => setState(() {
-          programmaticallyOpeningOrClosing = false;
-          panelIsOpen = false;
-        }));
-    _destinationFocusNode.unfocus();
-  }
-
   _handleSearchFocus() {
     if (_destinationFocusNode.hasFocus) {
-      setState(() {
-        programmaticallyOpeningOrClosing = true;
-      });
-      this._openPanel();
-    }
-  }
-
-  _handlePanelSlide(double percentage) {
-    if (programmaticallyOpeningOrClosing) {
-      return;
-    }
-    if (!panelIsOpen && percentage >= 0.7) {
-      this._openPanel();
-    } else if (panelIsOpen && percentage <= 0.5) {
-      this._closePanel();
+      _panelController.open();
     }
   }
 
@@ -64,24 +34,40 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     super.initState();
   }
 
-  void _updatePanel() {
+  _updatePanel() {
     switch (panelIndex) {
       case PanelIndex.DestinationAndSearch:
-        _setCurrentPanel(SliderFormWidget(
-          panelIsOpen: panelIsOpen,
+        setState(() {
+          _snapValue = null;
+        });
+        _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
+          panelController: _panelController,
+          slidingUpWidgetState: this,
         ));
         break;
       case PanelIndex.MakeRequest:
-        _setCurrentPanel(MakeRequestPanel());
+        setState(() {
+          _snapValue = .3;
+        });
+        _setCurrentPanel(MakeRequestPanel(
+          panelController: _panelController,
+        ));
         break;
       default:
         throw UnimplementedError("Called panel not implemented");
     }
   }
 
-  void _setCurrentPanel(panel) {
+  _setCurrentPanel(panel) {
     setState(() => _currentPanel = panel);
+  }
+
+  setPanelIndex(PanelIndex newPanelIndex) {
+    setState(() {
+      this.panelIndex = newPanelIndex;
+    });
+    _updatePanel();
   }
 
   Widget _panel(ScrollController sc) {
@@ -95,15 +81,14 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return SlidingUpPanel(
+    _slidingUpPanel = SlidingUpPanel(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(radius),
         topRight: Radius.circular(radius),
       ),
-      onPanelSlide: this._handlePanelSlide,
-      isDraggable: false,
+      // onPanelSlide: this._handlePanelSlide,
       minHeight: screenHeight / 4,
-      snapPoint: 1 / 4,
+      snapPoint: _snapValue,
       maxHeight: screenHeight - 120,
       controller: _panelController,
       backdropEnabled: true,
@@ -112,6 +97,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         child: MapWidget(),
       ),
     );
+    return _slidingUpPanel;
   }
 }
 

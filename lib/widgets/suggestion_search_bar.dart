@@ -170,7 +170,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
         onTap: widget.cardCallback == null
             ? () => _autocompleteOnTap(suggestion.description, suggestion)
-            : () => widget.cardCallback,
+            : widget.cardCallback,
         child: tile,
       ),
     );

@@ -5,24 +5,30 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/ext_api_calls.dart';
+import 'package:mule/screens/home/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class SliderFormWidget extends StatefulWidget {
-  final bool panelIsOpen;
+class SearchPanel extends StatefulWidget {
   final FocusNode destinationFocusNode;
+  final PanelIndex panelIndex;
+  final SlidingUpWidgetState slidingUpWidgetState;
+  final PanelController panelController;
 
-  const SliderFormWidget({
+  const SearchPanel({
     Key key,
-    this.panelIsOpen,
     this.destinationFocusNode,
+    this.panelIndex,
+    this.slidingUpWidgetState,
+    this.panelController,
   }) : super(key: key);
 
   @override
-  _SliderFormWidgetState createState() => _SliderFormWidgetState();
+  _SearchPanelState createState() => _SearchPanelState();
 }
 
-class _SliderFormWidgetState extends State<SliderFormWidget> {
+class _SearchPanelState extends State<SearchPanel> {
   FocusNode _searchFocusNode = FocusNode();
 
   TextEditingController _destinationController = TextEditingController();
@@ -59,6 +65,8 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyPlaces,
+          cardCallback: () =>
+              widget.slidingUpWidgetState.setPanelIndex(PanelIndex.MakeRequest),
         ),
       ],
     );
@@ -144,7 +152,7 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-      child: _getForm(widget.panelIsOpen),
+      child: _getForm(widget.panelController.isPanelOpen),
     );
   }
 
