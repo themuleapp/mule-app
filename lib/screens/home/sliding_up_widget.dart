@@ -14,7 +14,8 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
   final PanelController _panelController = PanelController();
   final double radius = 20.0;
 
-  double _snapValue = null;
+  double _snapValue;
+  bool _isDraggable;
   SlidingUpPanel _slidingUpPanel;
   PanelIndex panelIndex;
   Widget _currentPanel;
@@ -28,8 +29,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
   @override
   void initState() {
     _destinationFocusNode.addListener(_handleSearchFocus);
-    setState(() => panelIndex = PanelIndex.DestinationAndSearch);
-
+    panelIndex = PanelIndex.DestinationAndSearch;
     _updatePanel();
     super.initState();
   }
@@ -39,6 +39,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       case PanelIndex.DestinationAndSearch:
         setState(() {
           _snapValue = null;
+          _isDraggable = false;
         });
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
@@ -49,9 +50,11 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       case PanelIndex.MakeRequest:
         setState(() {
           _snapValue = .3;
+          _isDraggable = false;
         });
         _setCurrentPanel(MakeRequestPanel(
           panelController: _panelController,
+          slidingUpWidgetState: this,
         ));
         break;
       default:
@@ -86,7 +89,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         topLeft: Radius.circular(radius),
         topRight: Radius.circular(radius),
       ),
-      // onPanelSlide: this._handlePanelSlide,
+      isDraggable: _isDraggable,
       minHeight: screenHeight / 4,
       snapPoint: _snapValue,
       maxHeight: screenHeight - 120,

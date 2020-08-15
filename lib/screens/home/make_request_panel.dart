@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/sliding_up_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MakeRequestPanel extends StatelessWidget {
   final PanelController panelController;
+  final SlidingUpWidgetState slidingUpWidgetState;
   final double opacity = 1.0;
 
-  MakeRequestPanel({this.panelController});
+  MakeRequestPanel({this.panelController, this.slidingUpWidgetState});
 
   @override
   build(BuildContext context) {
