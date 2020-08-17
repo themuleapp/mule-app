@@ -168,9 +168,11 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
       shadowColor: AppTheme.darkGrey.withOpacity(0.5),
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        onTap: widget.cardCallback == null
-            ? () => _autocompleteOnTap(suggestion.description, suggestion)
-            : widget.cardCallback,
+        onTap: () {
+          _autocompleteOnTap(suggestion.description, suggestion);
+          if (widget.cardCallback != null)
+              widget.cardCallback();
+        },
         child: tile,
       ),
     );

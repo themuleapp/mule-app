@@ -111,7 +111,9 @@ class MakeRequestPanel extends StatelessWidget {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 15),
-                          hintText: "From here",
+                          hintText: GetIt.I.get<LocationStore>()
+                              .place
+                              .description,
                           prefixIcon: IconButton(
                             splashColor: AppTheme.lightBlue,
                             icon: Icon(
