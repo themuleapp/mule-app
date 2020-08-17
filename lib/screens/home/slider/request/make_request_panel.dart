@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/location/location_store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MakeRequestPanel extends StatelessWidget {
@@ -109,7 +111,7 @@ class MakeRequestPanel extends StatelessWidget {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 15),
-                          hintText: "From here - address",
+                          hintText: "From here",
                           prefixIcon: IconButton(
                             splashColor: AppTheme.lightBlue,
                             icon: Icon(
@@ -127,7 +129,9 @@ class MakeRequestPanel extends StatelessWidget {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 15),
-                          hintText: "To here - address",
+                          hintText: GetIt.I.get<LocationStore>()
+                              .destination
+                              .description,
                           prefixIcon: IconButton(
                             splashColor: AppTheme.lightBlue,
                             icon: Icon(
