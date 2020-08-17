@@ -16,6 +16,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   double _snapValue;
   bool _isDraggable;
+  bool _backdropTapClosesPanel;
   SlidingUpPanel _slidingUpPanel;
   PanelIndex panelIndex;
   Widget _currentPanel;
@@ -40,6 +41,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         setState(() {
           _snapValue = null;
           _isDraggable = true;
+          _backdropTapClosesPanel = true;
         });
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
@@ -51,6 +53,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         setState(() {
           _snapValue = .3;
           _isDraggable = false;
+          _backdropTapClosesPanel = false;
         });
         _setCurrentPanel(MakeRequestPanel(
           panelController: _panelController,
@@ -92,6 +95,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       onPanelClosed: () => _updatePanel(),
       onPanelOpened: () => _updatePanel(),
       isDraggable: _isDraggable,
+      backdropTapClosesPanel: _backdropTapClosesPanel,
       minHeight: screenHeight / 4,
       snapPoint: _snapValue,
       maxHeight: screenHeight - 120,
