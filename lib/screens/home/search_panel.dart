@@ -35,6 +35,9 @@ class _SearchPanelState extends State<SearchPanel> {
   TextEditingController _searchController = TextEditingController();
 
   Widget _getForm(bool open) {
+    if (!open) {
+      widget.destinationFocusNode.unfocus();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

@@ -39,7 +39,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       case PanelIndex.DestinationAndSearch:
         setState(() {
           _snapValue = null;
-          _isDraggable = false;
+          _isDraggable = true;
         });
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
@@ -89,6 +89,8 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         topLeft: Radius.circular(radius),
         topRight: Radius.circular(radius),
       ),
+      onPanelClosed: () => _updatePanel(),
+      onPanelOpened: () => _updatePanel(),
       isDraggable: _isDraggable,
       minHeight: screenHeight / 4,
       snapPoint: _snapValue,
