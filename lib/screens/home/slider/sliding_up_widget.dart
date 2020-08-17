@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
@@ -15,6 +16,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
   final double radius = 20.0;
 
   double _snapValue;
+  double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
   SlidingUpPanel _slidingUpPanel;
@@ -42,6 +44,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
           _snapValue = null;
           _isDraggable = true;
           _backdropTapClosesPanel = true;
+          _backdropOpacity = 0.5;
         });
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
@@ -51,9 +54,10 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MakeRequest:
         setState(() {
-          _snapValue = .3;
+          _snapValue = .2;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
+          _backdropOpacity = 0.0;
         });
         _setCurrentPanel(MakeRequestPanel(
           panelController: _panelController,
@@ -101,6 +105,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       maxHeight: screenHeight - 120,
       controller: _panelController,
       backdropEnabled: true,
+      backdropOpacity: _backdropOpacity,
       panelBuilder: (sc) => _panel(sc),
       body: Center(
         child: MapWidget(),
