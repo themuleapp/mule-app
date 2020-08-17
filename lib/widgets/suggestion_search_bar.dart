@@ -12,6 +12,7 @@ class SuggestionSearchBar extends StatefulWidget {
   final String hintText;
   final double spacing;
   final double elevation;
+  final Icon icon;
 
   const SuggestionSearchBar({
     Key key,
@@ -22,6 +23,7 @@ class SuggestionSearchBar extends StatefulWidget {
     this.hintText,
     this.spacing,
     this.elevation,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -121,10 +123,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
           hintText: widget.hintText,
           prefixIcon: IconButton(
             splashColor: AppTheme.lightBlue,
-            icon: Icon(
-              Icons.search,
-              color: AppTheme.secondaryBlue,
-            ),
+            icon: widget.icon,
             onPressed: () {},
           ),
         ),

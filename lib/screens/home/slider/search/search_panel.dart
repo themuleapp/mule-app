@@ -51,6 +51,10 @@ class _SearchPanelState extends State<SearchPanel> {
           focusNode: widget.destinationFocusNode,
           controller: _destinationController,
           hintText: "Destination...",
+          icon: Icon(
+            Icons.place,
+            color: AppTheme.secondaryBlue,
+          ),
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyLocations,
@@ -64,7 +68,11 @@ class _SearchPanelState extends State<SearchPanel> {
         SuggestionSearchBar(
           controller: _searchController,
           focusNode: _searchFocusNode,
-          hintText: "Coffee, Bagel...",
+          hintText: "Coffee, Target, Stationery...",
+          icon: Icon(
+            Icons.search,
+            color: AppTheme.secondaryBlue,
+          ),
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyPlaces,
