@@ -120,6 +120,7 @@ class MakeRequestPanel extends StatelessWidget {
                             ),
                             onPressed: () {},
                           ),
+                          enabled: false,
                         ),
                       ),
                     ),
@@ -140,6 +141,7 @@ class MakeRequestPanel extends StatelessWidget {
                             ),
                             onPressed: () {},
                           ),
+                          enabled: false,
                         ),
                       ),
                     )
