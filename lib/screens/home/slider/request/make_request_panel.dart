@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/screens/home/sliding_up_widget.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MakeRequestPanel extends StatelessWidget {

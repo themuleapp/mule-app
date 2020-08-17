@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mule/screens/home/make_request_panel.dart';
-import 'package:mule/screens/home/map_widget.dart';
-import 'package:mule/screens/home/search_panel.dart';
+import 'package:mule/screens/home/slider/request/make_request_panel.dart';
+import 'package:mule/screens/home/map/map_widget.dart';
+import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
