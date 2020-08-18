@@ -31,6 +31,8 @@ class _SearchPanelState extends State<SearchPanel> {
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
 
+  bool _destinationSelected = false;
+
   Widget _getForm(bool open) {
     if (!open) {
       widget.destinationFocusNode.unfocus();
@@ -55,28 +57,42 @@ class _SearchPanelState extends State<SearchPanel> {
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyLocations,
+          cardCallback: () {
+            setState(() {
+              _destinationSelected = true;
+            });
+          },
         ),
         AnimatedContainer(
           height: open ? 20 : 100,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         ),
-        _searchBarTitle(),
-        SuggestionSearchBar(
-          controller: _searchController,
-          focusNode: _searchFocusNode,
-          hintText: "Coffee, Target, Stationery...",
-          icon: Icon(
-            Icons.search,
-            color: AppTheme.secondaryBlue,
+        AnimatedOpacity(
+          opacity: _destinationSelected ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 100),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _searchBarTitle(),
+              SuggestionSearchBar(
+                controller: _searchController,
+                focusNode: _searchFocusNode,
+                hintText: "Coffee, Target, Stationery...",
+                icon: Icon(
+                  Icons.search,
+                  color: AppTheme.secondaryBlue,
+                ),
+                spacing: 10,
+                elevation: 2,
+                suggestionCallback: ExternalApi.getNearbyPlaces,
+                cardCallback: () {
+                  widget.slidingUpWidgetController.panelIndex =
+                      PanelIndex.MakeRequest;
+                },
+              ),
+            ],
           ),
-          spacing: 10,
-          elevation: 2,
-          suggestionCallback: ExternalApi.getNearbyPlaces,
-          cardCallback: () {
-            widget.slidingUpWidgetController.panelIndex =
-                PanelIndex.MakeRequest;
-          },
         ),
       ],
     );
