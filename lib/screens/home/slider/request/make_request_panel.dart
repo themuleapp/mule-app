@@ -7,10 +7,10 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MakeRequestPanel extends StatelessWidget {
   final PanelController panelController;
-  final SlidingUpWidgetState slidingUpWidgetState;
+  final SlidingUpWidgetController slidingUpWidgetController;
   final double opacity = 1.0;
 
-  MakeRequestPanel({this.panelController, this.slidingUpWidgetState});
+  MakeRequestPanel({this.panelController, this.slidingUpWidgetController});
 
   @override
   build(BuildContext context) {
@@ -183,7 +183,7 @@ class MakeRequestPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onTap: () => slidingUpWidgetState
+                  onTap: () => slidingUpWidgetController
                       .setPanelIndex(PanelIndex.DestinationAndSearch),
                 ),
                 const SizedBox(

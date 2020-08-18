@@ -13,14 +13,14 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class SearchPanel extends StatefulWidget {
   final FocusNode destinationFocusNode;
   final PanelIndex panelIndex;
-  final SlidingUpWidgetState slidingUpWidgetState;
+  final SlidingUpWidgetController slidingUpWidgetController;
   final PanelController panelController;
 
   const SearchPanel({
     Key key,
     this.destinationFocusNode,
     this.panelIndex,
-    this.slidingUpWidgetState,
+    this.slidingUpWidgetController,
     this.panelController,
   }) : super(key: key);
 
@@ -76,8 +76,10 @@ class _SearchPanelState extends State<SearchPanel> {
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyPlaces,
-          cardCallback: () =>
-              widget.slidingUpWidgetState.setPanelIndex(PanelIndex.MakeRequest),
+          cardCallback: () {
+            widget.slidingUpWidgetController
+                .setPanelIndex(PanelIndex.MakeRequest);
+          },
         ),
       ],
     );

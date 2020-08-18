@@ -27,7 +27,9 @@ class _MyHomePageState extends State<MyHomePage>
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: SlidingUpWidget(),
+          child: SlidingUpWidget(
+            controller: SlidingUpWidgetController(),
+          ),
         ),
       ),
     );

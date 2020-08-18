@@ -5,22 +5,30 @@ import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
+  final SlidingUpWidgetController controller;
+  final double radius;
+
+  SlidingUpWidget({
+    this.radius = 20.0,
+    this.controller,
+  });
+
   @override
-  SlidingUpWidgetState createState() => SlidingUpWidgetState();
+  _SlidingUpWidgetState createState() => _SlidingUpWidgetState();
 }
 
-class SlidingUpWidgetState extends State<SlidingUpWidget> {
+class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   final FocusNode _destinationFocusNode = FocusNode();
   final PanelController _panelController = PanelController();
-  final double radius = 20.0;
 
-  // Should be in a separate controller
+  // Animation
   double _snapValue;
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
   SlidingUpPanel _slidingUpPanel;
 
+  // Panel state
   PanelIndex panelIndex;
   Widget _currentPanel;
 
@@ -32,10 +40,23 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   void initState() {
+    super.initState();
     _destinationFocusNode.addListener(_handleSearchFocus);
+
     panelIndex = PanelIndex.DestinationAndSearch;
     _updatePanel();
-    super.initState();
+
+    widget.controller?._addState(this);
+  }
+
+  _setPanelIndex(PanelIndex newPanelIndex) {
+    if (newPanelIndex != panelIndex && _panelController.isAttached) {
+      _panelController.close();
+      setState(() {
+        this.panelIndex = newPanelIndex;
+      });
+    }
+    _updatePanel();
   }
 
   _updatePanel() {
@@ -50,7 +71,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
           panelController: _panelController,
-          slidingUpWidgetState: this,
+          slidingUpWidgetController: widget.controller,
         ));
         break;
       case PanelIndex.MakeRequest:
@@ -62,7 +83,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(MakeRequestPanel(
           panelController: _panelController,
-          slidingUpWidgetState: this,
+          slidingUpWidgetController: widget.controller,
         ));
         break;
       default:
@@ -72,16 +93,6 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   _setCurrentPanel(panel) {
     setState(() => _currentPanel = panel);
-  }
-
-  setPanelIndex(PanelIndex newPanelIndex) {
-    if (newPanelIndex != panelIndex && _panelController.isAttached) {
-      _panelController.close();
-      setState(() {
-        this.panelIndex = newPanelIndex;
-      });
-    }
-    _updatePanel();
   }
 
   Widget _panel(ScrollController sc) {
@@ -97,8 +108,8 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
     final screenHeight = MediaQuery.of(context).size.height;
     _slidingUpPanel = SlidingUpPanel(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(radius),
-        topRight: Radius.circular(radius),
+        topLeft: Radius.circular(widget.radius),
+        topRight: Radius.circular(widget.radius),
       ),
       onPanelClosed: () => _updatePanel(),
       onPanelOpened: () => _updatePanel(),
@@ -116,6 +127,22 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
       ),
     );
     return _slidingUpPanel;
+  }
+}
+
+class SlidingUpWidgetController {
+  _SlidingUpWidgetState _slidingUpWidgetState;
+
+  _addState(_SlidingUpWidgetState slidingUpWidgetState) {
+    this._slidingUpWidgetState = slidingUpWidgetState;
+  }
+
+  setPanelIndex(PanelIndex newPanelIndex) {
+    _slidingUpWidgetState._setPanelIndex(newPanelIndex);
+  }
+
+  PanelIndex getPanelIndex() {
+    return _slidingUpWidgetState.panelIndex;
   }
 }
 
