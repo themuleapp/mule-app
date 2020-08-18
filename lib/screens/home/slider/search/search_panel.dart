@@ -8,20 +8,17 @@ import 'package:mule/config/ext_api_calls.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SearchPanel extends StatefulWidget {
   final FocusNode destinationFocusNode;
   final PanelIndex panelIndex;
   final SlidingUpWidgetController slidingUpWidgetController;
-  final PanelController panelController;
 
   const SearchPanel({
     Key key,
     this.destinationFocusNode,
     this.panelIndex,
     this.slidingUpWidgetController,
-    this.panelController,
   }) : super(key: key);
 
   @override
@@ -77,8 +74,8 @@ class _SearchPanelState extends State<SearchPanel> {
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyPlaces,
           cardCallback: () {
-            widget.slidingUpWidgetController
-                .setPanelIndex(PanelIndex.MakeRequest);
+            widget.slidingUpWidgetController.panelIndex =
+                PanelIndex.MakeRequest;
           },
         ),
       ],
@@ -165,7 +162,8 @@ class _SearchPanelState extends State<SearchPanel> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-      child: _getForm(widget.panelController.isPanelOpen),
+      child: _getForm(
+          widget.slidingUpWidgetController.panelController.isPanelOpen),
     );
   }
 

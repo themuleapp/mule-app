@@ -3,23 +3,21 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MakeRequestPanel extends StatelessWidget {
-  final PanelController panelController;
   final SlidingUpWidgetController slidingUpWidgetController;
   final double opacity = 1.0;
 
-  MakeRequestPanel({this.panelController, this.slidingUpWidgetController});
+  MakeRequestPanel({this.slidingUpWidgetController});
 
   @override
   build(BuildContext context) {
     // Only animate after everything is done building
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => panelController.animatePanelToSnapPoint(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            ));
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        slidingUpWidgetController.panelController.animatePanelToSnapPoint(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -164,28 +162,29 @@ class MakeRequestPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
-                  child: Container(
-                    width: 48,
-                    height: 48,
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.white,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(16.0),
+                      width: 48,
+                      height: 48,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppTheme.white,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(16.0),
+                          ),
+                          border: Border.all(
+                              color: AppTheme.lightGrey.withOpacity(0.2)),
                         ),
-                        border: Border.all(
-                            color: AppTheme.lightGrey.withOpacity(0.2)),
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        color: AppTheme.lightGrey.withOpacity(0.5),
-                        size: 28,
+                        child: Icon(
+                          Icons.close,
+                          color: AppTheme.lightGrey.withOpacity(0.5),
+                          size: 28,
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () => slidingUpWidgetController
-                      .setPanelIndex(PanelIndex.DestinationAndSearch),
-                ),
+                    onTap: () {
+                      slidingUpWidgetController.panelIndex =
+                          PanelIndex.DestinationAndSearch;
+                    }),
                 const SizedBox(
                   width: 16,
                 ),

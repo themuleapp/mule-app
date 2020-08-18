@@ -49,7 +49,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     widget.controller?._addState(this);
   }
 
-  _setPanelIndex(PanelIndex newPanelIndex) {
+  _setPanelandUpdate(PanelIndex newPanelIndex) {
     if (newPanelIndex != panelIndex && _panelController.isAttached) {
       _panelController.close();
       setState(() {
@@ -70,7 +70,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(SearchPanel(
           destinationFocusNode: _destinationFocusNode,
-          panelController: _panelController,
           slidingUpWidgetController: widget.controller,
         ));
         break;
@@ -82,7 +81,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropOpacity = 0.0;
         });
         _setCurrentPanel(MakeRequestPanel(
-          panelController: _panelController,
           slidingUpWidgetController: widget.controller,
         ));
         break;
@@ -137,12 +135,16 @@ class SlidingUpWidgetController {
     this._slidingUpWidgetState = slidingUpWidgetState;
   }
 
-  setPanelIndex(PanelIndex newPanelIndex) {
-    _slidingUpWidgetState._setPanelIndex(newPanelIndex);
+  void set panelIndex(PanelIndex newPanelIndex) {
+    _slidingUpWidgetState._setPanelandUpdate(newPanelIndex);
   }
 
-  PanelIndex getPanelIndex() {
+  PanelIndex get panelIndex {
     return _slidingUpWidgetState.panelIndex;
+  }
+
+  PanelController get panelController {
+    return _slidingUpWidgetState._panelController;
   }
 }
 
