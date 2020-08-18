@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
@@ -15,11 +14,13 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
   final PanelController _panelController = PanelController();
   final double radius = 20.0;
 
+  // Should be in a separate controller
   double _snapValue;
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
   SlidingUpPanel _slidingUpPanel;
+
   PanelIndex panelIndex;
   Widget _currentPanel;
 
@@ -54,7 +55,7 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MakeRequest:
         setState(() {
-          _snapValue = .2;
+          _snapValue = .3;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
@@ -74,9 +75,12 @@ class SlidingUpWidgetState extends State<SlidingUpWidget> {
   }
 
   setPanelIndex(PanelIndex newPanelIndex) {
-    setState(() {
-      this.panelIndex = newPanelIndex;
-    });
+    if (newPanelIndex != panelIndex && _panelController.isAttached) {
+      _panelController.close();
+      setState(() {
+        this.panelIndex = newPanelIndex;
+      });
+    }
     _updatePanel();
   }
 
