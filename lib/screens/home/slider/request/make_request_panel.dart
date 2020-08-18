@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 
@@ -9,6 +12,14 @@ class MakeRequestPanel extends StatelessWidget {
   final double opacity = 1.0;
 
   MakeRequestPanel({this.slidingUpWidgetController});
+
+  Future<int> getNumMulesAround() async {
+    LocationData locationToCheckMulesAround =
+        GetIt.I.get<LocationStore>().place.location;
+    MulesAroundRes mulesAroundRes =
+        await httpClient.getMulesAroundMeLocation(locationToCheckMulesAround);
+    return mulesAroundRes.numMules;
+  }
 
   @override
   build(BuildContext context) {
@@ -55,14 +66,27 @@ class MakeRequestPanel extends StatelessWidget {
                       color: AppTheme.secondaryBlue,
                       size: 24,
                     ),
-                    Text(
-                      ' 12 ',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 21,
-                        color: AppTheme.lightGrey,
-                      ),
+                    FutureBuilder(
+                      future: getNumMulesAround(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done) {
+                          return Container(
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: CircularProgressIndicator(),
+                            height: 20.0,
+                            width: 20.0,
+                          );
+                        }
+                        return Text(
+                          ' ${snapshot.data} ',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 21,
+                            color: AppTheme.lightGrey,
+                          ),
+                        );
+                      },
                     ),
                     Text(
                       'Mules around',
