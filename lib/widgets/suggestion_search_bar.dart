@@ -92,9 +92,9 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   }
 
   _autocompleteOnTap(String selectedValue, Suggestion suggestion) async {
-    focusNode.unfocus();
     await suggestion.chooseLocation();
     controller.text = selectedValue;
+    focusNode.unfocus();
   }
 
   Widget _searchBar(FocusNode focusNode, TextEditingController controller) {

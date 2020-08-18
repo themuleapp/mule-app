@@ -18,7 +18,6 @@ class SlidingUpWidget extends StatefulWidget {
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
-  final FocusNode _destinationFocusNode = FocusNode();
   final PanelController _panelController = PanelController();
 
   // Animation
@@ -32,17 +31,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   PanelIndex panelIndex;
   Widget _currentPanel;
 
-  _handleSearchFocus() {
-    if (_destinationFocusNode.hasFocus) {
-      _panelController.open();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    _destinationFocusNode.addListener(_handleSearchFocus);
-
     panelIndex = PanelIndex.DestinationAndSearch;
     _updatePanel();
 
@@ -69,7 +60,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropOpacity = 0.5;
         });
         _setCurrentPanel(SearchPanel(
-          destinationFocusNode: _destinationFocusNode,
           slidingUpWidgetController: widget.controller,
         ));
         break;

@@ -10,14 +10,10 @@ import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
 
 class SearchPanel extends StatefulWidget {
-  final FocusNode destinationFocusNode;
-  final PanelIndex panelIndex;
   final SlidingUpWidgetController slidingUpWidgetController;
 
   const SearchPanel({
     Key key,
-    this.destinationFocusNode,
-    this.panelIndex,
     this.slidingUpWidgetController,
   }) : super(key: key);
 
@@ -26,16 +22,14 @@ class SearchPanel extends StatefulWidget {
 }
 
 class _SearchPanelState extends State<SearchPanel> {
-  FocusNode _searchFocusNode = FocusNode();
-
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
-
-  bool _destinationSelected = false;
+  FocusNode _searchFocusNode = FocusNode();
+  FocusNode _destinationFocusNode = FocusNode();
 
   Widget _getForm(bool open) {
     if (!open) {
-      widget.destinationFocusNode.unfocus();
+      _destinationFocusNode.unfocus();
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +41,7 @@ class _SearchPanelState extends State<SearchPanel> {
             child: _greetingTitle()),
         _destinationTitle(),
         SuggestionSearchBar(
-          focusNode: widget.destinationFocusNode,
+          focusNode: _destinationFocusNode,
           controller: _destinationController,
           hintText: "Destination...",
           icon: Icon(
@@ -57,19 +51,15 @@ class _SearchPanelState extends State<SearchPanel> {
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyLocations,
-          cardCallback: () {
-            setState(() {
-              _destinationSelected = true;
-            });
-          },
+          cardCallback: () => _searchFocusNode.requestFocus(),
         ),
         AnimatedContainer(
-          height: open ? 20 : 100,
+          height: open ? 20 : 500,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         ),
         AnimatedOpacity(
-          opacity: _destinationSelected ? 1.0 : 0.0,
+          opacity: _destinationFocusNode.hasFocus ? 0.0 : 1.0,
           duration: Duration(milliseconds: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,6 +164,12 @@ class _SearchPanelState extends State<SearchPanel> {
     );
   }
 
+  _handleFocus() {
+    if (_destinationFocusNode.hasFocus) {
+      widget.slidingUpWidgetController.panelController.open();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -185,6 +181,8 @@ class _SearchPanelState extends State<SearchPanel> {
 
   @override
   void initState() {
+    _destinationFocusNode.addListener(() => _handleFocus());
+
     super.initState();
   }
 }
