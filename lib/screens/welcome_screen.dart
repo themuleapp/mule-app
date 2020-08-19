@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final int delayedAmount = 500;
+  final int delayedAmount = 100;
   double _scale;
   AnimationController _controller;
 
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage>
                       color: color
                   ),
                 ),
-                delay: delayedAmount + 2000,
+                delay: delayedAmount + 1500,
               ),
               SizedBox(
                 height: AppTheme.elementSize(
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage>
                     child: _animatedButtonUI(screenHeight),
                   ),
                 ),
-                delay: delayedAmount + 4000,
+                delay: delayedAmount + 2500,
               ),
               SizedBox(
                 height: AppTheme.elementSize(
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage>
                         color: color),
                   ),
                 ),
-                delay: delayedAmount + 5000,
+                delay: delayedAmount + 3000,
               ),
             ],
           ),
