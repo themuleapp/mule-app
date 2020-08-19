@@ -12,6 +12,7 @@ class SuggestionSearchBar extends StatefulWidget {
   final String hintText;
   final double spacing;
   final double elevation;
+  final Icon icon;
 
   const SuggestionSearchBar({
     Key key,
@@ -22,6 +23,7 @@ class SuggestionSearchBar extends StatefulWidget {
     this.hintText,
     this.spacing,
     this.elevation,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -90,9 +92,9 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   }
 
   _autocompleteOnTap(String selectedValue, Suggestion suggestion) async {
-    focusNode.unfocus();
     await suggestion.chooseLocation();
     controller.text = selectedValue;
+    focusNode.unfocus();
   }
 
   Widget _searchBar(FocusNode focusNode, TextEditingController controller) {
@@ -121,10 +123,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
           hintText: widget.hintText,
           prefixIcon: IconButton(
             splashColor: AppTheme.lightBlue,
-            icon: Icon(
-              Icons.search,
-              color: AppTheme.secondaryBlue,
-            ),
+            icon: widget.icon,
             onPressed: () {},
           ),
         ),
@@ -168,9 +167,10 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
       shadowColor: AppTheme.darkGrey.withOpacity(0.5),
       child: InkWell(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        onTap: widget.cardCallback == null
-            ? () => _autocompleteOnTap(suggestion.description, suggestion)
-            : () => widget.cardCallback,
+        onTap: () {
+          _autocompleteOnTap(suggestion.description, suggestion);
+          if (widget.cardCallback != null) widget.cardCallback();
+        },
         child: tile,
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/screens/home/sliding_up_widget.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
@@ -27,7 +27,9 @@ class _MyHomePageState extends State<MyHomePage>
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: SlidingUpWidget(),
+          child: SlidingUpWidget(
+            controller: SlidingUpWidgetController(),
+          ),
         ),
       ),
     );

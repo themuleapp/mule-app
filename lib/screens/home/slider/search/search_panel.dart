@@ -5,30 +5,34 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/ext_api_calls.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
 
-class SliderFormWidget extends StatefulWidget {
-  final bool panelIsOpen;
-  final FocusNode destinationFocusNode;
+class SearchPanel extends StatefulWidget {
+  final SlidingUpWidgetController slidingUpWidgetController;
 
-  const SliderFormWidget({
+  const SearchPanel({
     Key key,
-    this.panelIsOpen,
-    this.destinationFocusNode,
+    this.slidingUpWidgetController,
   }) : super(key: key);
 
   @override
-  _SliderFormWidgetState createState() => _SliderFormWidgetState();
+  _SearchPanelState createState() => _SearchPanelState();
 }
 
-class _SliderFormWidgetState extends State<SliderFormWidget> {
-  FocusNode _searchFocusNode = FocusNode();
-
+class _SearchPanelState extends State<SearchPanel> {
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
+  FocusNode _searchFocusNode = FocusNode();
+  FocusNode _destinationFocusNode = FocusNode();
 
   Widget _getForm(bool open) {
+    if (!open) {
+      _destinationFocusNode.unfocus();
+    } else {
+      _destinationFocusNode.requestFocus();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -39,26 +43,48 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
             child: _greetingTitle()),
         _destinationTitle(),
         SuggestionSearchBar(
-          focusNode: widget.destinationFocusNode,
+          focusNode: _destinationFocusNode,
           controller: _destinationController,
           hintText: "Destination...",
+          icon: Icon(
+            Icons.place,
+            color: AppTheme.secondaryBlue,
+          ),
           spacing: 10,
           elevation: 2,
           suggestionCallback: ExternalApi.getNearbyLocations,
+          cardCallback: () => _searchFocusNode.requestFocus(),
         ),
         AnimatedContainer(
-          height: open ? 20 : 100,
+          height: open ? 20 : 500,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         ),
-        _searchBarTitle(),
-        SuggestionSearchBar(
-          controller: _searchController,
-          focusNode: _searchFocusNode,
-          hintText: "Coffee, Bagel...",
-          spacing: 10,
-          elevation: 2,
-          suggestionCallback: ExternalApi.getNearbyPlaces,
+        AnimatedOpacity(
+          opacity: _destinationFocusNode.hasFocus ? 0.0 : 1.0,
+          duration: Duration(milliseconds: 100),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _searchBarTitle(),
+              SuggestionSearchBar(
+                controller: _searchController,
+                focusNode: _searchFocusNode,
+                hintText: "Coffee, Target, Stationery...",
+                icon: Icon(
+                  Icons.search,
+                  color: AppTheme.secondaryBlue,
+                ),
+                spacing: 10,
+                elevation: 2,
+                suggestionCallback: ExternalApi.getNearbyPlaces,
+                cardCallback: () {
+                  widget.slidingUpWidgetController.panelIndex =
+                      PanelIndex.MakeRequest;
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -140,16 +166,25 @@ class _SliderFormWidgetState extends State<SliderFormWidget> {
     );
   }
 
+  _handleFocus() {
+    if (_destinationFocusNode.hasFocus) {
+      widget.slidingUpWidgetController.panelController.open();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-      child: _getForm(widget.panelIsOpen),
+      child: _getForm(
+          widget.slidingUpWidgetController.panelController.isPanelOpen),
     );
   }
 
   @override
   void initState() {
+    _destinationFocusNode.addListener(() => _handleFocus());
+
     super.initState();
   }
 }
