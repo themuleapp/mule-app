@@ -30,7 +30,7 @@ class _SearchPanelState extends State<SearchPanel> {
   Widget _getForm(bool open) {
     if (!open) {
       _destinationFocusNode.unfocus();
-    } else {
+    } else if (!_searchFocusNode.hasFocus) {
       _destinationFocusNode.requestFocus();
     }
     return Column(
