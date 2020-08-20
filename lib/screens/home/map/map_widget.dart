@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/ext_api_calls.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
@@ -31,8 +33,12 @@ class _MapWidgetState extends State<MapWidget> {
   Fluster<MapMarker> _clusterManager;
 
   final Set<Marker> _markers = Set();
+  final Set<Polyline> _polylines = Set();
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
+
+  BitmapDescriptor sourceIcon;
+  BitmapDescriptor destinationIcon;
 
   final String _markerImageUrl =
       'https://img.icons8.com/office/80/000000/marker.png';
@@ -41,6 +47,8 @@ class _MapWidgetState extends State<MapWidget> {
   final Color _clusterTextColor = AppTheme.white;
 
   List<LatLng> _markerLocations;
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
 
   @override
   void initState() {
@@ -48,6 +56,7 @@ class _MapWidgetState extends State<MapWidget> {
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       getCurrentLocation();
     }
+    setSourceAndDestinationIcons();
   }
 
   void getCurrentLocation() async {
@@ -67,6 +76,15 @@ class _MapWidgetState extends State<MapWidget> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void setSourceAndDestinationIcons() async {
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/source_pin.png');
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/destination_map_marker.png');
   }
 
   Future updateLocationOnServerAndGetMulesAround(Position position) async {
@@ -103,6 +121,8 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
+    //setMapPins();
+    //setPolylines();
   }
 
   void _initMarkers() async {
@@ -158,6 +178,54 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  void setMapPins() {
+    setState(() {
+      // source pin
+      _markers.add(Marker(
+          markerId: MarkerId('sourcePin'),
+          position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
+              GetIt.I.get<LocationStore>().place.location.lng),
+          icon: sourceIcon));
+      // destination pin
+      _markers.add(Marker(
+          markerId: MarkerId('destPin'),
+          position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
+              GetIt.I.get<LocationStore>().destination.location.lng),
+          icon: destinationIcon));
+    });
+  }
+
+  setPolylines() async {
+
+    List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
+        ExternalApi.googleApiKey,
+        GetIt.I.get<LocationStore>().place.location.lat,
+        GetIt.I.get<LocationStore>().place.location.lng,
+        GetIt.I.get<LocationStore>().destination.location.lat,
+        GetIt.I.get<LocationStore>().destination.location.lng);
+    if (result.isNotEmpty) {
+      // loop through all PointLatLng points and convert them
+      // to a list of LatLng, required by the Polyline
+      result.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    setState(() {
+      // create a Polyline instance
+      // with an id, an RGB color and the list of LatLng pairs
+      Polyline polyline = Polyline(
+          polylineId: PolylineId("poly"),
+          color: Color.fromARGB(255, 40, 122, 198),
+          points: polylineCoordinates);
+
+      // add the constructed polyline as a set of points
+      // to the polyline set, which will eventually
+      // end up showing up on the map
+      _polylines.add(polyline);
+    });
+  }
+
   getMap() {
     return Scaffold(
       body: Stack(
@@ -172,6 +240,7 @@ class _MapWidgetState extends State<MapWidget> {
                 zoomGesturesEnabled: true,
                 myLocationEnabled: true,
                 markers: _markers,
+                polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
                 onCameraMove: (position) => _updateMarkers(position.zoom),
                 gestureRecognizers: Set()
