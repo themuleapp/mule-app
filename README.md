@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/whisperingmule/mule-app">
-    <img src="./assets/images/logo.png" alt="Logo" width="200" height="200">
+    <img src="./assets/images/logo.png" alt="Logo" width="150" height="150">
   </a>
 
   <h3 align="center">Mule</h3>
