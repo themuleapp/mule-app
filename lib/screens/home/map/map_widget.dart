@@ -329,19 +329,14 @@ class MapController {
     this._mapWidgetState = _mapWidgetState;
   }
 
-  updateMapPins() {
+  drawRoute() {
+    _mapWidgetState._markers.clear();
     _mapWidgetState.updateMapPins();
-  }
-
-  showPolyLines() {
     _mapWidgetState.showPolyLines();
   }
 
-  removePolyLines() {
-    _mapWidgetState.removePolyLines();
-  }
-
-  resetMarkers() {
+  removeDrawnRoute() {
     _mapWidgetState._initMarkers();
+    _mapWidgetState.removePolyLines();
   }
 }

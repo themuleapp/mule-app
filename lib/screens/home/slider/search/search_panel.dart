@@ -174,8 +174,7 @@ class _SearchPanelState extends State<SearchPanel> {
 
   _onSubmitChoice() {
     widget.slidingUpWidgetController.panelIndex = PanelIndex.MakeRequest;
-    widget.mapController.updateMapPins();
-    widget.mapController.showPolyLines();
+    widget.mapController.drawRoute();
   }
 
   @override

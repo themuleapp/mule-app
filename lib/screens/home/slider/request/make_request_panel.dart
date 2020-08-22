@@ -29,8 +29,7 @@ class MakeRequestPanel extends StatelessWidget {
   _onReturnToSearch() {
     slidingUpWidgetController.panelIndex =
         PanelIndex.DestinationAndSearch;
-    mapController.resetMarkers();
-    mapController.removePolyLines();
+    mapController.removeDrawnRoute();
   }  
 
   @override
