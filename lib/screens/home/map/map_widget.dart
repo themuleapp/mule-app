@@ -20,6 +20,10 @@ import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
 class MapWidget extends StatefulWidget {
+  final MapController controller;
+
+  MapWidget({this.controller});
+
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
@@ -47,7 +51,6 @@ class _MapWidgetState extends State<MapWidget> {
   final Color _clusterTextColor = AppTheme.white;
 
   List<LatLng> _markerLocations;
-  List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
 
   @override
@@ -57,6 +60,7 @@ class _MapWidgetState extends State<MapWidget> {
       getCurrentLocation();
     }
     setSourceAndDestinationIcons();
+    widget.controller?._setState(this);
   }
 
   void getCurrentLocation() async {
@@ -121,8 +125,6 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
-    //setMapPins();
-    //setPolylines();
   }
 
   void _initMarkers() async {
@@ -178,24 +180,32 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  void setMapPins() {
+  void updateMapPins() {
+
     setState(() {
-      // source pin
-      _markers.add(Marker(
-          markerId: MarkerId('sourcePin'),
-          position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
-              GetIt.I.get<LocationStore>().place.location.lng),
-          icon: sourceIcon));
-      // destination pin
-      _markers.add(Marker(
-          markerId: MarkerId('destPin'),
-          position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
-              GetIt.I.get<LocationStore>().destination.location.lng),
-          icon: destinationIcon));
+      _areMarkersLoading = true;
+    });
+
+    // source pin
+    _markers.add(Marker(
+        markerId: MarkerId('sourcePin'),
+        position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
+            GetIt.I.get<LocationStore>().place.location.lng),
+        icon: sourceIcon));
+    // destination pin
+    _markers.add(Marker(
+        markerId: MarkerId('destPin'),
+        position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
+            GetIt.I.get<LocationStore>().destination.location.lng),
+        icon: destinationIcon));
+
+    setState(() {
+      _areMarkersLoading = false;
     });
   }
 
-  setPolylines() async {
+  showPolyLines() async {
+    List<LatLng> polylineCoordinates = [];
 
     List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey,
@@ -223,6 +233,12 @@ class _MapWidgetState extends State<MapWidget> {
       // to the polyline set, which will eventually
       // end up showing up on the map
       _polylines.add(polyline);
+    });
+  }
+
+  removePolyLines() {
+    setState(() {
+      _polylines.clear();
     });
   }
 
@@ -303,5 +319,29 @@ class _MapWidgetState extends State<MapWidget> {
         return getMap();
       },
     );
+  }
+}
+
+class MapController {
+  _MapWidgetState _mapWidgetState;
+
+  _setState(_MapWidgetState _mapWidgetState) {
+    this._mapWidgetState = _mapWidgetState;
+  }
+
+  updateMapPins() {
+    _mapWidgetState.updateMapPins();
+  }
+
+  showPolyLines() {
+    _mapWidgetState.showPolyLines();
+  }
+
+  removePolyLines() {
+    _mapWidgetState.removePolyLines();
+  }
+
+  resetMarkers() {
+    _mapWidgetState._initMarkers();
   }
 }

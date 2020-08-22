@@ -19,6 +19,7 @@ class SlidingUpWidget extends StatefulWidget {
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   final PanelController _panelController = PanelController();
+  final MapController _mapController = MapController();
 
   // Animation
   double _snapValue;
@@ -61,6 +62,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(SearchPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       case PanelIndex.MakeRequest:
@@ -72,6 +74,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       default:
@@ -111,7 +114,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       backdropOpacity: _backdropOpacity,
       panelBuilder: (sc) => _panel(sc),
       body: Center(
-        child: MapWidget(),
+        child: MapWidget(
+          controller: _mapController,
+        ),
       ),
     );
     return _slidingUpPanel;

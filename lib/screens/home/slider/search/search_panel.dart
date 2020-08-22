@@ -5,16 +5,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/ext_api_calls.dart';
+import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
 
 class SearchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final MapController mapController;
 
   const SearchPanel({
     Key key,
     this.slidingUpWidgetController,
+    this.mapController,
   }) : super(key: key);
 
   @override
@@ -78,10 +81,7 @@ class _SearchPanelState extends State<SearchPanel> {
                 spacing: 10,
                 elevation: 2,
                 suggestionCallback: ExternalApi.getNearbyPlaces,
-                cardCallback: () {
-                  widget.slidingUpWidgetController.panelIndex =
-                      PanelIndex.MakeRequest;
-                },
+                cardCallback: () => _onSubmitChoice(),
               ),
             ],
           ),
@@ -170,6 +170,12 @@ class _SearchPanelState extends State<SearchPanel> {
     if (_destinationFocusNode.hasFocus) {
       widget.slidingUpWidgetController.panelController.open();
     }
+  }
+
+  _onSubmitChoice() {
+    widget.slidingUpWidgetController.panelIndex = PanelIndex.MakeRequest;
+    widget.mapController.updateMapPins();
+    widget.mapController.showPolyLines();
   }
 
   @override
