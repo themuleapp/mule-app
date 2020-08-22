@@ -59,7 +59,6 @@ class _MapWidgetState extends State<MapWidget> {
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       getCurrentLocation();
     }
-    setSourceAndDestinationIcons();
     widget.controller?._setState(this);
   }
 
@@ -180,8 +179,14 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  void updateMapPins() {
-
+  void updateMapPins() async {
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/source_pin.png');
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/destination_map_marker.png');
+      
     setState(() {
       _areMarkersLoading = true;
     });
@@ -240,6 +245,41 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _polylines.clear();
     });
+  }
+
+  setMapView() async {
+    LocationData _northeastCoordinates;
+    LocationData _southwestCoordinates;
+    
+    LocationData startCoordinates = GetIt.I.get<LocationStore>().place.location;
+    LocationData destinationCoordinates = GetIt.I.get<LocationStore>().destination.location;
+
+    if (startCoordinates.lat <= destinationCoordinates.lat) {
+      _southwestCoordinates = startCoordinates;
+      _northeastCoordinates = destinationCoordinates;
+    } else {
+      _southwestCoordinates = destinationCoordinates;
+      _northeastCoordinates = startCoordinates;
+    }
+
+    // Accommodate the two locations within the
+    // camera view of the map
+    GoogleMapController controller = await _mapCompleter.future;
+    controller.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+          northeast: LatLng(
+            _northeastCoordinates.lat,
+            _northeastCoordinates.lng,
+          ),
+          southwest: LatLng(
+            _southwestCoordinates.lat,
+            _southwestCoordinates.lng,
+          ),
+        ),
+        10.0, // padding 
+      ),
+    );
   }
 
   getMap() {
@@ -331,6 +371,7 @@ class MapController {
 
   updateMapPins() {
     _mapWidgetState.updateMapPins();
+    _mapWidgetState.setMapView();
   }
 
   showPolyLines() {
