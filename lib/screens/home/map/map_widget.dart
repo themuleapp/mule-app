@@ -182,10 +182,10 @@ class _MapWidgetState extends State<MapWidget> {
   void updateMapPins() async {
     sourceIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/source_pin.png');
+        'assets/images/source_pin.png');
     destinationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/destination_map_marker.png');
+        'assets/images/destination_map_marker.png');
       
     setState(() {
       _areMarkersLoading = true;
