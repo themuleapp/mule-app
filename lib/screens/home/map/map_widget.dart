@@ -226,9 +226,9 @@ class _MapWidgetState extends State<MapWidget> {
       // with an id, an RGB color and the list of LatLng pairs
       Polyline polyline = Polyline(
           polylineId: PolylineId("poly"),
-          color: Color.fromARGB(255, 40, 122, 198),
-          points: polylineCoordinates);
-
+          color: AppTheme.lightBlue,
+          points: polylineCoordinates,
+          width: 4);
       // add the constructed polyline as a set of points
       // to the polyline set, which will eventually
       // end up showing up on the map
