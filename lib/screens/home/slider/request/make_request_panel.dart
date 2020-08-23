@@ -241,7 +241,10 @@ class MakeRequestPanel extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      slidingUpWidgetController.panelIndex =
+                          PanelIndex.WaitingToMatch;
+                    },
                   )
                 )
               ],
