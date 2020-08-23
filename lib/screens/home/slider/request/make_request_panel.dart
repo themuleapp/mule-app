@@ -213,36 +213,37 @@ class MakeRequestPanel extends StatelessWidget {
                   width: 16,
                 ),
                 Expanded(
-                    child: GestureDetector(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppTheme.secondaryBlue,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16.0),
+                  child: GestureDetector(
+                    child: Container(
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: AppTheme.secondaryBlue,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: AppTheme.secondaryBlue.withOpacity(0.5),
+                              offset: const Offset(1.1, 1.1),
+                              blurRadius: 10.0),
+                        ],
                       ),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: AppTheme.secondaryBlue.withOpacity(0.5),
-                            offset: const Offset(1.1, 1.1),
-                            blurRadius: 10.0),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Request',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          letterSpacing: 0.0,
-                          color: AppTheme.white,
+                      child: Center(
+                        child: Text(
+                          'Request',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            letterSpacing: 0.0,
+                            color: AppTheme.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onTap: () {},
-                ))
+                    onTap: () {},
+                  )
+                )
               ],
             ),
           ),
