@@ -248,38 +248,48 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   setMapView() async {
-    LocationData _northeastCoordinates;
-    LocationData _southwestCoordinates;
-    
-    LocationData startCoordinates = GetIt.I.get<LocationStore>().place.location;
-    LocationData destinationCoordinates = GetIt.I.get<LocationStore>().destination.location;
-
-    if (startCoordinates.lat <= destinationCoordinates.lat) {
-      _southwestCoordinates = startCoordinates;
-      _northeastCoordinates = destinationCoordinates;
-    } else {
-      _southwestCoordinates = destinationCoordinates;
-      _northeastCoordinates = startCoordinates;
-    }
-
     // Accommodate the two locations within the
     // camera view of the map
     GoogleMapController controller = await _mapCompleter.future;
     controller.animateCamera(
       CameraUpdate.newLatLngBounds(
-        LatLngBounds(
-          northeast: LatLng(
-            _northeastCoordinates.lat,
-            _northeastCoordinates.lng,
-          ),
-          southwest: LatLng(
-            _southwestCoordinates.lat,
-            _southwestCoordinates.lng,
-          ),
-        ),
-        10.0, // padding 
+        boundsFromLocationDataList([
+          GetIt.I.get<LocationStore>().destination.location, 
+          GetIt.I.get<LocationStore>().place.location,
+        ]),
+        150.0, // padding 
       ),
     );
+  }
+
+  resetMapView() async {
+    GoogleMapController controller = await _mapCompleter.future;
+    controller.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(
+          GetIt.I.get<LocationStore>().currentLocation.lat, 
+          GetIt.I.get<LocationStore>().currentLocation.lng,
+        ), 
+      _currentZoom,
+      ),
+    );
+  }
+
+  LatLngBounds boundsFromLocationDataList(List<LocationData> list) {
+    assert(list.isNotEmpty);
+    double x0, x1, y0, y1;
+    for (LocationData latLng in list) {
+      if (x0 == null) {
+        x0 = x1 = latLng.lat;
+        y0 = y1 = latLng.lng;
+      } else {
+        if (latLng.lat > x1) x1 = latLng.lat;
+        if (latLng.lat < x0) x0 = latLng.lat;
+        if (latLng.lng > y1) y1 = latLng.lng;
+        if (latLng.lng < y0) y0 = latLng.lng;
+      }
+    }
+    return LatLngBounds(northeast: LatLng(x1, y1), southwest: LatLng(x0, y0));
   }
 
   getMap() {
@@ -369,15 +379,16 @@ class MapController {
     this._mapWidgetState = _mapWidgetState;
   }
 
-  drawRoute() {
+  drawRoute() async {
     _mapWidgetState._markers.clear();
-    _mapWidgetState.updateMapPins();
+    await _mapWidgetState.updateMapPins();
     _mapWidgetState.showPolyLines();
-    //_mapWidgetState.setMapView();
+    _mapWidgetState.setMapView();
   }
 
   removeDrawnRoute() {
     _mapWidgetState._initMarkers();
     _mapWidgetState.removePolyLines();
+    _mapWidgetState.resetMapView();
   }
 }
