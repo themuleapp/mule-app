@@ -34,19 +34,23 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
       password: passwordController.text.trim(),
     );
     final res = await httpClient.handleLogin(loginData);
-    final success = res.statusCode;
-    if (success == 200) {
+    final status = res.statusCode;
+    // range 0 - 399
+    if (status < 400) {
       // Update data in the store!
       final ProfileRes resData = ProfileRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(resData);
       // user is logged in successfully
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
-    } else {
+    // range 400 - 499
+    } else if (status < 500) {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot log in!', errorMessages);
       emailController.clear();
       passwordController.clear();
+    } else {
+      createDialogWidget(context, 'Cannot log in!', 'This is a fault on our end... Please try again later');
     }
   }
 

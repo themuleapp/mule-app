@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
+import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
@@ -7,6 +10,7 @@ import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
+import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 
 class HttpClient {
   Dio _dio;
@@ -131,10 +135,9 @@ class HttpClient {
 
   Future<Response> handleDeleteAccount(
       DeleteAccountReq deleteAccountReq) async {
-
     String token = await Config.getToken();
 
-    return await _dio.delete(
+    Response res = await _dio.delete(
       '/authentication/delete-account',
       data: deleteAccountReq.toMap(),
       options: Options(
@@ -143,10 +146,51 @@ class HttpClient {
         },
       ),
     );
+    await Config.deleteToken();
+    return res;
   }
 
   Future<Response> handleGetProfileData() async {
-    return _makeAuthenticatedGetRequest('/profile');
+    return await _makeAuthenticatedGetRequest('/profile');
+  }
+
+  Future<bool> handleUpdateLocation(LocationData locationData) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/location/update', locationData.toMap());
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  getMulesAroundMeLocation(LocationData locationData) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/location/mules-nearby', locationData.toMap());
+    if (res.statusCode != 200) {
+      return null;
+    }
+
+    MulesAroundRes mulesAroundRes = MulesAroundRes.fromJson(res.data);
+    return mulesAroundRes;
+  }
+
+  Future<bool> uploadProfilePicture(File img) async {
+    if (img == null) {
+      return false;
+    }
+    final String token = await Config.getToken();
+    var formData = {
+      "image": await MultipartFile.fromBytes(img.readAsBytesSync(),
+          filename: 'image')
+    };
+    var res = await _dio.post('/profile/upload-image',
+        data: FormData.fromMap(formData),
+        options: Options(headers: {
+          'Authorization': token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }));
+    print(res.data);
+    return res.statusCode == 200 ? true : false;
   }
 }
 

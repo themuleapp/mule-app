@@ -61,12 +61,12 @@ class _DrawerUserControllerState extends State<DrawerUserController>
               duration: const Duration(milliseconds: 0),
               curve: Curves.fastOutSlowIn);
         } else if (scrollController.offset > 0 &&
-            scrollController.offset < widget.drawerWidth) {
+            scrollController.offset < widget.drawerWidth.floor()) {
           iconAnimationController.animateTo(
               (scrollController.offset * 100 / (widget.drawerWidth)) / 100,
               duration: const Duration(milliseconds: 0),
               curve: Curves.fastOutSlowIn);
-        } else if (scrollController.offset <= widget.drawerWidth) {
+        } else {
           if (scrolloffset != 0.0) {
             setState(() {
               scrolloffset = 0.0;
@@ -99,7 +99,8 @@ class _DrawerUserControllerState extends State<DrawerUserController>
           body: SingleChildScrollView(
             controller: scrollController,
             scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(parent: ClampingScrollPhysics()),
+            physics: const PageScrollPhysics(
+                parent: NeverScrollableScrollPhysics()),
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width + widget.drawerWidth,
