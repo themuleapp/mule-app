@@ -15,13 +15,6 @@ class WaitingToMatchPanel extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    // Only animate after everything is done building
-//    WidgetsBinding.instance.addPostFrameCallback((_) =>
-//        slidingUpWidgetController.panelController.animatePanelToSnapPoint(
-//          duration: Duration(milliseconds: 300),
-//          curve: Curves.easeInOut,
-//        ));
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
