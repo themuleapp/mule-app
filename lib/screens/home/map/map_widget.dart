@@ -30,10 +30,12 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidgetState extends State<MapWidget> {
   double _currentZoom = 15;
+  bool _isFocusedOnRoute = false;
   bool _isMapLoading = true;
   bool _areMarkersLoading = true;
 
   Completer<GoogleMapController> _mapCompleter = Completer();
+  GoogleMapController googleMapController; 
   Fluster<MapMarker> _clusterManager;
 
   final Set<Marker> _markers = Set();
@@ -115,6 +117,8 @@ class _MapWidgetState extends State<MapWidget> {
 
   void _onMapCreated(GoogleMapController controller) async {
     _mapCompleter.complete(controller);
+    googleMapController = controller;
+
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       await getCurrentLocation();
     }
@@ -127,6 +131,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   void _initMarkers() async {
+    setState(() {
+      _isFocusedOnRoute = false;
+    });
     final List<MapMarker> markers = [];
 
     for (LatLng markerLocation in _markerLocations) {
@@ -152,7 +159,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> _updateMarkers([double updatedZoom]) async {
-    if (_clusterManager == null || updatedZoom == _currentZoom) return;
+    if (_isFocusedOnRoute || _clusterManager == null || updatedZoom == _currentZoom) return;
 
     if (updatedZoom != null) {
       _currentZoom = updatedZoom;
@@ -188,6 +195,7 @@ class _MapWidgetState extends State<MapWidget> {
         'assets/images/destination_map_marker.png');
       
     setState(() {
+      _isFocusedOnRoute = true;
       _areMarkersLoading = true;
     });
 
@@ -248,10 +256,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   setMapView() async {
-    // Accommodate the two locations within the
-    // camera view of the map
-    GoogleMapController controller = await _mapCompleter.future;
-    controller.animateCamera(
+    googleMapController.animateCamera(
       CameraUpdate.newLatLngBounds(
         boundsFromLocationDataList([
           GetIt.I.get<LocationStore>().destination.location, 
@@ -263,8 +268,7 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   resetMapView() async {
-    GoogleMapController controller = await _mapCompleter.future;
-    controller.animateCamera(
+    googleMapController.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(
           GetIt.I.get<LocationStore>().currentLocation.lat, 
@@ -278,6 +282,7 @@ class _MapWidgetState extends State<MapWidget> {
   LatLngBounds boundsFromLocationDataList(List<LocationData> list) {
     assert(list.isNotEmpty);
     double x0, x1, y0, y1;
+
     for (LocationData latLng in list) {
       if (x0 == null) {
         x0 = x1 = latLng.lat;
@@ -381,7 +386,7 @@ class MapController {
 
   drawRoute() async {
     _mapWidgetState._markers.clear();
-    await _mapWidgetState.updateMapPins();
+    _mapWidgetState.updateMapPins();
     _mapWidgetState.showPolyLines();
     _mapWidgetState.setMapView();
   }
