@@ -1,5 +1,6 @@
 import 'dart:async';
 
+
 import 'package:fluster/fluster.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -262,7 +263,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   _setRouteView() async {
-    googleMapController.animateCamera(
+    GoogleMapController controller = await _mapCompleter.future;
+
+    controller.moveCamera(
       CameraUpdate.newLatLngBounds(
         boundsFromLocationDataList([
           GetIt.I.get<LocationStore>().destination.location, 
@@ -274,7 +277,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   _setDefaultView() async {
-    googleMapController.animateCamera(
+    GoogleMapController controller = await _mapCompleter.future;
+
+    controller.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(
           GetIt.I.get<LocationStore>().currentLocation.lat, 
@@ -282,6 +287,20 @@ class _MapWidgetState extends State<MapWidget> {
         ), 
       _defaultZoom,
       ),
+    );
+  }
+
+  _routeViewAdjust() async {
+    double extraZoom = -MediaQuery.of(context).size.height / widget.slidingUpWidgetController.snapHeight * 4;
+    double pixelOffset = widget.slidingUpWidgetController.snapHeight / 2;
+
+    GoogleMapController controller = await _mapCompleter.future;
+
+    controller.animateCamera(
+      CameraUpdate.zoomBy(extraZoom)
+    );
+    controller.animateCamera(
+      CameraUpdate.scrollBy(0, pixelOffset)
     );
   }
 
@@ -394,6 +413,7 @@ class MapController {
     _mapWidgetState._setRouteMarkers();
     _mapWidgetState._showPolyLines();
     _mapWidgetState._setRouteView();
+    _mapWidgetState._routeViewAdjust();
   }
 
   unfocusRoute() {
