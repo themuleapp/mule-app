@@ -291,14 +291,16 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   _routeViewAdjust() async {
-    double extraZoom = -MediaQuery.of(context).size.height / widget.slidingUpWidgetController.snapHeight * 4;
+    GoogleMapController controller;
+
     double pixelOffset = widget.slidingUpWidgetController.snapHeight / 2;
 
-    GoogleMapController controller = await _mapCompleter.future;
-
-    controller.animateCamera(
-      CameraUpdate.zoomBy(extraZoom)
+    controller = await _mapCompleter.future;
+    controller.moveCamera(
+      CameraUpdate.zoomOut()
     );
+
+    controller = await _mapCompleter.future;
     controller.animateCamera(
       CameraUpdate.scrollBy(0, pixelOffset)
     );
