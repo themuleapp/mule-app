@@ -16,20 +16,22 @@ import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_helper.dart';
 import 'package:mule/screens/home/map/map_marker.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
 class MapWidget extends StatefulWidget {
   final MapController controller;
+  final SlidingUpWidgetController slidingUpWidgetController;
 
-  MapWidget({this.controller});
+  MapWidget({this.controller, this.slidingUpWidgetController});
 
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  double _currentZoom = 15;
+  double _currentZoom = null;
   bool _isFocusedOnRoute = false;
   bool _isMapLoading = true;
   bool _areMarkersLoading = true;
@@ -38,6 +40,7 @@ class _MapWidgetState extends State<MapWidget> {
   GoogleMapController googleMapController; 
   Fluster<MapMarker> _clusterManager;
 
+  final double _defaultZoom = 15;
   final Set<Marker> _markers = Set();
   final Set<Polyline> _polylines = Set();
   final int _minClusterZoom = 0;
@@ -118,6 +121,7 @@ class _MapWidgetState extends State<MapWidget> {
   void _onMapCreated(GoogleMapController controller) async {
     _mapCompleter.complete(controller);
     googleMapController = controller;
+    _currentZoom = _defaultZoom;
 
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       await getCurrentLocation();
@@ -160,7 +164,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   Future<void> _updateMarkers([double updatedZoom]) async {
     if (_isFocusedOnRoute || _clusterManager == null || updatedZoom == _currentZoom) return;
-
+    
     if (updatedZoom != null) {
       _currentZoom = updatedZoom;
     }
@@ -186,7 +190,9 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  void updateMapPins() async {
+  _setRouteMarkers() async {
+    _markers.clear();
+
     sourceIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/images/source_pin.png');
@@ -217,7 +223,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  showPolyLines() async {
+  _showPolyLines() async {
     List<LatLng> polylineCoordinates = [];
 
     List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
@@ -249,32 +255,32 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  removePolyLines() {
+  _removePolyLines() {
     setState(() {
       _polylines.clear();
     });
   }
 
-  setMapView() async {
+  _setRouteView() async {
     googleMapController.animateCamera(
       CameraUpdate.newLatLngBounds(
         boundsFromLocationDataList([
           GetIt.I.get<LocationStore>().destination.location, 
           GetIt.I.get<LocationStore>().place.location,
         ]),
-        150.0, // padding 
+        50.0, // padding 
       ),
     );
   }
 
-  resetMapView() async {
+  _setDefaultView() async {
     googleMapController.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(
           GetIt.I.get<LocationStore>().currentLocation.lat, 
           GetIt.I.get<LocationStore>().currentLocation.lng,
         ), 
-      _currentZoom,
+      _defaultZoom,
       ),
     );
   }
@@ -330,7 +336,7 @@ class _MapWidgetState extends State<MapWidget> {
                     GetIt.I.get<LocationStore>().currentLocation.lat,
                     GetIt.I.get<LocationStore>().currentLocation.lng,
                   ),
-                  zoom: 15.0,
+                  zoom: _defaultZoom,
                 ),
               ),
             ),
@@ -384,16 +390,15 @@ class MapController {
     this._mapWidgetState = _mapWidgetState;
   }
 
-  drawRoute() async {
-    _mapWidgetState._markers.clear();
-    _mapWidgetState.updateMapPins();
-    _mapWidgetState.showPolyLines();
-    _mapWidgetState.setMapView();
+  focusOnRoute() async {
+    _mapWidgetState._setRouteMarkers();
+    _mapWidgetState._showPolyLines();
+    _mapWidgetState._setRouteView();
   }
 
-  removeDrawnRoute() {
+  unfocusRoute() {
     _mapWidgetState._initMarkers();
-    _mapWidgetState.removePolyLines();
-    _mapWidgetState.resetMapView();
+    _mapWidgetState._removePolyLines();
+    _mapWidgetState._setDefaultView();
   }
 }
