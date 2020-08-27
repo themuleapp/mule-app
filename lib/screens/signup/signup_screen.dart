@@ -187,7 +187,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 child: CustomTextFormField(
                   hintText: "First name",
                   controller: firstNameController,
-                  textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.sentences,
                   validator: validateNotEmptyInput,
                   keyboardType: TextInputType.name,
                 ),
@@ -197,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 child: CustomTextFormField(
                   hintText: "Last name",
                   controller: lastNameController,
-                  textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.sentences,
                   validator: validateNotEmptyInput,
                   keyboardType: TextInputType.name,
                 ),
@@ -211,7 +211,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
           CustomTextFormField(
             hintText: "Email",
             controller: emailController,
-            textCapitalization: TextCapitalization.none,
             validator: validateNotEmptyInput,
             keyboardType: TextInputType.emailAddress,
           ),
@@ -249,7 +248,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             hintText: "Password",
             obscureText: true,
             controller: password1Controller,
-            textCapitalization: TextCapitalization.none,
             validator: validateNewPassword,
           ),
           SizedBox(
@@ -260,7 +258,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             hintText: "Confirm Password",
             obscureText: true,
             controller: password2Controller,
-            textCapitalization: TextCapitalization.none,
             validator: validateNewPassword,
           ),
           SizedBox(

@@ -229,7 +229,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
           CustomTextFormField(
             hintText: "Email",
             controller: emailController,
-            textCapitalization: TextCapitalization.none,
             validator: validateEmail,
             keyboardType: TextInputType.emailAddress,
           ),
@@ -241,7 +240,6 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
             hintText: "Password",
             obscureText: true,
             validator: validateNotEmptyInput,
-            textCapitalization: TextCapitalization.none,
             controller: passwordController,
           ),
           SizedBox(

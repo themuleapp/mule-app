@@ -26,7 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       this.validator,
       this.autocorrect = false,
       this.enableSuggestions = false,
-      this.textCapitalization});
+      this.textCapitalization = TextCapitalization.none});
 
   @override
   Widget build(BuildContext context) {
