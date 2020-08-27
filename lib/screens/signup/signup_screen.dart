@@ -188,8 +188,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   hintText: "First name",
                   controller: firstNameController,
                   textCapitalization: TextCapitalization.words,
-                  autocorrect: false,
-                  enableSuggestions: false,
                   validator: validateNotEmptyInput,
                   keyboardType: TextInputType.name,
                 ),

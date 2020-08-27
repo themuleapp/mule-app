@@ -58,6 +58,7 @@ class CustomTextFormField extends StatelessWidget {
             validator: validator,
             autocorrect: autocorrect,
             enableSuggestions: enableSuggestions,
+            textCapitalization: textCapitalization,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: AppTheme.elementSize(
