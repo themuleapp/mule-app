@@ -9,7 +9,10 @@ class CustomTextFormField extends StatelessWidget {
   final Icon suffixIcon;
   final bool showLabel;
   final bool obscureText;
+  final bool autocorrect;
+  final bool enableSuggestions;
   final Function validator;
+  final TextCapitalization textCapitalization;
   final TextInputType keyboardType;
   CustomTextFormField(
       {@required this.hintText,
@@ -20,7 +23,10 @@ class CustomTextFormField extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.suffixIcon,
       this.showLabel = true,
-      this.validator});
+      this.validator,
+      this.autocorrect = false,
+      this.enableSuggestions = false,
+      this.textCapitalization});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,8 @@ class CustomTextFormField extends StatelessWidget {
             controller: controller,
             initialValue: value,
             validator: validator,
+            autocorrect: autocorrect,
+            enableSuggestions: enableSuggestions,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: AppTheme.elementSize(
