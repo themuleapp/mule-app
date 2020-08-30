@@ -187,7 +187,9 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 child: CustomTextFormField(
                   hintText: "First name",
                   controller: firstNameController,
+                  textCapitalization: TextCapitalization.sentences,
                   validator: validateNotEmptyInput,
+                  keyboardType: TextInputType.name,
                 ),
               ),
               SizedBox(width: 15.0),
@@ -195,7 +197,9 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 child: CustomTextFormField(
                   hintText: "Last name",
                   controller: lastNameController,
+                  textCapitalization: TextCapitalization.sentences,
                   validator: validateNotEmptyInput,
+                  keyboardType: TextInputType.name,
                 ),
               )
             ],
@@ -222,6 +226,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   hintText: "+1",
                   controller: phoneNumberPrefixController,
                   validator: validateNotEmptyInput,
+                  keyboardType: TextInputType.phone,
                 ),
               ),
               SizedBox(width: 15.0),
@@ -230,6 +235,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   hintText: "Phone number",
                   controller: phoneNumberController,
                   validator: validateNotEmptyInput,
+                  keyboardType: TextInputType.phone,
                 ),
               )
             ],
