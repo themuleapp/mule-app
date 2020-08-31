@@ -235,7 +235,7 @@ class MakeRequestPanel extends StatelessWidget {
                   type: ProgressButtonType.Raised,
                   onPressed: () async {
                     int score = await Future.delayed(
-                        const Duration(milliseconds: 5000), () => 42);
+                        const Duration(milliseconds: 2500), () => 42);
                     // After [onPressed], it will trigger animation running backwards, from end to beginning
                     return () {
                       // Optional returns is returning a VoidCallback that will be called
@@ -244,8 +244,8 @@ class MakeRequestPanel extends StatelessWidget {
                       // and do page navigation in the returned VoidCallback.
                       // So that user won't missed out the reverse animation.
 
-//                      slidingUpWidgetController.panelIndex =
-//                          PanelIndex.WaitingToMatch; //pandelIndex.Matched
+                      slidingUpWidgetController.panelIndex =
+                          PanelIndex.WaitingToMatch; //pandelIndex.Matched
                     };
                   },
                 ),
