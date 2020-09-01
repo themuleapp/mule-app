@@ -46,7 +46,6 @@ class MakeRequestPanel extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 22,
-                letterSpacing: 0.27,
                 color: AppTheme.darkerText,
               ),
             ),
@@ -245,7 +244,8 @@ class MakeRequestPanel extends StatelessWidget {
                       // So that user won't missed out the reverse animation.
 
                       slidingUpWidgetController.panelIndex =
-                          PanelIndex.WaitingToMatch; //pandelIndex.Matched
+                          PanelIndex.WaitingToMatch;
+                          //PanelIndex.Matched;
                     };
                   },
                 ),

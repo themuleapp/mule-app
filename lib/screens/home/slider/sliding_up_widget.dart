@@ -5,6 +5,8 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'match/matched_panel.dart';
+
 class SlidingUpWidget extends StatefulWidget {
   final SlidingUpWidgetController controller;
   final double radius;
@@ -86,6 +88,17 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           slidingUpWidgetController: widget.controller,
         ));
         break;
+      case PanelIndex.Matched:
+        setState(() {
+          _snapValue = null;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _backdropOpacity = 0;
+        });
+        _setCurrentPanel(MatchedPanel(
+          slidingUpWidgetController: widget.controller,
+        ));
+        break;
       default:
         throw UnimplementedError("Called panel not implemented");
     }
@@ -153,5 +166,6 @@ class SlidingUpWidgetController {
 enum PanelIndex {
   DestinationAndSearch,
   MakeRequest,
-  WaitingToMatch
+  WaitingToMatch,
+  Matched
 }

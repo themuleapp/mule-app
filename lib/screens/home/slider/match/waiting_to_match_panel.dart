@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
-import 'package:mule/models/data/location_data.dart';
-import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'package:mule/stores/location/location_store.dart';
 
 class WaitingToMatchPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
