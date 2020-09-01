@@ -39,7 +39,7 @@ class MakeRequestPanel extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           opacity: opacity,
           child: Padding(
-            padding: const EdgeInsets.only(top: 32.0, left: 18, right: 16),
+            padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
             child: Text(
               'Confirm Details',
               textAlign: TextAlign.left,
@@ -225,7 +225,8 @@ class MakeRequestPanel extends StatelessWidget {
                   ),
                   progressWidget: CircularProgressIndicator(
                       backgroundColor: AppTheme.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          AppTheme.secondaryBlue)),
                   width: MediaQuery.of(context).size.width - 100,
                   height: 48,
                   color: AppTheme.secondaryBlue,
