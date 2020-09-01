@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
@@ -212,37 +213,42 @@ class MakeRequestPanel extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                Expanded(
-                    child: GestureDetector(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppTheme.secondaryBlue,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: AppTheme.secondaryBlue.withOpacity(0.5),
-                            offset: const Offset(1.1, 1.1),
-                            blurRadius: 10.0),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Request',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          letterSpacing: 0.0,
-                          color: AppTheme.white,
-                        ),
-                      ),
+                ProgressButton(
+                  defaultWidget: Text(
+                    'Request',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      letterSpacing: 0.0,
+                      color: AppTheme.white,
                     ),
                   ),
-                  onTap: () {},
-                ))
+                  progressWidget: CircularProgressIndicator(
+                      backgroundColor: AppTheme.white,
+                      valueColor: AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
+                  width: MediaQuery.of(context).size.width - 100,
+                  height: 48,
+                  color: AppTheme.secondaryBlue,
+                  borderRadius: 16,
+                  animate: true,
+                  type: ProgressButtonType.Raised,
+                  onPressed: () async {
+                    int score = await Future.delayed(
+                        const Duration(milliseconds: 2500), () => 42);
+                    // After [onPressed], it will trigger animation running backwards, from end to beginning
+                    return () {
+                      // Optional returns is returning a VoidCallback that will be called
+                      // after the animation is stopped at the beginning.
+                      // A best practice would be to do time-consuming task in [onPressed],
+                      // and do page navigation in the returned VoidCallback.
+                      // So that user won't missed out the reverse animation.
+
+                      slidingUpWidgetController.panelIndex =
+                          PanelIndex.WaitingToMatch; //pandelIndex.Matched
+                    };
+                  },
+                ),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
@@ -74,6 +75,17 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           slidingUpWidgetController: widget.controller,
         ));
         break;
+      case PanelIndex.WaitingToMatch:
+        setState(() {
+          _snapValue = null;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _backdropOpacity = 0;
+        });
+        _setCurrentPanel(WaitingToMatchPanel(
+          slidingUpWidgetController: widget.controller,
+        ));
+        break;
       default:
         throw UnimplementedError("Called panel not implemented");
     }
@@ -141,4 +153,5 @@ class SlidingUpWidgetController {
 enum PanelIndex {
   DestinationAndSearch,
   MakeRequest,
+  WaitingToMatch
 }
