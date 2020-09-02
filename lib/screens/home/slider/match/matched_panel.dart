@@ -44,19 +44,37 @@ class MatchedPanel extends StatelessWidget {
                       Text(
                         'Nick Miller',
                         style: TextStyle(
-                            color: AppTheme.darkerText,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.0
+                          color: AppTheme.darkerText,
+                          fontWeight: FontWeight.w700,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
+
                         ),
                       ),
-                      Text(
-                        '4.7 Stars',
-                          style: TextStyle(
+                      SizedBox(
+                        height: 5
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(
+                            Icons.star,
+                            color: AppTheme.goldenYellow,
+                            size: AppTheme.elementSize(
+                                screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
+                          ),
+                          Text(
+                            '4.7 stars',
+                            style: TextStyle(
                               color: AppTheme.lightGrey,
                               fontWeight: FontWeight.w500,
-                              fontSize: 16.0
-                          )
-                      ),
+                              fontSize: AppTheme.elementSize(
+                                  screenHeight, 14, 14, 15, 15, 16, 18, 21, 24),
+                            )
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
