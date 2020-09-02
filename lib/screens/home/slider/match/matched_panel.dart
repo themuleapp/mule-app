@@ -65,16 +65,7 @@ class MatchedPanel extends StatelessWidget {
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
                           Text(
-                            '4.7', //replace with rating
-                            style: TextStyle(
-                              color: AppTheme.lightGrey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: AppTheme.elementSize(
-                                  screenHeight, 14, 14, 15, 15, 16, 18, 21, 24),
-                            )
-                          ),
-                          Text(
-                            ' stars',
+                            '4.7 stars', //replace with rating
                             style: TextStyle(
                               color: AppTheme.lightGrey,
                               fontWeight: FontWeight.w500,
@@ -88,20 +79,43 @@ class MatchedPanel extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  color: AppTheme.lightGrey.withOpacity(0.1),
+              GestureDetector(
+                child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      color: AppTheme.lightGrey.withOpacity(0.1),
+                    ),
+                    child: Icon(
+                      Icons.chat,
+                      color: AppTheme.secondaryBlue,
+                      size: AppTheme.elementSize(
+                          screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                    )
                 ),
-                child: Icon(
-                  Icons.chat,
-                  color: AppTheme.secondaryBlue,
-                  size: AppTheme.elementSize(
-                      screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-                )
+                onTap: () {},
               ),
+              SizedBox(
+                width: 15
+              ),
+              GestureDetector(
+                child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      color: AppTheme.lightGrey.withOpacity(0.1),
+                    ),
+                    child: Icon(
+                      Icons.report_problem,
+                      color: AppTheme.secondaryBlue,
+                      size: AppTheme.elementSize(
+                          screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                    )
+                ),
+                onTap: () {},
+              )
             ],
           ),
         )
