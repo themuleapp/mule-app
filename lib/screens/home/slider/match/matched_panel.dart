@@ -65,7 +65,16 @@ class MatchedPanel extends StatelessWidget {
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
                           Text(
-                            '4.7 stars',
+                            '4.7', //replace with rating
+                            style: TextStyle(
+                              color: AppTheme.lightGrey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: AppTheme.elementSize(
+                                  screenHeight, 14, 14, 15, 15, 16, 18, 21, 24),
+                            )
+                          ),
+                          Text(
+                            ' stars',
                             style: TextStyle(
                               color: AppTheme.lightGrey,
                               fontWeight: FontWeight.w500,
