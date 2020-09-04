@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:fluster/fluster.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -38,7 +37,7 @@ class _MapWidgetState extends State<MapWidget> {
   bool _areMarkersLoading = true;
 
   Completer<GoogleMapController> _mapCompleter = Completer();
-  GoogleMapController googleMapController; 
+  GoogleMapController googleMapController;
   Fluster<MapMarker> _clusterManager;
 
   final double _defaultZoom = 15;
@@ -46,6 +45,7 @@ class _MapWidgetState extends State<MapWidget> {
   final Set<Polyline> _polylines = Set();
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
+  final double _routeViewPadding = 50.0;
 
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
@@ -89,8 +89,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   void setSourceAndDestinationIcons() async {
     sourceIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/source_pin.png');
+        ImageConfiguration(devicePixelRatio: 2.5), 'assets/source_pin.png');
     destinationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/destination_map_marker.png');
@@ -164,8 +163,10 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> _updateMarkers([double updatedZoom]) async {
-    if (_isFocusedOnRoute || _clusterManager == null || updatedZoom == _currentZoom) return;
-    
+    if (_isFocusedOnRoute ||
+        _clusterManager == null ||
+        updatedZoom == _currentZoom) return;
+
     if (updatedZoom != null) {
       _currentZoom = updatedZoom;
     }
@@ -200,7 +201,7 @@ class _MapWidgetState extends State<MapWidget> {
     destinationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
         'assets/images/destination_map_marker.png');
-      
+
     setState(() {
       _isFocusedOnRoute = true;
       _areMarkersLoading = true;
@@ -268,10 +269,10 @@ class _MapWidgetState extends State<MapWidget> {
     controller.moveCamera(
       CameraUpdate.newLatLngBounds(
         boundsFromLocationDataList([
-          GetIt.I.get<LocationStore>().destination.location, 
+          GetIt.I.get<LocationStore>().destination.location,
           GetIt.I.get<LocationStore>().place.location,
         ]),
-        50.0, // padding 
+        _routeViewPadding,
       ),
     );
   }
@@ -282,10 +283,10 @@ class _MapWidgetState extends State<MapWidget> {
     controller.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(
-          GetIt.I.get<LocationStore>().currentLocation.lat, 
+          GetIt.I.get<LocationStore>().currentLocation.lat,
           GetIt.I.get<LocationStore>().currentLocation.lng,
-        ), 
-      _defaultZoom,
+        ),
+        _defaultZoom,
       ),
     );
   }
@@ -293,17 +294,14 @@ class _MapWidgetState extends State<MapWidget> {
   _routeViewAdjust() async {
     GoogleMapController controller;
 
-    double pixelOffset = widget.slidingUpWidgetController.snapHeight / 2;
+    double pixelOffset =
+        widget.slidingUpWidgetController.snapHeight / 2 + _routeViewPadding;
 
     controller = await _mapCompleter.future;
-    controller.moveCamera(
-      CameraUpdate.zoomOut()
-    );
+    controller.moveCamera(CameraUpdate.zoomOut());
 
     controller = await _mapCompleter.future;
-    controller.animateCamera(
-      CameraUpdate.scrollBy(0, pixelOffset)
-    );
+    controller.moveCamera(CameraUpdate.scrollBy(0, pixelOffset));
   }
 
   LatLngBounds boundsFromLocationDataList(List<LocationData> list) {
