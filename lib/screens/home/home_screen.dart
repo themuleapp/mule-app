@@ -22,12 +22,17 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: SlidingUpWidget(
+            minHeight: screenHeight / 4,
+            maxHeight: screenHeight - 120,
             controller: SlidingUpWidgetController(),
           ),
         ),

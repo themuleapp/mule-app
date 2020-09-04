@@ -5,14 +5,19 @@ import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
+import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 class MakeRequestPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final MapController mapController;
   final double opacity = 1.0;
 
-  MakeRequestPanel({this.slidingUpWidgetController});
+  MakeRequestPanel({
+    this.slidingUpWidgetController, 
+    this.mapController,
+  });
 
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
@@ -21,6 +26,12 @@ class MakeRequestPanel extends StatelessWidget {
         await httpClient.getMulesAroundMeLocation(locationToCheckMulesAround);
     return mulesAroundRes.numMules;
   }
+
+  _onReturnToSearch() {
+    slidingUpWidgetController.panelIndex =
+        PanelIndex.DestinationAndSearch;
+    mapController.unfocusRoute();
+  }  
 
   @override
   build(BuildContext context) {
@@ -206,10 +217,8 @@ class MakeRequestPanel extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () {
-                      slidingUpWidgetController.panelIndex =
-                          PanelIndex.DestinationAndSearch;
-                    }),
+                    onTap:() => _onReturnToSearch(),
+                ),
                 const SizedBox(
                   width: 16,
                 ),

@@ -8,10 +8,14 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class SlidingUpWidget extends StatefulWidget {
   final SlidingUpWidgetController controller;
   final double radius;
+  final double minHeight;
+  final double maxHeight;
 
   SlidingUpWidget({
-    this.radius = 20.0,
     this.controller,
+    this.radius = 20.0,
+    this.minHeight,
+    this.maxHeight,
   });
 
   @override
@@ -20,6 +24,7 @@ class SlidingUpWidget extends StatefulWidget {
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   final PanelController _panelController = PanelController();
+  final MapController _mapController = MapController();
 
   // Animation
   double _snapValue;
@@ -62,6 +67,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(SearchPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       case PanelIndex.MakeRequest:
@@ -73,6 +79,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       case PanelIndex.WaitingToMatch:
@@ -105,7 +112,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    
     _slidingUpPanel = SlidingUpPanel(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(widget.radius),
@@ -115,15 +122,18 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       onPanelOpened: () => _updatePanel(),
       isDraggable: _isDraggable,
       backdropTapClosesPanel: _backdropTapClosesPanel,
-      minHeight: screenHeight / 4,
+      minHeight: widget.minHeight,
       snapPoint: _snapValue,
-      maxHeight: screenHeight - 120,
+      maxHeight: widget.maxHeight,
       controller: _panelController,
       backdropEnabled: true,
       backdropOpacity: _backdropOpacity,
       panelBuilder: (sc) => _panel(sc),
       body: Center(
-        child: MapWidget(),
+        child: MapWidget(
+          controller: _mapController,
+          slidingUpWidgetController: widget.controller,
+        ),
       ),
     );
     return _slidingUpPanel;
@@ -147,6 +157,22 @@ class SlidingUpWidgetController {
 
   PanelController get panelController {
     return _slidingUpWidgetState._panelController;
+  }
+
+  double get snapPoint {
+    return _slidingUpWidgetState._snapValue;
+  }
+
+  double get maxHeight {
+    return _slidingUpWidgetState.widget.maxHeight;
+  }
+
+  double get minHeight {
+    return _slidingUpWidgetState.widget.minHeight;
+  }
+
+  double get snapHeight {
+    return snapPoint * (minHeight + maxHeight);
   }
 }
 

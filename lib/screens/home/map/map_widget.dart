@@ -5,34 +5,50 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/ext_api_calls.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_helper.dart';
 import 'package:mule/screens/home/map/map_marker.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
 class MapWidget extends StatefulWidget {
+  final MapController controller;
+  final SlidingUpWidgetController slidingUpWidgetController;
+
+  MapWidget({this.controller, this.slidingUpWidgetController});
+
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  double _currentZoom = 15;
+  double _currentZoom = null;
+  bool _isFocusedOnRoute = false;
   bool _isMapLoading = true;
   bool _areMarkersLoading = true;
 
   Completer<GoogleMapController> _mapCompleter = Completer();
+  GoogleMapController googleMapController;
   Fluster<MapMarker> _clusterManager;
 
+  final double _defaultZoom = 15;
   final Set<Marker> _markers = Set();
+  final Set<Polyline> _polylines = Set();
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
+  final double _routeViewPadding = 50.0;
+
+  BitmapDescriptor sourceIcon;
+  BitmapDescriptor destinationIcon;
 
   final String _markerImageUrl =
       'https://img.icons8.com/office/80/000000/marker.png';
@@ -41,6 +57,7 @@ class _MapWidgetState extends State<MapWidget> {
   final Color _clusterTextColor = AppTheme.white;
 
   List<LatLng> _markerLocations;
+  PolylinePoints polylinePoints = PolylinePoints();
 
   @override
   void initState() {
@@ -48,6 +65,7 @@ class _MapWidgetState extends State<MapWidget> {
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       getCurrentLocation();
     }
+    widget.controller?._setState(this);
   }
 
   void getCurrentLocation() async {
@@ -67,6 +85,14 @@ class _MapWidgetState extends State<MapWidget> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void setSourceAndDestinationIcons() async {
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5), 'assets/source_pin.png');
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/destination_map_marker.png');
   }
 
   Future updateLocationOnServerAndGetMulesAround(Position position) async {
@@ -94,6 +120,9 @@ class _MapWidgetState extends State<MapWidget> {
 
   void _onMapCreated(GoogleMapController controller) async {
     _mapCompleter.complete(controller);
+    googleMapController = controller;
+    _currentZoom = _defaultZoom;
+
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       await getCurrentLocation();
     }
@@ -106,6 +135,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   void _initMarkers() async {
+    setState(() {
+      _isFocusedOnRoute = false;
+    });
     final List<MapMarker> markers = [];
 
     for (LatLng markerLocation in _markerLocations) {
@@ -131,7 +163,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<void> _updateMarkers([double updatedZoom]) async {
-    if (_clusterManager == null || updatedZoom == _currentZoom) return;
+    if (_isFocusedOnRoute ||
+        _clusterManager == null ||
+        updatedZoom == _currentZoom) return;
 
     if (updatedZoom != null) {
       _currentZoom = updatedZoom;
@@ -158,6 +192,136 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+  _setRouteMarkers() async {
+    _markers.clear();
+
+    sourceIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/source_pin.png');
+    destinationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/destination_map_marker.png');
+
+    setState(() {
+      _isFocusedOnRoute = true;
+      _areMarkersLoading = true;
+    });
+
+    // source pin
+    _markers.add(Marker(
+        markerId: MarkerId('sourcePin'),
+        position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
+            GetIt.I.get<LocationStore>().place.location.lng),
+        icon: sourceIcon));
+    // destination pin
+    _markers.add(Marker(
+        markerId: MarkerId('destPin'),
+        position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
+            GetIt.I.get<LocationStore>().destination.location.lng),
+        icon: destinationIcon));
+
+    setState(() {
+      _areMarkersLoading = false;
+    });
+  }
+
+  _showPolyLines() async {
+    List<LatLng> polylineCoordinates = [];
+
+    List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
+        ExternalApi.googleApiKey,
+        GetIt.I.get<LocationStore>().place.location.lat,
+        GetIt.I.get<LocationStore>().place.location.lng,
+        GetIt.I.get<LocationStore>().destination.location.lat,
+        GetIt.I.get<LocationStore>().destination.location.lng);
+    if (result.isNotEmpty) {
+      // loop through all PointLatLng points and convert them
+      // to a list of LatLng, required by the Polyline
+      result.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    setState(() {
+      // create a Polyline instance
+      // with an id, an RGB color and the list of LatLng pairs
+      Polyline polyline = Polyline(
+          polylineId: PolylineId("poly"),
+          color: AppTheme.lightBlue,
+          points: polylineCoordinates,
+          width: 4);
+      // add the constructed polyline as a set of points
+      // to the polyline set, which will eventually
+      // end up showing up on the map
+      _polylines.add(polyline);
+    });
+  }
+
+  _removePolyLines() {
+    setState(() {
+      _polylines.clear();
+    });
+  }
+
+  _setRouteView() async {
+    GoogleMapController controller = await _mapCompleter.future;
+
+    controller.moveCamera(
+      CameraUpdate.newLatLngBounds(
+        boundsFromLocationDataList([
+          GetIt.I.get<LocationStore>().destination.location,
+          GetIt.I.get<LocationStore>().place.location,
+        ]),
+        _routeViewPadding,
+      ),
+    );
+  }
+
+  _setDefaultView() async {
+    GoogleMapController controller = await _mapCompleter.future;
+
+    controller.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(
+          GetIt.I.get<LocationStore>().currentLocation.lat,
+          GetIt.I.get<LocationStore>().currentLocation.lng,
+        ),
+        _defaultZoom,
+      ),
+    );
+  }
+
+  _routeViewAdjust() async {
+    GoogleMapController controller;
+
+    double pixelOffset =
+        widget.slidingUpWidgetController.snapHeight / 2 + _routeViewPadding;
+
+    controller = await _mapCompleter.future;
+    controller.moveCamera(CameraUpdate.zoomOut());
+
+    controller = await _mapCompleter.future;
+    controller.moveCamera(CameraUpdate.scrollBy(0, pixelOffset));
+  }
+
+  LatLngBounds boundsFromLocationDataList(List<LocationData> list) {
+    assert(list.isNotEmpty);
+    double x0, x1, y0, y1;
+
+    for (LocationData latLng in list) {
+      if (x0 == null) {
+        x0 = x1 = latLng.lat;
+        y0 = y1 = latLng.lng;
+      } else {
+        if (latLng.lat > x1) x1 = latLng.lat;
+        if (latLng.lat < x0) x0 = latLng.lat;
+        if (latLng.lng > y1) y1 = latLng.lng;
+        if (latLng.lng < y0) y0 = latLng.lng;
+      }
+    }
+    return LatLngBounds(northeast: LatLng(x1, y1), southwest: LatLng(x0, y0));
+  }
+
   getMap() {
     return Scaffold(
       body: Stack(
@@ -172,6 +336,7 @@ class _MapWidgetState extends State<MapWidget> {
                 zoomGesturesEnabled: true,
                 myLocationEnabled: true,
                 markers: _markers,
+                polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
                 onCameraMove: (position) => _updateMarkers(position.zoom),
                 gestureRecognizers: Set()
@@ -190,7 +355,7 @@ class _MapWidgetState extends State<MapWidget> {
                     GetIt.I.get<LocationStore>().currentLocation.lat,
                     GetIt.I.get<LocationStore>().currentLocation.lng,
                   ),
-                  zoom: 15.0,
+                  zoom: _defaultZoom,
                 ),
               ),
             ),
@@ -234,5 +399,26 @@ class _MapWidgetState extends State<MapWidget> {
         return getMap();
       },
     );
+  }
+}
+
+class MapController {
+  _MapWidgetState _mapWidgetState;
+
+  _setState(_MapWidgetState _mapWidgetState) {
+    this._mapWidgetState = _mapWidgetState;
+  }
+
+  focusOnRoute() async {
+    _mapWidgetState._setRouteMarkers();
+    _mapWidgetState._showPolyLines();
+    _mapWidgetState._setRouteView();
+    _mapWidgetState._routeViewAdjust();
+  }
+
+  unfocusRoute() {
+    _mapWidgetState._initMarkers();
+    _mapWidgetState._removePolyLines();
+    _mapWidgetState._setDefaultView();
   }
 }
