@@ -136,6 +136,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
                 maxLines: null,
+                textCapitalization: TextCapitalization.sentences,
+                enableSuggestions: true,
                 onChanged: (String txt) {},
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
