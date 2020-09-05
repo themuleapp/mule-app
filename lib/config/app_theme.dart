@@ -9,6 +9,7 @@ class AppTheme {
   static final Color black = Color(0xFF000000);
 
   static final Color lightSkyBlue = Color(0xFFEDFCFF);
+  static final Color goldenYellow = Color (0xFFFFDF00);
 
   //static final Color lightBlue = Color(0xFF82EDFF);
   static final Color lightBlue = Color(0xFF6CD1E7);
