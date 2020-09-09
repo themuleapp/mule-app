@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage>
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: SlidingUpWidget(
-            minHeight: screenHeight / 4,
+            minHeight: screenHeight / 5,
             maxHeight: screenHeight - 120,
             controller: SlidingUpWidgetController(),
           ),
