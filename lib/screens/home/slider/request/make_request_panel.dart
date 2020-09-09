@@ -254,8 +254,8 @@ class MakeRequestPanel extends StatelessWidget {
                       // So that user won't missed out the reverse animation.
 
                       slidingUpWidgetController.panelIndex =
-                          PanelIndex.WaitingToMatch;
-                          //PanelIndex.Matched;
+                          //PanelIndex.WaitingToMatch;
+                          PanelIndex.Matched;
                     };
                   },
                 ),

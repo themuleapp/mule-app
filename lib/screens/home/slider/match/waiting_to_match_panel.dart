@@ -45,11 +45,13 @@ class WaitingToMatchPanel extends StatelessWidget {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
              child:  Padding(
                padding:
-               const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+               const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 8),
                child: Text(
                  "Hang tight! We will notify you as soon as "
                      "someone accepts your request",
