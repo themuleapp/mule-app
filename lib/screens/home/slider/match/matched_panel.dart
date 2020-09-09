@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/location/location_store.dart';
+import 'package:get_it/get_it.dart';
 
 class MatchedPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final MapController mapController;
   final double opacity = 1.0;
 
-  MatchedPanel({this.slidingUpWidgetController});
-
+  MatchedPanel({this.slidingUpWidgetController, this.mapController});
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,12 +52,9 @@ class MatchedPanel extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           fontSize: AppTheme.elementSize(
                               screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
-
                         ),
                       ),
-                      SizedBox(
-                        height: 5
-                      ),
+                      SizedBox(height: 5),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -64,15 +65,13 @@ class MatchedPanel extends StatelessWidget {
                             size: AppTheme.elementSize(
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
-                          Text(
-                            '4.7 stars', //replace with rating
-                            style: TextStyle(
-                              color: AppTheme.lightGrey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: AppTheme.elementSize(
-                                  screenHeight, 14, 14, 15, 15, 16, 18, 21, 24),
-                            )
-                          ),
+                          Text('4.7 stars', //replace with rating
+                              style: TextStyle(
+                                color: AppTheme.lightGrey,
+                                fontWeight: FontWeight.w500,
+                                fontSize: AppTheme.elementSize(screenHeight, 14,
+                                    14, 15, 15, 16, 18, 21, 24),
+                              )),
                         ],
                       )
                     ],
@@ -92,13 +91,11 @@ class MatchedPanel extends StatelessWidget {
                       color: AppTheme.secondaryBlue,
                       size: AppTheme.elementSize(
                           screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-                    )
-                ),
-                onTap: () {},
+                    )),
+                onTap: () => mapController.focusDelivery(
+                    GetIt.I.get<LocationStore>().currentLocation),
               ),
-              SizedBox(
-                width: 15
-              ),
+              SizedBox(width: 15),
               GestureDetector(
                 child: Container(
                     height: 50,
@@ -112,8 +109,7 @@ class MatchedPanel extends StatelessWidget {
                       color: AppTheme.secondaryBlue,
                       size: AppTheme.elementSize(
                           screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-                    )
-                ),
+                    )),
                 onTap: () {},
               )
             ],

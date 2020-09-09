@@ -192,7 +192,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _setRouteMarkers() async {
+  void _setRouteMarkers() async {
     _markers.clear();
 
     sourceIcon = await BitmapDescriptor.fromAssetImage(
@@ -225,15 +225,21 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _showPolyLines() async {
+  void _showPolyLines({List<LocationData> focusPair = const []}) async {
     List<LatLng> polylineCoordinates = [];
 
+    if (focusPair.isEmpty) {
+      focusPair = [
+        GetIt.I.get<LocationStore>().destination.location,
+        GetIt.I.get<LocationStore>().place.location,
+      ];
+    }
     List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey,
-        GetIt.I.get<LocationStore>().place.location.lat,
-        GetIt.I.get<LocationStore>().place.location.lng,
-        GetIt.I.get<LocationStore>().destination.location.lat,
-        GetIt.I.get<LocationStore>().destination.location.lng);
+        focusPair[0].lat,
+        focusPair[0].lng,
+        focusPair[1].lat,
+        focusPair[1].lng);
     if (result.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
@@ -257,27 +263,30 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _removePolyLines() {
+  void _removePolyLines() {
     setState(() {
       _polylines.clear();
     });
   }
 
-  _setRouteView() async {
+  void _setViewFocus({List<LocationData> focusList = const []}) async {
     GoogleMapController controller = await _mapCompleter.future;
 
+    if (focusList.isEmpty) {
+      focusList.addAll([
+        GetIt.I.get<LocationStore>().destination.location,
+        GetIt.I.get<LocationStore>().place.location,
+      ]);
+    }
     controller.moveCamera(
       CameraUpdate.newLatLngBounds(
-        boundsFromLocationDataList([
-          GetIt.I.get<LocationStore>().destination.location,
-          GetIt.I.get<LocationStore>().place.location,
-        ]),
+        boundsFromLocationDataList(focusList),
         _routeViewPadding,
       ),
     );
   }
 
-  _setDefaultView() async {
+  void _setDefaultView() async {
     GoogleMapController controller = await _mapCompleter.future;
 
     controller.animateCamera(
@@ -291,7 +300,8 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 
-  _routeViewAdjust() async {
+  // Adjust view to fit to the visible portion of the map
+  void _viewAdjust() async {
     GoogleMapController controller;
 
     double pixelOffset =
@@ -412,11 +422,28 @@ class MapController {
   focusOnRoute() async {
     _mapWidgetState._setRouteMarkers();
     _mapWidgetState._showPolyLines();
-    _mapWidgetState._setRouteView();
-    _mapWidgetState._routeViewAdjust();
+    _mapWidgetState._setViewFocus();
+    _mapWidgetState._viewAdjust();
   }
 
-  unfocusRoute() {
+  focusDelivery(LocationData muleLocation) {
+    print("Focusing on delivery!");
+    resetView(); //TODO should this be here, or in the calling class?
+    _mapWidgetState._setRouteMarkers();
+
+    _mapWidgetState._showPolyLines(focusPair: [
+      muleLocation,
+      GetIt.I.get<LocationStore>().destination.location,
+    ]);
+    _mapWidgetState._setViewFocus(focusList: [
+      muleLocation,
+      GetIt.I.get<LocationStore>().place.location,
+      GetIt.I.get<LocationStore>().destination.location,
+    ]);
+    _mapWidgetState._viewAdjust();
+  }
+
+  resetView() {
     _mapWidgetState._initMarkers();
     _mapWidgetState._removePolyLines();
     _mapWidgetState._setDefaultView();

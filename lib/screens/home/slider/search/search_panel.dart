@@ -9,7 +9,6 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SearchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -188,7 +187,6 @@ class _SearchPanelState extends State<SearchPanel> {
   @override
   void initState() {
     _destinationFocusNode.addListener(() => _handleFocus());
-
     super.initState();
   }
 }

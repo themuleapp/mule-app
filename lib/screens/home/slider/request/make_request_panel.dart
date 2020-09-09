@@ -15,7 +15,7 @@ class MakeRequestPanel extends StatelessWidget {
   final double opacity = 1.0;
 
   MakeRequestPanel({
-    this.slidingUpWidgetController, 
+    this.slidingUpWidgetController,
     this.mapController,
   });
 
@@ -28,10 +28,9 @@ class MakeRequestPanel extends StatelessWidget {
   }
 
   _onReturnToSearch() {
-    slidingUpWidgetController.panelIndex =
-        PanelIndex.DestinationAndSearch;
-    mapController.unfocusRoute();
-  }  
+    slidingUpWidgetController.panelIndex = PanelIndex.DestinationAndSearch;
+    mapController.resetView();
+  }
 
   @override
   build(BuildContext context) {
@@ -197,26 +196,26 @@ class MakeRequestPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
+                  child: Container(
+                    width: 48,
+                    height: 48,
                     child: Container(
-                      width: 48,
-                      height: 48,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                          border: Border.all(
-                              color: AppTheme.lightGrey.withOpacity(0.2)),
+                      decoration: BoxDecoration(
+                        color: AppTheme.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16.0),
                         ),
-                        child: Icon(
-                          Icons.close,
-                          color: AppTheme.lightGrey.withOpacity(0.5),
-                          size: 28,
-                        ),
+                        border: Border.all(
+                            color: AppTheme.lightGrey.withOpacity(0.2)),
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        color: AppTheme.lightGrey.withOpacity(0.5),
+                        size: 28,
                       ),
                     ),
-                    onTap:() => _onReturnToSearch(),
+                  ),
+                  onTap: () => _onReturnToSearch(),
                 ),
                 const SizedBox(
                   width: 16,
@@ -254,8 +253,8 @@ class MakeRequestPanel extends StatelessWidget {
                       // So that user won't missed out the reverse animation.
 
                       slidingUpWidgetController.panelIndex =
-                          PanelIndex.WaitingToMatch;
-                          //PanelIndex.Matched;
+                          // PanelIndex.WaitingToMatch;
+                          PanelIndex.Matched;
                     };
                   },
                 ),

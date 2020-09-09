@@ -104,6 +104,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(MatchedPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       default:
@@ -125,7 +126,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    
     _slidingUpPanel = SlidingUpPanel(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(widget.radius),
@@ -189,9 +189,4 @@ class SlidingUpWidgetController {
   }
 }
 
-enum PanelIndex {
-  DestinationAndSearch,
-  MakeRequest,
-  WaitingToMatch,
-  Matched
-}
+enum PanelIndex { DestinationAndSearch, MakeRequest, WaitingToMatch, Matched }
