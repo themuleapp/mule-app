@@ -40,6 +40,10 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     emailController.clear();
   }
 
+  void _clearPhone() {
+    phoneNumberController.clear();
+  }
+
   void _handleSubmit() async {
     if (!_formKey.currentState.validate()) {
       return;
@@ -75,7 +79,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);
-      _clearEmail();
+      if (errorMessages.contains('phone')) {
+        _clearPhone();
+      } else if (errorMessages.contains('email')) {
+        _clearEmail();
+      }
     }
   }
 
@@ -161,10 +169,10 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                   child: Text(
                     "SIGN UP",
                     style: TextStyle(
-                        color: AppTheme.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: AppTheme.elementSize(
-                            screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
+                      color: AppTheme.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
                     ),
                   ),
                 ),
