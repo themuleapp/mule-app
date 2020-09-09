@@ -15,8 +15,24 @@ class MatchedPanel extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 500),
+          opacity: opacity,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
+            child: Text(
+              'En Route',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 22,
+                color: AppTheme.darkerText,
+              ),
+            ),
+          ),
+        ),
         Padding(
-          padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
