@@ -19,7 +19,7 @@ class RequestedFromMeRes {
   });
 
   RequestedFromMeRes.fromJson(Map<String, dynamic> jsonData)
-      : this.id = jsonData['id'],
+      : this.id = jsonData['_id'],
         this.place = jsonData['place'],
         this.destination = jsonData['destination'],
         this.requestedItem = jsonData['requestedItem'],

@@ -23,7 +23,7 @@ createConfirmDialogue(context, actionType) async {
             onPressed: () {
               // Dismiss the dialog but don't
               // dismiss the swiped item
-              print('reject');
+              print('Decline');
               Navigator.pop(context, false);
             },
           ),

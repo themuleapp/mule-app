@@ -205,6 +205,26 @@ class HttpClient {
         .map<RequestedFromMeRes>((item) => RequestedFromMeRes.fromJson(item))
         .toList();
   }
+
+  Future<bool> acceptRequestMadeToMe(String requestId) async {
+    print('HERHERERERERER');
+    print({'requestId': requestId});
+    Response res = await _makeAuthenticatedPostRequest(
+        '/request/accept-request', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> declineRequestMadeToMe(String requestId) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/request/decline-request', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
 }
 
 HttpClient httpClient = new HttpClient();

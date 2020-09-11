@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
+import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 
 class RequestsScreen extends StatefulWidget {
   static final String ACCEPT = 'accept';
-  static final String REJECT = 'reject';
+  static final String DECLINE = 'decline';
 
   @override
   _RequestsScreenState createState() => _RequestsScreenState();
@@ -33,7 +34,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
       itemBuilder: (context, index) {
         return Dismissible(
           key: Key(requestedFromMe[index].id),
-          onDismissed: (direction) => _handleDismissed(direction),
+          onDismissed: (direction) => _handleDismissed(direction, index),
           confirmDismiss: (direction) =>
               _confirmDismiss(context, direction, index),
           child: InkWell(
@@ -53,7 +54,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     if (direction == DismissDirection.startToEnd) {
       return RequestsScreen.ACCEPT;
     } else {
-      return RequestsScreen.REJECT;
+      return RequestsScreen.DECLINE;
     }
   }
 
@@ -62,15 +63,25 @@ class _RequestsScreenState extends State<RequestsScreen> {
     return await createConfirmDialogue(context, action) ?? false;
   }
 
-  _handleDismissed(direction) {
+  _handleDismissed(direction, index) async {
     print('Herererer');
     String action = _getActionDependingOnDirection(direction);
+    bool success;
     if (action == RequestsScreen.ACCEPT) {
       // Send api request
       // Remove from local list
+      print(requestedFromMe[index].id);
+      success =
+          await httpClient.acceptRequestMadeToMe(requestedFromMe[index].id);
     } else {
       // Send api request
       // Remove from local list
+      success =
+          await httpClient.declineRequestMadeToMe(requestedFromMe[index].id);
+    }
+    if (!success) {
+      createDialogWidget(context, 'There was a problem!',
+          'We couldn\'t complete your request please try again later!');
     }
   }
 
