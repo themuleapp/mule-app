@@ -11,6 +11,7 @@ import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
+import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
 
 class HttpClient {
   Dio _dio;
@@ -191,6 +192,18 @@ class HttpClient {
         }));
     print(res.data);
     return res.statusCode == 200 ? true : false;
+  }
+
+  Future<List<RequestedFromMeRes>> getRequestedFromMeNotYetAccepted() async {
+    Response res = await _makeAuthenticatedGetRequest(
+        '/request/requests-not-yet-accepted-by-me');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data;
+    return resData
+        .map<RequestedFromMeRes>((item) => RequestedFromMeRes.fromJson(item))
+        .toList();
   }
 }
 

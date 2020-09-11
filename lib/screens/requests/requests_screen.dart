@@ -1,17 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 
-class RequestsScreen extends StatelessWidget {
-  final itemsList = List<String>.generate(10, (n) => "Request number ${n}");
+class RequestsScreen extends StatefulWidget {
   static final String ACCEPT = 'accept';
   static final String REJECT = 'reject';
 
+  @override
+  _RequestsScreenState createState() => _RequestsScreenState();
+}
+
+class _RequestsScreenState extends State<RequestsScreen> {
+  List<RequestedFromMeRes> requestedFromMe = [];
+
+  @override
+  initState() {
+    super.initState();
+    httpClient.getRequestedFromMeNotYetAccepted().then((res) => {
+          setState(() {
+            requestedFromMe.addAll(res);
+          })
+        });
+  }
+
+  ListView generateItemsList() {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: requestedFromMe.length,
+      itemBuilder: (context, index) {
+        return Dismissible(
+          key: Key(requestedFromMe[index].id),
+          onDismissed: (direction) => _handleDismissed(direction),
+          confirmDismiss: (direction) =>
+              _confirmDismiss(context, direction, index),
+          child: InkWell(
+              onTap: () {
+                print("${requestedFromMe[index].requestedItem} clicked");
+              },
+              child: ListTile(
+                  title: Text('${requestedFromMe[index].requestedItem}'))),
+          background: slideRightBackground(),
+          secondaryBackground: slideLeftBackground(),
+        );
+      },
+    );
+  }
+
   String _getActionDependingOnDirection(direction) {
     if (direction == DismissDirection.startToEnd) {
-      return ACCEPT;
+      return RequestsScreen.ACCEPT;
     } else {
-      return REJECT;
+      return RequestsScreen.REJECT;
     }
   }
 
@@ -23,36 +65,13 @@ class RequestsScreen extends StatelessWidget {
   _handleDismissed(direction) {
     print('Herererer');
     String action = _getActionDependingOnDirection(direction);
-    if (action == ACCEPT) {
+    if (action == RequestsScreen.ACCEPT) {
       // Send api request
       // Remove from local list
     } else {
       // Send api request
       // Remove from local list
     }
-  }
-
-  ListView generateItemsList() {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: itemsList.length,
-      itemBuilder: (context, index) {
-        return Dismissible(
-          key: Key(itemsList[index]),
-          onDismissed: (direction) => _handleDismissed(direction),
-          confirmDismiss: (direction) =>
-              _confirmDismiss(context, direction, index),
-          child: InkWell(
-              onTap: () {
-                print("${itemsList[index]} clicked");
-              },
-              child: ListTile(title: Text('${itemsList[index]}'))),
-          background: slideRightBackground(),
-          secondaryBackground: slideLeftBackground(),
-        );
-      },
-    );
   }
 
   Widget slideRightBackground() {
