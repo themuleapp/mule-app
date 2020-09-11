@@ -4,34 +4,42 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 
 class WaitingToMatchPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final double loadingBarHeight;
   final double opacity = 1.0;
 
-  WaitingToMatchPanel({this.slidingUpWidgetController});
+  WaitingToMatchPanel(
+      {this.slidingUpWidgetController, this.loadingBarHeight = 10.0});
 
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final double loadingBar = slidingUpWidgetController.radius * 2;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Center(
-            child: Container(
-          height: 5,
-          margin: EdgeInsets.only(top: 5),
-          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              child: LinearProgressIndicator(
-                backgroundColor: AppTheme.secondaryBlue,
-                valueColor: AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
-              )),
-        )),
+          child: Container(
+            height: loadingBar,
+            child: ClipRect(
+              clipper: ClipHeightQuarter(height: loadingBarHeight),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(loadingBar / 2)),
+                child: LinearProgressIndicator(
+                  minHeight: loadingBarHeight,
+                  backgroundColor: AppTheme.secondaryBlue,
+                  valueColor: AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
+                ),
+              ),
+            ),
+          ),
+        ),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: opacity,
           child: Padding(
-            padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             child: Text(
               'Your request has been sent!',
               textAlign: TextAlign.left,
@@ -67,5 +75,22 @@ class WaitingToMatchPanel extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+class ClipHeightQuarter extends CustomClipper<Rect> {
+  double height;
+
+  ClipHeightQuarter({this.height});
+
+  @override
+  Rect getClip(Size size) {
+    Rect rect = Rect.fromLTRB(0.0, -size.height, size.width, this.height);
+    return rect;
+  }
+
+  @override
+  bool shouldReclip(ClipHeightQuarter oldClipper) {
+    return true;
   }
 }

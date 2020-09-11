@@ -125,7 +125,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    
     _slidingUpPanel = SlidingUpPanel(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(widget.radius),
@@ -187,11 +186,10 @@ class SlidingUpWidgetController {
   double get snapHeight {
     return snapPoint * (minHeight + maxHeight);
   }
+
+  double get radius {
+    return _slidingUpWidgetState.widget.radius;
+  }
 }
 
-enum PanelIndex {
-  DestinationAndSearch,
-  MakeRequest,
-  WaitingToMatch,
-  Matched
-}
+enum PanelIndex { DestinationAndSearch, MakeRequest, WaitingToMatch, Matched }
