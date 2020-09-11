@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/widgets/confirm_dialogue.dart';
 
 class RequestsScreen extends StatelessWidget {
   final itemsList = List<String>.generate(10, (n) => "Request number ${n}");
+  static final String ACCEPT = 'accept';
+  static final String REJECT = 'reject';
+
+  String _getActionDependingOnDirection(direction) {
+    if (direction == DismissDirection.startToEnd) {
+      return ACCEPT;
+    } else {
+      return REJECT;
+    }
+  }
+
+  Future<bool> _confirmDismiss(context, direction, index) async {
+    String action = _getActionDependingOnDirection(direction);
+    return await createConfirmDialogue(context, action) ?? false;
+  }
+
+  _handleDismissed(direction) {
+    print('Herererer');
+    String action = _getActionDependingOnDirection(direction);
+    if (action == ACCEPT) {
+      // Send api request
+      // Remove from local list
+    } else {
+      // Send api request
+      // Remove from local list
+    }
+  }
 
   ListView generateItemsList() {
     return ListView.builder(
@@ -12,6 +40,9 @@ class RequestsScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return Dismissible(
           key: Key(itemsList[index]),
+          onDismissed: (direction) => _handleDismissed(direction),
+          confirmDismiss: (direction) =>
+              _confirmDismiss(context, direction, index),
           child: InkWell(
               onTap: () {
                 print("${itemsList[index]} clicked");
@@ -89,7 +120,6 @@ class RequestsScreen extends StatelessWidget {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
