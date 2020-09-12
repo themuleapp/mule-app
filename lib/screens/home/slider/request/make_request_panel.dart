@@ -4,10 +4,13 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/data/suggestion.dart';
+import 'package:mule/models/req/placeRequest/place_request_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
 
 class MakeRequestPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -15,7 +18,7 @@ class MakeRequestPanel extends StatelessWidget {
   final double opacity = 1.0;
 
   MakeRequestPanel({
-    this.slidingUpWidgetController, 
+    this.slidingUpWidgetController,
     this.mapController,
   });
 
@@ -28,10 +31,9 @@ class MakeRequestPanel extends StatelessWidget {
   }
 
   _onReturnToSearch() {
-    slidingUpWidgetController.panelIndex =
-        PanelIndex.DestinationAndSearch;
+    slidingUpWidgetController.panelIndex = PanelIndex.DestinationAndSearch;
     mapController.unfocusRoute();
-  }  
+  }
 
   @override
   build(BuildContext context) {
@@ -197,26 +199,26 @@ class MakeRequestPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
+                  child: Container(
+                    width: 48,
+                    height: 48,
                     child: Container(
-                      width: 48,
-                      height: 48,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(16.0),
-                          ),
-                          border: Border.all(
-                              color: AppTheme.lightGrey.withOpacity(0.2)),
+                      decoration: BoxDecoration(
+                        color: AppTheme.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16.0),
                         ),
-                        child: Icon(
-                          Icons.close,
-                          color: AppTheme.lightGrey.withOpacity(0.5),
-                          size: 28,
-                        ),
+                        border: Border.all(
+                            color: AppTheme.lightGrey.withOpacity(0.2)),
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        color: AppTheme.lightGrey.withOpacity(0.5),
+                        size: 28,
                       ),
                     ),
-                    onTap:() => _onReturnToSearch(),
+                  ),
+                  onTap: () => _onReturnToSearch(),
                 ),
                 const SizedBox(
                   width: 16,
@@ -246,16 +248,38 @@ class MakeRequestPanel extends StatelessWidget {
                     int score = await Future.delayed(
                         const Duration(milliseconds: 2500), () => 42);
                     // After [onPressed], it will trigger animation running backwards, from end to beginning
-                    return () {
+                    LocationData currentLocation =
+                        GetIt.I.get<LocationStore>().currentLocation;
+                    PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
+                    DestinationSuggestion destination =
+                        GetIt.I.get<LocationStore>().destination;
+
+                    PlaceRequestData placeRequestData = PlaceRequestData(
+                      currentLocation.lat,
+                      currentLocation.lng,
+                      place.description,
+                      destination.description,
+                      'Coffee',
+                    );
+                    bool success =
+                        await httpClient.placeRequest(placeRequestData);
+                    if (!success) {
+                      createDialogWidget(
+                        context,
+                        'There was a problem',
+                        'Please try again later!',
+                      );
+                    }
+                    return () async {
                       // Optional returns is returning a VoidCallback that will be called
                       // after the animation is stopped at the beginning.
                       // A best practice would be to do time-consuming task in [onPressed],
                       // and do page navigation in the returned VoidCallback.
                       // So that user won't missed out the reverse animation.
-
-                      slidingUpWidgetController.panelIndex =
-                          PanelIndex.WaitingToMatch;
-                          //PanelIndex.Matched;
+                      if (success) {
+                        slidingUpWidgetController.panelIndex =
+                            PanelIndex.WaitingToMatch;
+                      }
                     };
                   },
                 ),
