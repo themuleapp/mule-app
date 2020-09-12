@@ -70,7 +70,8 @@ class _OrdersScreenState extends State<OrdersScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              padding: EdgeInsets.only(
+                  top: 20.0, left: 20, right: 20, bottom: 30),
               child: Text(
                 "Orders",
                 style: TextStyle(
@@ -81,10 +82,6 @@ class _OrdersScreenState extends State<OrdersScreen>
                       screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                 ),
               ),
-            ),
-            SizedBox(
-              height: AppTheme.elementSize(
-                  screenHeight, 10, 10, 12, 12, 14, 20, 20, 22),
             ),
             requestTypeTabs(screenHeight),
           ],
