@@ -19,6 +19,7 @@ class AppTheme {
   static final Color facebookBlue = Color(0xFF3B5998);
   static final Color menuBlue = Color(0xFF292E39);
 
+  static final Color lightestGrey = Color(0xFFACB3BF);
   static final Color lightGrey = Color(0xFF808080);
   static final Color darkGrey = Color(0xFF404040);
   static final Color darkestGrey = Color(0xFF262626);
