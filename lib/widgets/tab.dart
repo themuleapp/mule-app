@@ -8,7 +8,7 @@ Widget tab(tabTitle, screenHeight) {
       tabTitle,
       style: TextStyle(
         fontFamily: AppTheme.fontName,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: AppTheme.elementSize(screenHeight,
             14, 15, 16, 17, 18, 20, 24, 28),
       ),
