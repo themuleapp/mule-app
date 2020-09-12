@@ -13,17 +13,21 @@ class RequestsScreen extends StatefulWidget {
   _RequestsScreenState createState() => _RequestsScreenState();
 }
 
-class _RequestsScreenState extends State<RequestsScreen> {
+class _RequestsScreenState extends State<RequestsScreen>
+    with TickerProviderStateMixin {
+
   List<RequestedFromMeRes> requestedFromMe = [];
+  TabController _tabController;
 
   @override
   initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
     httpClient.getRequestedFromMeNotYetAccepted().then((res) => {
-          setState(() {
-            requestedFromMe.addAll(res);
-          })
-        });
+      setState(() {
+        requestedFromMe.addAll(res);
+      })
+    });
   }
 
   ListView generateItemsList() {
@@ -42,7 +46,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 print("${requestedFromMe[index].requestedItem} clicked");
               },
               child: ListTile(
-                  title: Text('${requestedFromMe[index].requestedItem}'))),
+                  title: Text('${requestedFromMe[index].requestedItem}')
+              )
+          ),
           background: slideRightBackground(),
           secondaryBackground: slideLeftBackground(),
         );
@@ -64,7 +70,6 @@ class _RequestsScreenState extends State<RequestsScreen> {
   }
 
   _handleDismissed(direction, index) async {
-    print('Herererer');
     String action = _getActionDependingOnDirection(direction);
     bool success;
     if (action == RequestsScreen.ACCEPT) {
@@ -81,7 +86,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
-          'We couldn\'t complete your request please try again later!');
+          'We couldn\'t complete your request, please try again!');
     }
   }
 
@@ -151,6 +156,78 @@ class _RequestsScreenState extends State<RequestsScreen> {
     );
   }
 
+  Widget requestTypeTabs(screenHeight) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget> [
+        TabBar(
+          tabs: [
+            Container(
+              height: 30,
+              child: Text(
+                'Available',
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: AppTheme.elementSize(screenHeight,
+                      14, 15, 16, 17, 18, 20, 24, 28),
+                ),
+              ),
+            ),
+            Container(
+              height: 30,
+              child: Text(
+                'Dismissed',
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: AppTheme.elementSize(screenHeight,
+                      14, 15, 16, 17, 18, 20, 24, 28),
+                ),
+              ),
+            ),
+            Container(
+              height: 30,
+              child: Text(
+                'Ongoing',
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: AppTheme.elementSize(screenHeight,
+                      14, 15, 16, 17, 18, 20, 24, 28),
+                ),
+              ),
+            )
+          ],
+          unselectedLabelColor: AppTheme.lightestGrey,
+          indicatorColor: AppTheme.secondaryBlue,
+          labelColor: AppTheme.black,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorWeight: 3.0,
+          isScrollable: false,
+          controller: _tabController,
+        ),
+        Container(
+          height: 100,
+          child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                Container(
+                    child: generateItemsList()
+                ),
+                Container(
+                  child: Text("Dismissed"),
+                ),
+                Container(
+                  child: Text("Ongoing"),
+                )
+              ]
+          ),
+        )
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -163,12 +240,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              child: Text(
                 "Requests",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
@@ -178,13 +255,13 @@ class _RequestsScreenState extends State<RequestsScreen> {
                       screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
                 ),
               ),
-              SizedBox(
-                height: AppTheme.elementSize(
-                    screenHeight, 10, 10, 12, 12, 14, 20, 20, 22),
-              ),
-              generateItemsList()
-            ],
-          ),
+            ),
+            SizedBox(
+              height: AppTheme.elementSize(
+                  screenHeight, 10, 10, 12, 12, 14, 20, 20, 22),
+            ),
+            requestTypeTabs(screenHeight),
+          ],
         ),
       ),
     );
