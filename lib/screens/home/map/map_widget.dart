@@ -50,7 +50,7 @@ class _MapWidgetState extends State<MapWidget> {
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
 
-  final String _markerImageUrl =
+  final String _muleMarkerImageUrl =
       'https://img.icons8.com/office/80/000000/marker.png';
 
   final Color _clusterColor = AppTheme.lightBlue;
@@ -85,14 +85,6 @@ class _MapWidgetState extends State<MapWidget> {
     } catch (e) {
       print(e);
     }
-  }
-
-  void setSourceAndDestinationIcons() async {
-    sourceIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'assets/source_pin.png');
-    destinationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/destination_map_marker.png');
   }
 
   Future updateLocationOnServerAndGetMulesAround(Position position) async {
@@ -142,7 +134,7 @@ class _MapWidgetState extends State<MapWidget> {
 
     for (LatLng markerLocation in _markerLocations) {
       final BitmapDescriptor markerImage =
-          await MapHelper.getMarkerImageFromUrl(_markerImageUrl);
+          await MapHelper.getMarkerImageFromUrl(_muleMarkerImageUrl);
 
       markers.add(
         MapMarker(
