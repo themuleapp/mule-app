@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:fluster/fluster.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/screens/home/map/map_marker.dart';
@@ -20,25 +22,25 @@ class MapHelper {
   /// time to download the file and set the marker image.
   ///
   /// You can resize the marker image by providing a [targetWidth].
-  static Future<BitmapDescriptor> getMarkerImageFromUrl(
-      String url, {
-        int targetWidth,
-      }) async {
-    assert(url != null);
-
-    final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
-
-    Uint8List markerImageBytes = await markerImageFile.readAsBytes();
-
-    if (targetWidth != null) {
-      markerImageBytes = await _resizeImageBytes(
-        markerImageBytes,
-        targetWidth,
-      );
-    }
-
-    return BitmapDescriptor.fromBytes(markerImageBytes);
-  }
+//  static Future<BitmapDescriptor> getMarkerImageFromUrl(
+//      String url, {
+//        int targetWidth,
+//      }) async {
+//    assert(url != null);
+//
+//    final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
+//
+//    Uint8List markerImageBytes = await markerImageFile.readAsBytes();
+//
+//    if (targetWidth != null) {
+//      markerImageBytes = await _resizeImageBytes(
+//        markerImageBytes,
+//        targetWidth,
+//      );
+//    }
+//
+//    return BitmapDescriptor.fromBytes(markerImageBytes);
+//  }
 
   /// Draw a [clusterColor] circle with the [clusterSize] text inside that is [width] wide.
   ///
@@ -96,25 +98,37 @@ class MapHelper {
   /// Resizes the given [imageBytes] with the [targetWidth].
   ///
   /// We don't want the marker image to be too big so we might need to resize the image.
-  static Future<Uint8List> _resizeImageBytes(
-      Uint8List imageBytes,
-      int targetWidth,
-      ) async {
-    assert(imageBytes != null);
-    assert(targetWidth != null);
+//  static Future<Uint8List> _resizeImageBytes(
+//      Uint8List imageBytes,
+//      int targetWidth,
+//      ) async {
+//    assert(imageBytes != null);
+//    assert(targetWidth != null);
+//
+//    final Codec imageCodec = await instantiateImageCodec(
+//      imageBytes,
+//      targetWidth: targetWidth,
+//    );
+//
+//    final FrameInfo frameInfo = await imageCodec.getNextFrame();
+//
+//    final ByteData byteData = await frameInfo.image.toByteData(
+//      format: ImageByteFormat.png,
+//    );
+//
+//    return byteData.buffer.asUint8List();
+//  }
 
-    final Codec imageCodec = await instantiateImageCodec(
-      imageBytes,
-      targetWidth: targetWidth,
-    );
+  static Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer.asUint8List();
+  }
 
-    final FrameInfo frameInfo = await imageCodec.getNextFrame();
-
-    final ByteData byteData = await frameInfo.image.toByteData(
-      format: ImageByteFormat.png,
-    );
-
-    return byteData.buffer.asUint8List();
+  static Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(String path, int width) async {
+    final Uint8List imageData = await getBytesFromAsset(path, width);
+    return BitmapDescriptor.fromBytes(imageData);
   }
 
   /// Inits the cluster manager with all the [MapMarker] to be displayed on the map.
