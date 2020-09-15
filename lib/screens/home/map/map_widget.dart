@@ -50,9 +50,6 @@ class _MapWidgetState extends State<MapWidget> {
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
 
-  final String _markerImageUrl =
-      'https://img.icons8.com/office/80/000000/marker.png';
-
   final Color _clusterColor = AppTheme.lightBlue;
   final Color _clusterTextColor = AppTheme.white;
 
@@ -85,14 +82,6 @@ class _MapWidgetState extends State<MapWidget> {
     } catch (e) {
       print(e);
     }
-  }
-
-  void setSourceAndDestinationIcons() async {
-    sourceIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'assets/source_pin.png');
-    destinationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/destination_map_marker.png');
   }
 
   Future updateLocationOnServerAndGetMulesAround(Position position) async {
@@ -141,14 +130,14 @@ class _MapWidgetState extends State<MapWidget> {
     final List<MapMarker> markers = [];
 
     for (LatLng markerLocation in _markerLocations) {
-      final BitmapDescriptor markerImage =
-          await MapHelper.getMarkerImageFromUrl(_markerImageUrl);
+      final muleIcon = await MapHelper.getBitmapDescriptorFromAssetBytes(
+          'assets/images/mule_marker.png', 60);
 
       markers.add(
         MapMarker(
           id: _markerLocations.indexOf(markerLocation).toString(),
           position: markerLocation,
-          icon: markerImage,
+          icon: muleIcon,
         ),
       );
     }
@@ -195,12 +184,10 @@ class _MapWidgetState extends State<MapWidget> {
   _setRouteMarkers() async {
     _markers.clear();
 
-    sourceIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/images/source_pin.png');
-    destinationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/images/destination_map_marker.png');
+    final sourceIcon = await MapHelper.getBitmapDescriptorFromAssetBytes(
+        'assets/images/source_marker.png', 60);
+    final destinationIcon = await MapHelper.getBitmapDescriptorFromAssetBytes(
+        'assets/images/destination_marker.png', 60);
 
     setState(() {
       _isFocusedOnRoute = true;
@@ -362,7 +349,8 @@ class _MapWidgetState extends State<MapWidget> {
           ),
           Opacity(
             opacity: _isMapLoading ? 1 : 0,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(
+                child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
           ),
 
           // Map markers loading indicator
