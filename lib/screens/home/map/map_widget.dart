@@ -215,16 +215,17 @@ class _MapWidgetState extends State<MapWidget> {
   _showPolyLines() async {
     List<LatLng> polylineCoordinates = [];
 
-    List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
+    PolylineResult result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey,
-        GetIt.I.get<LocationStore>().place.location.lat,
-        GetIt.I.get<LocationStore>().place.location.lng,
-        GetIt.I.get<LocationStore>().destination.location.lat,
-        GetIt.I.get<LocationStore>().destination.location.lng);
-    if (result.isNotEmpty) {
+        PointLatLng(GetIt.I.get<LocationStore>().place.location.lat,
+            GetIt.I.get<LocationStore>().place.location.lng),
+        PointLatLng(GetIt.I.get<LocationStore>().destination.location.lat,
+            GetIt.I.get<LocationStore>().destination.location.lng),
+        travelMode: TravelMode.walking);
+    if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
-      result.forEach((PointLatLng point) {
+      result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
