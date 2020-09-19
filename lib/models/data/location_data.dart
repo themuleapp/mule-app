@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationData {
   final double lng;
@@ -18,5 +19,9 @@ class LocationData {
       "lng": lng,
       "lat": lat,
     };
+  }
+
+  LatLng toLatLng() {
+    return LatLng(this.lat, this.lng);
   }
 }

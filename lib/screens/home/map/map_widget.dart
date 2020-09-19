@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:latlong/latlong.dart' as latlong;
 import 'package:fluster/fluster.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -43,6 +44,7 @@ class _MapWidgetState extends State<MapWidget> {
   final double _defaultZoom = 15;
   final Set<Marker> _markers = Set();
   final Set<Polyline> _polylines = Set();
+  final List<LatLng> _polylineCoords = [];
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
   final double _routeViewPadding = 50.0;
@@ -236,30 +238,34 @@ class _MapWidgetState extends State<MapWidget> {
       Polyline polyline = Polyline(
           polylineId: PolylineId("poly"),
           color: AppTheme.lightBlue,
-          points: polylineCoordinates,
+          points: _polylineCoords,
           width: 4);
       // add the constructed polyline as a set of points
       // to the polyline set, which will eventually
       // end up showing up on the map
       _polylines.add(polyline);
     });
+    _polylineCoords.addAll(polylineCoordinates);
   }
 
   _removePolyLines() {
     setState(() {
       _polylines.clear();
+      _polylineCoords.clear();
     });
   }
 
   _setRouteView() async {
     GoogleMapController controller = await _mapCompleter.future;
 
-    controller.moveCamera(
+    LatLngBounds bounds = boundsFromLocationDataList([
+      GetIt.I.get<LocationStore>().destination.location.toLatLng(),
+      GetIt.I.get<LocationStore>().place.location.toLatLng(),
+    ]..addAll(_polylineCoords));
+
+    controller.animateCamera(
       CameraUpdate.newLatLngBounds(
-        boundsFromLocationDataList([
-          GetIt.I.get<LocationStore>().destination.location,
-          GetIt.I.get<LocationStore>().place.location,
-        ]),
+        await _routeViewAdjust(bounds),
         _routeViewPadding,
       ),
     );
@@ -270,44 +276,64 @@ class _MapWidgetState extends State<MapWidget> {
 
     controller.animateCamera(
       CameraUpdate.newLatLngZoom(
-        LatLng(
-          GetIt.I.get<LocationStore>().currentLocation.lat,
-          GetIt.I.get<LocationStore>().currentLocation.lng,
-        ),
+        GetIt.I.get<LocationStore>().currentLocation.toLatLng(),
         _defaultZoom,
       ),
     );
   }
 
-  _routeViewAdjust() async {
-    GoogleMapController controller;
+  Future<LatLngBounds> _routeViewAdjust(LatLngBounds bounds) async {
+    GoogleMapController controller = await _mapCompleter.future;
+    int pixelOffset = widget.slidingUpWidgetController.snapHeight.toInt();
 
-    double pixelOffset =
-        widget.slidingUpWidgetController.snapHeight / 2 + _routeViewPadding;
+    ScreenCoordinate pointNortheast =
+        await controller.getScreenCoordinate(bounds.northeast);
+    ScreenCoordinate pointSouthwest =
+        await controller.getScreenCoordinate(bounds.southwest);
 
-    controller = await _mapCompleter.future;
-    controller.moveCamera(CameraUpdate.zoomOut());
+    if (pointSouthwest.y > MediaQuery.of(context).size.height - pixelOffset) {
+      pointSouthwest = ScreenCoordinate(
+        x: pointSouthwest.x,
+        y: pointSouthwest.y + 2 * pixelOffset,
+      );
+    }
 
-    controller = await _mapCompleter.future;
-    controller.moveCamera(CameraUpdate.scrollBy(0, pixelOffset));
+    // convert screen coords back to LatLng
+    LatLng geoNortheast = await controller.getLatLng(pointNortheast);
+    LatLng geoSouthwest = await controller.getLatLng(pointSouthwest);
+    LatLngBounds modifiedBounds =
+        new LatLngBounds(northeast: geoNortheast, southwest: geoSouthwest);
+    return modifiedBounds;
   }
 
-  LatLngBounds boundsFromLocationDataList(List<LocationData> list) {
+  LatLngBounds boundsFromLocationDataList(List<LatLng> list) {
     assert(list.isNotEmpty);
     double x0, x1, y0, y1;
 
-    for (LocationData latLng in list) {
+    for (LatLng latLng in list) {
       if (x0 == null) {
-        x0 = x1 = latLng.lat;
-        y0 = y1 = latLng.lng;
+        x0 = x1 = latLng.latitude;
+        y0 = y1 = latLng.longitude;
       } else {
-        if (latLng.lat > x1) x1 = latLng.lat;
-        if (latLng.lat < x0) x0 = latLng.lat;
-        if (latLng.lng > y1) y1 = latLng.lng;
-        if (latLng.lng < y0) y0 = latLng.lng;
+        if (latLng.latitude > x1) x1 = latLng.latitude;
+        if (latLng.latitude < x0) x0 = latLng.latitude;
+        if (latLng.longitude > y1) y1 = latLng.longitude;
+        if (latLng.longitude < y0) y0 = latLng.longitude;
       }
     }
-    return LatLngBounds(northeast: LatLng(x1, y1), southwest: LatLng(x0, y0));
+    LatLng northeast = LatLng(x1, y1);
+    LatLng southwest = LatLng(x0, y0);
+
+    return LatLngBounds(northeast: northeast, southwest: southwest);
+  }
+
+  double calculateDistance(LatLng x, LatLng y) {
+    latlong.Distance distance = latlong.Distance();
+    return distance.as(
+      latlong.LengthUnit.Kilometer,
+      latlong.LatLng(x.latitude, x.longitude),
+      latlong.LatLng(y.latitude, y.longitude),
+    );
   }
 
   getMap() {
@@ -350,8 +376,8 @@ class _MapWidgetState extends State<MapWidget> {
           ),
           Opacity(
             opacity: _isMapLoading ? 1 : 0,
-            child: Center(
-                child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
+            child:
+                Center(child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
           ),
 
           // Map markers loading indicator
@@ -402,7 +428,6 @@ class MapController {
     _mapWidgetState._setRouteMarkers();
     _mapWidgetState._showPolyLines();
     _mapWidgetState._setRouteView();
-    _mapWidgetState._routeViewAdjust();
   }
 
   unfocusRoute() {
