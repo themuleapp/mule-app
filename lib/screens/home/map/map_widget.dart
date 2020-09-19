@@ -323,6 +323,7 @@ class _MapWidgetState extends State<MapWidget> {
                 scrollGesturesEnabled: true,
                 zoomGesturesEnabled: true,
                 myLocationEnabled: true,
+                myLocationButtonEnabled: false,
                 markers: _markers,
                 polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
@@ -350,8 +351,8 @@ class _MapWidgetState extends State<MapWidget> {
           ),
           Opacity(
             opacity: _isMapLoading ? 1 : 0,
-            child: Center(
-                child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
+            child:
+                Center(child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
           ),
 
           // Map markers loading indicator
@@ -408,6 +409,10 @@ class MapController {
   unfocusRoute() {
     _mapWidgetState._initMarkers();
     _mapWidgetState._removePolyLines();
+    _mapWidgetState._setDefaultView();
+  }
+
+  focusCurrentLocation() {
     _mapWidgetState._setDefaultView();
   }
 }

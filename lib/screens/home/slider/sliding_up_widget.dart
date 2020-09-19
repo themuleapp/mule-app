@@ -38,6 +38,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
+  bool _myLocationButtonVisible;
 
   // Panel state
   PanelIndex panelIndex;
@@ -70,6 +71,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = true;
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
+          _myLocationButtonVisible = true;
         });
         _setCurrentPanel(SearchPanel(
           slidingUpWidgetController: widget.controller,
@@ -82,6 +84,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
+          _myLocationButtonVisible = false;
         });
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
@@ -94,6 +97,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
+          _myLocationButtonVisible = true;
         });
         _setCurrentPanel(WaitingToMatchPanel(
           slidingUpWidgetController: widget.controller,
@@ -105,6 +109,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
+          _myLocationButtonVisible = true;
         });
         _setCurrentPanel(MatchedPanel(
           slidingUpWidgetController: widget.controller,
@@ -153,7 +158,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               slidingUpWidgetController: widget.controller,
             ),
             Visibility(
-              visible: true,
+              visible: _myLocationButtonVisible,
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
@@ -170,7 +175,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                         Icons.my_location,
                         color: AppTheme.darkGrey,
                       ),
-                      onPressed: () => _mapController.unfocusRoute(),
+                      onPressed: () => _mapController.focusCurrentLocation(),
                     ),
                   ),
                 ),
