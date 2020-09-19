@@ -334,6 +334,7 @@ class _MapWidgetState extends State<MapWidget> {
                 scrollGesturesEnabled: true,
                 zoomGesturesEnabled: true,
                 myLocationEnabled: true,
+                myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 markers: _markers,
                 polylines: _polylines,
@@ -406,6 +407,10 @@ class MapController {
     await _mapWidgetState._updateBottomPadding();
     await _mapWidgetState._initMarkers();
     await _mapWidgetState._removePolyLines();
+    _mapWidgetState._setDefaultView();
+  }
+
+  focusCurrentLocation() {
     _mapWidgetState._setDefaultView();
   }
 }
