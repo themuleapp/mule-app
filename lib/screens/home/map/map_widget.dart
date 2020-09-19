@@ -20,6 +20,7 @@ import 'package:mule/screens/home/map/map_marker.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MapWidget extends StatefulWidget {
   final MapController controller;
@@ -48,6 +49,7 @@ class _MapWidgetState extends State<MapWidget> {
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
   final double _routeViewPadding = 50.0;
+  double _bottomPadding = 0.0;
 
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
@@ -123,6 +125,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
+    _updateBottomPadding();
   }
 
   void _initMarkers() async {
@@ -180,6 +183,12 @@ class _MapWidgetState extends State<MapWidget> {
 
     setState(() {
       _areMarkersLoading = false;
+    });
+  }
+
+  _updateBottomPadding() {
+    setState(() {
+      _bottomPadding = widget.slidingUpWidgetController.currentHeight;
     });
   }
 
@@ -265,7 +274,7 @@ class _MapWidgetState extends State<MapWidget> {
 
     controller.animateCamera(
       CameraUpdate.newLatLngBounds(
-        await _routeViewAdjust(bounds),
+        bounds,
         _routeViewPadding,
       ),
     );
@@ -280,30 +289,6 @@ class _MapWidgetState extends State<MapWidget> {
         _defaultZoom,
       ),
     );
-  }
-
-  Future<LatLngBounds> _routeViewAdjust(LatLngBounds bounds) async {
-    GoogleMapController controller = await _mapCompleter.future;
-    int pixelOffset = widget.slidingUpWidgetController.snapHeight.toInt();
-
-    ScreenCoordinate pointNortheast =
-        await controller.getScreenCoordinate(bounds.northeast);
-    ScreenCoordinate pointSouthwest =
-        await controller.getScreenCoordinate(bounds.southwest);
-
-    if (pointSouthwest.y > MediaQuery.of(context).size.height - pixelOffset) {
-      pointSouthwest = ScreenCoordinate(
-        x: pointSouthwest.x,
-        y: pointSouthwest.y + 2 * pixelOffset,
-      );
-    }
-
-    // convert screen coords back to LatLng
-    LatLng geoNortheast = await controller.getLatLng(pointNortheast);
-    LatLng geoSouthwest = await controller.getLatLng(pointSouthwest);
-    LatLngBounds modifiedBounds =
-        new LatLngBounds(northeast: geoNortheast, southwest: geoSouthwest);
-    return modifiedBounds;
   }
 
   LatLngBounds boundsFromLocationDataList(List<LatLng> list) {
@@ -349,6 +334,7 @@ class _MapWidgetState extends State<MapWidget> {
                 scrollGesturesEnabled: true,
                 zoomGesturesEnabled: true,
                 myLocationEnabled: true,
+                zoomControlsEnabled: false,
                 markers: _markers,
                 polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
@@ -371,6 +357,10 @@ class _MapWidgetState extends State<MapWidget> {
                   ),
                   zoom: _defaultZoom,
                 ),
+                padding: EdgeInsets.only(
+                  top: 30,
+                  bottom: _bottomPadding,
+                ),
               ),
             ),
           ),
@@ -379,26 +369,6 @@ class _MapWidgetState extends State<MapWidget> {
             child:
                 Center(child: SpinKitDoubleBounce(color: AppTheme.lightBlue)),
           ),
-
-          // Map markers loading indicator
-          if (_areMarkersLoading)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Card(
-                  elevation: 2,
-                  color: Colors.grey.withOpacity(0.9),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Text(
-                      'Loading',
-                      style: TextStyle(color: AppTheme.black),
-                    ),
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );
@@ -424,15 +394,18 @@ class MapController {
     this._mapWidgetState = _mapWidgetState;
   }
 
+  // These functions do not do well asyncronously, so keep the await keyword
   focusOnRoute() async {
-    _mapWidgetState._setRouteMarkers();
-    _mapWidgetState._showPolyLines();
+    await _mapWidgetState._updateBottomPadding();
+    await _mapWidgetState._setRouteMarkers();
+    await _mapWidgetState._showPolyLines();
     _mapWidgetState._setRouteView();
   }
 
-  unfocusRoute() {
-    _mapWidgetState._initMarkers();
-    _mapWidgetState._removePolyLines();
+  unfocusRoute() async {
+    await _mapWidgetState._updateBottomPadding();
+    await _mapWidgetState._initMarkers();
+    await _mapWidgetState._removePolyLines();
     _mapWidgetState._setDefaultView();
   }
 }

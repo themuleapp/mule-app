@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
@@ -184,7 +186,13 @@ class SlidingUpWidgetController {
   }
 
   double get snapHeight {
-    return snapPoint * (minHeight + maxHeight);
+    return minHeight + snapPoint * (maxHeight - minHeight);
+  }
+
+  double get currentHeight {
+    if (_slidingUpWidgetState._panelController.isPanelOpen) return maxHeight;
+    if (snapPoint == null) return minHeight;
+    return snapHeight;
   }
 
   double get radius {
