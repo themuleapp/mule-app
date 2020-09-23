@@ -11,6 +11,7 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/order_information_card.dart';
 
 class MakeRequestPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -116,78 +117,9 @@ class MakeRequestPanel extends StatelessWidget {
             ],
           ),
         ),
-        AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: opacity,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppTheme.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.lightGrey.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 15),
-                          hintText:
-                              GetIt.I.get<LocationStore>().place.description,
-                          prefixIcon: IconButton(
-                            splashColor: AppTheme.lightBlue,
-                            icon: Icon(
-                              Icons.my_location,
-                              color: AppTheme.secondaryBlue,
-                            ),
-                            onPressed: () {},
-                          ),
-                          enabled: false,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 15),
-                          hintText: GetIt.I
-                              .get<LocationStore>()
-                              .destination
-                              .description,
-                          prefixIcon: IconButton(
-                            splashColor: AppTheme.lightBlue,
-                            icon: Icon(
-                              Icons.place,
-                              color: AppTheme.secondaryBlue,
-                            ),
-                            onPressed: () {},
-                          ),
-                          enabled: false,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        orderInformationCard(
+            GetIt.I.get<LocationStore>().place.description,
+            GetIt.I.get<LocationStore>().destination.description),
         SizedBox(height: 10),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
