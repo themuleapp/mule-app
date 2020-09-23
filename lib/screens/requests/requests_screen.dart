@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
@@ -53,7 +54,9 @@ class _RequestsScreenState extends State<RequestsScreen>
                 Padding(
                   padding: EdgeInsets.only(top: 12, bottom: 8),
                   child: Text(
-                    "${requestedFromMe[index].createdAt}",
+                    "${DateFormat('MMM dd - H:m a')
+                        .format(requestedFromMe[index].createdAt.toLocal())
+                        .toUpperCase()}",
                     style: TextStyle(
                       color: AppTheme.darkGrey,
                       fontFamily: AppTheme.fontName,
