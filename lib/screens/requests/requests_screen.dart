@@ -47,9 +47,31 @@ class _RequestsScreenState extends State<RequestsScreen>
               onTap: () {
                 print("${requestedFromMe[index].requestedItem} clicked");
               },
-            child: orderInformationCard(
-              requestedFromMe[index].place, requestedFromMe[index].destination)
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 12, bottom: 8),
+                  child: Text(
+                    "${requestedFromMe[index].createdAt}",
+                    style: TextStyle(
+                      color: AppTheme.darkGrey,
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: orderInformationCard(
+                      requestedFromMe[index].place,
+                      requestedFromMe[index].destination
+                  )
+                ),
+              ],
+            )
+          ),
           background: slideRightBackground(),
           secondaryBackground: slideLeftBackground(),
         );
