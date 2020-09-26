@@ -7,10 +7,12 @@ import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/login/login_data.dart';
+import 'package:mule/models/req/placeRequest/place_request_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
+import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
 
 class HttpClient {
   Dio _dio;
@@ -191,6 +193,47 @@ class HttpClient {
         }));
     print(res.data);
     return res.statusCode == 200 ? true : false;
+  }
+
+  Future<List<RequestedFromMeRes>> getRequestedFromMeNotYetAccepted() async {
+    Response res = await _makeAuthenticatedGetRequest(
+        '/request/requests-not-yet-accepted-by-me');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data;
+    return resData
+        .map<RequestedFromMeRes>((item) => RequestedFromMeRes.fromJson(item))
+        .toList();
+  }
+
+  Future<bool> acceptRequestMadeToMe(String requestId) async {
+    print('HERHERERERERER');
+    print({'requestId': requestId});
+    Response res = await _makeAuthenticatedPostRequest(
+        '/request/accept-request', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> declineRequestMadeToMe(String requestId) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/request/decline-request', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> placeRequest(PlaceRequestData requestData) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/request/place-request', requestData.toMap());
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
   }
 }
 

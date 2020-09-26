@@ -50,9 +50,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.Places,
-        labelName: 'Places',
-        icon: Icon(Icons.map),
+        index: DrawerIndex.Requests,
+        labelName: 'Requests',
+        icon: Icon(Icons.playlist_add_check),
       ),
       DrawerList(
         index: DrawerIndex.Orders,
@@ -419,7 +419,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
 enum DrawerIndex {
   HOME,
-  Places,
+  Requests,
   Orders,
   Chat,
   Settings,

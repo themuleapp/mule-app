@@ -5,7 +5,10 @@ import 'package:mule/screens/help/help_screen.dart';
 import 'package:mule/screens/home/home_screen.dart';
 import 'package:mule/screens/menu/drawer_user_controller.dart';
 import 'package:mule/screens/menu/home_drawer.dart';
+import 'package:mule/screens/requests/requests_screen.dart';
 import 'package:mule/screens/settings/settings.dart';
+
+import 'screens/orders/orders_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -53,6 +56,14 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       if (drawerIndex == DrawerIndex.HOME) {
         setState(() {
           screenView = const MyHomePage();
+        });
+      } else if (drawerIndex == DrawerIndex.Requests) {
+        setState(() {
+          screenView = RequestsScreen();
+        });
+      } else if (drawerIndex == DrawerIndex.Orders) {
+        setState(() {
+          screenView = OrdersScreen();
         });
       } else if (drawerIndex == DrawerIndex.Settings) {
         setState(() {

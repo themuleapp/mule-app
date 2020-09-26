@@ -140,6 +140,8 @@ class _HelpScreenState extends State<HelpScreen> {
                   const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
               child: TextField(
                 maxLines: null,
+                enableSuggestions: true,
+                textCapitalization: TextCapitalization.sentences,
                 onChanged: (String txt) {},
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
