@@ -20,7 +20,6 @@ import 'package:mule/screens/home/map/map_marker.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MapWidget extends StatefulWidget {
   final MapController controller;
@@ -49,7 +48,6 @@ class _MapWidgetState extends State<MapWidget> {
   final int _minClusterZoom = 0;
   final int _maxClusterZoom = 19;
   final double _routeViewPadding = 50.0;
-  double _bottomPadding = 0.0;
 
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
@@ -62,11 +60,11 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   void initState() {
-    super.initState();
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       getCurrentLocation();
     }
     widget.controller?._setState(this);
+    super.initState();
   }
 
   void getCurrentLocation() async {
@@ -122,10 +120,10 @@ class _MapWidgetState extends State<MapWidget> {
     LocationData currentLocation = GetIt.I.get<LocationStore>().currentLocation;
     await updateLocationOnServerAndGetMulesAround(Position(
         latitude: currentLocation.lat, longitude: currentLocation.lng));
+
     setState(() {
       _isMapLoading = false;
     });
-    _updateBottomPadding();
   }
 
   void _initMarkers() async {
@@ -183,12 +181,6 @@ class _MapWidgetState extends State<MapWidget> {
 
     setState(() {
       _areMarkersLoading = false;
-    });
-  }
-
-  _updateBottomPadding() {
-    setState(() {
-      _bottomPadding = widget.slidingUpWidgetController.currentHeight;
     });
   }
 
@@ -360,7 +352,7 @@ class _MapWidgetState extends State<MapWidget> {
                 ),
                 padding: EdgeInsets.only(
                   top: 30,
-                  bottom: _bottomPadding,
+                  bottom: widget.slidingUpWidgetController.currentHeight,
                 ),
               ),
             ),
@@ -397,14 +389,12 @@ class MapController {
 
   // These functions do not do well asyncronously, so keep the await keyword
   focusOnRoute() async {
-    await _mapWidgetState._updateBottomPadding();
     await _mapWidgetState._setRouteMarkers();
     await _mapWidgetState._showPolyLines();
     _mapWidgetState._setRouteView();
   }
 
   unfocusRoute() async {
-    await _mapWidgetState._updateBottomPadding();
     await _mapWidgetState._initMarkers();
     await _mapWidgetState._removePolyLines();
     _mapWidgetState._setDefaultView();
