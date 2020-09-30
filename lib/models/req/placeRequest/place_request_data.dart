@@ -1,8 +1,10 @@
+import 'package:mule/models/data/location_data.dart';
+
 class PlaceRequestData {
   final double lat;
   final double lng;
-  final String place;
-  final String destination;
+  final LocationData place;
+  final LocationData destination;
   final String requestedItem;
 
   PlaceRequestData(
@@ -17,8 +19,14 @@ class PlaceRequestData {
     return <String, dynamic>{
       "lat": this.lat,
       "lng": this.lng,
-      "place": this.place,
-      "destination": this.destination,
+      "place": {
+        "lat": this.place.lat,
+        "lng": this.place.lng,
+      },
+      "destination": {
+        "lat": this.destination.lat,
+        "lng": this.destination.lng,
+      },
       "requestedItem": this.requestedItem,
     };
   }

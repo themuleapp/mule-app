@@ -117,8 +117,7 @@ class MakeRequestPanel extends StatelessWidget {
             ],
           ),
         ),
-        orderInformationCard(
-            GetIt.I.get<LocationStore>().place.description,
+        orderInformationCard(GetIt.I.get<LocationStore>().place.description,
             GetIt.I.get<LocationStore>().destination.description),
         SizedBox(height: 10),
         AnimatedOpacity(
@@ -189,8 +188,8 @@ class MakeRequestPanel extends StatelessWidget {
                     PlaceRequestData placeRequestData = PlaceRequestData(
                       currentLocation.lat,
                       currentLocation.lng,
-                      place.description,
-                      destination.description,
+                      place.location,
+                      destination.location,
                       'Coffee',
                     );
                     bool success =
