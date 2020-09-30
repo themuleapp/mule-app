@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
+import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/tab.dart';
 
 class RequestsScreen extends StatefulWidget {
@@ -46,9 +48,32 @@ class _RequestsScreenState extends State<RequestsScreen>
               onTap: () {
                 print("${requestedFromMe[index].requestedItem} clicked");
               },
-              child: ListTile(
-                  title: Text('${requestedFromMe[index].requestedItem}')
-              )
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 12, bottom: 8),
+                  child: Text(
+                    "${DateFormat('MMM dd - H:m a')
+                        .format(requestedFromMe[index].createdAt.toLocal())
+                        .toUpperCase()}",
+                    style: TextStyle(
+                      color: AppTheme.darkGrey,
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: orderInformationCard(
+                      requestedFromMe[index].place,
+                      requestedFromMe[index].destination
+                  )
+                ),
+              ],
+            )
           ),
           background: slideRightBackground(),
           secondaryBackground: slideLeftBackground(),
@@ -177,13 +202,11 @@ class _RequestsScreenState extends State<RequestsScreen>
         ),
         Container(
           padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-          height: 100,
+          height: screenHeight,
           child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                Container(
-                  child: generateItemsList()
-                ),
+                generateItemsList(),
                 Container(
                   child: Text("Dismissed"),
                 ),
