@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
@@ -233,7 +234,18 @@ class HttpClient {
     if (res.statusCode != 200) {
       return false;
     }
+    print(res.data);
     return true;
+  }
+
+  Future<Order> activeRequest() async {
+    Response res = await _makeAuthenticatedGetRequest('/request?type=active');
+    if (res.statusCode != 200) {
+      print(res.statusCode);
+      return null;
+    }
+    print(res.data);
+    return Order.fromJson(res.data);
   }
 }
 
