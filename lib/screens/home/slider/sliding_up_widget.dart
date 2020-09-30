@@ -115,6 +115,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(MatchedPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       default:

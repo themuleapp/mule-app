@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'dart:async';
 
 class WaitingToMatchPanel extends StatelessWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -10,10 +13,20 @@ class WaitingToMatchPanel extends StatelessWidget {
   WaitingToMatchPanel(
       {this.slidingUpWidgetController, this.loadingBarHeight = 5.0});
 
+  startChecking() {
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      Order order = await httpClient.activeRequest();
+      if (order != null && order.status == Status.ACCEPTED) {
+        slidingUpWidgetController.panelIndex = PanelIndex.Matched;
+      }
+    });
+  }
+
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final double loadingBar = slidingUpWidgetController.radius * 2;
+    startChecking();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
