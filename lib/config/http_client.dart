@@ -197,10 +197,8 @@ class HttpClient {
   }
 
   Future<bool> acceptRequestMadeToMe(String requestId) async {
-    print('HERHERERERERER');
-    print({'requestId': requestId});
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/accept-request', {'requestId': requestId});
+        '/requests/accept', {'requestId': requestId});
     if (res.statusCode != 200) {
       return false;
     }
@@ -209,7 +207,7 @@ class HttpClient {
 
   Future<bool> declineRequestMadeToMe(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/decline-request', {'requestId': requestId});
+        '/requests/decline', {'requestId': requestId});
     if (res.statusCode != 200) {
       return false;
     }
@@ -218,7 +216,7 @@ class HttpClient {
 
   Future<bool> placeRequest(PlaceRequestData requestData) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/place-request', requestData.toMap());
+        '/requests/place', requestData.toMap());
     if (res.statusCode != 200) {
       return false;
     }
