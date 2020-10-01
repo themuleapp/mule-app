@@ -34,8 +34,8 @@ class _MatchedPanelState extends State<MatchedPanel> {
         mule = order.mule;
         widget.mapController.updateDelivery(
           order.mule.location.toLatLng(),
-          order.place.toLatLng(),
-          order.destination.toLatLng(),
+          order.place.location.toLatLng(),
+          order.destination.location.toLatLng(),
           .1,
         );
       }

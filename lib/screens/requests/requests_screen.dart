@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
-import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/order_information_card.dart';
@@ -18,8 +18,7 @@ class RequestsScreen extends StatefulWidget {
 
 class _RequestsScreenState extends State<RequestsScreen>
     with TickerProviderStateMixin {
-
-  List<RequestedFromMeRes> requestedFromMe = [];
+  List<Order> requestedFromMe = [];
   TabController _tabController;
 
   @override
@@ -27,10 +26,10 @@ class _RequestsScreenState extends State<RequestsScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     httpClient.getRequestedFromMeNotYetAccepted().then((res) => {
-      setState(() {
-        requestedFromMe.addAll(res);
-      })
-    });
+          setState(() {
+            requestedFromMe.addAll(res);
+          })
+        });
   }
 
   ListView generateItemsList() {
@@ -45,36 +44,29 @@ class _RequestsScreenState extends State<RequestsScreen>
           confirmDismiss: (direction) =>
               _confirmDismiss(context, direction, index),
           child: InkWell(
-              onTap: () {
-                print("${requestedFromMe[index].requestedItem} clicked");
-              },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 12, bottom: 8),
-                  child: Text(
-                    "${DateFormat('MMM dd - H:m a')
-                        .format(requestedFromMe[index].createdAt.toLocal())
-                        .toUpperCase()}",
-                    style: TextStyle(
-                      color: AppTheme.darkGrey,
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w600,
+              onTap: () {},
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 12, bottom: 8),
+                    child: Text(
+                      "${DateFormat('MMM dd - H:m a').format(requestedFromMe[index].createdAt.toLocal()).toUpperCase()}",
+                      style: TextStyle(
+                        color: AppTheme.darkGrey,
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.left,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8),
-                  child: orderInformationCard(
-                      requestedFromMe[index].place,
-                      requestedFromMe[index].destination
-                  )
-                ),
-              ],
-            )
-          ),
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 8),
+                      child: orderInformationCard(
+                          requestedFromMe[index].place.description,
+                          requestedFromMe[index].destination.description)),
+                ],
+              )),
           background: slideRightBackground(),
           secondaryBackground: slideLeftBackground(),
         );
@@ -184,40 +176,36 @@ class _RequestsScreenState extends State<RequestsScreen>
 
   Widget requestTypeTabs(screenHeight) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget> [
-        TabBar(
-          tabs: [
-            tab('Available', screenHeight),
-            tab('Dismissed', screenHeight),
-            tab('Ongoing', screenHeight),
-          ],
-          unselectedLabelColor: AppTheme.lightestGrey,
-          indicatorColor: AppTheme.secondaryBlue,
-          labelColor: AppTheme.black,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorWeight: 4.0,
-          isScrollable: false,
-          controller: _tabController,
-        ),
-        Container(
-          padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-          height: screenHeight,
-          child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                generateItemsList(),
-                Container(
-                  child: Text("Dismissed"),
-                ),
-                Container(
-                  child: Text("Ongoing"),
-                )
-              ]
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          TabBar(
+            tabs: [
+              tab('Available', screenHeight),
+              tab('Dismissed', screenHeight),
+              tab('Ongoing', screenHeight),
+            ],
+            unselectedLabelColor: AppTheme.lightestGrey,
+            indicatorColor: AppTheme.secondaryBlue,
+            labelColor: AppTheme.black,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorWeight: 4.0,
+            isScrollable: false,
+            controller: _tabController,
           ),
-        )
-      ]
-    );
+          Container(
+            padding: EdgeInsets.only(top: 16, right: 16, left: 16),
+            height: screenHeight,
+            child: TabBarView(controller: _tabController, children: <Widget>[
+              generateItemsList(),
+              Container(
+                child: Text("Dismissed"),
+              ),
+              Container(
+                child: Text("Ongoing"),
+              )
+            ]),
+          )
+        ]);
   }
 
   @override
@@ -236,8 +224,8 @@ class _RequestsScreenState extends State<RequestsScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, left: 20, right: 20, bottom: 30),
+              padding:
+                  EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
               child: Text(
                 "Requests",
                 style: TextStyle(
