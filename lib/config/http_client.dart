@@ -226,8 +226,8 @@ class HttpClient {
     return true;
   }
 
-  Future<List<Order>> getRequestedFromMeNotYetAccepted() async {
-    Response res = await _makeAuthenticatedGetRequest('/request/mule/open');
+  Future<List<Order>> getOpenRequests() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/mule/open');
     if (res.statusCode != 200) {
       return null;
     }
@@ -235,8 +235,8 @@ class HttpClient {
     return resData.map<Order>((item) => Order.fromJson(item)).toList();
   }
 
-  Future<Order> activeRequest() async {
-    Response res = await _makeAuthenticatedGetRequest('/request?type=active');
+  Future<Order> getActiveRequest() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/active');
     if (res.statusCode != 200) {
       print(res.statusCode);
       return null;
