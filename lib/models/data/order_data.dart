@@ -1,19 +1,39 @@
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/mule_data.dart';
 
+// TODO Should this be in a response?
 class Order {
-  final LocationData place;
-  final LocationData destination;
+  final String id;
+  final LocationDesciption place;
+  final LocationDesciption destination;
   final Status status;
-  final MuleData mule;
+  final DateTime createdAt;
+  final String createdBy;
+  final MuleData acceptedBy;
 
   Order.fromJson(Map<String, dynamic> jsonData)
-      : this.place = LocationData.fromJson(jsonData['place']),
-        this.destination = LocationData.fromJson(jsonData['destination']),
+      : this.id = jsonData['id'],
+        this.place = LocationDesciption.fromJson(jsonData['place']),
+        this.destination = LocationDesciption.fromJson(jsonData['destination']),
         this.status = _statusFromString(jsonData['status']),
-        this.mule = (_statusFromString(jsonData['status']) == Status.ACCEPTED)
-            ? MuleData.fromJson(jsonData['mule'])
-            : null;
+        this.createdAt = DateTime.parse(jsonData['createdAt']),
+        this.createdBy = jsonData['createdBy'],
+        // Mule is only available when active request is accepted
+        this.acceptedBy =
+            (_statusFromString(jsonData['status']) == Status.ACCEPTED)
+                ? MuleData.fromJson(jsonData['mule'])
+                : null;
+}
+
+class LocationDesciption {
+  final LocationData location;
+  final String description;
+
+  LocationDesciption({this.location, this.description});
+
+  LocationDesciption.fromJson(Map<String, dynamic> jsonData)
+      : this.description = jsonData['addressString'],
+        this.location = LocationData.fromJson(jsonData['location']);
 }
 
 Status _statusFromString(String status) {

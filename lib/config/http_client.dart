@@ -196,18 +196,6 @@ class HttpClient {
     return res.statusCode == 200 ? true : false;
   }
 
-  Future<List<RequestedFromMeRes>> getRequestedFromMeNotYetAccepted() async {
-    Response res = await _makeAuthenticatedGetRequest(
-        '/request/requests-not-yet-accepted-by-me');
-    if (res.statusCode != 200) {
-      return null;
-    }
-    List<dynamic> resData = res.data;
-    return resData
-        .map<RequestedFromMeRes>((item) => RequestedFromMeRes.fromJson(item))
-        .toList();
-  }
-
   Future<bool> acceptRequestMadeToMe(String requestId) async {
     print('HERHERERERERER');
     print({'requestId': requestId});
@@ -236,6 +224,15 @@ class HttpClient {
     }
     print(res.data);
     return true;
+  }
+
+  Future<List<Order>> getRequestedFromMeNotYetAccepted() async {
+    Response res = await _makeAuthenticatedGetRequest('/request/mule/open');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data;
+    return resData.map<Order>((item) => Order.fromJson(item)).toList();
   }
 
   Future<Order> activeRequest() async {
