@@ -49,7 +49,8 @@ class _RequestsScreenState extends State<RequestsScreen>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 12, bottom: 8),
+                    padding: EdgeInsets.only(
+                        top: 12, bottom: 8, left: 16, right: 16),
                     child: Text(
                       "${DateFormat('MMM dd - H:m a').format(orders[orderStatus][index].createdAt.toLocal()).toUpperCase()}",
                       style: TextStyle(
@@ -241,7 +242,8 @@ class _RequestsScreenState extends State<RequestsScreen>
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
-      body: Column(
+      body: SingleChildScrollView(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Padding(
@@ -260,7 +262,7 @@ class _RequestsScreenState extends State<RequestsScreen>
           ),
           requestTypeTabs(screenHeight),
         ],
-      ),
+      )),
     );
   }
 }
