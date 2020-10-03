@@ -57,12 +57,11 @@ abstract class _UserInfoStore with Store {
     Random rng = Random();
     int number = rng.nextInt(100);
 
-    // this._profilePicture = await NetworkImage(
-    //   "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
-    //   scale: 1.0,
-    //   headers: {'Authorization': token},
-    // );
-    this._profilePicture = null;
+    this._profilePicture = await NetworkImage(
+      "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
+      scale: 1.0,
+      headers: {'Authorization': token},
+    );
   }
 
   @computed
