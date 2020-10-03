@@ -22,12 +22,18 @@ class RequestsScreen extends StatefulWidget {
 class _RequestsScreenState extends State<RequestsScreen>
     with TickerProviderStateMixin {
   TabController _tabController;
-  Future<Map<Status, List<OrderData>>> requestedFromMe = updateOrders();
+  Future<Map<Status, List<OrderData>>> requestedFromMe = getOrders();
 
   @override
   initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+  }
+
+  _updateOrders() {
+    setState(() {
+      requestedFromMe = getOrders();
+    });
   }
 
   ListView generateItemsList(
@@ -105,7 +111,7 @@ class _RequestsScreenState extends State<RequestsScreen>
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
     } else {
-      updateOrders();
+      _updateOrders();
     }
   }
 
@@ -197,7 +203,7 @@ class _RequestsScreenState extends State<RequestsScreen>
           Container(
             height: MediaQuery.of(context).size.height,
             child: FutureBuilder(
-              future: updateOrders(),
+              future: requestedFromMe,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == null) {
@@ -209,16 +215,13 @@ class _RequestsScreenState extends State<RequestsScreen>
                     return Text("The data could not be loaded...",
                         style: TextStyle(color: AppTheme.lightGrey));
                     // DO SOMETHING
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.none) {}
+                  }
                   return TabBarView(
                     controller: _tabController,
                     children: <Widget>[
                       generateItemsList(Status.OPEN, snapshot.data),
                       generateItemsList(Status.DISMISSED, snapshot.data),
-                      Container(
-                        child: Text("Ongoing"),
-                      )
+                      generateItemsList(Status.ACCEPTED, snapshot.data),
                     ],
                   );
                 } else {
@@ -268,15 +271,19 @@ class _RequestsScreenState extends State<RequestsScreen>
   }
 }
 
-Future<Map<Status, List<OrderData>>> updateOrders() async {
+Future<Map<Status, List<OrderData>>> getOrders() async {
   List<OrderData> orders = [];
   List<OrderData> openOrders = await httpClient.getOpenRequests();
   List<OrderData> history = await httpClient.getMuleHistory();
+  OrderData accepted = await httpClient.getActiveRequest();
 
   if (openOrders == null || history == null) {
     return {};
   }
-  orders..addAll(openOrders)..addAll(history);
+  orders
+    ..addAll(openOrders)
+    ..addAll(history)
+    ..add(accepted);
   return _sortOrders(orders);
 }
 

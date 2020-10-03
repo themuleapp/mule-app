@@ -19,10 +19,9 @@ class OrderData {
         this.createdAt = DateTime.parse(jsonData['createdAt']),
         this.createdBy = jsonData['createdBy'],
         // Mule is only available when active request is accepted
-        this.acceptedBy =
-            (_statusFromString(jsonData['status']) == Status.ACCEPTED)
-                ? MuleData.fromJson(jsonData['mule'])
-                : null;
+        this.acceptedBy = (jsonData['acceptedBy'] != null)
+            ? MuleData.fromJson(jsonData['acceptedBy'])
+            : null;
 }
 
 class LocationDesciption {
