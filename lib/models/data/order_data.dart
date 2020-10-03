@@ -2,7 +2,7 @@ import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/mule_data.dart';
 
 // TODO Should this be in a response?
-class Order {
+class OrderData {
   final String id;
   final LocationDesciption place;
   final LocationDesciption destination;
@@ -11,7 +11,7 @@ class Order {
   final String createdBy;
   final MuleData acceptedBy;
 
-  Order.fromJson(Map<String, dynamic> jsonData)
+  OrderData.fromJson(Map<String, dynamic> jsonData)
       : this.id = jsonData['id'],
         this.place = LocationDesciption.fromJson(jsonData['place']),
         this.destination = LocationDesciption.fromJson(jsonData['destination']),
@@ -29,11 +29,12 @@ class LocationDesciption {
   final LocationData location;
   final String description;
 
-  LocationDesciption({this.location, this.description});
+  LocationDesciption(this.location, this.description);
 
   LocationDesciption.fromJson(Map<String, dynamic> jsonData)
       : this.description = jsonData['addressString'],
-        this.location = LocationData.fromJson(jsonData['location']);
+        this.location =
+            LocationData(lat: jsonData['lat'], lng: jsonData['lng']);
 }
 
 Status _statusFromString(String status) {

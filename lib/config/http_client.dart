@@ -196,7 +196,7 @@ class HttpClient {
     return res.statusCode == 200 ? true : false;
   }
 
-  Future<bool> acceptRequestMadeToMe(String requestId) async {
+  Future<bool> acceptRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
         '/requests/accept', {'requestId': requestId});
     if (res.statusCode != 200) {
@@ -205,9 +205,9 @@ class HttpClient {
     return true;
   }
 
-  Future<bool> declineRequestMadeToMe(String requestId) async {
+  Future<bool> dismissRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/requests/decline', {'requestId': requestId});
+        '/requests/dismiss', {'requestId': requestId});
     if (res.statusCode != 200) {
       return false;
     }
@@ -224,23 +224,34 @@ class HttpClient {
     return true;
   }
 
-  Future<List<Order>> getOpenRequests() async {
+  Future<List<OrderData>> getMuleHistory() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/mule/history');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
+  }
+
+  Future<List<OrderData>> getOpenRequests() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/mule/open');
     if (res.statusCode != 200) {
       return null;
     }
-    List<dynamic> resData = res.data;
-    return resData.map<Order>((item) => Order.fromJson(item)).toList();
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
   }
 
-  Future<Order> getActiveRequest() async {
+  Future<OrderData> getActiveRequest() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/active');
     if (res.statusCode != 200) {
-      print(res.statusCode);
       return null;
     }
-    print(res.data);
-    return Order.fromJson(res.data);
+    return OrderData.fromJson(res.data['request']);
   }
 }
 

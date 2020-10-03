@@ -14,8 +14,8 @@ class WaitingToMatchPanel extends StatelessWidget {
       {this.slidingUpWidgetController, this.loadingBarHeight = 5.0});
 
   startChecking() {
-    Timer.periodic(Duration(seconds: 1), (timer) async {
-      Order order = await httpClient.activeRequest();
+    Timer.periodic(Duration(seconds: 10), (timer) async {
+      OrderData order = await httpClient.getActiveRequest();
       if (order != null && order.status == Status.ACCEPTED) {
         slidingUpWidgetController.panelIndex = PanelIndex.Matched;
       }

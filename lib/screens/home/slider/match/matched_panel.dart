@@ -18,7 +18,7 @@ class MatchedPanel extends StatefulWidget {
 }
 
 class _MatchedPanelState extends State<MatchedPanel> {
-  Order order;
+  OrderData order;
   MuleData mule;
 
   @override
@@ -29,11 +29,11 @@ class _MatchedPanelState extends State<MatchedPanel> {
 
   updateOrder() async {
     setState(() async {
-      order = await httpClient.activeRequest();
+      order = await httpClient.getActiveRequest();
       if (order.status == Status.ACCEPTED) {
-        mule = order.mule;
+        mule = order.acceptedBy;
         widget.mapController.updateDelivery(
-          order.mule.location.toLatLng(),
+          order.acceptedBy.location.toLatLng(),
           order.place.location.toLatLng(),
           order.destination.location.toLatLng(),
           .1,

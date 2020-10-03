@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 class Config {
-  static final BASE_URL = 'https://whisperingmule.herokuapp.com/api/';
-  // static final BASE_URL = 'http://10.0.2.2:3000/api/';
+  // static final BASE_URL = 'https://whisperingmule.herokuapp.com/api/';
+  static final BASE_URL = 'http://10.0.2.2:3000/api/';
   static final TOKEN_KEY = 'token';
   static final LocationData pennStateLocation =
       LocationData(lat: 40.793429, lng: -77.860314);

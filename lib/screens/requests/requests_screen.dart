@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
@@ -5,6 +7,7 @@ import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
+import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/tab.dart';
 
@@ -18,31 +21,28 @@ class RequestsScreen extends StatefulWidget {
 
 class _RequestsScreenState extends State<RequestsScreen>
     with TickerProviderStateMixin {
-  List<Order> requestedFromMe = [];
   TabController _tabController;
+  Future<Map<Status, List<OrderData>>> requestedFromMe = updateOrders();
 
   @override
   initState() {
-    super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    httpClient.getRequestedFromMeNotYetAccepted().then((res) => {
-          setState(() {
-            requestedFromMe.addAll(res);
-          })
-        });
+    super.initState();
   }
 
-  ListView generateItemsList() {
+  ListView generateItemsList(
+      Status orderStatus, Map<Status, List<OrderData>> orders) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: requestedFromMe.length,
+      itemCount: (orders.containsKey(orderStatus)) ? [orderStatus].length : 0,
       itemBuilder: (context, index) {
         return Dismissible(
-          key: Key(requestedFromMe[index].id),
-          onDismissed: (direction) => _handleDismissed(direction, index),
-          confirmDismiss: (direction) =>
-              _confirmDismiss(context, direction, index),
+          key: Key(orders[orderStatus][index].id),
+          onDismissed: (direction) =>
+              _handleDismissed(direction, orders[orderStatus][index].id),
+          confirmDismiss: (direction) => _confirmDismiss(
+              context, direction, orders[orderStatus][index].id),
           child: InkWell(
               onTap: () {},
               child: Column(
@@ -51,7 +51,7 @@ class _RequestsScreenState extends State<RequestsScreen>
                   Padding(
                     padding: EdgeInsets.only(top: 12, bottom: 8),
                     child: Text(
-                      "${DateFormat('MMM dd - H:m a').format(requestedFromMe[index].createdAt.toLocal()).toUpperCase()}",
+                      "${DateFormat('MMM dd - H:m a').format(orders[orderStatus][index].createdAt.toLocal()).toUpperCase()}",
                       style: TextStyle(
                         color: AppTheme.darkGrey,
                         fontFamily: AppTheme.fontName,
@@ -63,8 +63,8 @@ class _RequestsScreenState extends State<RequestsScreen>
                   Padding(
                       padding: EdgeInsets.only(bottom: 8),
                       child: orderInformationCard(
-                          requestedFromMe[index].place.description,
-                          requestedFromMe[index].destination.description)),
+                          orders[orderStatus][index].place.description,
+                          orders[orderStatus][index].destination.description)),
                 ],
               )),
           background: slideRightBackground(),
@@ -87,24 +87,23 @@ class _RequestsScreenState extends State<RequestsScreen>
     return await createConfirmDialogue(context, action) ?? false;
   }
 
-  _handleDismissed(direction, index) async {
+  _handleDismissed(DismissDirection direction, String requestId) async {
     String action = _getActionDependingOnDirection(direction);
     bool success;
     if (action == RequestsScreen.ACCEPT) {
       // Send api request
       // Remove from local list
-      print(requestedFromMe[index].id);
-      success =
-          await httpClient.acceptRequestMadeToMe(requestedFromMe[index].id);
+      success = await httpClient.acceptRequest(requestId);
     } else {
       // Send api request
       // Remove from local list
-      success =
-          await httpClient.declineRequestMadeToMe(requestedFromMe[index].id);
+      success = await httpClient.dismissRequest(requestId);
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
+    } else {
+      updateOrders();
     }
   }
 
@@ -174,7 +173,8 @@ class _RequestsScreenState extends State<RequestsScreen>
     );
   }
 
-  Widget requestTypeTabs(screenHeight) {
+  Widget requestTypeTabs(double height) {
+    double screenHeight = height;
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -193,17 +193,39 @@ class _RequestsScreenState extends State<RequestsScreen>
             controller: _tabController,
           ),
           Container(
-            padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-            height: screenHeight,
-            child: TabBarView(controller: _tabController, children: <Widget>[
-              generateItemsList(),
-              Container(
-                child: Text("Dismissed"),
-              ),
-              Container(
-                child: Text("Ongoing"),
-              )
-            ]),
+            height: MediaQuery.of(context).size.height,
+            child: FutureBuilder(
+              future: updateOrders(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == null) {
+                    createDialogWidget(
+                      context,
+                      "Oops, something went wrong...",
+                      "Please try again later!",
+                    );
+                    return Text("The data could not be loaded...",
+                        style: TextStyle(color: AppTheme.lightGrey));
+                    // DO SOMETHING
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.none) {}
+                  return TabBarView(
+                    controller: _tabController,
+                    children: <Widget>[
+                      generateItemsList(Status.OPEN, snapshot.data),
+                      generateItemsList(Status.DISMISSED, snapshot.data),
+                      Container(
+                        child: Text("Ongoing"),
+                      )
+                    ],
+                  );
+                } else {
+                  return SpinKitDoubleBounce(
+                    color: AppTheme.lightBlue,
+                  );
+                }
+              },
+            ),
           )
         ]);
   }
@@ -219,28 +241,48 @@ class _RequestsScreenState extends State<RequestsScreen>
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding:
-                  EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
-              child: Text(
-                "Requests",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.darkGrey,
-                  fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
-                ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding:
+                EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
+            child: Text(
+              "Requests",
+              style: TextStyle(
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.darkGrey,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
               ),
             ),
-            requestTypeTabs(screenHeight),
-          ],
-        ),
+          ),
+          requestTypeTabs(screenHeight),
+        ],
       ),
     );
   }
+}
+
+Future<Map<Status, List<OrderData>>> updateOrders() async {
+  List<OrderData> orders = [];
+  List<OrderData> openOrders = await httpClient.getOpenRequests();
+  List<OrderData> history = await httpClient.getMuleHistory();
+
+  if (openOrders == null || history == null) {
+    return {};
+  }
+  orders..addAll(openOrders)..addAll(history);
+  return _sortOrders(orders);
+}
+
+Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
+  Map<Status, List<OrderData>> sortedOrders = {};
+
+  Status.values.forEach((status) {
+    sortedOrders.putIfAbsent(
+        status, () => orders.where((order) => order.status == status).toList());
+  });
+  return sortedOrders;
 }
