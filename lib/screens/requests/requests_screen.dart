@@ -35,7 +35,8 @@ class _RequestsScreenState extends State<RequestsScreen>
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: (orders.containsKey(orderStatus)) ? [orderStatus].length : 0,
+      itemCount:
+          (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
       itemBuilder: (context, index) {
         return Dismissible(
           key: Key(orders[orderStatus][index].id),

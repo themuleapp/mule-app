@@ -188,7 +188,8 @@ class MakeRequestPanel extends StatelessWidget {
 
                     PlaceRequestData placeRequestData = PlaceRequestData(
                       LocationDesciption(place.location, place.description),
-                      LocationDesciption(place.location, place.description),
+                      LocationDesciption(
+                          destination.location, destination.description),
                     );
                     bool success =
                         await httpClient.placeRequest(placeRequestData);
