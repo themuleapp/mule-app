@@ -181,8 +181,7 @@ class _RequestsScreenState extends State<RequestsScreen>
     );
   }
 
-  Widget requestTypeTabs(double height) {
-    double screenHeight = height;
+  Widget requestTypeTabs(double screenHeight) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -200,38 +199,41 @@ class _RequestsScreenState extends State<RequestsScreen>
             isScrollable: false,
             controller: _tabController,
           ),
-          Container(
-            height: MediaQuery.of(context).size.height,
-            child: FutureBuilder(
-              future: requestedFromMe,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == null) {
-                    createDialogWidget(
-                      context,
-                      "Oops, something went wrong...",
-                      "Please try again later!",
-                    );
-                    return Text("The data could not be loaded...",
-                        style: TextStyle(color: AppTheme.lightGrey));
-                    // DO SOMETHING
-                  }
-                  return TabBarView(
+          FutureBuilder(
+            future: requestedFromMe,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data == null) {
+                  createDialogWidget(
+                    context,
+                    "Oops, something went wrong...",
+                    "Please try again later!",
+                  );
+                  return Text("The data could not be loaded...",
+                      style: TextStyle(color: AppTheme.lightGrey));
+                  // DO SOMETHING
+                }
+                return Container(
+                  height: screenHeight,
+                  child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
                       generateItemsList(Status.OPEN, snapshot.data),
                       generateItemsList(Status.DISMISSED, snapshot.data),
                       generateItemsList(Status.ACCEPTED, snapshot.data),
                     ],
-                  );
-                } else {
-                  return SpinKitDoubleBounce(
+                  ),
+                );
+              } else {
+                return Container(
+                  height: 200,
+                  child: SpinKitDoubleBounce(
                     color: AppTheme.lightBlue,
-                  );
-                }
-              },
-            ),
-          )
+                  ),
+                );
+              }
+            },
+          ),
         ]);
   }
 
