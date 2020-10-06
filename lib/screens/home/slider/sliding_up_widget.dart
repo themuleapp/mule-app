@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/loading/loading_panel.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
@@ -17,6 +18,7 @@ class SlidingUpWidget extends StatefulWidget {
   final double maxHeight;
   final double buttonSpacing;
   final double buttonSize;
+  final PanelIndex beginScreen;
 
   SlidingUpWidget({
     this.controller,
@@ -25,6 +27,7 @@ class SlidingUpWidget extends StatefulWidget {
     this.maxHeight,
     this.buttonSize = 50.0,
     this.buttonSpacing = 20.0,
+    this.beginScreen = PanelIndex.DestinationAndSearch,
   });
 
   @override
@@ -49,7 +52,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   @override
   void initState() {
     super.initState();
-    panelIndex = PanelIndex.DestinationAndSearch;
+    panelIndex = widget.beginScreen;
     _updatePanel();
 
     widget.controller?._addState(this);
@@ -114,6 +117,19 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _myLocationButtonVisible = true;
         });
         _setCurrentPanel(MatchedPanel(
+          slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
+        ));
+        break;
+      case PanelIndex.Loading:
+        setState(() {
+          _snapValue = null;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _backdropOpacity = 0;
+          _myLocationButtonVisible = false;
+        });
+        _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
         ));
@@ -202,6 +218,10 @@ class SlidingUpWidgetController {
     _slidingUpWidgetState._setPanelandUpdate(newPanelIndex);
   }
 
+  bool get isActive {
+    return _slidingUpWidgetState != null;
+  }
+
   PanelIndex get panelIndex {
     return _slidingUpWidgetState.panelIndex;
   }
@@ -237,4 +257,10 @@ class SlidingUpWidgetController {
   }
 }
 
-enum PanelIndex { DestinationAndSearch, MakeRequest, WaitingToMatch, Matched }
+enum PanelIndex {
+  DestinationAndSearch,
+  MakeRequest,
+  WaitingToMatch,
+  Matched,
+  Loading
+}
