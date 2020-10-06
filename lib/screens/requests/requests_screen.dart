@@ -36,50 +36,57 @@ class _RequestsScreenState extends State<RequestsScreen>
     });
   }
 
-  ListView generateItemsList(
-      Status orderStatus, Map<Status, List<OrderData>> orders) {
+  ListView generateItemsList(Status orderStatus,
+      Map<Status, List<OrderData>> orders, bool dismissable) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount:
           (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
       itemBuilder: (context, index) {
-        return Dismissible(
-          key: Key(orders[orderStatus][index].id),
-          onDismissed: (direction) =>
-              _handleDismissed(direction, orders[orderStatus][index].id),
-          confirmDismiss: (direction) => _confirmDismiss(
-              context, direction, orders[orderStatus][index].id),
-          child: InkWell(
-              onTap: () {},
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 12, bottom: 8, left: 16, right: 16),
-                    child: Text(
-                      "${DateFormat('MMM dd - H:m a').format(orders[orderStatus][index].createdAt.toLocal()).toUpperCase()}",
-                      style: TextStyle(
-                        color: AppTheme.darkGrey,
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: orderInformationCard(
-                          orders[orderStatus][index].place.description,
-                          orders[orderStatus][index].destination.description)),
-                ],
-              )),
-          background: slideRightBackground(),
-          secondaryBackground: slideLeftBackground(),
-        );
+        return dismissable
+            ? dismissableCard(orders[orderStatus][index])
+            : orderCard(orders[orderStatus][index]);
       },
     );
+  }
+
+  Dismissible dismissableCard(OrderData order) {
+    return Dismissible(
+      key: Key(order.id),
+      onDismissed: (direction) => _handleDismissed(direction, order.id),
+      confirmDismiss: (direction) =>
+          _confirmDismiss(context, direction, order.id),
+      child: orderCard(order),
+      background: slideRightBackground(),
+      secondaryBackground: slideLeftBackground(),
+    );
+  }
+
+  InkWell orderCard(OrderData order) {
+    return InkWell(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
+              child: Text(
+                "${DateFormat('MMM dd - H:m a').format(order.createdAt.toLocal()).toUpperCase()}",
+                style: TextStyle(
+                  color: AppTheme.darkGrey,
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: orderInformationCard(
+                    order.place.description, order.destination.description)),
+          ],
+        ));
   }
 
   String _getActionDependingOnDirection(direction) {
@@ -218,9 +225,9 @@ class _RequestsScreenState extends State<RequestsScreen>
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
-                      generateItemsList(Status.OPEN, snapshot.data),
-                      generateItemsList(Status.DISMISSED, snapshot.data),
-                      generateItemsList(Status.ACCEPTED, snapshot.data),
+                      generateItemsList(Status.OPEN, snapshot.data, true),
+                      generateItemsList(Status.DISMISSED, snapshot.data, false),
+                      generateItemsList(Status.ACCEPTED, snapshot.data, false),
                     ],
                   ),
                 );
