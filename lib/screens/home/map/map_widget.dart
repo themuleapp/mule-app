@@ -235,6 +235,10 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   _showPolyLines({PointLatLng origin, PointLatLng destination}) async {
+    // Polylines should be cleared when not used or updating
+    if (_polylineCoords != null && !_polylineCoords.isEmpty) {
+      return;
+    }
     List<LatLng> polylineCoordinates = [];
 
     if (origin == null || destination == null) {
@@ -254,7 +258,6 @@ class _MapWidgetState extends State<MapWidget> {
     if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
-      polylineCoordinates.clear();
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
