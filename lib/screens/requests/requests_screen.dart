@@ -1,10 +1,15 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
-import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
+import 'package:mule/models/data/order_data.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
+import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/tab.dart';
 
@@ -18,68 +23,72 @@ class RequestsScreen extends StatefulWidget {
 
 class _RequestsScreenState extends State<RequestsScreen>
     with TickerProviderStateMixin {
-
-  List<RequestedFromMeRes> requestedFromMe = [];
   TabController _tabController;
+  Future<Map<Status, List<OrderData>>> requestedFromMe = getOrders();
 
   @override
   initState() {
-    super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    httpClient.getRequestedFromMeNotYetAccepted().then((res) => {
-      setState(() {
-        requestedFromMe.addAll(res);
-      })
+    super.initState();
+  }
+
+  _updateOrders() {
+    setState(() {
+      requestedFromMe = getOrders();
     });
   }
 
-  ListView generateItemsList() {
+  ListView generateItemsList(Status orderStatus,
+      Map<Status, List<OrderData>> orders, bool dismissable) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: requestedFromMe.length,
+      itemCount:
+          (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
       itemBuilder: (context, index) {
-        return Dismissible(
-          key: Key(requestedFromMe[index].id),
-          onDismissed: (direction) => _handleDismissed(direction, index),
-          confirmDismiss: (direction) =>
-              _confirmDismiss(context, direction, index),
-          child: InkWell(
-              onTap: () {
-                print("${requestedFromMe[index].requestedItem} clicked");
-              },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 12, bottom: 8),
-                  child: Text(
-                    "${DateFormat('MMM dd - H:m a')
-                        .format(requestedFromMe[index].createdAt.toLocal())
-                        .toUpperCase()}",
-                    style: TextStyle(
-                      color: AppTheme.darkGrey,
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8),
-                  child: orderInformationCard(
-                      requestedFromMe[index].place,
-                      requestedFromMe[index].destination
-                  )
-                ),
-              ],
-            )
-          ),
-          background: slideRightBackground(),
-          secondaryBackground: slideLeftBackground(),
-        );
+        return dismissable
+            ? dismissableCard(orders[orderStatus][index])
+            : orderCard(orders[orderStatus][index]);
       },
     );
+  }
+
+  Dismissible dismissableCard(OrderData order) {
+    return Dismissible(
+      key: Key(order.id),
+      onDismissed: (direction) => _handleDismissed(direction, order.id),
+      confirmDismiss: (direction) =>
+          _confirmDismiss(context, direction, order.id),
+      child: orderCard(order),
+      background: slideRightBackground(),
+      secondaryBackground: slideLeftBackground(),
+    );
+  }
+
+  InkWell orderCard(OrderData order) {
+    return InkWell(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
+              child: Text(
+                "${DateFormat('MMM dd - H:m a').format(order.createdAt.toLocal()).toUpperCase()}",
+                style: TextStyle(
+                  color: AppTheme.darkGrey,
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: orderInformationCard(
+                    order.place.description, order.destination.description)),
+          ],
+        ));
   }
 
   String _getActionDependingOnDirection(direction) {
@@ -95,24 +104,23 @@ class _RequestsScreenState extends State<RequestsScreen>
     return await createConfirmDialogue(context, action) ?? false;
   }
 
-  _handleDismissed(direction, index) async {
+  _handleDismissed(DismissDirection direction, String requestId) async {
     String action = _getActionDependingOnDirection(direction);
     bool success;
     if (action == RequestsScreen.ACCEPT) {
       // Send api request
       // Remove from local list
-      print(requestedFromMe[index].id);
-      success =
-          await httpClient.acceptRequestMadeToMe(requestedFromMe[index].id);
+      success = await httpClient.acceptRequest(requestId);
     } else {
       // Send api request
       // Remove from local list
-      success =
-          await httpClient.declineRequestMadeToMe(requestedFromMe[index].id);
+      success = await httpClient.dismissRequest(requestId);
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
+    } else {
+      _updateOrders();
     }
   }
 
@@ -182,42 +190,60 @@ class _RequestsScreenState extends State<RequestsScreen>
     );
   }
 
-  Widget requestTypeTabs(screenHeight) {
+  Widget requestTypeTabs(double screenHeight) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget> [
-        TabBar(
-          tabs: [
-            tab('Available', screenHeight),
-            tab('Dismissed', screenHeight),
-            tab('Ongoing', screenHeight),
-          ],
-          unselectedLabelColor: AppTheme.lightestGrey,
-          indicatorColor: AppTheme.secondaryBlue,
-          labelColor: AppTheme.black,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorWeight: 4.0,
-          isScrollable: false,
-          controller: _tabController,
-        ),
-        Container(
-          padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-          height: screenHeight,
-          child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                generateItemsList(),
-                Container(
-                  child: Text("Dismissed"),
-                ),
-                Container(
-                  child: Text("Ongoing"),
-                )
-              ]
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          TabBar(
+            tabs: [
+              tab('Available', screenHeight),
+              tab('Dismissed', screenHeight),
+              tab('Ongoing', screenHeight),
+            ],
+            unselectedLabelColor: AppTheme.lightestGrey,
+            indicatorColor: AppTheme.secondaryBlue,
+            labelColor: AppTheme.black,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorWeight: 4.0,
+            isScrollable: false,
+            controller: _tabController,
           ),
-        )
-      ]
-    );
+          FutureBuilder(
+            future: requestedFromMe,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data == null) {
+                  createDialogWidget(
+                    context,
+                    "Oops, something went wrong...",
+                    "Please try again later!",
+                  );
+                  return Text("The data could not be loaded...",
+                      style: TextStyle(color: AppTheme.lightGrey));
+                  // DO SOMETHING
+                }
+                return Container(
+                  height: screenHeight,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: <Widget>[
+                      generateItemsList(Status.OPEN, snapshot.data, true),
+                      generateItemsList(Status.DISMISSED, snapshot.data, false),
+                      generateItemsList(Status.ACCEPTED, snapshot.data, false),
+                    ],
+                  ),
+                );
+              } else {
+                return Container(
+                  height: 200,
+                  child: SpinKitDoubleBounce(
+                    color: AppTheme.lightBlue,
+                  ),
+                );
+              }
+            },
+          ),
+        ]);
   }
 
   @override
@@ -232,27 +258,54 @@ class _RequestsScreenState extends State<RequestsScreen>
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, left: 20, right: 20, bottom: 30),
-              child: Text(
-                "Requests",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.darkGrey,
-                  fontSize: AppTheme.elementSize(
-                      screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
-                ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding:
+                EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
+            child: Text(
+              "Requests",
+              style: TextStyle(
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.darkGrey,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
               ),
             ),
-            requestTypeTabs(screenHeight),
-          ],
-        ),
-      ),
+          ),
+          requestTypeTabs(screenHeight),
+        ],
+      )),
     );
   }
+}
+
+Future<Map<Status, List<OrderData>>> getOrders() async {
+  List<OrderData> orders = [];
+  List<OrderData> openOrders = await httpClient.getOpenRequests();
+  List<OrderData> history = await httpClient.getMuleHistory();
+  OrderData accepted = await httpClient.getActiveRequest();
+
+  if (openOrders == null || history == null) {
+    return {};
+  }
+  if (accepted != null) {
+    orders.add(accepted);
+  }
+  orders..addAll(openOrders)..addAll(history);
+  orders.removeWhere(
+      (element) => element.createdBy == GetIt.I.get<UserInfoStore>().fullName);
+  return _sortOrders(orders);
+}
+
+Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
+  Map<Status, List<OrderData>> sortedOrders = {};
+
+  Status.values.forEach((status) {
+    sortedOrders.putIfAbsent(
+        status, () => orders.where((order) => order.status == status).toList());
+  });
+  return sortedOrders;
 }

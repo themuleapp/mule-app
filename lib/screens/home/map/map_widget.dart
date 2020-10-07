@@ -24,8 +24,13 @@ import 'package:mule/widgets/loading-animation.dart';
 class MapWidget extends StatefulWidget {
   final MapController controller;
   final SlidingUpWidgetController slidingUpWidgetController;
+  final Function initCallback;
 
-  MapWidget({this.controller, this.slidingUpWidgetController});
+  MapWidget({
+    this.controller,
+    this.slidingUpWidgetController,
+    this.initCallback,
+  });
 
   @override
   _MapWidgetState createState() => _MapWidgetState();
@@ -154,6 +159,20 @@ class _MapWidgetState extends State<MapWidget> {
     await _updateMarkers();
   }
 
+  _singleMuleMarker(LatLng muleLocation) async {
+    final muleIcon = await MapHelper.getBitmapDescriptorFromAssetBytes(
+        'assets/images/mule_marker.png', 60);
+
+    Marker muleMarker = Marker(
+      markerId: MarkerId("MULEMARKER"),
+      position: muleLocation,
+      icon: muleIcon,
+    );
+    _markers
+      ..clear()
+      ..add(muleMarker);
+  }
+
   Future<void> _updateMarkers([double updatedZoom]) async {
     if (_isFocusedOnRoute ||
         _clusterManager == null ||
@@ -215,15 +234,26 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _showPolyLines() async {
+  _showPolyLines({PointLatLng origin, PointLatLng destination}) async {
+    // Polylines should be cleared when not used or updating
+    if (_polylineCoords != null && !_polylineCoords.isEmpty) {
+      return;
+    }
     List<LatLng> polylineCoordinates = [];
 
+    if (origin == null || destination == null) {
+      origin = PointLatLng(
+        GetIt.I.get<LocationStore>().place.location.lat,
+        GetIt.I.get<LocationStore>().place.location.lng,
+      );
+      destination = PointLatLng(
+        GetIt.I.get<LocationStore>().destination.location.lat,
+        GetIt.I.get<LocationStore>().destination.location.lng,
+      );
+    }
+
     PolylineResult result = await polylinePoints?.getRouteBetweenCoordinates(
-        ExternalApi.googleApiKey,
-        PointLatLng(GetIt.I.get<LocationStore>().place.location.lat,
-            GetIt.I.get<LocationStore>().place.location.lng),
-        PointLatLng(GetIt.I.get<LocationStore>().destination.location.lat,
-            GetIt.I.get<LocationStore>().destination.location.lng),
+        ExternalApi.googleApiKey, origin, destination,
         travelMode: TravelMode.walking);
     if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
@@ -256,13 +286,15 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _setRouteView() async {
+  _setRouteView({List<LatLng> focusLocation = const []}) async {
     GoogleMapController controller = await _mapCompleter.future;
 
     LatLngBounds bounds = boundsFromLocationDataList([
       GetIt.I.get<LocationStore>().destination.location.toLatLng(),
       GetIt.I.get<LocationStore>().place.location.toLatLng(),
-    ]..addAll(_polylineCoords));
+    ]
+      ..addAll(_polylineCoords)
+      ..addAll(focusLocation));
 
     controller.animateCamera(
       CameraUpdate.newLatLngBounds(
@@ -402,5 +434,32 @@ class MapController {
 
   focusCurrentLocation() {
     _mapWidgetState._setDefaultView();
+  }
+
+  updateDelivery(LatLng muleLocation, LatLng place, LatLng destination,
+      double triggerDistance) async {
+    await _mapWidgetState._removePolyLines();
+
+    // Check if mule is within certain radius
+    PointLatLng target;
+    PointLatLng origin =
+        PointLatLng(muleLocation.latitude, muleLocation.longitude);
+    //DOESN'T WORK
+    if (_mapWidgetState.calculateDistance(muleLocation, place) <
+        triggerDistance) {
+      target = PointLatLng(place.latitude, place.longitude);
+    } else {
+      target = PointLatLng(destination.latitude, destination.longitude);
+    }
+    await _mapWidgetState._showPolyLines(
+      origin: origin,
+      destination: target,
+    );
+    await _mapWidgetState._singleMuleMarker(muleLocation);
+    await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
+  }
+
+  bool get isMapLoading {
+    return _mapWidgetState == null || _mapWidgetState._isMapLoading;
   }
 }

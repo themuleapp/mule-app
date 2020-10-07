@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
@@ -42,6 +43,21 @@ class HttpClient {
       String path, Map<String, dynamic> data) async {
     final String token = await Config.getToken();
     return await _dio.post(
+      path,
+      data: data,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      ),
+    );
+  }
+
+  Future<Response> _makeAuthenticatedDeleteRequest(
+      String path, Map<String, dynamic> data) async {
+    final String token = await Config.getToken();
+    return await _dio.delete(
       path,
       data: data,
       options: Options(
@@ -195,32 +211,18 @@ class HttpClient {
     return res.statusCode == 200 ? true : false;
   }
 
-  Future<List<RequestedFromMeRes>> getRequestedFromMeNotYetAccepted() async {
-    Response res = await _makeAuthenticatedGetRequest(
-        '/request/requests-not-yet-accepted-by-me');
-    if (res.statusCode != 200) {
-      return null;
-    }
-    List<dynamic> resData = res.data;
-    return resData
-        .map<RequestedFromMeRes>((item) => RequestedFromMeRes.fromJson(item))
-        .toList();
-  }
-
-  Future<bool> acceptRequestMadeToMe(String requestId) async {
-    print('HERHERERERERER');
-    print({'requestId': requestId});
+  Future<bool> acceptRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/accept-request', {'requestId': requestId});
+        '/requests/accept', {'requestId': requestId});
     if (res.statusCode != 200) {
       return false;
     }
     return true;
   }
 
-  Future<bool> declineRequestMadeToMe(String requestId) async {
+  Future<bool> dismissRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/decline-request', {'requestId': requestId});
+        '/requests/dismiss', {'requestId': requestId});
     if (res.statusCode != 200) {
       return false;
     }
@@ -229,11 +231,48 @@ class HttpClient {
 
   Future<bool> placeRequest(PlaceRequestData requestData) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/request/place-request', requestData.toMap());
+        '/requests/place', requestData.toMap());
     if (res.statusCode != 200) {
       return false;
     }
+    print(res.data);
     return true;
+  }
+
+  Future<List<OrderData>> getMuleHistory() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/mule/history');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
+  }
+
+  Future<List<OrderData>> getOpenRequests() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/mule/open');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
+  }
+
+  Future<OrderData> getActiveRequest() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/active');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    return OrderData.fromJson(res.data['request']);
+  }
+
+  Future<bool> deleteActiveRequest(OrderData order) async {
+    Response res = await _makeAuthenticatedDeleteRequest(
+        '/requests/cancel', {"requestId": order.id});
+    return res.data['status'] == 200;
   }
 }
 

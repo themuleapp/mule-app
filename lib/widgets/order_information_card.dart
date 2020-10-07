@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 
-Widget orderInformationCard(place, destination) {
+Widget orderInformationCard(String place, String destination) {
   return AnimatedOpacity(
     duration: const Duration(milliseconds: 500),
     opacity: 1.0,
     child: Padding(
-      padding:
-      const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
           color: AppTheme.white,
