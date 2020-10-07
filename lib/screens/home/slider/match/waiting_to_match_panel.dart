@@ -98,7 +98,8 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                         duration: const Duration(milliseconds: 500),
                         opacity: widget.opacity,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          padding: const EdgeInsets.only(
+                              top: 32, left: 16, right: 16),
                           child: Text(
                             'Your request has been sent!',
                             textAlign: TextAlign.left,
@@ -171,9 +172,10 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                   ),
                 ),
                 Container(
-                    padding: const EdgeInsets.only(top: 16, right: 16),
-                    child: Image.asset('assets/images/student_waiting.png',
-                        height: 150))
+                  padding: const EdgeInsets.only(top: 16, right: 16),
+                  child: Image.asset('assets/images/student_waiting.png',
+                      height: 150),
+                ),
               ],
             ),
           ],
