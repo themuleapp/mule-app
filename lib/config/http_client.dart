@@ -266,14 +266,13 @@ class HttpClient {
     if (res.statusCode != 200) {
       return null;
     }
-    print(res.data['request']);
     return OrderData.fromJson(res.data['request']);
   }
 
   Future<bool> deleteActiveRequest(OrderData order) async {
     Response res = await _makeAuthenticatedDeleteRequest(
-        '/requests/cancel', {"id": order.id});
-    return res.statusCode == 200;
+        '/requests/cancel', {"requestId": order.id});
+    return res.data['status'] == 200;
   }
 }
 
