@@ -173,7 +173,6 @@ class _SearchPanelState extends State<SearchPanel> {
 
   _onSubmitChoice() {
     widget.slidingUpWidgetController.panelIndex = PanelIndex.MakeRequest;
-    widget.mapController.focusOnRoute();
   }
 
   @override
@@ -188,7 +187,8 @@ class _SearchPanelState extends State<SearchPanel> {
   @override
   void initState() {
     _destinationFocusNode.addListener(() => _handleFocus());
-
+    widget.mapController.unfocusRoute();
+    widget.mapController.focusCurrentLocation();
     super.initState();
   }
 }

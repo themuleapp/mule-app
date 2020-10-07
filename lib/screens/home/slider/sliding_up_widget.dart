@@ -106,6 +106,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         });
         _setCurrentPanel(WaitingToMatchPanel(
           slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
         ));
         break;
       case PanelIndex.Matched:

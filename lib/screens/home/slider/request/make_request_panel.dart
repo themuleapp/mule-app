@@ -14,7 +14,7 @@ import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_information_card.dart';
 
-class MakeRequestPanel extends StatelessWidget {
+class MakeRequestPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
@@ -23,7 +23,10 @@ class MakeRequestPanel extends StatelessWidget {
     this.slidingUpWidgetController,
     this.mapController,
   });
+  _MakeRequestPanelState createState() => _MakeRequestPanelState();
+}
 
+class _MakeRequestPanelState extends State<MakeRequestPanel> {
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
         GetIt.I.get<LocationStore>().place.location;
@@ -33,15 +36,23 @@ class MakeRequestPanel extends StatelessWidget {
   }
 
   _onReturnToSearch() {
-    slidingUpWidgetController.panelIndex = PanelIndex.DestinationAndSearch;
-    mapController.unfocusRoute();
+    widget.slidingUpWidgetController.panelIndex =
+        PanelIndex.DestinationAndSearch;
+    widget.mapController.unfocusRoute();
+  }
+
+  @override
+  void initState() {
+    widget.mapController.focusOnRoute();
+    super.initState();
   }
 
   @override
   build(BuildContext context) {
     // Only animate after everything is done building
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        slidingUpWidgetController.panelController.animatePanelToSnapPoint(
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget
+            .slidingUpWidgetController.panelController
+            .animatePanelToSnapPoint(
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         ));
@@ -52,7 +63,7 @@ class MakeRequestPanel extends StatelessWidget {
       children: <Widget>[
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: opacity,
+          opacity: widget.opacity,
           child: Padding(
             padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
             child: Text(
@@ -123,7 +134,7 @@ class MakeRequestPanel extends StatelessWidget {
         SizedBox(height: 10),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: opacity,
+          opacity: widget.opacity,
           child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16),
             child: Row(
@@ -207,7 +218,7 @@ class MakeRequestPanel extends StatelessWidget {
                       // and do page navigation in the returned VoidCallback.
                       // So that user won't missed out the reverse animation.
                       if (success) {
-                        slidingUpWidgetController.panelIndex =
+                        widget.slidingUpWidgetController.panelIndex =
                             PanelIndex.WaitingToMatch;
                       }
                     };

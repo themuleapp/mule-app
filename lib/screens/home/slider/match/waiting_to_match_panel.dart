@@ -1,32 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'dart:async';
 
-class WaitingToMatchPanel extends StatelessWidget {
+import 'package:mule/widgets/alert_widget.dart';
+
+class WaitingToMatchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final MapController mapController;
   final double loadingBarHeight;
   final double opacity = 1.0;
 
-  WaitingToMatchPanel(
-      {this.slidingUpWidgetController, this.loadingBarHeight = 5.0});
+  WaitingToMatchPanel({
+    this.slidingUpWidgetController,
+    this.mapController,
+    this.loadingBarHeight = 5.0,
+  });
 
-  startChecking() {
-    Timer.periodic(Duration(seconds: 10), (timer) async {
-      OrderData order = await httpClient.getActiveRequest();
-      if (order != null && order.status == Status.ACCEPTED) {
-        slidingUpWidgetController.panelIndex = PanelIndex.Matched;
-      }
-    });
+  @override
+  _WaitingToMatchState createState() => _WaitingToMatchState();
+}
+
+class _WaitingToMatchState extends State<WaitingToMatchPanel> {
+  Timer timer;
+  OrderData order;
+
+  @override
+  void initState() {
+    widget.mapController.focusOnRoute();
+    super.initState();
+    _checkOrder(true);
+  }
+
+  _checkOrder(bool keepChecking) async {
+    order = await httpClient.getActiveRequest();
+    if (order != null && order.status == Status.ACCEPTED) {
+      widget.slidingUpWidgetController.panelIndex = PanelIndex.Matched;
+    } else if (keepChecking) {
+      _startChecking();
+    }
+  }
+
+  _startChecking() {
+    timer = Timer.periodic(Duration(seconds: 10),
+        (timer) async => {if (mounted) _checkOrder(false)});
   }
 
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final double loadingBar = slidingUpWidgetController.radius * 2;
-    startChecking();
+    final double loadingBar = widget.slidingUpWidgetController.radius * 2;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -38,12 +65,12 @@ class WaitingToMatchPanel extends StatelessWidget {
               child: Container(
                 height: loadingBar,
                 child: ClipRect(
-                  clipper: ClipHeightQuarter(height: loadingBarHeight),
+                  clipper: ClipHeightQuarter(height: widget.loadingBarHeight),
                   child: ClipRRect(
                     borderRadius:
                         BorderRadius.all(Radius.circular(loadingBar / 2)),
                     child: LinearProgressIndicator(
-                      minHeight: loadingBarHeight,
+                      minHeight: widget.loadingBarHeight,
                       backgroundColor: AppTheme.secondaryBlue,
                       valueColor:
                           AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
@@ -62,7 +89,7 @@ class WaitingToMatchPanel extends StatelessWidget {
                     children: <Widget>[
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 500),
-                        opacity: opacity,
+                        opacity: widget.opacity,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Text(
@@ -88,6 +115,30 @@ class WaitingToMatchPanel extends StatelessWidget {
                                     15, 16, 17, 18, 20, 24, 28),
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 150,
+                        padding: EdgeInsets.only(left: 40),
+                        child: MaterialButton(
+                          color: Colors.redAccent,
+                          textColor: Colors.white,
+                          child: Text("CANCEL"),
+                          onPressed: () async {
+                            if (order != null &&
+                                await httpClient.deleteActiveRequest(order)) {
+                              widget.slidingUpWidgetController.panelIndex =
+                                  PanelIndex.DestinationAndSearch;
+                              timer.cancel();
+                              print("Successfully deleted request");
+                            } else {
+                              createDialogWidget(
+                                  context,
+                                  "Something went wrong...",
+                                  "Something went wrong while cancelling your request, please try again later.");
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),

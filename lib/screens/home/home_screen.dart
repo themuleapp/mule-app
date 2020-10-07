@@ -57,27 +57,31 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   _checkCurrentActiveStatus(snapshot) {
-    if (snapshot.hasData && snapshot.data != null) {
-      // TODO Replace fullname check by user being a mule or not
-      if (snapshot.data.createdBy != GetIt.I.get<UserInfoStore>().fullName) {
-        controller.panelIndex = PanelIndex.DestinationAndSearch;
-      } else {
-        switch (snapshot.data.status) {
-          case (Status.ACCEPTED):
-            controller.panelIndex = PanelIndex.Matched;
-            break;
-          case (Status.OPEN):
-            controller.panelIndex = PanelIndex.WaitingToMatch;
-            break;
-          default:
-            controller.panelIndex = PanelIndex.DestinationAndSearch;
-        }
-        OrderData order = snapshot.data;
-        GetIt.I.get<LocationStore>().updateDestination(DestinationSuggestion(
-            "", order.destination.description, order.destination.location));
-        GetIt.I.get<LocationStore>().updatePlace(PlacesSuggestion(
-            "", order.place.description, order.place.location));
+    if (!controller.isActive) {
+      return;
+    }
+    if (snapshot.data == null) {
+      controller.panelIndex = PanelIndex.DestinationAndSearch;
+      //TODO Replace fullname check by check if user is mule
+    } else if (snapshot.data.createdBy !=
+        GetIt.I.get<UserInfoStore>().fullName) {
+    } else {
+      OrderData order = snapshot.data;
+      switch (order.status) {
+        case (Status.ACCEPTED):
+          controller.panelIndex = PanelIndex.Matched;
+          break;
+        case (Status.OPEN):
+          print(order.status);
+          controller.panelIndex = PanelIndex.WaitingToMatch;
+          break;
+        default:
+          controller.panelIndex = PanelIndex.DestinationAndSearch;
       }
+      GetIt.I.get<LocationStore>().updateDestination(DestinationSuggestion(
+          "", order.destination.description, order.destination.location));
+      GetIt.I.get<LocationStore>().updatePlace(
+          PlacesSuggestion("", order.place.description, order.place.location));
     }
   }
 }

@@ -5,6 +5,8 @@ import 'package:mule/models/data/mule_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/confirm_dialogue.dart';
 
 class MatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -23,6 +25,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
 
   @override
   void initState() {
+    widget.mapController.focusOnRoute();
     updateOrder();
     super.initState();
   }
@@ -151,12 +154,21 @@ class _MatchedPanelState extends State<MatchedPanel> {
                       color: AppTheme.lightGrey.withOpacity(0.1),
                     ),
                     child: Icon(
-                      Icons.report_problem,
-                      color: AppTheme.secondaryBlue,
+                      Icons.delete,
+                      color: Colors.redAccent,
                       size: AppTheme.elementSize(
                           screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                     )),
-                onTap: () {},
+                onTap: () async {
+                  if (await httpClient.deleteActiveRequest(order)) {
+                    widget.slidingUpWidgetController.panelIndex =
+                        PanelIndex.DestinationAndSearch;
+                    widget.mapController.focusCurrentLocation();
+                  } else {
+                    createDialogWidget(context, "Something went wrong...",
+                        "Something went wrong when cancelling your request, please try again later.");
+                  }
+                },
               )
             ],
           ),

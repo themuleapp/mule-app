@@ -289,10 +289,10 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
   if (openOrders == null || history == null) {
     return {};
   }
-  orders
-    ..addAll(openOrders)
-    ..addAll(history)
-    ..add(accepted);
+  if (accepted != null) {
+    orders.add(accepted);
+  }
+  orders..addAll(openOrders)..addAll(history);
   return _sortOrders(orders);
 }
 
