@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
@@ -115,27 +116,45 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
-                      Container(
-                        height: 30,
-                        width: 150,
-                        padding: EdgeInsets.only(left: 40),
-                        child: MaterialButton(
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, bottom: 8),
+                        child: ProgressButton(
+                          defaultWidget: Text(
+                            'Cancel',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              letterSpacing: 0.0,
+                              color: AppTheme.white,
+                            ),
+                          ),
+                          progressWidget: CircularProgressIndicator(
+                              backgroundColor: AppTheme.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppTheme.secondaryBlue)),
+                          width: MediaQuery.of(context).size.width - 100,
+                          height: 48,
                           color: Colors.redAccent,
-                          textColor: Colors.white,
-                          child: Text("CANCEL"),
+                          borderRadius: 16,
+                          animate: true,
+                          type: ProgressButtonType.Raised,
                           onPressed: () async {
-                            if (order != null &&
-                                await httpClient.deleteActiveRequest(order)) {
-                              widget.slidingUpWidgetController.panelIndex =
-                                  PanelIndex.DestinationAndSearch;
-                              timer.cancel();
-                              print("Successfully deleted request");
-                            } else {
-                              createDialogWidget(
-                                  context,
-                                  "Something went wrong...",
-                                  "Something went wrong while cancelling your request, please try again later.");
-                            }
+                            return () async {
+                              if (order != null &&
+                                  await httpClient.deleteActiveRequest(order)) {
+                                widget.slidingUpWidgetController.panelIndex =
+                                    PanelIndex.DestinationAndSearch;
+                                timer.cancel();
+                                print("Successfully deleted request");
+                              } else {
+                                createDialogWidget(
+                                    context,
+                                    "There was a problem",
+                                    "Please try again later!");
+                              }
+                            };
                           },
                         ),
                       ),

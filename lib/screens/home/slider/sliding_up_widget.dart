@@ -106,11 +106,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.WaitingToMatch:
         setState(() {
-          _snapValue = 0.2;
+          _snapValue = 0.25;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = true;
+          _myLocationButtonVisible = false;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
