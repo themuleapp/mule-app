@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
@@ -17,8 +19,7 @@ class _MyHomePageState extends State<MyHomePage>
   bool get wantKeepAlive => true;
 
   final SlidingUpWidgetController controller = SlidingUpWidgetController();
-  Future<Status> orderStatus =
-      httpClient.getActiveRequest().then((value) => value.status);
+  Future<OrderData> order = httpClient.getActiveRequest();
 
   @override
   void dispose() {
@@ -37,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage>
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: FutureBuilder(
-              future: orderStatus,
+              future: order,
               builder: (context, snapshot) {
                 SlidingUpWidget slidingUpWidget = SlidingUpWidget(
                   beginScreen: PanelIndex.Loading,
@@ -46,15 +47,21 @@ class _MyHomePageState extends State<MyHomePage>
                   controller: controller,
                 );
                 if (snapshot.hasData && snapshot.data != null) {
-                  switch (snapshot.data) {
-                    case (Status.ACCEPTED):
-                      controller.panelIndex = PanelIndex.Matched;
-                      break;
-                    case (Status.OPEN):
-                      controller.panelIndex = PanelIndex.WaitingToMatch;
-                      break;
-                    default:
-                      controller.panelIndex = PanelIndex.DestinationAndSearch;
+                  // TODO Replace fullname check by user being a mule or not
+                  if (snapshot.data.createdBy !=
+                      GetIt.I.get<UserInfoStore>().fullName) {
+                    controller.panelIndex = PanelIndex.DestinationAndSearch;
+                  } else {
+                    switch (snapshot.data.status) {
+                      case (Status.ACCEPTED):
+                        controller.panelIndex = PanelIndex.Matched;
+                        break;
+                      case (Status.OPEN):
+                        controller.panelIndex = PanelIndex.WaitingToMatch;
+                        break;
+                      default:
+                        controller.panelIndex = PanelIndex.DestinationAndSearch;
+                    }
                   }
                 }
                 return slidingUpWidget;
