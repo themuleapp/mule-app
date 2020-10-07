@@ -44,6 +44,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   bool _isDraggable;
   bool _backdropTapClosesPanel;
   bool _myLocationButtonVisible;
+  Function _mapStateCallback;
 
   // Panel state
   PanelIndex panelIndex;
@@ -77,6 +78,10 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
           _myLocationButtonVisible = true;
+          _mapStateCallback = () {
+            _mapController.unfocusRoute();
+            _mapController.focusCurrentLocation();
+          };
         });
         _setCurrentPanel(SearchPanel(
           slidingUpWidgetController: widget.controller,
@@ -90,6 +95,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
           _myLocationButtonVisible = false;
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
         });
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
@@ -103,6 +111,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
           _myLocationButtonVisible = true;
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
         });
         _setCurrentPanel(WaitingToMatchPanel(
           slidingUpWidgetController: widget.controller,
@@ -116,6 +127,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
           _myLocationButtonVisible = true;
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
         });
         _setCurrentPanel(MatchedPanel(
           slidingUpWidgetController: widget.controller,
@@ -137,6 +151,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       default:
         throw UnimplementedError("Called panel not implemented");
+    }
+    if (!_mapController.isMapLoading) {
+      _mapStateCallback();
     }
   }
 
@@ -176,6 +193,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             MapWidget(
               controller: _mapController,
               slidingUpWidgetController: widget.controller,
+              initCallback: _mapStateCallback,
             ),
             Visibility(
               visible: _myLocationButtonVisible,

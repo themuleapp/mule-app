@@ -43,7 +43,6 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
 
   @override
   void initState() {
-    widget.mapController.focusOnRoute();
     super.initState();
   }
 

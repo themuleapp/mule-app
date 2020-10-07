@@ -187,8 +187,6 @@ class _SearchPanelState extends State<SearchPanel> {
   @override
   void initState() {
     _destinationFocusNode.addListener(() => _handleFocus());
-    widget.mapController.unfocusRoute();
-    widget.mapController.focusCurrentLocation();
     super.initState();
   }
 }

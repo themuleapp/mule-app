@@ -24,8 +24,13 @@ import 'package:mule/widgets/loading-animation.dart';
 class MapWidget extends StatefulWidget {
   final MapController controller;
   final SlidingUpWidgetController slidingUpWidgetController;
+  final Function initCallback;
 
-  MapWidget({this.controller, this.slidingUpWidgetController});
+  MapWidget({
+    this.controller,
+    this.slidingUpWidgetController,
+    this.initCallback,
+  });
 
   @override
   _MapWidgetState createState() => _MapWidgetState();
@@ -249,6 +254,7 @@ class _MapWidgetState extends State<MapWidget> {
     if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
+      polylineCoordinates.clear();
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
@@ -435,6 +441,7 @@ class MapController {
     PointLatLng target;
     PointLatLng origin =
         PointLatLng(muleLocation.latitude, muleLocation.longitude);
+    //DOESN'T WORK
     if (_mapWidgetState.calculateDistance(muleLocation, place) <
         triggerDistance) {
       target = PointLatLng(place.latitude, place.longitude);
@@ -447,5 +454,9 @@ class MapController {
     );
     await _mapWidgetState._singleMuleMarker(muleLocation);
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
+  }
+
+  bool get isMapLoading {
+    return _mapWidgetState == null || _mapWidgetState._isMapLoading;
   }
 }

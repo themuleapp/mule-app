@@ -25,7 +25,6 @@ class _MatchedPanelState extends State<MatchedPanel> {
 
   @override
   void initState() {
-    widget.mapController.focusOnRoute();
     updateOrder();
     super.initState();
   }

@@ -31,7 +31,6 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
 
   @override
   void initState() {
-    widget.mapController.focusOnRoute();
     super.initState();
     _checkOrder(true);
   }
