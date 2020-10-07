@@ -55,6 +55,13 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
     final screenHeight = MediaQuery.of(context).size.height;
     final double loadingBar = widget.slidingUpWidgetController.radius * 2;
 
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget
+            .slidingUpWidgetController.panelController
+            .animatePanelToSnapPoint(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        ));
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
