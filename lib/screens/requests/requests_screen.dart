@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/loading-animation.dart';
@@ -293,6 +295,8 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
     orders.add(accepted);
   }
   orders..addAll(openOrders)..addAll(history);
+  orders.removeWhere(
+      (element) => element.createdBy == GetIt.I.get<UserInfoStore>().fullName);
   return _sortOrders(orders);
 }
 
