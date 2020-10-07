@@ -54,6 +54,21 @@ class HttpClient {
     );
   }
 
+  Future<Response> _makeAuthenticatedDeleteRequest(
+      String path, Map<String, dynamic> data) async {
+    final String token = await Config.getToken();
+    return await _dio.delete(
+      path,
+      data: data,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      ),
+    );
+  }
+
   Future<Response> _makePostRequest(
       String path, Map<String, dynamic> data) async {
     return await _dio.post(
@@ -253,6 +268,12 @@ class HttpClient {
     }
     print(res.data['request']);
     return OrderData.fromJson(res.data['request']);
+  }
+
+  Future<bool> deleteActiveRequest(OrderData order) async {
+    Response res = await _makeAuthenticatedDeleteRequest(
+        '/requests/cancel', {"id": order.id});
+    return res.statusCode == 200;
   }
 }
 
