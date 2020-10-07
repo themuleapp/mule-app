@@ -85,7 +85,7 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 500),
@@ -133,7 +133,7 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                           progressWidget: CircularProgressIndicator(
                               backgroundColor: AppTheme.white,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppTheme.secondaryBlue)),
+                                  Colors.redAccent)),
                           width: MediaQuery.of(context).size.width - 100,
                           height: 48,
                           color: Colors.redAccent,
@@ -141,6 +141,8 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                           animate: true,
                           type: ProgressButtonType.Raised,
                           onPressed: () async {
+                            int score = await Future.delayed(
+                                const Duration(milliseconds: 2500), () => 42);
                             return () async {
                               if (order != null &&
                                   await httpClient.deleteActiveRequest(order)) {
