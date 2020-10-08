@@ -122,7 +122,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.Matched:
         setState(() {
-          _snapValue = null;
+          _snapValue = .1;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
