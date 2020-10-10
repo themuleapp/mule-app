@@ -23,10 +23,10 @@ class WaitingToMatchPanel extends StatefulWidget {
   });
 
   @override
-  _WaitingToMatchState createState() => _WaitingToMatchState();
+  WaitingToMatchState createState() => WaitingToMatchState();
 }
 
-class _WaitingToMatchState extends State<WaitingToMatchPanel> {
+class WaitingToMatchState extends State<WaitingToMatchPanel> {
   Timer timer;
   OrderData order;
 
@@ -48,6 +48,18 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
   _startChecking() {
     timer = Timer.periodic(Duration(seconds: 10),
         (timer) async => {if (mounted) _checkOrder(false)});
+  }
+
+  cancelRequest() async {
+    if (order != null && await httpClient.deleteActiveRequest(order)) {
+      widget.slidingUpWidgetController.panelIndex =
+          PanelIndex.DestinationAndSearch;
+      timer.cancel();
+      print("Successfully deleted request");
+    } else {
+      createDialogWidget(
+          context, "There was a problem", "Please try again later!");
+    }
   }
 
   @override

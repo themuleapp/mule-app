@@ -8,6 +8,7 @@ import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:mule/screens/home/slider/match/matched_panel.dart';
 
 import 'match/matched_panel.dart';
 
@@ -44,6 +45,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   bool _isDraggable;
   bool _backdropTapClosesPanel;
   bool _myLocationButtonVisible;
+  bool _cancelButtonVisible;
   Function _mapStateCallback;
 
   // Panel state
@@ -78,6 +80,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
           _myLocationButtonVisible = true;
+          _cancelButtonVisible = false;
           _mapStateCallback = () {
             _mapController.unfocusRoute();
             _mapController.focusCurrentLocation();
@@ -95,6 +98,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
           _myLocationButtonVisible = false;
+          _cancelButtonVisible = false;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -111,6 +115,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
           _myLocationButtonVisible = false;
+          _cancelButtonVisible = true;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -127,6 +132,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
           _myLocationButtonVisible = true;
+          _cancelButtonVisible = true;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -143,6 +149,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
           _myLocationButtonVisible = false;
+          _cancelButtonVisible = false;
         });
         _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
@@ -208,12 +215,46 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                   ),
                   child: FittedBox(
                     child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       backgroundColor: AppTheme.white,
                       child: Icon(
-                        Icons.my_location,
+                        Icons.near_me,
                         color: AppTheme.darkGrey,
                       ),
                       onPressed: () => _mapController.focusCurrentLocation(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _cancelButtonVisible,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  height: widget.buttonSize,
+                  width: widget.buttonSize,
+                  margin: EdgeInsets.only(
+                    bottom: widget.minHeight + widget.buttonSpacing,
+                    right: widget.buttonSpacing,
+                  ),
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      backgroundColor: AppTheme.white,
+                      child: Icon(
+                        Icons.close,
+                        color: AppTheme.darkGrey,
+                      ),
+                      onPressed: () {
+                        if (panelIndex == PanelIndex.WaitingToMatch) {
+                          WaitingToMatchState().cancelRequest();
+                        }
+                      },
                     ),
                   ),
                 ),
