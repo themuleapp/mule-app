@@ -136,50 +136,50 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, right: 16, bottom: 8),
-                        child: ProgressButton(
-                          defaultWidget: Text(
-                            'Cancel',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              letterSpacing: 0.0,
-                              color: AppTheme.white,
-                            ),
-                          ),
-                          progressWidget: CircularProgressIndicator(
-                              backgroundColor: AppTheme.white,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.redAccent)),
-                          width: MediaQuery.of(context).size.width - 100,
-                          height: 48,
-                          color: Colors.redAccent,
-                          borderRadius: 16,
-                          animate: true,
-                          type: ProgressButtonType.Raised,
-                          onPressed: () async {
-                            int score = await Future.delayed(
-                                const Duration(milliseconds: 2500), () => 42);
-                            return () async {
-                              if (order != null &&
-                                  await httpClient.deleteActiveRequest(order)) {
-                                widget.slidingUpWidgetController.panelIndex =
-                                    PanelIndex.DestinationAndSearch;
-                                timer.cancel();
-                                print("Successfully deleted request");
-                              } else {
-                                createDialogWidget(
-                                    context,
-                                    "There was a problem",
-                                    "Please try again later!");
-                              }
-                            };
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(
+                      //       left: 16, right: 16, bottom: 8),
+                      //   child: ProgressButton(
+                      //     defaultWidget: Text(
+                      //       'Cancel',
+                      //       textAlign: TextAlign.left,
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 18,
+                      //         letterSpacing: 0.0,
+                      //         color: AppTheme.white,
+                      //       ),
+                      //     ),
+                      //     progressWidget: CircularProgressIndicator(
+                      //         backgroundColor: AppTheme.white,
+                      //         valueColor: AlwaysStoppedAnimation<Color>(
+                      //             Colors.redAccent)),
+                      //     width: MediaQuery.of(context).size.width - 100,
+                      //     height: 48,
+                      //     color: Colors.redAccent,
+                      //     borderRadius: 16,
+                      //     animate: true,
+                      //     type: ProgressButtonType.Raised,
+                      //     onPressed: () async {
+                      //       int score = await Future.delayed(
+                      //           const Duration(milliseconds: 2500), () => 42);
+                      //       return () async {
+                      //         if (order != null &&
+                      //             await httpClient.deleteActiveRequest(order)) {
+                      //           widget.slidingUpWidgetController.panelIndex =
+                      //               PanelIndex.DestinationAndSearch;
+                      //           timer.cancel();
+                      //           print("Successfully deleted request");
+                      //         } else {
+                      //           createDialogWidget(
+                      //               context,
+                      //               "There was a problem",
+                      //               "Please try again later!");
+                      //         }
+                      //       };
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
