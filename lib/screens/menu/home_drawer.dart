@@ -28,7 +28,7 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
-
+  bool state = true;
   @override
   void initState() {
     setdDrawerListArray();
@@ -197,9 +197,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                               height: AppTheme.elementSize(
                                   screenHeight, 25, 25, 25, 25, 25, 30, 30, 35),
                               child: Switch(
-                                value: true,
+                                value: state,
                                 activeColor: AppTheme.lightBlue,
-                                onChanged: (bool state) {},
+                                onChanged: (bool s) {
+                                  setState(() {
+                                    state = s;
+                                  });
+                                },
                               ),
                             )
                           ],
