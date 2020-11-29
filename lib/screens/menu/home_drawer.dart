@@ -69,16 +69,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Settings',
         icon: Icon(Icons.settings),
       ),
-      DrawerList(
-        index: DrawerIndex.Feedback,
-        labelName: 'Feedback',
-        icon: Icon(Icons.feedback),
-      ),
-      DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Report',
-        icon: Icon(Icons.report_problem),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Feedback,
+      //   labelName: 'Feedback',
+      //   icon: Icon(Icons.feedback),
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.Help,
+      //   labelName: 'Report',
+      //   icon: Icon(Icons.report_problem),
+      // ),
     ];
   }
 
