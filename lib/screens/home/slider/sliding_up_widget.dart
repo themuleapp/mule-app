@@ -7,6 +7,7 @@ import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
+import 'package:mule/widgets/stylized_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 
@@ -40,24 +41,43 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   final MapController _mapController = MapController();
 
   // Animation
+  EdgeInsets buttonMargin;
   double _snapValue;
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
-  bool _myLocationButtonVisible;
-  bool _cancelButtonVisible;
   Function _mapStateCallback;
 
   // Panel state
   PanelIndex panelIndex;
   Widget _currentPanel;
+  List<StylizedButton> _buttonList = [];
+
+  // Buttons
+  StylizedButton currentLocationButton;
+  StylizedButton cancelButton;
 
   @override
   void initState() {
     super.initState();
     panelIndex = widget.beginScreen;
     _updatePanel();
-
+    buttonMargin = EdgeInsets.only(
+      bottom: widget.minHeight + widget.buttonSpacing,
+      right: widget.buttonSpacing,
+    );
+    currentLocationButton = CurrentLocationButton(
+        size: widget.buttonSize,
+        callback: () {
+          if (!_mapController.isMapLoading)
+            _mapController.focusCurrentLocation();
+        },
+        margin: buttonMargin);
+    cancelButton = CancelButton(
+      size: widget.buttonSize,
+      callback: () => null,
+      margin: buttonMargin,
+    );
     widget.controller?._addState(this);
   }
 
@@ -79,8 +99,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = true;
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
-          _myLocationButtonVisible = true;
-          _cancelButtonVisible = false;
+          _buttonList = [currentLocationButton];
           _mapStateCallback = () {
             _mapController.unfocusRoute();
             _mapController.focusCurrentLocation();
@@ -97,8 +116,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
-          _myLocationButtonVisible = false;
-          _cancelButtonVisible = false;
+          _buttonList = [cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -114,8 +132,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = false;
-          _cancelButtonVisible = true;
+          _buttonList = [currentLocationButton, cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -131,8 +148,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = true;
-          _cancelButtonVisible = true;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -148,9 +163,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = false;
-          _cancelButtonVisible = false;
         });
+        _buttonList = [currentLocationButton, cancelButton];
         _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
@@ -202,64 +216,27 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               slidingUpWidgetController: widget.controller,
               initCallback: _mapStateCallback,
             ),
-            Visibility(
-              visible: _myLocationButtonVisible,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  height: widget.buttonSize,
-                  width: widget.buttonSize,
-                  margin: EdgeInsets.only(
-                    bottom: widget.minHeight + widget.buttonSpacing,
-                    right: widget.buttonSpacing,
-                  ),
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      backgroundColor: AppTheme.white,
-                      child: Icon(
-                        Icons.near_me,
-                        color: AppTheme.darkGrey,
-                      ),
-                      onPressed: () => _mapController.focusCurrentLocation(),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // Expanded(child: null),
+                  Container(
+                    height: _buttonList.length *
+                            (widget.buttonSize + 2 * widget.buttonSpacing) +
+                        widget.controller.currentHeight,
+                    width: widget.buttonSize + widget.buttonSpacing,
+                    child: ListView.builder(
+                      itemCount: _buttonList.length,
+                      itemBuilder: (context, i) => _buttonList[i],
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-            Visibility(
-              visible: _cancelButtonVisible,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  height: widget.buttonSize,
-                  width: widget.buttonSize,
-                  margin: EdgeInsets.only(
-                    bottom: widget.minHeight + widget.buttonSpacing,
-                    right: widget.buttonSpacing,
-                  ),
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      backgroundColor: AppTheme.white,
-                      child: Icon(
-                        Icons.close,
-                        color: AppTheme.darkGrey,
-                      ),
-                      onPressed: () {
-                        if (panelIndex == PanelIndex.WaitingToMatch) {
-                          WaitingToMatchState().cancelRequest();
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
