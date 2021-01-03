@@ -28,11 +28,20 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
-  bool state = true;
+
   @override
   void initState() {
-    setdDrawerListArray();
+    updateDrawerState();
     super.initState();
+  }
+
+  void updateDrawerState() {
+    setState(() {
+      if (GetIt.I.get<UserInfoStore>().isMule)
+        setMuleDrawerList();
+      else
+        setUserDrawerListArray();
+    });
   }
 
   _handleSignOut() async {
@@ -42,7 +51,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
-  void setdDrawerListArray() {
+  void setMuleDrawerList() {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
@@ -79,6 +88,31 @@ class _HomeDrawerState extends State<HomeDrawer> {
       //   labelName: 'Report',
       //   icon: Icon(Icons.report_problem),
       // ),
+    ];
+  }
+
+  void setUserDrawerListArray() {
+    drawerList = <DrawerList>[
+      DrawerList(
+        index: DrawerIndex.HOME,
+        labelName: 'Home',
+        icon: Icon(Icons.home),
+      ),
+      DrawerList(
+        index: DrawerIndex.Orders,
+        labelName: 'Orders',
+        icon: Icon(Icons.shopping_basket),
+      ),
+      DrawerList(
+        index: DrawerIndex.Chat,
+        labelName: 'Chat',
+        icon: Icon(Icons.chat),
+      ),
+      DrawerList(
+        index: DrawerIndex.Settings,
+        labelName: 'Settings',
+        icon: Icon(Icons.settings),
+      ),
     ];
   }
 
@@ -142,9 +176,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   ),
                                   child: GestureDetector(
                                     child: CircleAvatar(
-                                      backgroundImage: GetIt.I
-                                          .get<UserInfoStore>()
-                                          .profilePicture,
+                                      backgroundImage: (AssetImage(
+                                          "assets/images/profile_picture_placeholder.png")),
                                     ),
                                     onTap: () {
                                       Navigator.of(context).push(
@@ -197,12 +230,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
                               height: AppTheme.elementSize(
                                   screenHeight, 25, 25, 25, 25, 25, 30, 30, 35),
                               child: Switch(
-                                value: state,
+                                value: GetIt.I.get<UserInfoStore>().isMule,
                                 activeColor: AppTheme.lightBlue,
-                                onChanged: (bool s) {
-                                  setState(() {
-                                    state = s;
-                                  });
+                                onChanged: (state) {
+                                  GetIt.I
+                                      .get<UserInfoStore>()
+                                      .updateIsMule(state);
+                                  updateDrawerState();
                                 },
                               ),
                             )
