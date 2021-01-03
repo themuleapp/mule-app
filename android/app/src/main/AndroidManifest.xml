@@ -30,5 +30,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCZQ2LiMZViXvH7xoSA5M2sK635Bgui2zs" />
+        <intent-filter>
+            <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+
     </application>
 </manifest>
