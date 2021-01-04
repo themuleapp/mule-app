@@ -1,8 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:mule/config/config.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:mule/config/http_client.dart';
 
 part 'user_info_store.g.dart';
 
@@ -62,15 +61,9 @@ abstract class _UserInfoStore with Store {
 
   @action
   Future<void> updateProfilePicture() async {
-    final String token = await Config.getToken();
-    Random rng = Random();
-    int number = rng.nextInt(100);
+    ImageProvider imageProvider = await httpClient.getProfilePicture();
 
-    this._profilePicture = await NetworkImage(
-      "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
-      scale: 1.0,
-      headers: {'Authorization': token},
-    );
+    if (imageProvider != null) this._profilePicture = imageProvider;
   }
 
   @computed

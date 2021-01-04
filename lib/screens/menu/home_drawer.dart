@@ -176,8 +176,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                   ),
                                   child: GestureDetector(
                                     child: CircleAvatar(
-                                      backgroundImage: (AssetImage(
-                                          "assets/images/profile_picture_placeholder.png")),
+                                      backgroundImage: GetIt.I
+                                          .get<UserInfoStore>()
+                                          .profilePicture,
                                     ),
                                     onTap: () {
                                       Navigator.of(context).push(
@@ -453,6 +454,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
     widget.callBackIndex(indexScreen);
   }
+
+  ImageProvider getProfilePicture(ImageProvider imageProvider) {}
 }
 
 enum DrawerIndex {
