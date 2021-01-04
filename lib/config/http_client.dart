@@ -221,12 +221,16 @@ class HttpClient {
 
     Response<dynamic> res = await _makeAuthenticatedGetRequest(
         "${Config.BASE_URL}profile/profile-image" + "?v=${number}");
+    String token = await Config.getToken();
 
     if (res.statusCode != 200) return null;
-    if (!res.data['success']) return null;
-    Uint8List bytes = base64Decode(res.data['msg']);
-
-    return MemoryImage(bytes);
+    try {
+      if (!res.data['success']) return null;
+    } catch (exception) {
+      return NetworkImage(
+          "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
+          headers: {"Authorization": token});
+    }
   }
 
   Future<bool> acceptRequest(String requestId) async {
