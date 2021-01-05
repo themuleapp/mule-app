@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage>
       OrderData order = snapshot.data;
       switch (order.status) {
         case (Status.ACCEPTED):
-          controller.panelIndex = PanelIndex.Matched;
+          controller.panelIndex = PanelIndex.UserMatched;
           break;
         case (Status.OPEN):
           print(order.status);

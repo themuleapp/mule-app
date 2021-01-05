@@ -120,7 +120,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           mapController: _mapController,
         ));
         break;
-      case PanelIndex.Matched:
+      case PanelIndex.UserMatched:
         setState(() {
           _snapValue = null;
           _isDraggable = false;
@@ -280,6 +280,7 @@ enum PanelIndex {
   DestinationAndSearch,
   MakeRequest,
   WaitingToMatch,
-  Matched,
-  Loading
+  UserMatched,
+  MuleMatched,
+  Loading,
 }
