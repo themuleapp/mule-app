@@ -9,6 +9,7 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'match/mule_matched_panel.dart';
 import 'match/user_matched_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
