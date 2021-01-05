@@ -9,7 +9,7 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import 'match/matched_panel.dart';
+import 'match/user_matched_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final SlidingUpWidgetController controller;
@@ -131,7 +131,23 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             _mapController.focusOnRoute();
           };
         });
-        _setCurrentPanel(MatchedPanel(
+        _setCurrentPanel(UserMatchedPanel(
+          slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
+        ));
+        break;
+      case PanelIndex.MuleMatched:
+        setState(() {
+          _snapValue = null;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _backdropOpacity = 0;
+          _myLocationButtonVisible = true;
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
+        });
+        _setCurrentPanel(MuleMatchedPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
         ));
