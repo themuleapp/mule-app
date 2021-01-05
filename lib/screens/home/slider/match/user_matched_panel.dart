@@ -8,18 +8,18 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 
-class MatchedPanel extends StatefulWidget {
+class UserMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
 
-  MatchedPanel({this.slidingUpWidgetController, this.mapController});
+  UserMatchedPanel({this.slidingUpWidgetController, this.mapController});
 
   @override
-  _MatchedPanelState createState() => _MatchedPanelState();
+  _UserMatchedPanelState createState() => _UserMatchedPanelState();
 }
 
-class _MatchedPanelState extends State<MatchedPanel> {
+class _UserMatchedPanelState extends State<UserMatchedPanel> {
   OrderData order;
   MuleData mule;
 
