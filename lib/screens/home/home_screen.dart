@@ -63,16 +63,19 @@ class _MyHomePageState extends State<MyHomePage>
     if (snapshot.data == null) {
       controller.panelIndex = PanelIndex.DestinationAndSearch;
       //TODO Replace fullname check by check if user is mule
-    } else if (snapshot.data.createdBy !=
-        GetIt.I.get<UserInfoStore>().fullName) {
+      // } else if (snapshot.data.createdBy !=
+      //     GetIt.I.get<UserInfoStore>().fullName) {
     } else {
       OrderData order = snapshot.data;
       switch (order.status) {
         case (Status.ACCEPTED):
-          controller.panelIndex = PanelIndex.UserMatched;
+          if (snapshot.data.createdBy != GetIt.I.get<UserInfoStore>().isMule) {
+            controller.panelIndex = PanelIndex.MuleMatched;
+          } else {
+            controller.panelIndex = PanelIndex.UserMatched;
+          }
           break;
         case (Status.OPEN):
-          print(order.status);
           controller.panelIndex = PanelIndex.WaitingToMatch;
           break;
         default:
