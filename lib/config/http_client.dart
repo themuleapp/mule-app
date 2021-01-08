@@ -269,13 +269,6 @@ class HttpClient {
     return OrderData.fromJson(res.data['request']);
   }
 
-  Future<bool> deleteActiveRequest(OrderData order) async {
-    Response res = await _makeAuthenticatedDeleteRequest(
-        '/requests/cancel', {"requestId": order.id});
-    return res.data['status'] == 200;
-  }
-
-
   Future<void> uploadDeviceToken(
       UploadDeviceTokenReq uploadDeviceTokenReq) async {
     Response res = await _makeAuthenticatedPostRequest(
@@ -285,6 +278,15 @@ class HttpClient {
       print('There was a problem uploading the deviceToken!!');
     }
   }
+
+  Future<bool> deleteActiveRequest(OrderData order) async {
+    Response res = await _makeAuthenticatedDeleteRequest(
+        '/requests/cancel', {"requestId": order.id});
+    return res.data['status'] == 200;
+  }
+
+
+
 }
 
 HttpClient httpClient = new HttpClient();
