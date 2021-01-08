@@ -6,12 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/tab.dart';
+
+import '../../navigation_home_screen.dart';
 
 class RequestsScreen extends StatefulWidget {
   static final String ACCEPT = 'accept';
@@ -25,6 +28,7 @@ class _RequestsScreenState extends State<RequestsScreen>
     with TickerProviderStateMixin {
   TabController _tabController;
   Future<Map<Status, List<OrderData>>> requestedFromMe = getOrders();
+  final SlidingUpWidgetController controller = SlidingUpWidgetController();
 
   @override
   initState() {
@@ -111,6 +115,10 @@ class _RequestsScreenState extends State<RequestsScreen>
       // Send api request
       // Remove from local list
       success = await httpClient.acceptRequest(requestId);
+      controller.panelIndex = PanelIndex.MuleMatched;
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
       // Remove from local list
