@@ -116,8 +116,8 @@ class _RequestsScreenState extends State<RequestsScreen>
       // Remove from local list
       success = await httpClient.acceptRequest(requestId);
       // controller.panelIndex = PanelIndex.MuleMatched;
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
       //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
