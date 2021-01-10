@@ -66,11 +66,14 @@ class _MyHomePageState extends State<MyHomePage>
       //TODO Replace fullname check by check if user is mule
       // } else if (snapshot.data.createdBy !=
       //     GetIt.I.get<UserInfoStore>().fullName) {
+
+      //     }
     } else {
       OrderData order = snapshot.data;
       switch (order.status) {
         case (Status.ACCEPTED):
-          if (snapshot.data.createdBy != GetIt.I.get<UserInfoStore>().isMule) {
+          if (snapshot.data.createdBy !=
+              GetIt.I.get<UserInfoStore>().fullName) {
             controller.panelIndex = PanelIndex.MuleMatched;
           } else {
             controller.panelIndex = PanelIndex.UserMatched;

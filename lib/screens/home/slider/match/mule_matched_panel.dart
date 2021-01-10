@@ -78,7 +78,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Text(
-                        (order.createdBy != null) ? order.createdBy : "LOADING",
+                        (order != null) ? order.createdBy : "LOADING",
                         style: TextStyle(
                           color: AppTheme.darkerText,
                           fontWeight: FontWeight.w700,
