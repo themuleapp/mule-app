@@ -29,7 +29,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
     super.initState();
   }
 
-  updateOrder() async {
+  updateOrder() {
     setState(() async {
       order = await httpClient.getActiveRequest();
       if (order.status == Status.ACCEPTED) {
