@@ -11,7 +11,7 @@ Future<bool> loadCurrentPosition() {
   Geolocator geolocator = Geolocator();
 
   Future<bool> isLocationLoaded =
-      geolocator.getCurrentPosition().then((position) async {
+      Geolocator.getCurrentPosition().then((position) async {
     GetIt.I.get<LocationStore>().updateCurrentLocation(position);
     return GetIt.I.get<LocationStore>().isLocationLoaded;
   });

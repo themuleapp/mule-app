@@ -41,7 +41,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
           child: Padding(
             padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
             child: Text(
-              'En Route',
+              'You are en route',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
