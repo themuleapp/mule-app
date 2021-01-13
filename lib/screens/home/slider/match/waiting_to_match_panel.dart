@@ -9,24 +9,27 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'dart:async';
 
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 class WaitingToMatchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double loadingBarHeight;
   final double opacity = 1.0;
+  final StylizedButton buttonBridge;
 
   WaitingToMatchPanel({
     this.slidingUpWidgetController,
     this.mapController,
     this.loadingBarHeight = 5.0,
+    this.buttonBridge,
   });
 
   @override
-  _WaitingToMatchState createState() => _WaitingToMatchState();
+  WaitingToMatchState createState() => WaitingToMatchState();
 }
 
-class _WaitingToMatchState extends State<WaitingToMatchPanel> {
+class WaitingToMatchState extends State<WaitingToMatchPanel> {
   Timer timer;
   OrderData order;
 
@@ -34,6 +37,7 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
   void initState() {
     super.initState();
     _checkOrder(true);
+    widget.buttonBridge?.callback = cancelRequest;
   }
 
   _checkOrder(bool keepChecking) async {
@@ -48,6 +52,18 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
   _startChecking() {
     timer = Timer.periodic(Duration(seconds: 10),
         (timer) async => {if (mounted) _checkOrder(false)});
+  }
+
+  cancelRequest() async {
+    if (order != null && await httpClient.deleteActiveRequest(order)) {
+      widget.slidingUpWidgetController.panelIndex =
+          PanelIndex.DestinationAndSearch;
+      timer.cancel();
+      print("Successfully deleted request");
+    } else {
+      createDialogWidget(
+          context, "There was a problem", "Please try again later!");
+    }
   }
 
   @override
@@ -124,50 +140,50 @@ class _WaitingToMatchState extends State<WaitingToMatchPanel> {
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, right: 16, bottom: 8),
-                        child: ProgressButton(
-                          defaultWidget: Text(
-                            'Cancel',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              letterSpacing: 0.0,
-                              color: AppTheme.white,
-                            ),
-                          ),
-                          progressWidget: CircularProgressIndicator(
-                              backgroundColor: AppTheme.white,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.redAccent)),
-                          width: MediaQuery.of(context).size.width - 100,
-                          height: 48,
-                          color: Colors.redAccent,
-                          borderRadius: 16,
-                          animate: true,
-                          type: ProgressButtonType.Raised,
-                          onPressed: () async {
-                            int score = await Future.delayed(
-                                const Duration(milliseconds: 2500), () => 42);
-                            return () async {
-                              if (order != null &&
-                                  await httpClient.deleteActiveRequest(order)) {
-                                widget.slidingUpWidgetController.panelIndex =
-                                    PanelIndex.DestinationAndSearch;
-                                timer.cancel();
-                                print("Successfully deleted request");
-                              } else {
-                                createDialogWidget(
-                                    context,
-                                    "There was a problem",
-                                    "Please try again later!");
-                              }
-                            };
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(
+                      //       left: 16, right: 16, bottom: 8),
+                      //   child: ProgressButton(
+                      //     defaultWidget: Text(
+                      //       'Cancel',
+                      //       textAlign: TextAlign.left,
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 18,
+                      //         letterSpacing: 0.0,
+                      //         color: AppTheme.white,
+                      //       ),
+                      //     ),
+                      //     progressWidget: CircularProgressIndicator(
+                      //         backgroundColor: AppTheme.white,
+                      //         valueColor: AlwaysStoppedAnimation<Color>(
+                      //             Colors.redAccent)),
+                      //     width: MediaQuery.of(context).size.width - 100,
+                      //     height: 48,
+                      //     color: Colors.redAccent,
+                      //     borderRadius: 16,
+                      //     animate: true,
+                      //     type: ProgressButtonType.Raised,
+                      //     onPressed: () async {
+                      //       int score = await Future.delayed(
+                      //           const Duration(milliseconds: 2500), () => 42);
+                      //       return () async {
+                      //         if (order != null &&
+                      //             await httpClient.deleteActiveRequest(order)) {
+                      //           widget.slidingUpWidgetController.panelIndex =
+                      //               PanelIndex.DestinationAndSearch;
+                      //           timer.cancel();
+                      //           print("Successfully deleted request");
+                      //         } else {
+                      //           createDialogWidget(
+                      //               context,
+                      //               "There was a problem",
+                      //               "Please try again later!");
+                      //         }
+                      //       };
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

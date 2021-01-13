@@ -13,15 +13,18 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_information_card.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 class MakeRequestPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
+  final StylizedButton buttonBridge;
 
   MakeRequestPanel({
     this.slidingUpWidgetController,
     this.mapController,
+    this.buttonBridge,
   });
   _MakeRequestPanelState createState() => _MakeRequestPanelState();
 }
@@ -35,7 +38,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
     return mulesAroundRes.numMules;
   }
 
-  _onReturnToSearch() {
+  onReturnToSearch() {
     widget.slidingUpWidgetController.panelIndex =
         PanelIndex.DestinationAndSearch;
     widget.mapController.unfocusRoute();
@@ -44,6 +47,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
   @override
   void initState() {
     super.initState();
+    widget.buttonBridge?.callback = onReturnToSearch;
   }
 
   @override
@@ -136,94 +140,62 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
           opacity: widget.opacity,
           child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.white,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(16.0),
-                        ),
-                        border: Border.all(
-                            color: AppTheme.lightGrey.withOpacity(0.2)),
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        color: AppTheme.lightGrey.withOpacity(0.5),
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                  onTap: () => _onReturnToSearch(),
+            child: ProgressButton(
+              defaultWidget: Text(
+                'Request',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  letterSpacing: 0.0,
+                  color: AppTheme.white,
                 ),
-                const SizedBox(
-                  width: 16,
-                ),
-                ProgressButton(
-                  defaultWidget: Text(
-                    'Request',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      letterSpacing: 0.0,
-                      color: AppTheme.white,
-                    ),
-                  ),
-                  progressWidget: CircularProgressIndicator(
-                      backgroundColor: AppTheme.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          AppTheme.secondaryBlue)),
-                  width: MediaQuery.of(context).size.width - 100,
-                  height: 48,
-                  color: AppTheme.secondaryBlue,
-                  borderRadius: 16,
-                  animate: true,
-                  type: ProgressButtonType.Raised,
-                  onPressed: () async {
-                    int score = await Future.delayed(
-                        const Duration(milliseconds: 2500), () => 42);
-                    // After [onPressed], it will trigger animation running backwards, from end to beginning
-                    LocationData currentLocation =
-                        GetIt.I.get<LocationStore>().currentLocation;
-                    PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
-                    DestinationSuggestion destination =
-                        GetIt.I.get<LocationStore>().destination;
+              ),
+              progressWidget: CircularProgressIndicator(
+                  backgroundColor: AppTheme.white,
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
+              width: MediaQuery.of(context).size.width,
+              height: 48,
+              color: AppTheme.secondaryBlue,
+              borderRadius: 16,
+              animate: true,
+              type: ProgressButtonType.Raised,
+              onPressed: () async {
+                int score = await Future.delayed(
+                    const Duration(milliseconds: 2500), () => 42);
+                // After [onPressed], it will trigger animation running backwards, from end to beginning
+                LocationData currentLocation =
+                    GetIt.I.get<LocationStore>().currentLocation;
+                PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
+                DestinationSuggestion destination =
+                    GetIt.I.get<LocationStore>().destination;
 
-                    PlaceRequestData placeRequestData = PlaceRequestData(
-                      LocationDesciption(place.location, place.description),
-                      LocationDesciption(
-                          destination.location, destination.description),
-                    );
-                    bool success =
-                        await httpClient.placeRequest(placeRequestData);
-                    if (!success) {
-                      createDialogWidget(
-                        context,
-                        'There was a problem',
-                        'Please try again later!',
-                      );
-                    }
-                    return () async {
-                      // Optional returns is returning a VoidCallback that will be called
-                      // after the animation is stopped at the beginning.
-                      // A best practice would be to do time-consuming task in [onPressed],
-                      // and do page navigation in the returned VoidCallback.
-                      // So that user won't missed out the reverse animation.
-                      if (success) {
-                        widget.slidingUpWidgetController.panelIndex =
-                            PanelIndex.WaitingToMatch;
-                      }
-                    };
-                  },
-                ),
-              ],
+                PlaceRequestData placeRequestData = PlaceRequestData(
+                  LocationDesciption(place.location, place.description),
+                  LocationDesciption(
+                      destination.location, destination.description),
+                );
+                bool success = await httpClient.placeRequest(placeRequestData);
+                if (!success) {
+                  createDialogWidget(
+                    context,
+                    'There was a problem',
+                    'Please try again later!',
+                  );
+                }
+                return () async {
+                  // Optional returns is returning a VoidCallback that will be called
+                  // after the animation is stopped at the beginning.
+                  // A best practice would be to do time-consuming task in [onPressed],
+                  // and do page navigation in the returned VoidCallback.
+                  // So that user won't missed out the reverse animation.
+                  if (success) {
+                    widget.slidingUpWidgetController.panelIndex =
+                        PanelIndex.WaitingToMatch;
+                  }
+                };
+              },
             ),
           ),
         ),
