@@ -13,15 +13,18 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_information_card.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 class MakeRequestPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
+  final StylizedButton buttonBridge;
 
   MakeRequestPanel({
     this.slidingUpWidgetController,
     this.mapController,
+    this.buttonBridge,
   });
   _MakeRequestPanelState createState() => _MakeRequestPanelState();
 }
@@ -44,6 +47,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
   @override
   void initState() {
     super.initState();
+    widget.buttonBridge?.callback = _onReturnToSearch;
   }
 
   @override

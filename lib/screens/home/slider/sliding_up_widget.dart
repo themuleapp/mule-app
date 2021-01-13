@@ -79,6 +79,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       margin: EdgeInsets.only(bottom: widget.buttonSpacing),
     );
 
+    // When using a button that is dependent on a function inside one of the slider panels,
+    // the button should be passed as an argument using the name 'buttonBridge'
     cancelButton = CancelButton(
       size: widget.buttonSize,
       callback: () => null,
@@ -129,6 +131,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
+          buttonBridge: cancelButton,
         ));
         break;
       case PanelIndex.WaitingToMatch:
@@ -154,6 +157,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
+          _buttonList = [currentLocationButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -170,7 +174,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
         });
-        _buttonList = [currentLocationButton, cancelButton];
+        _buttonList = [];
         _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
@@ -230,7 +234,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: _currentHeight),
+                    padding: EdgeInsets.only(
+                      bottom: !_panelController.isPanelOpen
+                          ? _currentHeight
+                          : widget.minHeight,
+                    ),
                     child: Container(
                       height: _buttonList.length *
                           (widget.buttonSize + widget.buttonSpacing),
