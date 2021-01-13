@@ -7,7 +7,10 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
+import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
+
+import '../../../../navigation_home_screen.dart';
 
 class MuleMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -63,7 +66,25 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   }
 
   completedRequest() async {
-    print("Order completed");
+    _confirmComplete(context);
+    _handleComplete(order.id);
+    // Navigator.of(context).push(
+    //       MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+  }
+
+  _confirmComplete(context) async {
+    return await createOrderCompletionDialogue(context);
+  }
+
+  _handleComplete(String requestId) async {
+    bool success;
+    success = await httpClient.muleCompleteRequest(requestId);
+    if (!success) {
+      createDialogWidget(context, 'There was a problem!',
+          'We couldn\'t complete your request, please try again!');
+    }
+    createDialogWidget(context, "Confirmation sent!",
+        "Please wait while we confirm that the order has been received.");
   }
 
   @override
