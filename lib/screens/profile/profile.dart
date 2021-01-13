@@ -162,16 +162,16 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(
-                Icons.chevron_right,
-                color: AppTheme.secondaryBlue,
-                size: AppTheme.elementSize(
-                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ChangeEmail()));
-              },
+              // trailing: Icon(
+              //   Icons.chevron_right,
+              //   color: AppTheme.secondaryBlue,
+              //   size: AppTheme.elementSize(
+              //       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              // ),
+              // onTap: () {
+              //   Navigator.of(context).push(
+              //       MaterialPageRoute(builder: (context) => ChangeEmail()));
+              // },
             ),
             Divider(),
             ListTile(
@@ -208,16 +208,16 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(
-                Icons.chevron_right,
-                color: AppTheme.secondaryBlue,
-                size: AppTheme.elementSize(
-                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ChangePhone()));
-              },
+              // trailing: Icon(
+              //   Icons.chevron_right,
+              //   color: AppTheme.secondaryBlue,
+              //   size: AppTheme.elementSize(
+              //       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+              // ),
+              // onTap: () {
+              //   Navigator.of(context).push(
+              //       MaterialPageRoute(builder: (context) => ChangePhone()));
+              // },
             ),
             Divider(),
             Padding(

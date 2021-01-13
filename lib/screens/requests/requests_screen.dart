@@ -303,9 +303,14 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
 Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
   Map<Status, List<OrderData>> sortedOrders = {};
 
+  // Split orders by status
   Status.values.forEach((status) {
     sortedOrders.putIfAbsent(
         status, () => orders.where((order) => order.status == status).toList());
   });
+
+  // Sort orders by time of creation
+  sortedOrders.forEach((status, list) =>
+      list.sort((a, b) => a.createdAt.compareTo(b.createdAt)));
   return sortedOrders;
 }
