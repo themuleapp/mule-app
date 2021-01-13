@@ -63,3 +63,15 @@ class CancelButton extends StylizedButton {
           icon: Icons.close,
         );
 }
+
+class CompletedButton extends StylizedButton {
+  CompletedButton({double size, Function callback, EdgeInsets margin})
+      : super(
+          size: size,
+          color: Colors.green,
+          margin: margin,
+          iconColor: AppTheme.black,
+          callback: callback,
+          icon: Icons.check,
+        );
+}
