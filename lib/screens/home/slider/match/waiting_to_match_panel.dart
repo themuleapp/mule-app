@@ -43,7 +43,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   _checkOrder(bool keepChecking) async {
     order = await httpClient.getActiveRequest();
     if (order != null && order.status == Status.ACCEPTED) {
-      widget.slidingUpWidgetController.panelIndex = PanelIndex.Matched;
+      widget.slidingUpWidgetController.panelIndex = PanelIndex.UserMatched;
     } else if (keepChecking) {
       _startChecking();
     }

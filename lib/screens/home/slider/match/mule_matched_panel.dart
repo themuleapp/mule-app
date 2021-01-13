@@ -8,32 +8,29 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 
-class MatchedPanel extends StatefulWidget {
+class MuleMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
 
-  MatchedPanel({this.slidingUpWidgetController, this.mapController});
+  MuleMatchedPanel({this.slidingUpWidgetController, this.mapController});
 
   @override
-  _MatchedPanelState createState() => _MatchedPanelState();
+  _MuleMatchedPanelState createState() => _MuleMatchedPanelState();
 }
 
-class _MatchedPanelState extends State<MatchedPanel> {
+class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   OrderData order;
-  MuleData mule;
 
   @override
   void initState() {
-    updateOrder();
     super.initState();
   }
 
-  updateOrder() async {
+  Future<OrderData> updateOrder() async {
     setState(() async {
       order = await httpClient.getActiveRequest();
       if (order.status == Status.ACCEPTED) {
-        mule = order.acceptedBy;
         widget.mapController.updateDelivery(
           order.acceptedBy.location.toLatLng(),
           order.place.location.toLatLng(),
@@ -47,7 +44,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
+    updateOrder();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +55,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
           child: Padding(
             padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
             child: Text(
-              'En Route',
+              'You are en route',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -95,7 +92,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Text(
-                        (mule != null) ? mule.name : "LOADING",
+                        (order != null) ? order.createdBy : "LOADING",
                         style: TextStyle(
                           color: AppTheme.darkerText,
                           fontWeight: FontWeight.w700,
@@ -114,7 +111,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
                             size: AppTheme.elementSize(
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
-                          Text('4.7 stars', //replace with rating
+                          Text('4.7 stars', //replace with phone number
                               style: TextStyle(
                                 color: AppTheme.lightGrey,
                                 fontWeight: FontWeight.w500,

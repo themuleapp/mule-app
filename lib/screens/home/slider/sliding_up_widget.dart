@@ -11,7 +11,8 @@ import 'package:mule/widgets/stylized_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 
-import 'match/matched_panel.dart';
+import 'match/mule_matched_panel.dart';
+import 'match/user_matched_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final SlidingUpWidgetController controller;
@@ -151,7 +152,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           buttonBridge: cancelButton,
         ));
         break;
-      case PanelIndex.Matched:
+      case PanelIndex.UserMatched:
         setState(() {
           _snapValue = null;
           _isDraggable = false;
@@ -162,7 +163,23 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             _mapController.focusOnRoute();
           };
         });
-        _setCurrentPanel(MatchedPanel(
+        _setCurrentPanel(UserMatchedPanel(
+          slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
+        ));
+        break;
+      case PanelIndex.MuleMatched:
+        setState(() {
+          _snapValue = null;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _backdropOpacity = 0;
+          _myLocationButtonVisible = true;
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
+        });
+        _setCurrentPanel(MuleMatchedPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
         ));
@@ -319,6 +336,7 @@ enum PanelIndex {
   DestinationAndSearch,
   MakeRequest,
   WaitingToMatch,
-  Matched,
-  Loading
+  UserMatched,
+  MuleMatched,
+  Loading,
 }
