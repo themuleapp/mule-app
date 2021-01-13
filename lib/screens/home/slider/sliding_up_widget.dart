@@ -9,8 +9,6 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/widgets/stylized_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:mule/screens/home/slider/match/matched_panel.dart';
-
 import 'match/mule_matched_panel.dart';
 import 'match/user_matched_panel.dart';
 
@@ -174,7 +172,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = true;
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };

@@ -6,6 +6,7 @@ import 'package:mule/models/data/mule_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 class MyHomePage extends StatefulWidget {
