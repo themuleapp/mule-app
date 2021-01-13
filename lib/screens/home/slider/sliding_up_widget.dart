@@ -180,14 +180,16 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
+          _buttonList = [currentLocationButton, cancelButton, completedButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
         });
         _setCurrentPanel(MuleMatchedPanel(
-          slidingUpWidgetController: widget.controller,
-          mapController: _mapController,
-        ));
+            slidingUpWidgetController: widget.controller,
+            mapController: _mapController,
+            buttonBridge: cancelButton,
+            buttonBridge2: completedButton));
         break;
       case PanelIndex.Loading:
         setState(() {

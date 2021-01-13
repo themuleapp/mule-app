@@ -161,7 +161,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                     )),
                 onTap: () {},
               ),
-              SizedBox(width: 15),
+              //SizedBox(width: 15),
             ],
           ),
         )

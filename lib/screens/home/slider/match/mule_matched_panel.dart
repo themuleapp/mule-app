@@ -7,13 +7,21 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 class MuleMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
+  final StylizedButton buttonBridge;
+  final StylizedButton buttonBridge2;
 
-  MuleMatchedPanel({this.slidingUpWidgetController, this.mapController});
+  MuleMatchedPanel({
+    this.slidingUpWidgetController,
+    this.mapController,
+    this.buttonBridge,
+    this.buttonBridge2,
+  });
 
   @override
   _MuleMatchedPanelState createState() => _MuleMatchedPanelState();
@@ -25,6 +33,8 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   @override
   void initState() {
     super.initState();
+    widget.buttonBridge?.callback = cancelRequest;
+    widget.buttonBridge2?.callback = completedRequest;
   }
 
   Future<OrderData> updateOrder() async {
@@ -39,6 +49,21 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
         );
       }
     });
+  }
+
+  cancelRequest() async {
+    if (await httpClient.deleteActiveRequest(order)) {
+      widget.slidingUpWidgetController.panelIndex =
+          PanelIndex.DestinationAndSearch;
+      widget.mapController.focusCurrentLocation();
+    } else {
+      createDialogWidget(context, "Something went wrong...",
+          "Something went wrong when cancelling your request, please try again later.");
+    }
+  }
+
+  completedRequest() async {
+    print("Order completed");
   }
 
   @override
@@ -140,32 +165,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                     )),
                 onTap: () {},
               ),
-              SizedBox(width: 15),
-              GestureDetector(
-                child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      color: AppTheme.lightGrey.withOpacity(0.1),
-                    ),
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.redAccent,
-                      size: AppTheme.elementSize(
-                          screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-                    )),
-                onTap: () async {
-                  if (await httpClient.deleteActiveRequest(order)) {
-                    widget.slidingUpWidgetController.panelIndex =
-                        PanelIndex.DestinationAndSearch;
-                    widget.mapController.focusCurrentLocation();
-                  } else {
-                    createDialogWidget(context, "Something went wrong...",
-                        "Something went wrong when cancelling your request, please try again later.");
-                  }
-                },
-              )
+              //SizedBox(width: 15),
             ],
           ),
         )
