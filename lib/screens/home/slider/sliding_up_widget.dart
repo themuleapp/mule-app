@@ -63,10 +63,10 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   void initState() {
-    _initialzeButtons();
     super.initState();
     panelIndex = widget.beginScreen;
     _updatePanel();
+    _initialzeButtons();
     widget.controller?._addState(this);
   }
 
@@ -235,7 +235,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      bottom: !_panelController.isPanelOpen
+                      bottom: _panelController.isAttached &&
+                              !_panelController.isPanelOpen
                           ? _currentHeight
                           : widget.minHeight,
                     ),
