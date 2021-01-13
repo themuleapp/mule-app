@@ -163,7 +163,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _buttonList = [currentLocationButton, cancelButton, completedButton];
+          _buttonList = [currentLocationButton, cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -172,7 +172,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
           buttonBridge: cancelButton,
-          buttonBridge2: completedButton,
         ));
         break;
       case PanelIndex.MuleMatched:

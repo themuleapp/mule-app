@@ -14,13 +14,11 @@ class UserMatchedPanel extends StatefulWidget {
   final MapController mapController;
   final double opacity = 1.0;
   final StylizedButton buttonBridge;
-  final StylizedButton buttonBridge2;
 
   UserMatchedPanel({
     this.slidingUpWidgetController,
     this.mapController,
     this.buttonBridge,
-    this.buttonBridge2,
   });
 
   @override
@@ -36,10 +34,9 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
     updateOrder();
     super.initState();
     widget.buttonBridge?.callback = cancelRequest;
-    widget.buttonBridge2?.callback = completedRequest;
   }
 
-  updateOrder() {
+  updateOrder() async {
     setState(() async {
       order = await httpClient.getActiveRequest();
       if (order.status == Status.ACCEPTED) {
@@ -63,10 +60,6 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
       createDialogWidget(context, "Something went wrong...",
           "Something went wrong when cancelling your request, please try again later.");
     }
-  }
-
-  completedRequest() async {
-    print("order completed");
   }
 
   @override
@@ -139,7 +132,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                             size: AppTheme.elementSize(
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
-                          Text('4.7 stars', //replace with rating
+                          Text('4.7 stars', //replace with mule phone number
                               style: TextStyle(
                                 color: AppTheme.lightGrey,
                                 fontWeight: FontWeight.w500,
@@ -169,31 +162,6 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                 onTap: () {},
               ),
               SizedBox(width: 15),
-              // GestureDetector(
-              //   child: Container(
-              //       height: 50,
-              //       width: 50,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              //         color: AppTheme.lightGrey.withOpacity(0.1),
-              //       ),
-              //       child: Icon(
-              //         Icons.delete,
-              //         color: Colors.redAccent,
-              //         size: AppTheme.elementSize(
-              //             screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-              //       )),
-              //   onTap: () async {
-              //     if (await httpClient.deleteActiveRequest(order)) {
-              //       widget.slidingUpWidgetController.panelIndex =
-              //           PanelIndex.DestinationAndSearch;
-              //       widget.mapController.focusCurrentLocation();
-              //     } else {
-              //       createDialogWidget(context, "Something went wrong...",
-              //           "Something went wrong when cancelling your request, please try again later.");
-              //     }
-              //   },
-              // )
             ],
           ),
         )

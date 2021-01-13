@@ -70,7 +70,7 @@ class CompletedButton extends StylizedButton {
           size: size,
           color: Colors.green,
           margin: margin,
-          iconColor: AppTheme.black,
+          iconColor: AppTheme.white,
           callback: callback,
           icon: Icons.check,
         );
