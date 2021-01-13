@@ -140,7 +140,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _buttonList = [currentLocationButton, cancelButton];
+          _buttonList = [cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
