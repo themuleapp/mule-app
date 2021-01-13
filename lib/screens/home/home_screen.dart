@@ -6,7 +6,6 @@ import 'package:mule/models/data/mule_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -63,11 +62,6 @@ class _MyHomePageState extends State<MyHomePage>
     }
     if (snapshot.data == null) {
       controller.panelIndex = PanelIndex.DestinationAndSearch;
-      //TODO Replace fullname check by check if user is mule
-      // } else if (snapshot.data.createdBy !=
-      //     GetIt.I.get<UserInfoStore>().fullName) {
-
-      //     }
     } else {
       OrderData order = snapshot.data;
       switch (order.status) {

@@ -99,8 +99,8 @@ class _DrawerUserControllerState extends State<DrawerUserController>
           body: SingleChildScrollView(
             controller: scrollController,
             scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(
-                parent: NeverScrollableScrollPhysics()),
+            physics:
+                const PageScrollPhysics(parent: NeverScrollableScrollPhysics()),
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width + widget.drawerWidth,
@@ -182,8 +182,8 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: AppTheme.white,
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
                                         color: Colors.grey.withOpacity(0.6),

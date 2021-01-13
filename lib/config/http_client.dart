@@ -220,15 +220,14 @@ class HttpClient {
     int number = rng.nextInt(100);
 
     Response<dynamic> res = await _makeAuthenticatedGetRequest(
-        "${Config.BASE_URL}profile/profile-image" + "?v=${number}");
+        "${Config.BASE_URL}profile/profile-image");
     String token = await Config.getToken();
 
     if (res.statusCode != 200) return null;
     try {
       if (!res.data['success']) return null;
     } catch (exception) {
-      return NetworkImage(
-          "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
+      return NetworkImage("${Config.BASE_URL}profile/profile-image",
           headers: {"Authorization": token});
     }
   }

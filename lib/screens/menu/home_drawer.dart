@@ -45,6 +45,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   _handleSignOut() async {
+    imageCache.clear();
     await httpClient.handleSignOut();
     await Config.deleteToken();
     Navigator.of(context)
