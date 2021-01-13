@@ -9,17 +9,20 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'dart:async';
 
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 class WaitingToMatchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double loadingBarHeight;
   final double opacity = 1.0;
+  final StylizedButton buttonBridge;
 
   WaitingToMatchPanel({
     this.slidingUpWidgetController,
     this.mapController,
     this.loadingBarHeight = 5.0,
+    this.buttonBridge,
   });
 
   @override
@@ -34,6 +37,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   void initState() {
     super.initState();
     _checkOrder(true);
+    widget.buttonBridge?.callback = cancelRequest;
   }
 
   _checkOrder(bool keepChecking) async {
