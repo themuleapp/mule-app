@@ -37,6 +37,10 @@ class SlidingUpWidget extends StatefulWidget {
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
+  _SlidingUpWidgetState() {
+    // Initialize buttons
+  }
+
   final PanelController _panelController = PanelController();
   final MapController _mapController = MapController();
 
@@ -59,26 +63,27 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   void initState() {
+    _initialzeButtons();
     super.initState();
     panelIndex = widget.beginScreen;
     _updatePanel();
-    buttonMargin = EdgeInsets.only(
-      bottom: widget.minHeight + widget.buttonSpacing,
-      right: widget.buttonSpacing,
-    );
+    widget.controller?._addState(this);
+  }
+
+  void _initialzeButtons() {
     currentLocationButton = CurrentLocationButton(
-        size: widget.buttonSize,
-        callback: () {
-          if (!_mapController.isMapLoading)
-            _mapController.focusCurrentLocation();
-        },
-        margin: buttonMargin);
+      size: widget.buttonSize,
+      callback: () {
+        if (!_mapController.isMapLoading) _mapController.focusCurrentLocation();
+      },
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
+    );
+
     cancelButton = CancelButton(
       size: widget.buttonSize,
       callback: () => null,
-      margin: buttonMargin,
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
     );
-    widget.controller?._addState(this);
   }
 
   _setPanelandUpdate(PanelIndex newPanelIndex) {
@@ -224,15 +229,15 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Expanded(child: null),
-                  Container(
-                    height: _buttonList.length *
-                            (widget.buttonSize + 2 * widget.buttonSpacing) +
-                        widget.controller.currentHeight,
-                    width: widget.buttonSize + widget.buttonSpacing,
-                    child: ListView.builder(
-                      itemCount: _buttonList.length,
-                      itemBuilder: (context, i) => _buttonList[i],
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _currentHeight),
+                    child: Container(
+                      height: _buttonList.length *
+                          (widget.buttonSize + widget.buttonSpacing),
+                      width: widget.buttonSize + widget.buttonSpacing,
+                      child: Column(
+                        children: _buttonList,
+                      ),
                     ),
                   ),
                 ],
@@ -242,6 +247,14 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         ),
       ),
     );
+  }
+
+  double get _currentHeight {
+    if (_panelController.isAttached && _panelController.isPanelOpen)
+      return widget.maxHeight;
+    if (_snapValue == null) return widget.minHeight;
+    return widget.minHeight +
+        _snapValue * (widget.maxHeight - widget.minHeight);
   }
 }
 
@@ -285,9 +298,7 @@ class SlidingUpWidgetController {
   }
 
   double get currentHeight {
-    if (_slidingUpWidgetState._panelController.isPanelOpen) return maxHeight;
-    if (snapPoint == null) return minHeight;
-    return snapHeight;
+    return _slidingUpWidgetState._currentHeight;
   }
 
   double get radius {
