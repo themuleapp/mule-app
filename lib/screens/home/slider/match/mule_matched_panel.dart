@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
+import 'package:mule/config/messages_service.dart';
 import 'package:mule/models/data/mule_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
@@ -29,6 +31,9 @@ class MuleMatchedPanel extends StatefulWidget {
 
 class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   OrderData order;
+
+  final MessagesService _service = GetIt.I.get<MessagesService>();
+  final String number = "8148807674";
 
   @override
   void initState() {
@@ -163,7 +168,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                       size: AppTheme.elementSize(
                           screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                     )),
-                onTap: () {},
+                onTap: () => _service.sendSms(number),
               ),
               //SizedBox(width: 15),
             ],
