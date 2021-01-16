@@ -29,15 +29,16 @@ class UserMatchedPanel extends StatefulWidget {
 class _UserMatchedPanelState extends State<UserMatchedPanel> {
   OrderData order;
   MuleData mule;
+  String number = "";
 
   final MessagesService _service = GetIt.I.get<MessagesService>();
-  final String number = "8148807674";
 
   @override
   void initState() {
     updateOrder();
     super.initState();
     widget.buttonBridge?.callback = cancelRequest;
+    number = mule.phoneNumber;
   }
 
   updateOrder() async {
