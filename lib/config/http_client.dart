@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/painting.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/order_data.dart';
@@ -14,6 +17,7 @@ import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
+import 'dart:math';
 
 class HttpClient {
   Dio _dio;
@@ -211,6 +215,23 @@ class HttpClient {
     return res.statusCode == 200 ? true : false;
   }
 
+  Future<ImageProvider> getProfilePicture() async {
+    Random rng = Random();
+    int number = rng.nextInt(100);
+
+    Response<dynamic> res = await _makeAuthenticatedGetRequest(
+        "${Config.BASE_URL}profile/profile-image");
+    String token = await Config.getToken();
+
+    if (res.statusCode != 200) return null;
+    try {
+      if (!res.data['success']) return null;
+    } catch (exception) {
+      return NetworkImage("${Config.BASE_URL}profile/profile-image",
+          headers: {"Authorization": token});
+    }
+  }
+
   Future<bool> acceptRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
         '/requests/accept', {'requestId': requestId});
@@ -250,6 +271,17 @@ class HttpClient {
         : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
   }
 
+  Future<List<OrderData>> getUserHistory() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/user/history');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
+  }
+
   Future<List<OrderData>> getOpenRequests() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/mule/open');
     if (res.statusCode != 200) {
@@ -263,7 +295,7 @@ class HttpClient {
 
   Future<OrderData> getActiveRequest() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/active');
-    if (res.statusCode != 200) {
+    if (res.statusCode != 200 || res.data == "") {
       return null;
     }
     return OrderData.fromJson(res.data['request']);
@@ -273,6 +305,15 @@ class HttpClient {
     Response res = await _makeAuthenticatedDeleteRequest(
         '/requests/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
+  }
+
+  Future<bool> muleCompleteRequest(String requestId) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/requests/mule/confirm', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
   }
 }
 

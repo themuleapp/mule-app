@@ -31,18 +31,28 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   void initState() {
-    setdDrawerListArray();
+    updateDrawerState();
     super.initState();
   }
 
+  void updateDrawerState() {
+    setState(() {
+      if (GetIt.I.get<UserInfoStore>().isMule)
+        setMuleDrawerList();
+      else
+        setUserDrawerListArray();
+    });
+  }
+
   _handleSignOut() async {
+    imageCache.clear();
     await httpClient.handleSignOut();
     await Config.deleteToken();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
-  void setdDrawerListArray() {
+  void setMuleDrawerList() {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
@@ -69,15 +79,40 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Settings',
         icon: Icon(Icons.settings),
       ),
+      // DrawerList(
+      //   index: DrawerIndex.Feedback,
+      //   labelName: 'Feedback',
+      //   icon: Icon(Icons.feedback),
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.Help,
+      //   labelName: 'Report',
+      //   icon: Icon(Icons.report_problem),
+      // ),
+    ];
+  }
+
+  void setUserDrawerListArray() {
+    drawerList = <DrawerList>[
       DrawerList(
-        index: DrawerIndex.Feedback,
-        labelName: 'Feedback',
-        icon: Icon(Icons.feedback),
+        index: DrawerIndex.HOME,
+        labelName: 'Home',
+        icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Report',
-        icon: Icon(Icons.report_problem),
+        index: DrawerIndex.Orders,
+        labelName: 'Orders',
+        icon: Icon(Icons.shopping_basket),
+      ),
+      DrawerList(
+        index: DrawerIndex.Chat,
+        labelName: 'Chat',
+        icon: Icon(Icons.chat),
+      ),
+      DrawerList(
+        index: DrawerIndex.Settings,
+        labelName: 'Settings',
+        icon: Icon(Icons.settings),
       ),
     ];
   }
@@ -197,9 +232,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                               height: AppTheme.elementSize(
                                   screenHeight, 25, 25, 25, 25, 25, 30, 30, 35),
                               child: Switch(
-                                value: true,
+                                value: GetIt.I.get<UserInfoStore>().isMule,
                                 activeColor: AppTheme.lightBlue,
-                                onChanged: (bool state) {},
+                                onChanged: (state) {
+                                  GetIt.I
+                                      .get<UserInfoStore>()
+                                      .updateIsMule(state);
+                                  updateDrawerState();
+                                },
                               ),
                             )
                           ],
@@ -415,6 +455,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
     widget.callBackIndex(indexScreen);
   }
+
+  ImageProvider getProfilePicture(ImageProvider imageProvider) {}
 }
 
 enum DrawerIndex {

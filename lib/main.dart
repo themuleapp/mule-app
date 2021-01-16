@@ -8,6 +8,7 @@ import 'package:mule/config/utils.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
+  Config.setupLocator();
   runApp(App());
 }
 

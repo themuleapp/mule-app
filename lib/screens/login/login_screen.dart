@@ -43,14 +43,15 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
       // user is logged in successfully
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
-    // range 400 - 499
+      // range 400 - 499
     } else if (status < 500) {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot log in!', errorMessages);
       emailController.clear();
       passwordController.clear();
     } else {
-      createDialogWidget(context, 'Cannot log in!', 'This is a fault on our end... Please try again later');
+      createDialogWidget(context, 'Cannot log in!',
+          'This is a fault on our end... Please try again later');
     }
   }
 
@@ -145,7 +146,12 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                       height: AppTheme.elementSize(
                           screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          createDialogWidget(
+                              context,
+                              'We are still working on this :( ',
+                              'We\'re sorry, this feature is not yet available but will be rolled out soon');
+                        },
                         color: AppTheme.facebookBlue,
                         child: Row(
                           children: <Widget>[
@@ -176,15 +182,19 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                           border: Border.all(
                             color: Colors.redAccent,
                           ),
-                          borderRadius: BorderRadius.circular(3.0)
-                      ),
+                          borderRadius: BorderRadius.circular(3.0)),
                       margin: EdgeInsets.only(
                         top: 10.0,
                       ),
                       height: AppTheme.elementSize(
                           screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          createDialogWidget(
+                              context,
+                              'We are still working on this :( ',
+                              'We\'re sorry, this feature is not yet available but will be rolled out soon');
+                        },
                         color: AppTheme.white,
                         child: Row(
                           children: <Widget>[

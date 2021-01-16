@@ -7,9 +7,10 @@ import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
+import 'package:mule/widgets/stylized_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'match/matched_panel.dart';
+import 'match/mule_matched_panel.dart';
+import 'match/user_matched_panel.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final SlidingUpWidgetController controller;
@@ -31,32 +32,68 @@ class SlidingUpWidget extends StatefulWidget {
   });
 
   @override
-  _SlidingUpWidgetState createState() => _SlidingUpWidgetState();
+  _SlidingUpWidgetState createState() =>
+      _SlidingUpWidgetState(this.minHeight, this.maxHeight);
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
+  _SlidingUpWidgetState(this._minHeight, this._maxHeight);
+
   final PanelController _panelController = PanelController();
   final MapController _mapController = MapController();
 
+  // Slider size
+  double _minHeight;
+  double _maxHeight;
+
   // Animation
-  double _snapValue;
+  EdgeInsets buttonMargin;
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
-  bool _myLocationButtonVisible;
   Function _mapStateCallback;
 
   // Panel state
   PanelIndex panelIndex;
   Widget _currentPanel;
+  List<StylizedButton> _buttonList = [];
+
+  // Buttons
+  StylizedButton currentLocationButton;
+  StylizedButton cancelButton;
+  StylizedButton completedButton;
 
   @override
   void initState() {
     super.initState();
     panelIndex = widget.beginScreen;
     _updatePanel();
-
+    _initialzeButtons();
     widget.controller?._addState(this);
+  }
+
+  void _initialzeButtons() {
+    currentLocationButton = CurrentLocationButton(
+      size: widget.buttonSize,
+      callback: () {
+        if (!_mapController.isMapLoading) _mapController.focusCurrentLocation();
+      },
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
+    );
+
+    // When using a button that is dependent on a function inside one of the slider panels,
+    // the button should be passed as an argument using the name 'buttonBridge'
+    cancelButton = CancelButton(
+      size: widget.buttonSize,
+      callback: () => null,
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
+    );
+
+    completedButton = CompletedButton(
+      size: widget.buttonSize,
+      callback: () => null,
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
+    );
   }
 
   _setPanelandUpdate(PanelIndex newPanelIndex) {
@@ -73,11 +110,12 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     switch (panelIndex) {
       case PanelIndex.DestinationAndSearch:
         setState(() {
-          _snapValue = null;
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = true;
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
-          _myLocationButtonVisible = true;
+          _buttonList = [currentLocationButton];
           _mapStateCallback = () {
             _mapController.unfocusRoute();
             _mapController.focusCurrentLocation();
@@ -90,11 +128,13 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MakeRequest:
         setState(() {
-          _snapValue = .25;
+          _minHeight =
+              widget.minHeight + .25 * (widget.maxHeight - widget.minHeight);
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
-          _myLocationButtonVisible = false;
+          _buttonList = [cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -102,15 +142,17 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         _setCurrentPanel(MakeRequestPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
+          buttonBridge: cancelButton,
         ));
         break;
       case PanelIndex.WaitingToMatch:
         setState(() {
-          _snapValue = .07;
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = false;
+          _buttonList = [cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -118,31 +160,53 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         _setCurrentPanel(WaitingToMatchPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
+          buttonBridge: cancelButton,
         ));
         break;
-      case PanelIndex.Matched:
+      case PanelIndex.UserMatched:
         setState(() {
-          _snapValue = null;
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = true;
+          _buttonList = [currentLocationButton, cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
         });
-        _setCurrentPanel(MatchedPanel(
+        _setCurrentPanel(UserMatchedPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
+          buttonBridge: cancelButton,
         ));
         break;
-      case PanelIndex.Loading:
+      case PanelIndex.MuleMatched:
         setState(() {
-          _snapValue = null;
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _myLocationButtonVisible = false;
+          _buttonList = [currentLocationButton, cancelButton, completedButton];
+          _mapStateCallback = () {
+            _mapController.focusOnRoute();
+          };
+        });
+        _setCurrentPanel(MuleMatchedPanel(
+            slidingUpWidgetController: widget.controller,
+            mapController: _mapController,
+            buttonBridge: cancelButton,
+            buttonBridge2: completedButton));
+        break;
+      case PanelIndex.Loading:
+        setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
+          _isDraggable = false;
+          _backdropTapClosesPanel = false;
+          _buttonList = [];
+          _backdropOpacity = 0;
         });
         _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
@@ -180,9 +244,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       onPanelOpened: () => _updatePanel(),
       isDraggable: _isDraggable,
       backdropTapClosesPanel: _backdropTapClosesPanel,
-      minHeight: widget.minHeight,
-      snapPoint: _snapValue,
-      maxHeight: widget.maxHeight,
+      minHeight: _minHeight,
+      maxHeight: _maxHeight,
       controller: _panelController,
       backdropEnabled: true,
       backdropOpacity: _backdropOpacity,
@@ -195,34 +258,42 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               slidingUpWidgetController: widget.controller,
               initCallback: _mapStateCallback,
             ),
-            Visibility(
-              visible: _myLocationButtonVisible,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  height: widget.buttonSize,
-                  width: widget.buttonSize,
-                  margin: EdgeInsets.only(
-                    bottom: widget.minHeight + widget.buttonSpacing,
-                    right: widget.buttonSpacing,
-                  ),
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      backgroundColor: AppTheme.white,
-                      child: Icon(
-                        Icons.my_location,
-                        color: AppTheme.darkGrey,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: _panelController.isAttached &&
+                              !_panelController.isPanelOpen
+                          ? _currentHeight
+                          : widget.minHeight,
+                    ),
+                    child: Container(
+                      height: _buttonList.length *
+                          (widget.buttonSize + widget.buttonSpacing),
+                      width: widget.buttonSize + widget.buttonSpacing,
+                      child: Column(
+                        children: _buttonList,
                       ),
-                      onPressed: () => _mapController.focusCurrentLocation(),
                     ),
                   ),
-                ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
+  }
+
+  double get _currentHeight {
+    if (_panelController.isAttached && _panelController.isPanelOpen)
+      return _maxHeight;
+    return _minHeight;
   }
 }
 
@@ -249,10 +320,6 @@ class SlidingUpWidgetController {
     return _slidingUpWidgetState._panelController;
   }
 
-  double get snapPoint {
-    return _slidingUpWidgetState._snapValue;
-  }
-
   double get maxHeight {
     return _slidingUpWidgetState.widget.maxHeight;
   }
@@ -261,14 +328,8 @@ class SlidingUpWidgetController {
     return _slidingUpWidgetState.widget.minHeight;
   }
 
-  double get snapHeight {
-    return minHeight + snapPoint * (maxHeight - minHeight);
-  }
-
   double get currentHeight {
-    if (_slidingUpWidgetState._panelController.isPanelOpen) return maxHeight;
-    if (snapPoint == null) return minHeight;
-    return snapHeight;
+    return _slidingUpWidgetState._currentHeight;
   }
 
   double get radius {
@@ -280,6 +341,7 @@ enum PanelIndex {
   DestinationAndSearch,
   MakeRequest,
   WaitingToMatch,
-  Matched,
-  Loading
+  UserMatched,
+  MuleMatched,
+  Loading,
 }

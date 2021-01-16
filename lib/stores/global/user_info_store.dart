@@ -1,8 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:mule/config/config.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:mule/config/http_client.dart';
 
 part 'user_info_store.g.dart';
 
@@ -27,6 +26,10 @@ abstract class _UserInfoStore with Store {
   @observable
   ImageProvider _profilePicture = AssetImage(_defaultImagePath);
 
+  // TODO add updateIsMule and add to updateEverythingFromRes
+  @observable
+  bool _isMule = true;
+
   @action
   void updateEmail(String email) {
     this._email = email;
@@ -44,6 +47,11 @@ abstract class _UserInfoStore with Store {
   }
 
   @action
+  void updateIsMule(bool isMule) {
+    this._isMule = isMule;
+  }
+
+  @action
   void updateEverythingFromrRes(ProfileRes res) {
     this._firstName = res.firstName;
     this._lastName = res.lastName;
@@ -53,15 +61,9 @@ abstract class _UserInfoStore with Store {
 
   @action
   Future<void> updateProfilePicture() async {
-    final String token = await Config.getToken();
-    Random rng = Random();
-    int number = rng.nextInt(100);
+    ImageProvider imageProvider = await httpClient.getProfilePicture();
 
-    this._profilePicture = await NetworkImage(
-      "${Config.BASE_URL}profile/profile-image" + "?v=${number}",
-      scale: 1.0,
-      headers: {'Authorization': token},
-    );
+    if (imageProvider != null) this._profilePicture = imageProvider;
   }
 
   @computed
@@ -72,5 +74,7 @@ abstract class _UserInfoStore with Store {
   String get phoneNumber => this._phoneNumber;
   @computed
   String get firstName => this._firstName;
+  @computed
+  bool get isMule => this._isMule;
   ImageProvider get profilePicture => this._profilePicture;
 }
