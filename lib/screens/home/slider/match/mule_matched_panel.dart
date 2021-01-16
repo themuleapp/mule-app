@@ -139,7 +139,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Text(
-                        (order != null) ? order.createdBy : "LOADING",
+                        (order != null) ? order.createdBy.name : "LOADING",
                         style: TextStyle(
                           color: AppTheme.darkerText,
                           fontWeight: FontWeight.w700,
@@ -153,12 +153,14 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Icon(
-                            Icons.star,
-                            color: AppTheme.goldenYellow,
+                            Icons.perm_phone_msg,
+                            color: AppTheme.secondaryBlue,
                             size: AppTheme.elementSize(
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
-                          Text('4.7 stars', //replace with phone number
+                          Text(
+                              order.createdBy
+                                  .phoneNumber, //replace with phone number
                               style: TextStyle(
                                 color: AppTheme.lightGrey,
                                 fontWeight: FontWeight.w500,

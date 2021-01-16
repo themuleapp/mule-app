@@ -8,7 +8,6 @@ import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
-import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class UserMatchedPanel extends StatefulWidget {
@@ -131,12 +130,12 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Icon(
-                            Icons.star,
-                            color: AppTheme.goldenYellow,
+                            Icons.perm_phone_msg,
+                            color: AppTheme.secondaryBlue,
                             size: AppTheme.elementSize(
                                 screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
                           ),
-                          Text('4.7 stars', //replace with mule phone number
+                          Text(mule.phoneNumber,
                               style: TextStyle(
                                 color: AppTheme.lightGrey,
                                 fontWeight: FontWeight.w500,
