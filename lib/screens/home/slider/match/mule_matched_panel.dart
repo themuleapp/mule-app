@@ -3,16 +3,13 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/messages_service.dart';
-import 'package:mule/models/data/mule_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
-import 'package:mule/widgets/confirm_dialogue.dart';
+
 import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
-
-import '../../../../navigation_home_screen.dart';
 
 class MuleMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -63,7 +60,6 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
     if (await httpClient.deleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
-      widget.mapController.focusCurrentLocation();
     } else {
       createDialogWidget(context, "Something went wrong...",
           "Something went wrong when cancelling your request, please try again later.");
