@@ -1,5 +1,6 @@
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/mule_data.dart';
+import 'package:mule/models/data/user_data.dart';
 
 // TODO Should this be in a response?
 class OrderData {
@@ -8,7 +9,7 @@ class OrderData {
   final LocationDesciption destination;
   final Status status;
   final DateTime createdAt;
-  final String createdBy;
+  final UserData createdBy;
   final MuleData acceptedBy;
 
   OrderData.fromJson(Map<String, dynamic> jsonData)
@@ -17,7 +18,7 @@ class OrderData {
         this.destination = LocationDesciption.fromJson(jsonData['destination']),
         this.status = _statusFromString(jsonData['status']),
         this.createdAt = DateTime.parse(jsonData['createdAt']),
-        this.createdBy = jsonData['createdBy'],
+        this.createdBy = UserData.fromJson(jsonData['createdBy']),
         // Mule is only available when active request is accepted
         this.acceptedBy = (jsonData['acceptedBy'] != null)
             ? MuleData.fromJson(jsonData['acceptedBy'])

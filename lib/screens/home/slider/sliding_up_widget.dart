@@ -9,7 +9,6 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/widgets/stylized_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'match/mule_matched_panel.dart';
 import 'match/user_matched_panel.dart';
 
@@ -60,6 +59,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   // Buttons
   StylizedButton currentLocationButton;
   StylizedButton cancelButton;
+  StylizedButton completedButton;
 
   @override
   void initState() {
@@ -82,6 +82,12 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     // When using a button that is dependent on a function inside one of the slider panels,
     // the button should be passed as an argument using the name 'buttonBridge'
     cancelButton = CancelButton(
+      size: widget.buttonSize,
+      callback: () => null,
+      margin: EdgeInsets.only(bottom: widget.buttonSpacing),
+    );
+
+    completedButton = CompletedButton(
       size: widget.buttonSize,
       callback: () => null,
       margin: EdgeInsets.only(bottom: widget.buttonSpacing),
@@ -157,7 +163,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _buttonList = [currentLocationButton];
+          _buttonList = [currentLocationButton, cancelButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
@@ -165,6 +171,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         _setCurrentPanel(UserMatchedPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
+          buttonBridge: cancelButton,
         ));
         break;
       case PanelIndex.MuleMatched:
@@ -173,15 +180,16 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
-          _buttonList = [currentLocationButton];
+          _buttonList = [currentLocationButton, cancelButton, completedButton];
           _mapStateCallback = () {
             _mapController.focusOnRoute();
           };
         });
         _setCurrentPanel(MuleMatchedPanel(
-          slidingUpWidgetController: widget.controller,
-          mapController: _mapController,
-        ));
+            slidingUpWidgetController: widget.controller,
+            mapController: _mapController,
+            buttonBridge: cancelButton,
+            buttonBridge2: completedButton));
         break;
       case PanelIndex.Loading:
         setState(() {

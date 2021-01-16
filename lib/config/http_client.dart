@@ -271,6 +271,17 @@ class HttpClient {
         : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
   }
 
+  Future<List<OrderData>> getUserHistory() async {
+    Response res = await _makeAuthenticatedGetRequest('/requests/user/history');
+    if (res.statusCode != 200) {
+      return null;
+    }
+    List<dynamic> resData = res.data['requests'];
+    return (resData == null)
+        ? []
+        : resData.map<OrderData>((item) => OrderData.fromJson(item)).toList();
+  }
+
   Future<List<OrderData>> getOpenRequests() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/mule/open');
     if (res.statusCode != 200) {
