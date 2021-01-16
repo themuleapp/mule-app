@@ -73,7 +73,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
           if (snapshot.data == null) {
             return CircularProgressIndicator();
           } else {
-            // updateOrder(snapshot.data);
+            updateOrder(snapshot.data);
             UserData user = snapshot.data.createdBy;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
