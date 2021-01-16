@@ -77,7 +77,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
             return CircularProgressIndicator();
           } else {
             // updateOrder(snapshot.data);
-            UserData user = snapshot.data.requestedBy;
+            UserData user = snapshot.data.createdBy;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,21 +146,21 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                                         25, 26, 26, 18, 20, 21, 22),
                                   ),
                                   Text(
-                                      user.phoneNumber, //replace with phone number
+                                      user
+                                          .phoneNumber, //replace with phone number
                                       style: TextStyle(
-                                        color: AppTheme.lightGrey,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: AppTheme.elementSize(
-                                            screenHeight,
-                                            14,
-                                            14,
-                                            15,
-                                            15,
-                                            16,
-                                            18,
-                                            21,
-                                            24),
-                                      )),
+                                          color: AppTheme.lightGrey,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: AppTheme.elementSize(
+                                              screenHeight,
+                                              14,
+                                              14,
+                                              15,
+                                              15,
+                                              16,
+                                              18,
+                                              21,
+                                              24))),
                                 ],
                               )
                             ],
