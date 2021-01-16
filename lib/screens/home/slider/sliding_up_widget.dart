@@ -32,16 +32,19 @@ class SlidingUpWidget extends StatefulWidget {
   });
 
   @override
-  _SlidingUpWidgetState createState() => _SlidingUpWidgetState();
+  _SlidingUpWidgetState createState() =>
+      _SlidingUpWidgetState(this.minHeight, this.maxHeight);
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
-  _SlidingUpWidgetState() {
-    // Initialize buttons
-  }
+  _SlidingUpWidgetState(this._minHeight, this._maxHeight);
 
   final PanelController _panelController = PanelController();
   final MapController _mapController = MapController();
+
+  // Slider size
+  double _minHeight;
+  double _maxHeight;
 
   // Animation
   EdgeInsets buttonMargin;
@@ -107,6 +110,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     switch (panelIndex) {
       case PanelIndex.DestinationAndSearch:
         setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = true;
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
@@ -123,6 +128,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MakeRequest:
         setState(() {
+          _minHeight =
+              widget.minHeight + .25 * (widget.maxHeight - widget.minHeight);
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
@@ -139,6 +147,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.WaitingToMatch:
         setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -155,6 +165,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.UserMatched:
         setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -171,6 +183,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MuleMatched:
         setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -187,6 +201,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.Loading:
         setState(() {
+          _minHeight = widget.minHeight;
+          _maxHeight = widget.maxHeight;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _buttonList = [];
@@ -228,8 +244,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       onPanelOpened: () => _updatePanel(),
       isDraggable: _isDraggable,
       backdropTapClosesPanel: _backdropTapClosesPanel,
-      minHeight: widget.minHeight,
-      maxHeight: widget.maxHeight,
+      minHeight: _minHeight,
+      maxHeight: _maxHeight,
       controller: _panelController,
       backdropEnabled: true,
       backdropOpacity: _backdropOpacity,
@@ -276,8 +292,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   double get _currentHeight {
     if (_panelController.isAttached && _panelController.isPanelOpen)
-      return widget.maxHeight;
-    return widget.minHeight;
+      return _maxHeight;
+    return _minHeight;
   }
 }
 
