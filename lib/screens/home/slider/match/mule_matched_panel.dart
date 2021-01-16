@@ -75,15 +75,14 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
           } else {
             updateOrder(snapshot.data);
             UserData user = snapshot.data.createdBy;
-            String formattedPhoneNumber = "+" +
-                user.phoneNumber.substring(0, 1) +
+            String formattedPhoneNumber = user.phoneNumber.substring(0, 2) +
                 " " +
                 "(" +
-                user.phoneNumber.substring(1, 4) +
+                user.phoneNumber.substring(2, 5) +
                 ") " +
-                user.phoneNumber.substring(4, 7) +
+                user.phoneNumber.substring(5, 8) +
                 " - " +
-                user.phoneNumber.substring(7, user.phoneNumber.length);
+                user.phoneNumber.substring(8, user.phoneNumber.length);
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
