@@ -67,11 +67,11 @@ class _MyHomePageState extends State<MyHomePage>
       OrderData order = snapshot.data;
       switch (order.status) {
         case (Status.ACCEPTED):
-          if (snapshot.data.createdBy !=
+          if (snapshot.data.createdBy.name ==
               GetIt.I.get<UserInfoStore>().fullName) {
-            controller.panelIndex = PanelIndex.MuleMatched;
-          } else {
             controller.panelIndex = PanelIndex.UserMatched;
+          } else {
+            controller.panelIndex = PanelIndex.MuleMatched;
           }
           break;
         case (Status.OPEN):

@@ -52,14 +52,6 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
 
   @override
   build(BuildContext context) {
-    // Only animate after everything is done building
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget
-            .slidingUpWidgetController.panelController
-            .animatePanelToSnapPoint(
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        ));
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
