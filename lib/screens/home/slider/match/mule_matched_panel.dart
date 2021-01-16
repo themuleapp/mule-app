@@ -8,7 +8,6 @@ import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
-import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class MuleMatchedPanel extends StatefulWidget {
@@ -42,14 +41,12 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   }
 
   updateOrder(OrderData order) {
-    if (order.status == Status.ACCEPTED) {
-      widget.mapController.updateDelivery(
-        order.acceptedBy.location.toLatLng(),
-        order.place.location.toLatLng(),
-        order.destination.location.toLatLng(),
-        .1,
-      );
-    }
+    widget.mapController.updateDelivery(
+      order.acceptedBy.location.toLatLng(),
+      order.place.location.toLatLng(),
+      order.destination.location.toLatLng(),
+      .1,
+    );
   }
 
   cancelRequest() async {
@@ -146,21 +143,21 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                                         25, 26, 26, 18, 20, 21, 22),
                                   ),
                                   Text(
-                                      user
-                                          .phoneNumber, //replace with phone number
+                                      user.phoneNumber, //replace with phone number
                                       style: TextStyle(
-                                          color: AppTheme.lightGrey,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: AppTheme.elementSize(
-                                              screenHeight,
-                                              14,
-                                              14,
-                                              15,
-                                              15,
-                                              16,
-                                              18,
-                                              21,
-                                              24))),
+                                        color: AppTheme.lightGrey,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: AppTheme.elementSize(
+                                            screenHeight,
+                                            14,
+                                            14,
+                                            15,
+                                            15,
+                                            16,
+                                            18,
+                                            21,
+                                            24),
+                                      )),
                                 ],
                               )
                             ],

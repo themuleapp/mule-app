@@ -37,16 +37,13 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
     widget.buttonBridge?.callback = cancelRequest;
   }
 
-  updateOrder() async {
-    OrderData order = await this.order;
-    if (order.status == Status.ACCEPTED) {
-      widget.mapController.updateDelivery(
-        order.acceptedBy.location.toLatLng(),
-        order.place.location.toLatLng(),
-        order.destination.location.toLatLng(),
-        .1,
-      );
-    }
+  updateOrder(OrderData order) async {
+    widget.mapController.updateDelivery(
+      order.acceptedBy.location.toLatLng(),
+      order.place.location.toLatLng(),
+      order.destination.location.toLatLng(),
+      .1,
+    );
   }
 
   String muleName(OrderData order) {
@@ -74,6 +71,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
           if (snapshot.data == null) {
             return CircularProgressIndicator();
           } else {
+            updateOrder(snapshot.data);
             MuleData mule = snapshot.data.acceptedBy;
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
