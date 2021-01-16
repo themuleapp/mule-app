@@ -45,7 +45,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   // Animation
   EdgeInsets buttonMargin;
-  double _snapValue;
   double _backdropOpacity;
   bool _isDraggable;
   bool _backdropTapClosesPanel;
@@ -108,7 +107,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     switch (panelIndex) {
       case PanelIndex.DestinationAndSearch:
         setState(() {
-          _snapValue = null;
           _isDraggable = true;
           _backdropTapClosesPanel = true;
           _backdropOpacity = 0.5;
@@ -125,7 +123,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MakeRequest:
         setState(() {
-          _snapValue = .25;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0.0;
@@ -142,7 +139,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.WaitingToMatch:
         setState(() {
-          _snapValue = null;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -159,7 +155,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.UserMatched:
         setState(() {
-          _snapValue = null;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -176,7 +171,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.MuleMatched:
         setState(() {
-          _snapValue = null;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _backdropOpacity = 0;
@@ -193,7 +187,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         break;
       case PanelIndex.Loading:
         setState(() {
-          _snapValue = null;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
           _buttonList = [];
@@ -236,7 +229,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       isDraggable: _isDraggable,
       backdropTapClosesPanel: _backdropTapClosesPanel,
       minHeight: widget.minHeight,
-      snapPoint: _snapValue,
       maxHeight: widget.maxHeight,
       controller: _panelController,
       backdropEnabled: true,
@@ -285,9 +277,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   double get _currentHeight {
     if (_panelController.isAttached && _panelController.isPanelOpen)
       return widget.maxHeight;
-    if (_snapValue == null) return widget.minHeight;
-    return widget.minHeight +
-        _snapValue * (widget.maxHeight - widget.minHeight);
+    return widget.minHeight;
   }
 }
 
@@ -314,20 +304,12 @@ class SlidingUpWidgetController {
     return _slidingUpWidgetState._panelController;
   }
 
-  double get snapPoint {
-    return _slidingUpWidgetState._snapValue;
-  }
-
   double get maxHeight {
     return _slidingUpWidgetState.widget.maxHeight;
   }
 
   double get minHeight {
     return _slidingUpWidgetState.widget.minHeight;
-  }
-
-  double get snapHeight {
-    return minHeight + snapPoint * (maxHeight - minHeight);
   }
 
   double get currentHeight {
