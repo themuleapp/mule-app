@@ -18,7 +18,7 @@ class OrderData {
         this.destination = LocationDesciption.fromJson(jsonData['destination']),
         this.status = _statusFromString(jsonData['status']),
         this.createdAt = DateTime.parse(jsonData['createdAt']),
-        this.createdBy = jsonData['createdBy'],
+        this.createdBy = UserData.fromJson(jsonData['createdBy']),
         // Mule is only available when active request is accepted
         this.acceptedBy = (jsonData['acceptedBy'] != null)
             ? MuleData.fromJson(jsonData['acceptedBy'])
