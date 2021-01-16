@@ -73,6 +73,15 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
           } else {
             updateOrder(snapshot.data);
             MuleData mule = snapshot.data.acceptedBy;
+            String formattedPhoneNumber = "+" +
+                mule.phoneNumber.substring(0, 1) +
+                " " +
+                "(" +
+                mule.phoneNumber.substring(1, 4) +
+                ") " +
+                mule.phoneNumber.substring(4, 7) +
+                "-" +
+                mule.phoneNumber.substring(7, user.phoneNumber.length);
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +151,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                                     size: AppTheme.elementSize(screenHeight, 25,
                                         25, 26, 26, 18, 20, 21, 22),
                                   ),
-                                  Text(mule.phoneNumber,
+                                  Text(formattedPhoneNumber,
                                       style: TextStyle(
                                         color: AppTheme.lightGrey,
                                         fontWeight: FontWeight.w500,
