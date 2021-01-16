@@ -306,6 +306,15 @@ class HttpClient {
         '/requests/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
   }
+
+  Future<bool> muleCompleteRequest(String requestId) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/requests/mule/confirm', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
 }
 
 HttpClient httpClient = new HttpClient();
