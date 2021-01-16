@@ -73,15 +73,14 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
           } else {
             updateOrder(snapshot.data);
             MuleData mule = snapshot.data.acceptedBy;
-            String formattedPhoneNumber = "+" +
-                mule.phoneNumber.substring(0, 1) +
+            String formattedPhoneNumber = mule.phoneNumber.substring(0, 2) +
                 " " +
                 "(" +
-                mule.phoneNumber.substring(1, 4) +
+                mule.phoneNumber.substring(2, 5) +
                 ") " +
-                mule.phoneNumber.substring(4, 7) +
+                mule.phoneNumber.substring(5, 8) +
                 " - " +
-                mule.phoneNumber.substring(7, mule.phoneNumber.length);
+                mule.phoneNumber.substring(8, mule.phoneNumber.length);
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
