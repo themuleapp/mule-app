@@ -196,9 +196,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           _snapValue = null;
           _isDraggable = false;
           _backdropTapClosesPanel = false;
+          _buttonList = [];
           _backdropOpacity = 0;
         });
-        _buttonList = [];
         _setCurrentPanel(LoadingPanel(
           slidingUpWidgetController: widget.controller,
           mapController: _mapController,
