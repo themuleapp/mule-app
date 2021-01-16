@@ -80,7 +80,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                 mule.phoneNumber.substring(1, 4) +
                 ") " +
                 mule.phoneNumber.substring(4, 7) +
-                "-" +
+                " - " +
                 mule.phoneNumber.substring(7, mule.phoneNumber.length);
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
