@@ -137,8 +137,8 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Icon(
-                                    Icons.perm_phone_msg,
-                                    color: AppTheme.secondaryBlue,
+                                    Icons.phone,
+                                    color: AppTheme.darkGrey,
                                     size: AppTheme.elementSize(screenHeight, 25,
                                         25, 26, 26, 18, 20, 21, 22),
                                   ),

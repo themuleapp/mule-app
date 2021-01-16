@@ -137,26 +137,26 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Icon(
-                                    Icons.perm_phone_msg,
-                                    color: AppTheme.secondaryBlue,
+                                    Icons.phone,
+                                    color: AppTheme.darkGrey,
                                     size: AppTheme.elementSize(screenHeight, 25,
                                         25, 26, 26, 18, 20, 21, 22),
                                   ),
-                                  Text(
-                                      user.phoneNumber, //replace with phone number
+                                  Text(user.phoneNumber,
                                       style: TextStyle(
                                         color: AppTheme.lightGrey,
                                         fontWeight: FontWeight.w500,
                                         fontSize: AppTheme.elementSize(
-                                            screenHeight,
-                                            14,
-                                            14,
-                                            15,
-                                            15,
-                                            16,
-                                            18,
-                                            21,
-                                            24),
+                                          screenHeight,
+                                          14,
+                                          14,
+                                          15,
+                                          15,
+                                          16,
+                                          18,
+                                          21,
+                                          24,
+                                        ),
                                       )),
                                 ],
                               )
