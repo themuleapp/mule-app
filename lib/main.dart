@@ -5,7 +5,7 @@ import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/splash_screen.dart';
 import 'package:mule/config/utils.dart';
 
-import 'config/notification_service.dart';
+import 'widgets/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

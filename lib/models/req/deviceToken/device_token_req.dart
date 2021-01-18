@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class UploadDeviceTokenReq {
+class DeviceTokenReq {
   final String deviceToken;
 
-  UploadDeviceTokenReq({
+  DeviceTokenReq({
     @required this.deviceToken,
   });
 

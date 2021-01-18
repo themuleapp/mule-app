@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/notification_types.dart';
-import 'package:mule/models/req/uploadDeviceToken/upload_device_token_req.dart';
+import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 
 class NotificationHandler extends StatefulWidget {
@@ -20,7 +20,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
 
   @override
   void initState() {
-    print('HERERERERERERERE');
     super.initState();
     if (Platform.isIOS) {
       // When permission is given send the token to the server
@@ -47,7 +46,7 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
     await httpClient
-        .uploadDeviceToken(UploadDeviceTokenReq(deviceToken: fcmToken));
+        .uploadDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
   }
 
   Future<dynamic> _foregroundMessageHandler(
