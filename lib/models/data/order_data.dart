@@ -1,6 +1,5 @@
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/user_data.dart';
-import 'package:mule/models/data/user_data.dart';
 
 // TODO Should this be in a response?
 class OrderData {
