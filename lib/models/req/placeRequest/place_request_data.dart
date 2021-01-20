@@ -1,26 +1,25 @@
-import 'package:mule/models/data/order_data.dart';
-
 class PlaceRequestData {
-  final LocationDesciption place;
-  final LocationDesciption destination;
+  final double lat;
+  final double lng;
+  final String place;
+  final String destination;
+  final String requestedItem;
 
   PlaceRequestData(
+    this.lat,
+    this.lng,
     this.place,
     this.destination,
+    this.requestedItem,
   );
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      "place": {
-        "addressString": this.place.description,
-        "lat": this.place.location.lat,
-        "lng": this.place.location.lng,
-      },
-      "destination": {
-        "addressString": this.destination.description,
-        "lat": this.destination.location.lat,
-        "lng": this.destination.location.lng,
-      },
+      "lat": this.lat,
+      "lng": this.lng,
+      "place": this.place,
+      "destination": this.destination,
+      "requestedItem": this.requestedItem,
     };
   }
 }

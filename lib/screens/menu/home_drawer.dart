@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
-import 'package:mule/config/notification_util.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/screens/legal/legal.dart';
 import 'package:mule/screens/profile/profile.dart';
@@ -38,7 +37,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   _handleSignOut() async {
     await httpClient.handleSignOut();
-    await NotificationUtil.deleteDeviceToken();
     await Config.deleteToken();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => HomePage()));
