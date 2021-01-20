@@ -295,7 +295,10 @@ class HttpClient {
 
   Future<OrderData> getActiveRequest() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/active');
-    if (res.statusCode != 200 || res.data == "") {
+    if (res.statusCode != 200) {
+      return null;
+    }
+    if (res.data['request'].isEmpty()) {
       return null;
     }
     return OrderData.fromJson(res.data['request']);
