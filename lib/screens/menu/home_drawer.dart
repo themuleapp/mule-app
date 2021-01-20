@@ -28,16 +28,17 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
+  bool _isMule = GetIt.I.get<UserInfoStore>().isMule;
 
   @override
   void initState() {
-    updateDrawerState();
     super.initState();
+    _updateDrawerState();
   }
 
-  void updateDrawerState() {
+  _updateDrawerState() {
     setState(() {
-      if (GetIt.I.get<UserInfoStore>().isMule)
+      if (_isMule)
         setMuleDrawerList();
       else
         setUserDrawerListArray();
@@ -115,6 +116,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.settings),
       ),
     ];
+  }
+
+  _updateUserIsMule(bool isMule) async {
+    bool isMuleConfirm = await httpClient.setIsMule(isMule);
+    GetIt.I.get<UserInfoStore>().updateIsMule(isMuleConfirm);
+
+    setState(() {
+      _isMule = isMuleConfirm;
+    });
+    _updateDrawerState();
   }
 
   @override
@@ -235,10 +246,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 value: GetIt.I.get<UserInfoStore>().isMule,
                                 activeColor: AppTheme.lightBlue,
                                 onChanged: (state) {
-                                  GetIt.I
-                                      .get<UserInfoStore>()
-                                      .updateIsMule(state);
-                                  updateDrawerState();
+                                  _updateUserIsMule(state);
                                 },
                               ),
                             )
@@ -455,8 +463,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
     widget.callBackIndex(indexScreen);
   }
-
-  ImageProvider getProfilePicture(ImageProvider imageProvider) {}
 }
 
 enum DrawerIndex {
