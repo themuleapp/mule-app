@@ -43,9 +43,7 @@ dependencies:
   flutter_cache_manager:
   flutter_polyline_points:
   flutter_progress_button:
-  firebase_messaging:
   latlong: ^0.6.1
-  intl:
 
 dev_dependencies:
   flutter_test:

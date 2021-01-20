@@ -47,11 +47,11 @@ class MapHelper {
   /// Then it will convert the canvas to an image and generate the [BitmapDescriptor]
   /// to be used on the cluster marker icons.
   static Future<BitmapDescriptor> _getClusterMarker(
-    int clusterSize,
-    Color clusterColor,
-    Color textColor,
-    int width,
-  ) async {
+      int clusterSize,
+      Color clusterColor,
+      Color textColor,
+      int width,
+      ) async {
     assert(clusterSize != null);
     assert(clusterColor != null);
     assert(width != null);
@@ -87,9 +87,9 @@ class MapHelper {
     );
 
     final image = await pictureRecorder.endRecording().toImage(
-          radius.toInt() * 2,
-          radius.toInt() * 2,
-        );
+      radius.toInt() * 2,
+      radius.toInt() * 2,
+    );
     final data = await image.toByteData(format: ImageByteFormat.png);
 
     return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
@@ -121,16 +121,12 @@ class MapHelper {
 
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))
-        .buffer
-        .asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer.asUint8List();
   }
 
-  static Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(
-      String path, int width) async {
+  static Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(String path, int width) async {
     final Uint8List imageData = await getBytesFromAsset(path, width);
     return BitmapDescriptor.fromBytes(imageData);
   }
@@ -140,10 +136,10 @@ class MapHelper {
   ///
   /// For more info about customizing your clustering logic check the [Fluster] constructor.
   static Future<Fluster<MapMarker>> initClusterManager(
-    List<MapMarker> markers,
-    int minZoom,
-    int maxZoom,
-  ) async {
+      List<MapMarker> markers,
+      int minZoom,
+      int maxZoom,
+      ) async {
     assert(markers != null);
     assert(minZoom != null);
     assert(maxZoom != null);
@@ -156,30 +152,30 @@ class MapHelper {
       nodeSize: 64,
       points: markers,
       createCluster: (
-        BaseCluster cluster,
-        double lng,
-        double lat,
-      ) =>
+          BaseCluster cluster,
+          double lng,
+          double lat,
+          ) =>
           MapMarker(
-        id: cluster.id.toString(),
-        position: LatLng(lat, lng),
-        isCluster: cluster.isCluster,
-        clusterId: cluster.id,
-        pointsSize: cluster.pointsSize,
-        childMarkerId: cluster.childMarkerId,
-      ),
+            id: cluster.id.toString(),
+            position: LatLng(lat, lng),
+            isCluster: cluster.isCluster,
+            clusterId: cluster.id,
+            pointsSize: cluster.pointsSize,
+            childMarkerId: cluster.childMarkerId,
+          ),
     );
   }
 
   /// Gets a list of markers and clusters that reside within the visible bounding box for
   /// the given [currentZoom]. For more info check [Fluster.clusters].
   static Future<List<Marker>> getClusterMarkers(
-    Fluster<MapMarker> clusterManager,
-    double currentZoom,
-    Color clusterColor,
-    Color clusterTextColor,
-    int clusterWidth,
-  ) {
+      Fluster<MapMarker> clusterManager,
+      double currentZoom,
+      Color clusterColor,
+      Color clusterTextColor,
+      int clusterWidth,
+      ) {
     assert(currentZoom != null);
     assert(clusterColor != null);
     assert(clusterTextColor != null);
