@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/location_data.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/models/req/placeRequest/place_request_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
@@ -11,8 +12,9 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/order_information_card.dart';
 
-class MakeRequestPanel extends StatelessWidget {
+class MakeRequestPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
   final double opacity = 1.0;
@@ -21,7 +23,10 @@ class MakeRequestPanel extends StatelessWidget {
     this.slidingUpWidgetController,
     this.mapController,
   });
+  _MakeRequestPanelState createState() => _MakeRequestPanelState();
+}
 
+class _MakeRequestPanelState extends State<MakeRequestPanel> {
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
         GetIt.I.get<LocationStore>().place.location;
@@ -31,15 +36,22 @@ class MakeRequestPanel extends StatelessWidget {
   }
 
   _onReturnToSearch() {
-    slidingUpWidgetController.panelIndex = PanelIndex.DestinationAndSearch;
-    mapController.unfocusRoute();
+    widget.slidingUpWidgetController.panelIndex =
+        PanelIndex.DestinationAndSearch;
+    widget.mapController.unfocusRoute();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   build(BuildContext context) {
     // Only animate after everything is done building
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        slidingUpWidgetController.panelController.animatePanelToSnapPoint(
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget
+            .slidingUpWidgetController.panelController
+            .animatePanelToSnapPoint(
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         ));
@@ -50,7 +62,7 @@ class MakeRequestPanel extends StatelessWidget {
       children: <Widget>[
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: opacity,
+          opacity: widget.opacity,
           child: Padding(
             padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
             child: Text(
@@ -116,82 +128,12 @@ class MakeRequestPanel extends StatelessWidget {
             ],
           ),
         ),
-        AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: opacity,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppTheme.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.lightGrey.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 15),
-                          hintText:
-                              GetIt.I.get<LocationStore>().place.description,
-                          prefixIcon: IconButton(
-                            splashColor: AppTheme.lightBlue,
-                            icon: Icon(
-                              Icons.my_location,
-                              color: AppTheme.secondaryBlue,
-                            ),
-                            onPressed: () {},
-                          ),
-                          enabled: false,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 15),
-                          hintText: GetIt.I
-                              .get<LocationStore>()
-                              .destination
-                              .description,
-                          prefixIcon: IconButton(
-                            splashColor: AppTheme.lightBlue,
-                            icon: Icon(
-                              Icons.place,
-                              color: AppTheme.secondaryBlue,
-                            ),
-                            onPressed: () {},
-                          ),
-                          enabled: false,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        orderInformationCard(GetIt.I.get<LocationStore>().place.description,
+            GetIt.I.get<LocationStore>().destination.description),
         SizedBox(height: 10),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: opacity,
+          opacity: widget.opacity,
           child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16),
             child: Row(
@@ -255,11 +197,9 @@ class MakeRequestPanel extends StatelessWidget {
                         GetIt.I.get<LocationStore>().destination;
 
                     PlaceRequestData placeRequestData = PlaceRequestData(
-                      currentLocation.lat,
-                      currentLocation.lng,
-                      place.description,
-                      destination.description,
-                      'Coffee',
+                      LocationDesciption(place.location, place.description),
+                      LocationDesciption(
+                          destination.location, destination.description),
                     );
                     bool success =
                         await httpClient.placeRequest(placeRequestData);
@@ -277,7 +217,7 @@ class MakeRequestPanel extends StatelessWidget {
                       // and do page navigation in the returned VoidCallback.
                       // So that user won't missed out the reverse animation.
                       if (success) {
-                        slidingUpWidgetController.panelIndex =
+                        widget.slidingUpWidgetController.panelIndex =
                             PanelIndex.WaitingToMatch;
                       }
                     };
