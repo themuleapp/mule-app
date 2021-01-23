@@ -107,7 +107,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                         child: Padding(
                           padding: EdgeInsets.only(
                               top: AppTheme.elementSize(
-                                  screenHeight, 20, 22, 24, 26, 32, 34, 36, 38),
+                                  screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
                               left: 16,
                               right: 16),
                           child: Text(
@@ -116,7 +116,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 18, 19, 20, 21, 22, 26, 30, 36),
+                                  screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
                               color: AppTheme.darkerText,
                             ),
                           ),
@@ -131,7 +131,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: AppTheme.elementSize(screenHeight, 14,
-                                    15, 16, 17, 18, 20, 24, 28),
+                                    15, 16, 16, 18, 20, 24, 28),
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
@@ -141,8 +141,8 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, right: 16),
                   child: Image.asset('assets/images/student_waiting.png',
-                      height: AppTheme.elementSize(screenHeight, 100, 110, 125,
-                          140, 150, 150, 160, 160)),
+                      height: AppTheme.elementSize(screenHeight, 100, 110, 120,
+                          130, 150, 150, 160, 160)),
                 ),
               ],
             ),
