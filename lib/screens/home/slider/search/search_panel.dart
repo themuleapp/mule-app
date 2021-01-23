@@ -31,7 +31,7 @@ class _SearchPanelState extends State<SearchPanel> {
   FocusNode _searchFocusNode = FocusNode();
   FocusNode _destinationFocusNode = FocusNode();
 
-  Widget _getForm(bool open) {
+  Widget _getForm(bool open, screenHeight) {
     if (!open) {
       _destinationFocusNode.unfocus();
     } else if (!_searchFocusNode.hasFocus) {
@@ -44,8 +44,8 @@ class _SearchPanelState extends State<SearchPanel> {
         AnimatedOpacity(
             opacity: open ? 0.0 : 1.0,
             duration: Duration(milliseconds: 100),
-            child: _greetingTitle()),
-        _destinationTitle(),
+            child: _greetingTitle(screenHeight)),
+        _destinationTitle(screenHeight),
         SuggestionSearchBar(
           focusNode: _destinationFocusNode,
           controller: _destinationController,
@@ -68,7 +68,7 @@ class _SearchPanelState extends State<SearchPanel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _searchBarTitle(),
+              _searchBarTitle(screenHeight),
               SuggestionSearchBar(
                 controller: _searchController,
                 focusNode: _searchFocusNode,
@@ -113,10 +113,10 @@ class _SearchPanelState extends State<SearchPanel> {
     );
   }
 
-  Widget _greetingTitle() {
+  Widget _greetingTitle(screenHeight) {
     return Container(
       padding: EdgeInsets.only(
-        top: 20,
+        top: AppTheme.elementSize(screenHeight, 10, 12, 14, 17, 20, 22, 26, 30),
       ),
       child: Observer(
         builder: (_) => Text(
@@ -125,41 +125,47 @@ class _SearchPanelState extends State<SearchPanel> {
             fontFamily: AppTheme.fontName,
             fontWeight: FontWeight.w400,
             color: AppTheme.darkGrey,
-            fontSize: 16,
+            fontSize: AppTheme.elementSize(
+                screenHeight, 14, 15, 15, 16, 17, 20, 24, 26),
           ),
         ),
       ),
     );
   }
 
-  Widget _destinationTitle() {
+  Widget _destinationTitle(screenHeight) {
     return Container(
-      padding: EdgeInsets.only(top: 5, bottom: 10),
+      padding: EdgeInsets.only(
+          top: AppTheme.elementSize(screenHeight, 1, 2, 3, 4, 5, 6, 8, 10),
+          bottom:
+              AppTheme.elementSize(screenHeight, 6, 7, 8, 10, 12, 14, 15, 16)),
       child: Text(
         "Where are you headed?",
         style: TextStyle(
           fontFamily: AppTheme.fontName,
           fontWeight: FontWeight.w700,
           color: AppTheme.darkGrey,
-          fontSize: 20,
+          fontSize: AppTheme.elementSize(
+              screenHeight, 16, 18, 19, 19, 20, 22, 26, 30),
         ),
       ),
     );
   }
 
-  Widget _searchBarTitle() {
+  Widget _searchBarTitle(screenHeight) {
     return Container(
       padding: EdgeInsets.only(
-        top: 5,
-        bottom: 10,
-      ),
+          top: AppTheme.elementSize(screenHeight, 1, 2, 3, 4, 5, 6, 8, 10),
+          bottom:
+              AppTheme.elementSize(screenHeight, 6, 7, 8, 10, 12, 14, 15, 16)),
       child: Text(
         "What would you like?",
         style: TextStyle(
           fontFamily: AppTheme.fontName,
           fontWeight: FontWeight.w700,
           color: AppTheme.darkGrey,
-          fontSize: 20,
+          fontSize: AppTheme.elementSize(
+              screenHeight, 16, 18, 19, 19, 20, 22, 26, 30),
         ),
       ),
     );
@@ -177,10 +183,12 @@ class _SearchPanelState extends State<SearchPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
       child: _getForm(
-          widget.slidingUpWidgetController.panelController.isPanelOpen),
+          widget.slidingUpWidgetController.panelController.isPanelOpen,
+          screenHeight),
     );
   }
 
