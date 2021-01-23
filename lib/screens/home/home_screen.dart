@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
@@ -22,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   final SlidingUpWidgetController controller = SlidingUpWidgetController();
   Future<OrderData> order = httpClient.getActiveRequest();
-
+  MuleData mule;
   @override
   void dispose() {
     super.dispose();
@@ -62,15 +63,18 @@ class _MyHomePageState extends State<MyHomePage>
     }
     if (snapshot.data == null) {
       controller.panelIndex = PanelIndex.DestinationAndSearch;
-      //TODO Replace fullname check by check if user is mule
     } else {
       OrderData order = snapshot.data;
       switch (order.status) {
         case (Status.ACCEPTED):
-          controller.panelIndex = PanelIndex.Matched;
+          if (snapshot.data.createdBy.name ==
+              GetIt.I.get<UserInfoStore>().fullName) {
+            controller.panelIndex = PanelIndex.UserMatched;
+          } else {
+            controller.panelIndex = PanelIndex.MuleMatched;
+          }
           break;
         case (Status.OPEN):
-          print(order.status);
           controller.panelIndex = PanelIndex.WaitingToMatch;
           break;
         default:

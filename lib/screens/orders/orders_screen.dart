@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/config/http_client.dart';
+import 'package:mule/models/data/order_data.dart';
+import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/loading-animation.dart';
+import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/tab.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -9,19 +17,63 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen>
     with TickerProviderStateMixin {
-
   TabController _tabController;
-
+  Future<Map<Status, List<OrderData>>> myOrders = getOrders();
   @override
   initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
 
-  Widget requestTypeTabs(screenHeight) {
+  _updateOrders() {
+    setState(() {
+      myOrders = getOrders();
+    });
+  }
+
+  ListView generateItemsList(
+      Status orderStatus, Map<Status, List<OrderData>> orders) {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount:
+          (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
+      itemBuilder: (context, index) {
+        return orderCard(orders[orderStatus][index]);
+      },
+    );
+  }
+
+  InkWell orderCard(OrderData order) {
+    return InkWell(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
+              child: Text(
+                "${DateFormat('MMM dd - H:m a').format(order.createdAt.toLocal()).toUpperCase()}",
+                style: TextStyle(
+                  color: AppTheme.darkGrey,
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: orderInformationCard(
+                    order.place.description, order.destination.description)),
+          ],
+        ));
+  }
+
+  Widget requestTypeTabs(double screenHeight) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget> [
+        children: <Widget>[
           TabBar(
             tabs: [
               tab('Upcoming', screenHeight),
@@ -35,23 +87,41 @@ class _OrdersScreenState extends State<OrdersScreen>
             isScrollable: false,
             controller: _tabController,
           ),
-          Container(
-            padding: EdgeInsets.only(top: 16, right: 16, left: 16),
-            height: 100,
-            child: TabBarView(
-              controller: _tabController,
-                children: <Widget>[
-                  Container(
-                    child: Text("Upcoming")
+          FutureBuilder(
+            future: myOrders,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data == null) {
+                  createDialogWidget(
+                    context,
+                    "Oops, something went wrong...",
+                    "Please try again later!",
+                  );
+                  return Text("The data could not be loaded...",
+                      style: TextStyle(color: AppTheme.lightGrey));
+                  // DO SOMETHING
+                }
+                return Container(
+                  height: screenHeight,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: <Widget>[
+                      generateItemsList(Status.ACCEPTED, snapshot.data),
+                      generateItemsList(Status.COMPLETED, snapshot.data),
+                    ],
                   ),
-                  Container(
-                    child: Text("Past"),
+                );
+              } else {
+                return Container(
+                  height: 200,
+                  child: SpinKitDoubleBounce(
+                    color: AppTheme.lightBlue,
                   ),
-                ]
-            ),
-          )
-        ]
-    );
+                );
+              }
+            },
+          ),
+        ]);
   }
 
   @override
@@ -70,8 +140,8 @@ class _OrdersScreenState extends State<OrdersScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(
-                  top: 20.0, left: 20, right: 20, bottom: 30),
+              padding:
+                  EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
               child: Text(
                 "Orders",
                 style: TextStyle(
@@ -89,4 +159,34 @@ class _OrdersScreenState extends State<OrdersScreen>
       ),
     );
   }
+}
+
+Future<Map<Status, List<OrderData>>> getOrders() async {
+  List<OrderData> orders = [];
+  List<OrderData> history = await httpClient.getUserHistory();
+  OrderData ongoing = await httpClient.getActiveRequest();
+
+  if (history == null) {
+    return {};
+  }
+  if (ongoing != null) {
+    orders.add(ongoing);
+  }
+  orders..addAll(history);
+  return _sortOrders(orders);
+}
+
+Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
+  Map<Status, List<OrderData>> sortedOrders = {};
+
+  // Split orders by status
+  Status.values.forEach((status) {
+    sortedOrders.putIfAbsent(
+        status, () => orders.where((order) => order.status == status).toList());
+  });
+
+  // Sort orders by time of creation
+  sortedOrders.forEach((status, list) =>
+      list.sort((a, b) => a.createdAt.compareTo(b.createdAt)));
+  return sortedOrders;
 }
