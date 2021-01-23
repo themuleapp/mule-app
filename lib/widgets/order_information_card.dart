@@ -31,7 +31,15 @@ Widget orderInformationCard(
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 15),
+                    contentPadding: EdgeInsets.only(
+                        top: AppTheme.elementSize(
+                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 15, 15, 16, 17, 18, 20, 22, 24),
+                      color: AppTheme.lightGrey,
+                    ),
                     hintText: place,
                     prefixIcon: IconButton(
                       splashColor: AppTheme.lightBlue,
@@ -52,7 +60,15 @@ Widget orderInformationCard(
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 15),
+                    contentPadding: EdgeInsets.only(
+                        top: AppTheme.elementSize(
+                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 15, 15, 16, 17, 18, 20, 22, 24),
+                      color: AppTheme.lightGrey,
+                    ),
                     hintText: destination,
                     prefixIcon: IconButton(
                       splashColor: AppTheme.lightBlue,
