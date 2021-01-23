@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
-
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/painting.dart';
 import 'package:mule/config/config.dart';
@@ -300,8 +298,7 @@ class HttpClient {
     return OrderData.fromJson(res.data['request']);
   }
 
-  Future<void> uploadDeviceToken(
-      DeviceTokenReq uploadDeviceTokenReq) async {
+  Future<void> uploadDeviceToken(DeviceTokenReq uploadDeviceTokenReq) async {
     Response res = await _makeAuthenticatedPostRequest(
         '/profile/device-token', uploadDeviceTokenReq.toMap());
     if (res.statusCode != 200) {
@@ -310,8 +307,7 @@ class HttpClient {
     }
   }
 
-  Future<void> deleteDeviceToken(
-      DeviceTokenReq uploadDeviceTokenReq) async {
+  Future<void> deleteDeviceToken(DeviceTokenReq uploadDeviceTokenReq) async {
     Response res = await _makeAuthenticatedDeleteRequest(
         '/profile/device-token', uploadDeviceTokenReq.toMap());
     if (res.statusCode != 200) {
@@ -325,7 +321,7 @@ class HttpClient {
         '/requests/user/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
   }
-  
+
   Future<bool> muleCompleteRequest(String requestId) async {
     Response res = await _makeAuthenticatedPostRequest(
         '/requests/mule/confirm', {'requestId': requestId});
