@@ -206,7 +206,7 @@ class _RequestsScreenState extends State<RequestsScreen>
             tabs: [
               tab('Available', screenHeight),
               tab('Dismissed', screenHeight),
-              tab('Ongoing', screenHeight),
+              tab('Completed', screenHeight),
             ],
             unselectedLabelColor: AppTheme.lightestGrey,
             indicatorColor: AppTheme.secondaryBlue,
@@ -237,7 +237,7 @@ class _RequestsScreenState extends State<RequestsScreen>
                     children: <Widget>[
                       generateItemsList(Status.OPEN, snapshot.data, true),
                       generateItemsList(Status.DISMISSED, snapshot.data, false),
-                      generateItemsList(Status.ACCEPTED, snapshot.data, false),
+                      generateItemsList(Status.COMPLETED, snapshot.data, false),
                     ],
                   ),
                 );
