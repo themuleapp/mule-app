@@ -166,10 +166,10 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                       AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
               width: MediaQuery.of(context).size.width,
               height: AppTheme.elementSize(
-                  screenHeight, 36, 38, 42, 46, 48, 48, 48, 48),
+                  screenHeight, 36, 38, 42, 48, 48, 48, 48, 48),
               color: AppTheme.secondaryBlue,
               borderRadius: AppTheme.elementSize(
-                  screenHeight, 8, 10, 12, 14, 16, 16, 16, 16),
+                  screenHeight, 8, 10, 12, 16, 16, 16, 16, 16),
               animate: true,
               type: ProgressButtonType.Raised,
               onPressed: () async {

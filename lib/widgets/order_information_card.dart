@@ -37,7 +37,7 @@ Widget orderInformationCard(
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 15, 15, 16, 17, 18, 20, 22, 24),
+                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
                       color: AppTheme.lightGrey,
                     ),
                     hintText: place,
@@ -66,7 +66,7 @@ Widget orderInformationCard(
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: AppTheme.elementSize(
-                          screenHeight, 15, 15, 16, 17, 18, 20, 22, 24),
+                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
                       color: AppTheme.lightGrey,
                     ),
                     hintText: destination,
