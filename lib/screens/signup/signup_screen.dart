@@ -12,6 +12,7 @@ import 'package:mule/screens/signup/phone_otp.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
 
+import '../../navigation_home_screen.dart';
 import '../../stores/global/user_info_store.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -74,8 +75,10 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       final ProfileRes authRes = ProfileRes.fromJson(res.data);
       GetIt.I.get<UserInfoStore>().updateEverythingFromrRes(authRes);
       // user is signed up successfully
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);

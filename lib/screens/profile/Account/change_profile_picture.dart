@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 class ChangeProfilePicture extends StatefulWidget {
   @override
@@ -35,19 +36,15 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
     });
   }
 
-  Future _updateImage() async {
+  Future<bool> _updateImage(File image) async {
+    if (image == null) return false;
+
     bool isSuccessfulUpload = await httpClient.uploadProfilePicture(_image);
 
     if (isSuccessfulUpload) {
       await GetIt.I.get<UserInfoStore>().updateProfilePicture();
-
-      if (Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      }
-    } else {
-      createDialogWidget(context, "Something went wrong while uploading...",
-          "Please try again");
     }
+    return isSuccessfulUpload;
   }
 
   @override
@@ -113,7 +110,9 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
           SizedBox(
             height: 30.0,
           ),
-          Container(
+          Visibility(
+            visible: _image == null,
+            child: Container(
               height: 60.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -126,26 +125,64 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
                   _ButtonWithText(
                       "Gallery", _getImageFromGallery, AppTheme.lightBlue),
                 ],
-              )),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child:
-                _ButtonWithText("Update", _updateImage, AppTheme.secondaryBlue),
+              ),
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: GestureDetector(
-              onTap: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text(
-                "CANCEL",
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.lightText),
+          Visibility(
+            visible: _image != null,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: ProgressButton(
+                defaultWidget: Text(
+                  'Upload',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    letterSpacing: 0.0,
+                    color: AppTheme.white,
+                  ),
+                ),
+                progressWidget: CircularProgressIndicator(
+                    backgroundColor: AppTheme.white,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
+                width: MediaQuery.of(context).size.width - 100,
+                height: 48,
+                color: AppTheme.secondaryBlue,
+                borderRadius: 16,
+                animate: true,
+                type: ProgressButtonType.Raised,
+                onPressed: () async {
+                  bool success = await _updateImage(_image);
+                  if (!success) {
+                    createDialogWidget(
+                      context,
+                      'There was a problem',
+                      'Please try again later!',
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+          Visibility(
+            visible: _image != null,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 35),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _image = null;
+                  });
+                },
+                child: Text(
+                  "CANCEL",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.lightText),
+                ),
               ),
             ),
           ),
