@@ -139,7 +139,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
           ),
         ),
         orderInformationCard(GetIt.I.get<LocationStore>().place.description,
-            GetIt.I.get<LocationStore>().destination.description),
+            GetIt.I.get<LocationStore>().destination.description, screenHeight),
         SizedBox(height: 10),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 
-Widget orderInformationCard(String place, String destination) {
+Widget orderInformationCard(
+    String place, String destination, double screenHeight) {
   return AnimatedOpacity(
     duration: const Duration(milliseconds: 500),
     opacity: 1.0,
@@ -44,7 +45,9 @@ Widget orderInformationCard(String place, String destination) {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(
+                  height: AppTheme.elementSize(
+                      screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
               Container(
                 child: TextField(
                   decoration: InputDecoration(
