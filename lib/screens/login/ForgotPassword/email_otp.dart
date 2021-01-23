@@ -58,7 +58,7 @@ class _OtpVerificationState extends State<OtpVerification>
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppTheme.white,
       appBar: AppBar(
         backgroundColor: AppTheme.white,
