@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
-
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/painting.dart';
 import 'package:mule/config/config.dart';
@@ -13,11 +11,10 @@ import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/req/placeRequest/place_request_data.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
+import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
-import 'package:mule/models/res/requestedFromMeRes/requested_from_me_res.dart';
-import 'dart:math';
 
 class HttpClient {
   Dio _dio;
@@ -299,6 +296,24 @@ class HttpClient {
       return null;
     }
     return OrderData.fromJson(res.data['request']);
+  }
+
+  Future<void> uploadDeviceToken(DeviceTokenReq uploadDeviceTokenReq) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/profile/device-token', uploadDeviceTokenReq.toMap());
+    if (res.statusCode != 200) {
+      print(res.data);
+      print('There was a problem uploading the deviceToken!!');
+    }
+  }
+
+  Future<void> deleteDeviceToken(DeviceTokenReq uploadDeviceTokenReq) async {
+    Response res = await _makeAuthenticatedDeleteRequest(
+        '/profile/device-token', uploadDeviceTokenReq.toMap());
+    if (res.statusCode != 200) {
+      print(res.data);
+      print('There was a problem uploading the deviceToken!!');
+    }
   }
 
   Future<bool> deleteActiveRequest(OrderData order) async {
