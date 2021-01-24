@@ -303,8 +303,8 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
     orders.add(accepted);
   }
   orders..addAll(openOrders)..addAll(history);
-  orders.removeWhere(
-      (element) => element.createdBy == GetIt.I.get<UserInfoStore>().fullName);
+  orders.removeWhere((element) =>
+      element.createdBy.name == GetIt.I.get<UserInfoStore>().fullName);
   return _sortOrders(orders);
 }
 
