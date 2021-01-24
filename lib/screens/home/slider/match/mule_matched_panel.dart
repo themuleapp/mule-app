@@ -50,7 +50,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   }
 
   cancelRequest() async {
-    if (await httpClient.deleteActiveRequest(await order)) {
+    if (await httpClient.muleDeleteActiveRequest(await order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
       widget.mapController.focusCurrentLocation();

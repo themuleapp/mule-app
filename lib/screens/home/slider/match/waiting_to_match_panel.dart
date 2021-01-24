@@ -55,7 +55,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   }
 
   cancelRequest() async {
-    if (order != null && await httpClient.deleteActiveRequest(order)) {
+    if (order != null && await httpClient.userDeleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
       timer.cancel();
