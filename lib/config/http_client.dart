@@ -303,7 +303,7 @@ class HttpClient {
 
   Future<bool> deleteActiveRequest(OrderData order) async {
     Response res = await _makeAuthenticatedDeleteRequest(
-        '/requests/cancel', {"requestId": order.id});
+        '/requests/user/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
   }
 
