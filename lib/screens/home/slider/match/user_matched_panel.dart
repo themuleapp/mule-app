@@ -73,6 +73,14 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
           } else {
             updateOrder(snapshot.data);
             MuleData mule = snapshot.data.acceptedBy;
+            Image muleImg;
+            if (mule.profilePicture != null) {
+              muleImg = Image.network(mule.profilePicture);
+            } else {
+              muleImg =
+                  Image.asset('assets/images/profile_picture_placeholder.png');
+            }
+
             String formattedPhoneNumber = mule.phoneNumber.substring(0, 2) +
                 " " +
                 "(" +
@@ -119,8 +127,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(16.0),
-                            child: Image.asset(
-                                'assets/images/profile_picture_placeholder.png'),
+                            child: muleImg,
                           ),
                         ),
                         Expanded(
