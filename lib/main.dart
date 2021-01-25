@@ -5,6 +5,8 @@ import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/splash_screen.dart';
 import 'package:mule/config/utils.dart';
 
+import 'widgets/notification_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
@@ -21,15 +23,18 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
-        future: Future.wait([_isAuthenticatedUser, _isCurrentLocationLoaded]),
-        builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
-          if (snapshot.hasData && !snapshot.data.contains(false)) {
-            return NavigationHomeScreen();
-          } else if (!snapshot.hasData) {
-            return SplashScreen();
-          }
-          return HomePage();
-        },
+          future: Future.wait([_isAuthenticatedUser, _isCurrentLocationLoaded]),
+          builder: (BuildContext context, AsyncSnapshot<List<bool>> snapshot) {
+            if (snapshot.hasData && !snapshot.data.contains(false)) {
+              return NotificationHandler(
+                body: NavigationHomeScreen(),
+              );
+            } else if (!snapshot.hasData) {
+              return SplashScreen();
+            }
+            return HomePage();
+          },
+        
       ),
     );
   }

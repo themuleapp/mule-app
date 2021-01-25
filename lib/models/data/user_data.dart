@@ -15,12 +15,14 @@ class MuleData extends UserData {
   String name;
   String phoneNumber;
   LocationData location;
+  String profilePicture;
 
-  MuleData({String name, String phoneNumber, this.location})
+  MuleData({String name, String phoneNumber, this.location, this.profilePicture})
       : super(name: name, phoneNumber: phoneNumber);
 
   MuleData.fromJson(Map<String, dynamic> jsonData)
       : name = jsonData['name'],
         phoneNumber = jsonData['phoneNumber'],
-        this.location = LocationData.fromJson(jsonData['location']);
+        this.location = LocationData.fromJson(jsonData['location']),
+        this.profilePicture = jsonData['profilePicture'];
 }
