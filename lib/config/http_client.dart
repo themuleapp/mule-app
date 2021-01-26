@@ -292,7 +292,10 @@ class HttpClient {
 
   Future<OrderData> getActiveRequest() async {
     Response res = await _makeAuthenticatedGetRequest('/requests/active');
-    if (res.statusCode != 200 || res.data == "") {
+    if (res.statusCode != 200) {
+      return null;
+    }
+    if (res.data['request'] == null) {
       return null;
     }
     return OrderData.fromJson(res.data['request']);
@@ -329,6 +332,15 @@ class HttpClient {
       return false;
     }
     return true;
+  }
+
+  Future<bool> setIsMule(bool isMule) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/profile/change-mule-status', {'mule': isMule});
+    if (res.statusCode != 200) {
+      return null;
+    }
+    return res.data['msg'].contains("Mule") ? true : false;
   }
 }
 
