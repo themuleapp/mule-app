@@ -57,6 +57,7 @@ abstract class _UserInfoStore with Store {
     this._lastName = res.lastName;
     this._email = res.email;
     this._phoneNumber = res.phoneNumber;
+    this._isMule = res.isMule;
   }
 
   @action
@@ -76,5 +77,6 @@ abstract class _UserInfoStore with Store {
   String get firstName => this._firstName;
   @computed
   bool get isMule => this._isMule;
+
   ImageProvider get profilePicture => this._profilePicture;
 }
