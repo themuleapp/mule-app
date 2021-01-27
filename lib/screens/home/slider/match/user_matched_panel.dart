@@ -10,6 +10,8 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
+import '../../../../navigation_home_screen.dart';
+
 class UserMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
@@ -59,6 +61,24 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
       createDialogWidget(context, "Something went wrong...",
           "Something went wrong when cancelling your request, please try again later.");
     }
+  }
+
+// TODO: pop up a dialogue box (after mule comfirms) asking whether order has been received
+  completedRequest(OrderData order) async {
+    _handleComplete(order.id);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+  }
+
+  _handleComplete(String requestId) async {
+    bool success;
+    success = await httpClient.userCompleteRequest(requestId);
+    if (!success) {
+      createDialogWidget(context, 'There was a problem!',
+          'We couldn\'t complete your request, please try again!');
+    }
+    createDialogWidget(
+        context, "Confirmation sent!", "We\'re glad everything went well!");
   }
 
   @override

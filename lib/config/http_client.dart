@@ -334,6 +334,15 @@ class HttpClient {
     return true;
   }
 
+  Future<bool> userCompleteRequest(String requestId) async {
+    Response res = await _makeAuthenticatedPostRequest(
+        '/requests/user/confirm', {'requestId': requestId});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
+
   Future<bool> setIsMule(bool isMule) async {
     Response res = await _makeAuthenticatedPostRequest(
         '/profile/change-mule-status', {'mule': isMule});
