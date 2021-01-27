@@ -61,8 +61,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
     }
   }
 
-  completedRequest() async {
-    print("Order completed");
+  completedRequest(OrderData order) async {
     _confirmComplete(context);
     _handleComplete(order.id);
     // Navigator.of(context).push(
