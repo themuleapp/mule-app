@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/config/http_client.dart';
+import 'package:mule/config/notification_util.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/screens/legal/legal.dart';
 import 'package:mule/screens/profile/profile.dart';
@@ -28,16 +29,17 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList> drawerList;
+  bool _isMule = GetIt.I.get<UserInfoStore>().isMule;
 
   @override
   void initState() {
-    updateDrawerState();
     super.initState();
+    _updateDrawerState();
   }
 
-  void updateDrawerState() {
+  _updateDrawerState() {
     setState(() {
-      if (GetIt.I.get<UserInfoStore>().isMule)
+      if (_isMule)
         setMuleDrawerList();
       else
         setUserDrawerListArray();
@@ -47,6 +49,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   _handleSignOut() async {
     imageCache.clear();
     await httpClient.handleSignOut();
+    await NotificationUtil.deleteDeviceToken();
     await Config.deleteToken();
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => HomePage()));
@@ -115,6 +118,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.settings),
       ),
     ];
+  }
+
+  _updateUserIsMule(bool isMule) async {
+    bool isMuleConfirm = await httpClient.setIsMule(isMule);
+    GetIt.I.get<UserInfoStore>().updateIsMule(isMuleConfirm);
+
+    setState(() {
+      _isMule = isMuleConfirm;
+    });
+    _updateDrawerState();
   }
 
   @override
@@ -235,10 +248,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 value: GetIt.I.get<UserInfoStore>().isMule,
                                 activeColor: AppTheme.lightBlue,
                                 onChanged: (state) {
-                                  GetIt.I
-                                      .get<UserInfoStore>()
-                                      .updateIsMule(state);
-                                  updateDrawerState();
+                                  _updateUserIsMule(state);
                                 },
                               ),
                             )
@@ -455,8 +465,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
     widget.callBackIndex(indexScreen);
   }
-
-  ImageProvider getProfilePicture(ImageProvider imageProvider) {}
 }
 
 enum DrawerIndex {
