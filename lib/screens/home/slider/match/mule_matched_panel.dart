@@ -83,6 +83,16 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                 user.phoneNumber.substring(5, 8) +
                 " - " +
                 user.phoneNumber.substring(8, user.phoneNumber.length);
+
+            // Get the user profile picture and see if he has one
+            // Otherwise just use the placeholder
+            Image userImg;
+            if (user.profilePicture != null) {
+              userImg = Image.network(user.profilePicture);
+            } else {
+              userImg =
+                  Image.asset('assets/images/profile_picture_placeholder.png');
+            }
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,8 +129,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
-                          child: Image.asset(
-                              'assets/images/profile_picture_placeholder.png'),
+                          child: userImg,
                         ),
                       ),
                       Expanded(
