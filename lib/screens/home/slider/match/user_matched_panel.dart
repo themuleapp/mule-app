@@ -97,14 +97,18 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
                     duration: const Duration(milliseconds: 500),
                     opacity: widget.opacity,
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 32.0, left: 16, right: 16),
+                      padding: EdgeInsets.only(
+                          top: AppTheme.elementSize(
+                              screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                          left: 16,
+                          right: 16),
                       child: Text(
                         'En Route',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 22,
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
                           color: AppTheme.darkerText,
                         ),
                       ),
