@@ -8,17 +8,20 @@ import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/clip_height.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class UserMatchedPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
+  final double loadingBarHeight;
   final double opacity = 1.0;
   final StylizedButton buttonBridge;
 
   UserMatchedPanel({
     this.slidingUpWidgetController,
     this.mapController,
+    this.loadingBarHeight = 5.0,
     this.buttonBridge,
   });
 
@@ -64,12 +67,29 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
+    final double loadingBar = widget.slidingUpWidgetController.radius * 2;
     return FutureBuilder(
         future: order,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return CircularProgressIndicator();
+            return Center(
+              child: Container(
+                height: loadingBar,
+                child: ClipRect(
+                  clipper: ClipHeightQuarter(height: widget.loadingBarHeight),
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(loadingBar / 2)),
+                    child: LinearProgressIndicator(
+                      minHeight: widget.loadingBarHeight,
+                      backgroundColor: AppTheme.secondaryBlue,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
+                    ),
+                  ),
+                ),
+              ),
+            );
           } else {
             updateOrder(snapshot.data);
             MuleData mule = snapshot.data.acceptedBy;
