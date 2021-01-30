@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
@@ -101,20 +100,24 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 500),
                         opacity: widget.opacity,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 32, left: 16, right: 16),
+                          padding: EdgeInsets.only(
+                              top: AppTheme.elementSize(
+                                  screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                              left: 16,
+                              right: 16),
                           child: Text(
                             'Your request has been sent!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 22,
+                              fontSize: AppTheme.elementSize(
+                                  screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
                               color: AppTheme.darkerText,
                             ),
                           ),
@@ -129,7 +132,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: AppTheme.elementSize(screenHeight, 14,
-                                    15, 16, 17, 18, 20, 24, 28),
+                                    15, 16, 16, 18, 20, 24, 28),
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
@@ -139,7 +142,8 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, right: 16),
                   child: Image.asset('assets/images/student_waiting.png',
-                      height: 150),
+                      height: AppTheme.elementSize(screenHeight, 100, 110, 120,
+                          130, 150, 150, 160, 160)),
                 ),
               ],
             ),

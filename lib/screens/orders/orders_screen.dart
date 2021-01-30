@@ -32,19 +32,19 @@ class _OrdersScreenState extends State<OrdersScreen>
   }
 
   ListView generateItemsList(
-      Status orderStatus, Map<Status, List<OrderData>> orders) {
+      Status orderStatus, Map<Status, List<OrderData>> orders, double screenHeight) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount:
           (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
       itemBuilder: (context, index) {
-        return orderCard(orders[orderStatus][index]);
+        return orderCard(orders[orderStatus][index], screenHeight);
       },
     );
   }
 
-  InkWell orderCard(OrderData order) {
+  InkWell orderCard(OrderData order, double screenHeight) {
     return InkWell(
         onTap: () {},
         child: Column(
@@ -65,7 +65,7 @@ class _OrdersScreenState extends State<OrdersScreen>
             Padding(
                 padding: EdgeInsets.only(bottom: 8),
                 child: orderInformationCard(
-                    order.place.description, order.destination.description)),
+                    order.place.description, order.destination.description, screenHeight)),
           ],
         ));
   }
@@ -106,8 +106,8 @@ class _OrdersScreenState extends State<OrdersScreen>
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
-                      generateItemsList(Status.ACCEPTED, snapshot.data),
-                      generateItemsList(Status.COMPLETED, snapshot.data),
+                      generateItemsList(Status.ACCEPTED, snapshot.data, screenHeight),
+                      generateItemsList(Status.COMPLETED, snapshot.data, screenHeight),
                     ],
                   ),
                 );

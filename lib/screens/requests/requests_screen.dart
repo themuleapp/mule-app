@@ -42,8 +42,11 @@ class _RequestsScreenState extends State<RequestsScreen>
     });
   }
 
-  ListView generateItemsList(Status orderStatus,
-      Map<Status, List<OrderData>> orders, bool dismissable) {
+  ListView generateItemsList(
+      Status orderStatus,
+      Map<Status, List<OrderData>> orders,
+      bool dismissable,
+      double screenHeight) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -51,25 +54,25 @@ class _RequestsScreenState extends State<RequestsScreen>
           (orders.containsKey(orderStatus)) ? orders[orderStatus].length : 0,
       itemBuilder: (context, index) {
         return dismissable
-            ? dismissableCard(orders[orderStatus][index])
-            : orderCard(orders[orderStatus][index]);
+            ? dismissableCard(orders[orderStatus][index], screenHeight)
+            : orderCard(orders[orderStatus][index], screenHeight);
       },
     );
   }
 
-  Dismissible dismissableCard(OrderData order) {
+  Dismissible dismissableCard(OrderData order, double screenHeight) {
     return Dismissible(
       key: Key(order.id),
       onDismissed: (direction) => _handleDismissed(direction, order.id),
       confirmDismiss: (direction) =>
           _confirmDismiss(context, direction, order.id),
-      child: orderCard(order),
+      child: orderCard(order, screenHeight),
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
     );
   }
 
-  InkWell orderCard(OrderData order) {
+  InkWell orderCard(OrderData order, double screenHeight) {
     return InkWell(
         onTap: () {},
         child: Column(
@@ -89,8 +92,8 @@ class _RequestsScreenState extends State<RequestsScreen>
             ),
             Padding(
                 padding: EdgeInsets.only(bottom: 8),
-                child: orderInformationCard(
-                    order.place.description, order.destination.description)),
+                child: orderInformationCard(order.place.description,
+                    order.destination.description, screenHeight)),
           ],
         ));
   }
@@ -235,9 +238,12 @@ class _RequestsScreenState extends State<RequestsScreen>
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
-                      generateItemsList(Status.OPEN, snapshot.data, true),
-                      generateItemsList(Status.DISMISSED, snapshot.data, false),
-                      generateItemsList(Status.COMPLETED, snapshot.data, false),
+                      generateItemsList(
+                          Status.OPEN, snapshot.data, true, screenHeight),
+                      generateItemsList(
+                          Status.DISMISSED, snapshot.data, false, screenHeight),
+                      generateItemsList(
+                          Status.COMPLETED, snapshot.data, false, screenHeight),
                     ],
                   ),
                 );

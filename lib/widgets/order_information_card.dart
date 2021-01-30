@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 
-Widget orderInformationCard(String place, String destination) {
+Widget orderInformationCard(
+    String place, String destination, double screenHeight) {
   return AnimatedOpacity(
     duration: const Duration(milliseconds: 500),
     opacity: 1.0,
@@ -30,7 +31,15 @@ Widget orderInformationCard(String place, String destination) {
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 15),
+                    contentPadding: EdgeInsets.only(
+                        top: AppTheme.elementSize(
+                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
+                      color: AppTheme.lightGrey,
+                    ),
                     hintText: place,
                     prefixIcon: IconButton(
                       splashColor: AppTheme.lightBlue,
@@ -44,12 +53,22 @@ Widget orderInformationCard(String place, String destination) {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(
+                  height: AppTheme.elementSize(
+                      screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
               Container(
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(top: 15),
+                    contentPadding: EdgeInsets.only(
+                        top: AppTheme.elementSize(
+                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: AppTheme.elementSize(
+                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
+                      color: AppTheme.lightGrey,
+                    ),
                     hintText: destination,
                     prefixIcon: IconButton(
                       splashColor: AppTheme.lightBlue,

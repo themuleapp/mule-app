@@ -52,6 +52,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
 
   @override
   build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,21 +61,31 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
           duration: const Duration(milliseconds: 500),
           opacity: widget.opacity,
           child: Padding(
-            padding: const EdgeInsets.only(top: 32.0, left: 16, right: 16),
+            padding: EdgeInsets.only(
+                top: AppTheme.elementSize(
+                    screenHeight, 20, 22, 24, 26, 32, 34, 36, 38),
+                left: 16,
+                right: 16),
             child: Text(
               'Confirm Details',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: 22,
+                fontSize: AppTheme.elementSize(
+                    screenHeight, 18, 19, 20, 21, 22, 26, 30, 36),
                 color: AppTheme.darkerText,
               ),
             ),
           ),
         ),
         Padding(
-          padding:
-              const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 16),
+          padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom:
+                  AppTheme.elementSize(screenHeight, 2, 3, 4, 6, 8, 10, 12, 14),
+              top: AppTheme.elementSize(
+                  screenHeight, 6, 7, 10, 12, 16, 18, 20, 22)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +96,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                     Icon(
                       Icons.people,
                       color: AppTheme.secondaryBlue,
-                      size: 24,
+                      size: AppTheme.elementSize(
+                          screenHeight, 18, 19, 20, 21, 22, 24, 28, 32),
                     ),
                     FutureBuilder(
                       future: getNumMulesAround(),
@@ -103,7 +115,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 21,
+                            fontSize: AppTheme.elementSize(
+                                screenHeight, 17, 18, 19, 20, 21, 24, 28, 34),
                             color: AppTheme.lightGrey,
                           ),
                         );
@@ -114,7 +127,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.w200,
-                        fontSize: 21,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 17, 18, 19, 20, 21, 24, 28, 34),
                         color: AppTheme.lightGrey,
                       ),
                     ),
@@ -125,8 +139,10 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
           ),
         ),
         orderInformationCard(GetIt.I.get<LocationStore>().place.description,
-            GetIt.I.get<LocationStore>().destination.description),
-        SizedBox(height: 10),
+            GetIt.I.get<LocationStore>().destination.description, screenHeight),
+        SizedBox(
+            height:
+                AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: widget.opacity,
@@ -138,7 +154,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 18,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 14, 15, 16, 17, 18, 18, 18, 18),
                   letterSpacing: 0.0,
                   color: AppTheme.white,
                 ),
@@ -148,9 +165,11 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                   valueColor:
                       AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
               width: MediaQuery.of(context).size.width,
-              height: 48,
+              height: AppTheme.elementSize(
+                  screenHeight, 36, 38, 42, 48, 48, 48, 48, 48),
               color: AppTheme.secondaryBlue,
-              borderRadius: 16,
+              borderRadius: AppTheme.elementSize(
+                  screenHeight, 8, 10, 12, 16, 16, 16, 16, 16),
               animate: true,
               type: ProgressButtonType.Raised,
               onPressed: () async {
