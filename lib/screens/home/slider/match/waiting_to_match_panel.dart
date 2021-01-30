@@ -9,6 +9,7 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'dart:async';
 
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/clip_height.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class WaitingToMatchPanel extends StatefulWidget {
@@ -146,22 +147,5 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
         ),
       ],
     );
-  }
-}
-
-class ClipHeightQuarter extends CustomClipper<Rect> {
-  double height;
-
-  ClipHeightQuarter({this.height});
-
-  @override
-  Rect getClip(Size size) {
-    Rect rect = Rect.fromLTRB(0.0, -size.height, size.width, this.height);
-    return rect;
-  }
-
-  @override
-  bool shouldReclip(ClipHeightQuarter oldClipper) {
-    return true;
   }
 }
