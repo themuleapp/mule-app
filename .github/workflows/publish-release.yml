@@ -2,6 +2,7 @@ name: Publish Release
 
 on:
   release:
+    types: [ prereleased ]
     branches: [ actions-test ]
 
 jobs:
