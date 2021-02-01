@@ -1,0 +1,57 @@
+name: Publish Release
+
+on:
+  release:
+    branches: [ actions-test ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image:  cirrusci/flutter:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Print Dart SDK version
+        run: dart --version
+      
+      - name: Print Flutter SDK version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze project source
+        run: dart analyze
+
+      - name: Run tests
+        run: flutter test
+      
+      - name: Build
+        run: flutter build apk
+        
+  publish:
+    runs-on: ubuntu-latest
+
+    container:
+      image:  cirrusci/flutter:latest
+
+    steps:
+      - name: Build
+        run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
+      
+      - name: Publish
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ SERVICE_ACCOUNT_JSON }}
+          packageName: com.whisperingmule.Mule
+          releaseFile: ${{ SIGNED_RELEASE_FILE }}
+          track: internal
+          inAppUpdatePriority: 2
+          userFraction: 1.0
+          whatsNewDirectory: distribution/whatsnew
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
+        
+        
