@@ -73,14 +73,6 @@ class _MapWidgetState extends State<MapWidget> {
     try {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      StreamSubscription<Position> positionStream = Geolocator()
-          .getPositionStream(LocationOptions(
-              accuracy: LocationAccuracy.high, distanceFilter: 30))
-          .listen((Position position) async {
-        if (position != null) {
-          await updateLocationOnServerAndGetMulesAround(position);
-        }
-      });
 
       await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
