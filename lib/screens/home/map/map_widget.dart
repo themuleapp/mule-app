@@ -71,8 +71,8 @@ class _MapWidgetState extends State<MapWidget> {
 
   void getCurrentLocation() async {
     try {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
       await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
