@@ -54,6 +54,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="1" /></a>
 * [MongoDB](https://www.mongodb.com/)
 * [Google Cloud Platform](https://cloud.google.com/)
 * [Heroku](https://www.heroku.com/)
+* [Firebase](https://firebase.google.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
