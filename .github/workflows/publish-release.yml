@@ -41,12 +41,15 @@ jobs:
       
       - name: Build
         run: flutter build appbundle
+      
+      - name: Test
+        run: ls -al . && ls -al build && ls -al build/app && ls -al build/app/outputs && ls -al build/app/outputs/aab
         
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: build/app/outputs/apk/release
+          releaseDirectory: build/app/outputs/aab/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
