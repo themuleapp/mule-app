@@ -6,7 +6,7 @@ on:
     branches: [ actions-test ]
 
 jobs:
-  dry-run:
+  analysis:
     runs-on: ubuntu-latest
 
     container:
@@ -21,26 +21,23 @@ jobs:
       - name: Print Flutter SDK version
         run: flutter --version
 
-      - name: Install dependencies
-        run: flutter pub get
-
 #       - name: Analyze project source
-#         run: dart analyze
+#         run: flutter analyze
 
 #       - name: Run tests
 #         run: flutter test
-      
-      - name: Build
-        run: flutter build appbundle
 
   publish:
-    needs: [dry-run]
+    needs: [analysis]
     runs-on: ubuntu-latest
 
     container:
       image:  cirrusci/flutter:latest
 
     steps:
+      - name: Test
+        run: ls -al
+        
       - name: Pub get
         run: flutter pub get
       
