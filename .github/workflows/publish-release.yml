@@ -24,11 +24,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Analyze project source
-        run: dart analyze
+#       - name: Analyze project source
+#         run: dart analyze
 
-      - name: Run tests
-        run: flutter test
+#       - name: Run tests
+#         run: flutter test
       
       - name: Build
         run: flutter build apk
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Build
-        run: flutter build aab
+        run: flutter build appbundle
         
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
