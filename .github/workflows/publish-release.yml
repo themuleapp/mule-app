@@ -6,7 +6,7 @@ on:
     branches: [ actions-test ]
 
 jobs:
-  build:
+  dry-run:
     runs-on: ubuntu-latest
 
     container:
@@ -31,15 +31,19 @@ jobs:
 #         run: flutter test
       
       - name: Build
-        run: flutter build apk
+        run: flutter build appbundle
 
   publish:
+    needs: [dry-run]
     runs-on: ubuntu-latest
 
     container:
       image:  cirrusci/flutter:latest
 
     steps:
+      - name: Pub get
+        run: flutter pub get
+      
       - name: Build
         run: flutter build appbundle
         
