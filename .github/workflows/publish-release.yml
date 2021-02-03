@@ -1,25 +1,25 @@
 name: Publish Release
 
 on:
-  release:
-    types: [ prereleased ]
+  push:
+#     types: [ prereleased ]
     branches: [ actions-test ]
 
 jobs:
-  analysis:
-    runs-on: ubuntu-latest
+#   analysis:
+#     runs-on: ubuntu-latest
 
-    container:
-      image:  cirrusci/flutter:latest
+#     container:
+#       image:  cirrusci/flutter:latest
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Print Dart SDK version
-        run: dart --version
+#       - name: Print Dart SDK version
+#         run: dart --version
       
-      - name: Print Flutter SDK version
-        run: flutter --version
+#       - name: Print Flutter SDK version
+#         run: flutter --version
 
 #       - name: Analyze project source
 #         run: flutter analyze
@@ -28,16 +28,12 @@ jobs:
 #         run: flutter test
 
   publish:
-    needs: [analysis]
     runs-on: ubuntu-latest
 
     container:
       image:  cirrusci/flutter:latest
 
-    steps:
-      - name: Test
-        run: ls -al
-        
+    steps:        
       - name: Pub get
         run: flutter pub get
       
