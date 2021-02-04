@@ -6,26 +6,32 @@ on:
     branches: [ actions-test ]
 
 jobs:
-#   analysis:
-#     runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-#     container:
-#       image:  cirrusci/flutter:latest
+    container:
+      image:  cirrusci/flutter:latest
 
-#     steps:
-#       - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Print Dart SDK version
-#         run: dart --version
+      - name: Print Dart SDK version
+        run: dart --version
       
-#       - name: Print Flutter SDK version
-#         run: flutter --version
+      - name: Print Flutter SDK version
+        run: flutter --version
 
 #       - name: Analyze project source
 #         run: flutter analyze
 
 #       - name: Run tests
 #         run: flutter test
+      - name: Upload AAB
+        id: uploadArtifact
+        uses: actions/upload-artifact@v1
+        with:
+            name: appBundle
+            path: app/build/outputs/bundle/release/app-release.aab
 
   publish:
     runs-on: ubuntu-latest
@@ -53,9 +59,9 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env: 
           BUILD_TOOLS_VERSION: "30.0.2"
-      
-      - name: Show apk path
-        run: cat ${{ steps.sign_app.outputs.signedReleaseFile }}
+
+      - name: Release file path
+        run: echo ${{ steps.sign_app.outputs.signedReleaseFile }}
       
       - name: Publish
         uses: r0adkll/upload-google-play@v1
