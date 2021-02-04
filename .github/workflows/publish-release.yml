@@ -40,26 +40,26 @@ jobs:
         run: flutter pub get
       
       - name: Build
-        run: flutter build appbundle
+        run: flutter build apk
         
-      - name: Sign app APK
+      - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: build/app/outputs/bundle/release
+          releaseDirectory: build/app/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-        env: 
-          BUILD_TOOLS_VERSION: "30.0.2"
+#         env: 
+#           BUILD_TOOLS_VERSION: "30.0.2"
       
       - name: Publish
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT }}
-          packageName: com.whisperingmule.Mule
-          releaseFile: ${{steps.sign_app.outputs.signedReleaseFile}}
+          packageName: com.whisperingmule.mule
+          releaseFile: ${{ steps.sign_app.outputs.signedReleaseFile }}
           track: internal
           inAppUpdatePriority: 2
           whatsNewDirectory: distribution/whatsnew
