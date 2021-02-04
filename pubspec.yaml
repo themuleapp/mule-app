@@ -50,8 +50,18 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   mobx_codegen:
+  flutter_application_id: "^1.0.0"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+  
+flutter_application_id:
+  android: 
+    id: "com.whisperingmule.Mule"
+    name: "Mule - Android"
+  ios:
+    id: "com.whisperingmule.Mule"
+    name: "Mule - iOS"
 
 # The following section is specific to Flutter.
 flutter:
