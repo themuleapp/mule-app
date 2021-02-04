@@ -41,9 +41,6 @@ jobs:
       
       - name: Build
         run: flutter build appbundle
-      
-      - name: Check Unsigned
-        run: jarsigner -verify -verbose -certs build/app/outputs/bundle/release/app-release.aab
         
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
@@ -66,6 +63,6 @@ jobs:
           track: internal
           inAppUpdatePriority: 2
           whatsNewDirectory: distribution/whatsnew
-          mappingFile: app/build/outputs/mapping/release/mapping.txt
+          mappingFile: build/app/outputs/mapping/release/mapping.txt
         
         
