@@ -54,12 +54,15 @@ jobs:
         env: 
           BUILD_TOOLS_VERSION: "30.0.2"
       
+      - name: Show apk path
+        run: cat ${{ steps.sign_app.outputs.signedReleaseFile }}
+      
       - name: Publish
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT }}
           packageName: com.whisperingmule.mule
-          releaseFile: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
           track: internal
           inAppUpdatePriority: 2
           whatsNewDirectory: distribution/whatsnew
