@@ -58,7 +58,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT }}
-          packageName: com.example.mule
+          packageName: com.whisperingmule.mule
           releaseFile: ${{ steps.sign_app.outputs.signedReleaseFile }}
           track: internal
           inAppUpdatePriority: 2
