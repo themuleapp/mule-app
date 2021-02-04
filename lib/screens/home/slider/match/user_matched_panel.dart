@@ -55,7 +55,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
 
   cancelRequest() async {
     OrderData order = await this.order;
-    if (await httpClient.deleteActiveRequest(order)) {
+    if (await httpClient.userDeleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
     } else {

@@ -43,7 +43,7 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
     widget.buttonBridge2?.callback = completedRequest;
   }
 
-  updateOrder(OrderData order) {
+  updateOrder(OrderData order) async {
     widget.mapController.updateDelivery(
       order.acceptedBy.location.toLatLng(),
       order.place.location.toLatLng(),
@@ -53,7 +53,8 @@ class _MuleMatchedPanelState extends State<MuleMatchedPanel> {
   }
 
   cancelRequest() async {
-    if (await httpClient.deleteActiveRequest(await order)) {
+    OrderData order = await this.order;
+    if (await httpClient.muleDeleteActiveRequest(await order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
       widget.mapController.focusCurrentLocation();
