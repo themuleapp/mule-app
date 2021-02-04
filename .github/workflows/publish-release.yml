@@ -59,6 +59,9 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env: 
           BUILD_TOOLS_VERSION: "30.0.2"
+        
+      - name: TEST
+        run: ls /etc/
 
       - name: Release file path
         run: echo ${{ steps.sign_app.outputs.signedReleaseFile }}
