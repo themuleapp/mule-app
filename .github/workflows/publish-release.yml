@@ -26,28 +26,34 @@ jobs:
 
 #       - name: Run tests
 #         run: flutter test
+      
+      - name: Build
+        run: flutter build appbundle
 
-  publish:
+      - uses: actions/upload-artifact@v2
+        with:
+          name: android-release
+          path: build/app/outputs/bundle/release/
+
+  publish-android:
     runs-on: ubuntu-latest
     needs: [ build ]
-
-    container:
-      image:  cirrusci/flutter:latest
 
     steps:        
       - uses: actions/checkout@v2
 
-      - name: Pub get
-        run: flutter pub get
-      
-      - name: Build
-        run: flutter build appbundle
+      - uses: actions/download-artifact@v2
+        with:
+          name: android-release
+          
+      - name: TEST
+        run: ls -al && ls -al android-release/
         
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: build/app/outputs/bundle/release
+          releaseDirectory: android-release/
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -67,3 +73,12 @@ jobs:
           mappingFile: build/app/outputs/mapping/release/mapping.txt
         
         
+  publish-ios:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+
+    steps:        
+      - uses: actions/checkout@v2
+        
+      - name: PLACEHOLDER
+        run: echo "Should publish to Apple App Store"
