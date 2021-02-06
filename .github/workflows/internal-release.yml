@@ -1,9 +1,9 @@
 name: Publish Internal Release
 
 on:
-  push:
-#     types: [ prereleased ]
-    branches: [ actions-test ]
+  release:
+    types: [ prereleased ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -21,11 +21,11 @@ jobs:
       - name: Print Flutter SDK version
         run: flutter --version
 
-#       - name: Analyze project source
-#         run: flutter analyze
+      - name: Analyze project source
+        run: flutter analyze
 
-#       - name: Run tests
-#         run: flutter test
+      - name: Run tests
+        run: flutter test
       
       - name: Build
         run: flutter build appbundle
