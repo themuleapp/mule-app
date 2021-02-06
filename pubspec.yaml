@@ -57,10 +57,10 @@ dev_dependencies:
   
 flutter_application_id:
   android: 
-    id: "com.whisperingmule.mule"
+    id: "com.mule.mule"
     name: "Mule - Android"
   ios:
-    id: "com.whisperingmule.mule"
+    id: "com.mule.mule"
     name: "Mule - iOS"
 
 # The following section is specific to Flutter.
