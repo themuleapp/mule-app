@@ -33,7 +33,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: android-release
-          path: build/app/outputs/bundle/release/
+          path: build/app/outputs/
 
   publish-android:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: './'
+          releaseDirectory: 'bundle/release'
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -67,7 +67,7 @@ jobs:
           track: internal
           inAppUpdatePriority: 1
           whatsNewDirectory: distribution/whatsnew
-          mappingFile: build/app/outputs/mapping/release/mapping.txt
+          mappingFile: mapping/release/mapping.txt
         
         
   publish-ios:
