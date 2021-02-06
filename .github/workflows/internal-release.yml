@@ -45,15 +45,12 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: android-release
-          
-      - name: TEST
-        run: ls -al && ls -al android-release/
         
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: android-release/
+          releaseDirectory: './'
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
