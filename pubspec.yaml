@@ -47,6 +47,7 @@ dependencies:
   latlong: ^0.6.1
   intl:
   url_launcher:
+  flash:
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/http_client.dart';
 import 'package:mule/config/notification_types.dart';
+import 'package:mule/config/notification_util.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 
@@ -45,8 +46,7 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     print('WAAAAAAAAAAAAAAAAAAAAAAAAAA');
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
-    await httpClient
-        .uploadDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
+    await httpClient.uploadDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
   }
 
   Future<dynamic> _foregroundMessageHandler(
@@ -56,8 +56,55 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     print(message['data']['type']);
     switch (message['data']['type']) {
       case MULE_NEW_REQUEST:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => RequestsScreen()));
+        NotificationUtil.displaySnackbar(
+            title: message['notification']['title'],
+            body: message['notification']['body'],
+            context: context,
+            onHandle: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => RequestsScreen()));
+            });
+        break;
+      case USER_REQUEST_ACCEPTED:
+        NotificationUtil.displaySnackbar(
+            title: message['notification']['title'],
+            body: message['notification']['body'],
+            context: context,
+            onHandle: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => RequestsScreen()));
+            });
+        break;
+      case MULE_DELIVERY_CONFIRMED:
+        NotificationUtil.displaySnackbar(
+          title: message['notification']['title'],
+          body: message['notification']['body'],
+          context: context,
+        );
+        break;
+      case USER_DELIVERED_CONFIRMED:
+        NotificationUtil.displaySnackbar(
+          title: message['notification']['title'],
+          body: message['notification']['body'],
+          context: context,
+        );
+        break;
+      case MULE_CANCELLED:
+        NotificationUtil.displaySnackbar(
+          title: message['notification']['title'],
+          body: message['notification']['body'],
+          context: context,
+        );
+        break;
+      case USER_REQUEST_TIMEOUT:
+        NotificationUtil.displaySnackbar(
+          title: message['notification']['title'],
+          body: message['notification']['body'],
+          context: context,
+        );
+        break;
+      default:
+        print('UNKNOWN NOTIFICATION TYPE!');
     }
   }
 
