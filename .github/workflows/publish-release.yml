@@ -15,9 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: stupid test
-        run: echo ${ secrets.KEY_PASSWORD }
-
       - name: Print Dart SDK version
         run: dart --version
       
