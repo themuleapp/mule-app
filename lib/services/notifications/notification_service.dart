@@ -1,10 +1,12 @@
 import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/services/notifications/notification_types.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class NotificationHandler extends StatefulWidget {
   final Widget body;
@@ -51,6 +53,8 @@ class _NotificationHandlerState extends State<NotificationHandler> {
 
   Future<dynamic> _foregroundMessageHandler(
       Map<String, dynamic> message) async {
+    await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+
     print('Here');
     print(message);
     print(message['data']['type']);
