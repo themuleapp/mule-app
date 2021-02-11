@@ -191,10 +191,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           };
         });
         _setCurrentPanel(MuleMatchedPanel(
-            slidingUpWidgetController: widget.controller,
-            mapController: _mapController,
-            buttonBridge: cancelButton,
-            buttonBridge2: completedButton));
+          slidingUpWidgetController: widget.controller,
+          mapController: _mapController,
+          buttonBridge: cancelButton,
+          buttonBridge2: completedButton,
+        ));
         break;
       case PanelIndex.Loading:
         setState(() {

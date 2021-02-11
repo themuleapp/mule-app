@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'dart:async';
+import 'package:mule/stores/global/user_info_store.dart';
 
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/clip_height.dart';
@@ -13,6 +14,7 @@ import 'package:mule/widgets/stylized_button.dart';
 
 class WaitingToMatchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
+  final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
   final MapController mapController;
   final double loadingBarHeight;
   final double opacity = 1.0;
@@ -30,35 +32,18 @@ class WaitingToMatchPanel extends StatefulWidget {
 }
 
 class WaitingToMatchState extends State<WaitingToMatchPanel> {
-  Timer timer;
   OrderData order;
 
   @override
   void initState() {
     super.initState();
-    _checkOrder(true);
     widget.buttonBridge?.callback = cancelRequest;
   }
 
-  _checkOrder(bool keepChecking) async {
-    order = await muleApiService.getActiveRequest();
-    if (order != null && order.status == Status.ACCEPTED) {
-      widget.slidingUpWidgetController.panelIndex = PanelIndex.UserMatched;
-    } else if (keepChecking) {
-      _startChecking();
-    }
-  }
-
-  _startChecking() {
-    timer = Timer.periodic(Duration(seconds: 10),
-        (timer) async => {if (mounted) _checkOrder(false)});
-  }
-
   cancelRequest() async {
-    if (order != null && await muleApiService.userDeleteActiveRequest(order)) {
+    if (await muleApiService.userDeleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
-      timer.cancel();
       print("Successfully deleted request");
     } else {
       createDialogWidget(
