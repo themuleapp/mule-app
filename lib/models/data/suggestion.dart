@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:mule/config/ext_api_calls.dart';
+import 'package:mule/models/data/order_data.dart';
+import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 import 'location_data.dart';
@@ -20,7 +21,9 @@ class DestinationSuggestion extends Suggestion {
   DestinationSuggestion(String name, String vicinity, LocationData location)
       : super(name, vicinity, location);
 
-  // todo
+  DestinationSuggestion.fromLocationDescription(LocationDesciption location)
+      : super("", location.description, location.location);
+
   DestinationSuggestion.fromJson(Map<String, dynamic> json)
       : super(json["structured_formatting"]["main_text"],
             json["structured_formatting"]["secondary_text"], null);
@@ -39,6 +42,9 @@ class DestinationSuggestion extends Suggestion {
 class PlacesSuggestion extends Suggestion {
   PlacesSuggestion(String name, String vicinity, LocationData location)
       : super(name, vicinity, location);
+
+  PlacesSuggestion.fromLocationDescription(LocationDesciption location)
+      : super("", location.description, location.location);
 
   PlacesSuggestion.fromJson(Map<String, dynamic> json)
       : super(json['name'], json['vicinity'],

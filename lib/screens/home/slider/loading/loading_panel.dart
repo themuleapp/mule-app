@@ -2,18 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
+import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
-class LoadingPanel extends StatefulWidget {
+class LoadingPanel extends Panel {
   final SlidingUpWidgetController slidingUpWidgetController;
   final MapController mapController;
 
-  const LoadingPanel({
+  LoadingPanel({
     Key key,
     this.slidingUpWidgetController,
     this.mapController,
-  }) : super(key: key);
+  });
 
   @override
   _LoadingPanelState createState() => _LoadingPanelState();

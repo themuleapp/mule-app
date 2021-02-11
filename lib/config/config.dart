@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mule/config/messages_service.dart';
+import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:get_it/get_it.dart';

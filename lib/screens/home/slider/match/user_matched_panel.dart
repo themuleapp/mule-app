@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
-import 'package:mule/config/messages_service.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
@@ -30,7 +30,7 @@ class UserMatchedPanel extends StatefulWidget {
 }
 
 class _UserMatchedPanelState extends State<UserMatchedPanel> {
-  Future<OrderData> order = httpClient.getActiveRequest();
+  Future<OrderData> order = muleApiService.getActiveRequest();
 
   final MessagesService _service = GetIt.I.get<MessagesService>();
 
@@ -40,7 +40,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
     widget.buttonBridge?.callback = cancelRequest;
   }
 
-  updateOrder(OrderData order) async {
+  updateOrder(OrderData order) {
     widget.mapController.updateDelivery(
       order.acceptedBy.location.toLatLng(),
       order.place.location.toLatLng(),
@@ -55,7 +55,7 @@ class _UserMatchedPanelState extends State<UserMatchedPanel> {
 
   cancelRequest() async {
     OrderData order = await this.order;
-    if (await httpClient.userDeleteActiveRequest(order)) {
+    if (await muleApiService.userDeleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
     } else {

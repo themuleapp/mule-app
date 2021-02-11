@@ -11,8 +11,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/ext_api_calls.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/ext_api_calls.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_helper.dart';
@@ -74,12 +74,12 @@ class _MapWidgetState extends State<MapWidget> {
 
   void getCurrentLocation() async {
     try {
-      Position position = await Geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      StreamSubscription<Position> positionStream = Geolocator
-          .getPositionStream(
-              desiredAccuracy: LocationAccuracy.high, distanceFilter: 30)
-          .listen((Position position) async {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      StreamSubscription<Position> positionStream =
+          Geolocator.getPositionStream(
+                  desiredAccuracy: LocationAccuracy.high, distanceFilter: 30)
+              .listen((Position position) async {
         if (position != null) {
           await updateLocationOnServerAndGetMulesAround(position);
         }
@@ -95,7 +95,7 @@ class _MapWidgetState extends State<MapWidget> {
     LocationData locationData =
         LocationData(lng: position.longitude, lat: position.latitude);
     bool updatedSuccessfully =
-        await httpClient.handleUpdateLocation(locationData);
+        await muleApiService.handleUpdateLocation(locationData);
     if (!updatedSuccessfully) {
       print('Location not updated successfully');
     }
@@ -104,7 +104,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   Future getMulesAround(LocationData locationData, Position position) async {
     MulesAroundRes mulesAround =
-        await httpClient.getMulesAroundMeLocation(locationData);
+        await muleApiService.getMulesAroundMeLocation(locationData);
     GetIt.I.get<LocationStore>().updateCurrentLocation(position);
 
     setState(() {
@@ -384,7 +384,9 @@ class _MapWidgetState extends State<MapWidget> {
                 ),
                 padding: EdgeInsets.only(
                   top: 30,
-                  bottom: widget.slidingUpWidgetController.currentHeight,
+                  bottom: (widget.slidingUpWidgetController == null)
+                      ? 0
+                      : widget.slidingUpWidgetController?.currentHeight,
                 ),
               ),
             ),
@@ -457,6 +459,9 @@ class MapController {
     );
     await _mapWidgetState._singleMuleMarker(muleLocation);
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
+    _mapWidgetState.setState(() {
+      print("oi!");
+    });
   }
 
   bool get isMapLoading {

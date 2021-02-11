@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/changePassword/change_password_req.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
-import 'package:mule/screens/profile/profile.dart';
-import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
 
@@ -49,11 +46,10 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
         ChangePasswordReq(oldPassword: oldPass, newPassword: newPass1);
 
     final Response res =
-        await httpClient.handleChangePassword(changePasswordReq);
+        await muleApiService.handleChangePassword(changePasswordReq);
     if (res.statusCode == 200) {
       Navigator.of(context).pop();
-      createDialogWidget(context, 'Success!',
-          'Your password has been changed');
+      createDialogWidget(context, 'Success!', 'Your password has been changed');
     } else {
       ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', errRes.errors.join('\n'));
@@ -102,8 +98,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                           child: Text(
                             "Change Password",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(
-                                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+                                fontSize: AppTheme.elementSize(screenHeight, 24,
+                                    26, 28, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.darkGrey),
                           ),
@@ -154,8 +150,8 @@ class _ChangePasswordState extends State<ChangePassword> with InputValidation {
                               "SUBMIT",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: AppTheme.elementSize(
-                                    screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
+                                fontSize: AppTheme.elementSize(screenHeight, 14,
+                                    15, 16, 17, 18, 26, 28, 30),
                               ),
                             ),
                             onPressed: this._handleSubmitChangePassword,

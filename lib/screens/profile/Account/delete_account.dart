@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/screens/welcome_screen.dart';
@@ -25,7 +25,8 @@ class _DeleteAccountState extends State<DeleteAccount> {
     DeleteAccountReq deleteAccountReq = DeleteAccountReq(
       reason: this.reason,
     );
-    final Response res = await httpClient.handleDeleteAccount(deleteAccountReq);
+    final Response res =
+        await muleApiService.handleDeleteAccount(deleteAccountReq);
     if (res.statusCode == 200) {
       // TODO show a little reminder that it successded
       Navigator.of(context).push(

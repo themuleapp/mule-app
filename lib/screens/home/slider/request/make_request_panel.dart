@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
@@ -33,8 +33,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
         GetIt.I.get<LocationStore>().place.location;
-    MulesAroundRes mulesAroundRes =
-        await httpClient.getMulesAroundMeLocation(locationToCheckMulesAround);
+    MulesAroundRes mulesAroundRes = await muleApiService
+        .getMulesAroundMeLocation(locationToCheckMulesAround);
     return mulesAroundRes.numMules;
   }
 
@@ -187,7 +187,8 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                   LocationDesciption(
                       destination.location, destination.description),
                 );
-                bool success = await httpClient.placeRequest(placeRequestData);
+                bool success =
+                    await muleApiService.placeRequest(placeRequestData);
                 if (!success) {
                   createDialogWidget(
                     context,

@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/loading/loading_panel.dart';
 import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
@@ -66,9 +63,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   @override
   void initState() {
     super.initState();
+    _initialzeButtons();
     panelIndex = widget.beginScreen;
     _updatePanel();
-    _initialzeButtons();
     widget.controller?._addState(this);
   }
 

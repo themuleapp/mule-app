@@ -4,12 +4,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/ext_api_calls.dart';
+import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class SearchPanel extends StatefulWidget {
   final SlidingUpWidgetController slidingUpWidgetController;
@@ -187,6 +186,8 @@ class _SearchPanelState extends State<SearchPanel> {
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
       child: _getForm(
+          // (widget.slidingUpWidgetController == null)
+          //     ? false
           widget.slidingUpWidgetController.panelController.isPanelOpen,
           screenHeight),
     );

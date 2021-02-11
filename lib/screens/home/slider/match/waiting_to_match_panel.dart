@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
@@ -41,7 +41,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   }
 
   _checkOrder(bool keepChecking) async {
-    order = await httpClient.getActiveRequest();
+    order = await muleApiService.getActiveRequest();
     if (order != null && order.status == Status.ACCEPTED) {
       widget.slidingUpWidgetController.panelIndex = PanelIndex.UserMatched;
     } else if (keepChecking) {
@@ -55,7 +55,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   }
 
   cancelRequest() async {
-    if (order != null && await httpClient.userDeleteActiveRequest(order)) {
+    if (order != null && await muleApiService.userDeleteActiveRequest(order)) {
       widget.slidingUpWidgetController.panelIndex =
           PanelIndex.DestinationAndSearch;
       timer.cancel();

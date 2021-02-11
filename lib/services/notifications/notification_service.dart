@@ -1,8 +1,8 @@
 import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/config/http_client.dart';
-import 'package:mule/config/notification_types.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/services/notifications/notification_types.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 
@@ -45,7 +45,7 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     print('WAAAAAAAAAAAAAAAAAAAAAAAAAA');
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
-    await httpClient
+    await muleApiService
         .uploadDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
   }
 
