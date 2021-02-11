@@ -27,9 +27,19 @@ class MakeRequestPanel extends StatefulWidget {
     this.buttonBridge,
   });
   _MakeRequestPanelState createState() => _MakeRequestPanelState();
-}
 
-class _MakeRequestPanelState extends State<MakeRequestPanel> {
+  Future<bool> placeRequest() {
+    PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
+    DestinationSuggestion destination =
+        GetIt.I.get<LocationStore>().destination;
+
+    PlaceRequestData placeRequestData = PlaceRequestData(
+      LocationDesciption(place.location, place.description),
+      LocationDesciption(destination.location, destination.description),
+    );
+    return muleApiService.placeRequest(placeRequestData);
+  }
+
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
         GetIt.I.get<LocationStore>().place.location;
@@ -38,16 +48,17 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
     return mulesAroundRes.numMules;
   }
 
-  onReturnToSearch() {
-    widget.slidingUpWidgetController.panelIndex =
-        PanelIndex.DestinationAndSearch;
-    widget.mapController.unfocusRoute();
+  void onReturnToSearch() {
+    slidingUpWidgetController.panelIndex = PanelIndex.DestinationAndSearch;
+    mapController.unfocusRoute();
   }
+}
 
+class _MakeRequestPanelState extends State<MakeRequestPanel> {
   @override
   void initState() {
     super.initState();
-    widget.buttonBridge?.callback = onReturnToSearch;
+    widget.buttonBridge?.callback = widget.onReturnToSearch;
   }
 
   @override
@@ -100,7 +111,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                           screenHeight, 18, 19, 20, 21, 22, 24, 28, 32),
                     ),
                     FutureBuilder(
-                      future: getNumMulesAround(),
+                      future: widget.getNumMulesAround(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
                           return Container(
@@ -173,40 +184,16 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
               animate: true,
               type: ProgressButtonType.Raised,
               onPressed: () async {
-                int score = await Future.delayed(
-                    const Duration(milliseconds: 2500), () => 42);
-                // After [onPressed], it will trigger animation running backwards, from end to beginning
-                LocationData currentLocation =
-                    GetIt.I.get<LocationStore>().currentLocation;
-                PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
-                DestinationSuggestion destination =
-                    GetIt.I.get<LocationStore>().destination;
-
-                PlaceRequestData placeRequestData = PlaceRequestData(
-                  LocationDesciption(place.location, place.description),
-                  LocationDesciption(
-                      destination.location, destination.description),
-                );
-                bool success =
-                    await muleApiService.placeRequest(placeRequestData);
-                if (!success) {
+                if (await widget.placeRequest()) {
+                  widget.slidingUpWidgetController.panelIndex =
+                      PanelIndex.WaitingToMatch;
+                } else {
                   createDialogWidget(
                     context,
                     'There was a problem',
                     'Please try again later!',
                   );
                 }
-                return () async {
-                  // Optional returns is returning a VoidCallback that will be called
-                  // after the animation is stopped at the beginning.
-                  // A best practice would be to do time-consuming task in [onPressed],
-                  // and do page navigation in the returned VoidCallback.
-                  // So that user won't missed out the reverse animation.
-                  if (success) {
-                    widget.slidingUpWidgetController.panelIndex =
-                        PanelIndex.WaitingToMatch;
-                  }
-                };
               },
             ),
           ),
