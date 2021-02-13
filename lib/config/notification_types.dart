@@ -20,6 +20,11 @@ const USER_DELIVERED_CONFIRMED = 'USER_REQUEST_DELIVERED';
  * This is a notification that gets sent to the user whenever a mule that has accepted his
  * request cancels.
  */
+const USER_CANCELLED = 'USER_CANCELLED';
+/**
+ * This is a notification that gets sent to the user whenever a mule that has accepted his
+ * request cancels.
+ */
 const MULE_CANCELLED = 'MULE_CANCELLED';
 /**
  * This is a notification that gets sent to the user when the request he placed times out (no one accepted)

@@ -89,6 +89,13 @@ class _NotificationHandlerState extends State<NotificationHandler> {
           context: context,
         );
         break;
+      case USER_CANCELLED:
+        NotificationUtil.displaySnackbar(
+          title: message['notification']['title'],
+          body: message['notification']['body'],
+          context: context,
+        );
+        break;
       case MULE_CANCELLED:
         NotificationUtil.displaySnackbar(
           title: message['notification']['title'],
