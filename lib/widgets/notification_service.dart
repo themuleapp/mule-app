@@ -6,6 +6,7 @@ import 'package:mule/config/notification_types.dart';
 import 'package:mule/config/notification_util.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
+import 'package:mule/widgets/alert_widget.dart';
 
 class NotificationHandler extends StatefulWidget {
   final Widget body;
@@ -76,11 +77,8 @@ class _NotificationHandlerState extends State<NotificationHandler> {
             });
         break;
       case MULE_DELIVERY_CONFIRMED:
-        NotificationUtil.displaySnackbar(
-          title: message['notification']['title'],
-          body: message['notification']['body'],
-          context: context,
-        );
+        createDialogWidget(context, message['notification']['title'],
+            message['notification']['body']);
         break;
       case USER_DELIVERED_CONFIRMED:
         NotificationUtil.displaySnackbar(
