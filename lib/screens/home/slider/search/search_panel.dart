@@ -4,36 +4,69 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/panel.dart';
+import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
-import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/stylized_button.dart';
 import 'package:mule/widgets/suggestion_search_bar.dart';
 
-class SearchPanel extends StatefulWidget {
-  final SlidingUpWidgetController slidingUpWidgetController;
-  final MapController mapController;
-
-  const SearchPanel({
+class SearchPanel extends Panel {
+  SearchPanel({
+    double screenHeight,
+    MapController mapController,
+    PanelController controller,
+    SlidingUpWidgetController slidingUpWidgetController,
     Key key,
-    this.slidingUpWidgetController,
-    this.mapController,
-  }) : super(key: key);
+  }) : super(
+          slidingUpWidgetController: slidingUpWidgetController,
+          screenHeight: screenHeight,
+          mapController: mapController,
+          controller: controller,
+          backdropOpacity: 0.5,
+          key: key,
+        );
+
+  @override
+  void mapStateCallback() {
+    if (mapController.isMapLoading)
+      mapController
+        ..unfocusRoute()
+        ..focusCurrentLocation();
+  }
+
+  @override
+  List<StylizedButton> get buttons {
+    StylizedButton currentLocationButton = CurrentLocationButton(
+      size: buttonSize,
+      callback: () {
+        if (!mapController.isMapLoading) mapController.focusCurrentLocation();
+      },
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [currentLocationButton];
+  }
 
   @override
   _SearchPanelState createState() => _SearchPanelState();
 }
 
-class _SearchPanelState extends State<SearchPanel> {
+class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _searchController = TextEditingController();
   FocusNode _searchFocusNode = FocusNode();
   FocusNode _destinationFocusNode = FocusNode();
 
+  bool destinationSelected = false;
+
   Widget _getForm(bool open, screenHeight) {
     if (!open) {
       _destinationFocusNode.unfocus();
-    } else if (!_searchFocusNode.hasFocus) {
+      _searchFocusNode.unfocus();
+    } else if (destinationSelected) {
+      _searchFocusNode.requestFocus();
+    } else {
       _destinationFocusNode.requestFocus();
     }
     return Column(
@@ -46,23 +79,24 @@ class _SearchPanelState extends State<SearchPanel> {
             child: _greetingTitle(screenHeight)),
         _destinationTitle(screenHeight),
         SuggestionSearchBar(
-          focusNode: _destinationFocusNode,
-          controller: _destinationController,
-          hintText: "Destination...",
-          icon: Icon(
-            Icons.place,
-            color: AppTheme.secondaryBlue,
-          ),
-          spacing: 10,
-          elevation: 2,
-          suggestionCallback: ExternalApi.getNearbyLocations,
-          cardCallback: () => _searchFocusNode.requestFocus(),
-        ),
+            focusNode: _destinationFocusNode,
+            controller: _destinationController,
+            hintText: "Destination...",
+            icon: Icon(
+              Icons.place,
+              color: AppTheme.secondaryBlue,
+            ),
+            spacing: 10,
+            elevation: 2,
+            suggestionCallback: ExternalApi.getNearbyLocations,
+            cardCallback: () {
+              setState(() => destinationSelected = true);
+            }),
         Container(
           height: 20,
         ),
         AnimatedOpacity(
-          opacity: _destinationFocusNode.hasFocus || !open ? 0.0 : 1.0,
+          opacity: (!destinationSelected || !open) ? 0.0 : 1.0,
           duration: Duration(milliseconds: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,12 +206,31 @@ class _SearchPanelState extends State<SearchPanel> {
 
   _handleFocus() {
     if (_destinationFocusNode.hasFocus) {
-      widget.slidingUpWidgetController.panelController.open();
+      return widget.slidingUpWidgetController.open();
     }
   }
 
   _onSubmitChoice() {
-    widget.slidingUpWidgetController.panelIndex = PanelIndex.MakeRequest;
+    // widget.slidingUpWidgetController.panel = MakeRequestPanel();
+    print("Submitted choice!");
+  }
+
+  @override
+  void close() {
+    if (!isOpen) return;
+
+    setState(() {
+      isOpen = false;
+    });
+  }
+
+  @override
+  void open() {
+    if (isOpen) return;
+
+    setState(() {
+      isOpen = true;
+    });
   }
 
   @override
@@ -185,17 +238,14 @@ class _SearchPanelState extends State<SearchPanel> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-      child: _getForm(
-          // (widget.slidingUpWidgetController == null)
-          //     ? false
-          widget.slidingUpWidgetController.panelController.isPanelOpen,
-          screenHeight),
+      child: _getForm(isOpen, screenHeight),
     );
   }
 
   @override
   void initState() {
     _destinationFocusNode.addListener(() => _handleFocus());
+    widget.init(this);
     super.initState();
   }
 }
