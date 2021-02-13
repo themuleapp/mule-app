@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/location_data.dart';
@@ -386,7 +387,7 @@ class _MapWidgetState extends State<MapWidget> {
                   top: 30,
                   bottom: (widget.slidingUpWidgetController == null)
                       ? 0
-                      : widget.slidingUpWidgetController?.currentHeight,
+                      : widget.slidingUpWidgetController.currentHeight,
                 ),
               ),
             ),
@@ -459,9 +460,6 @@ class MapController {
     );
     await _mapWidgetState._singleMuleMarker(muleLocation);
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
-    _mapWidgetState.setState(() {
-      print("oi!");
-    });
   }
 
   bool get isMapLoading {
