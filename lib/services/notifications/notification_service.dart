@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/services/notifications/notification_types.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
-import 'package:mule/screens/requests/requests_screen.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
 class NotificationHandler extends StatefulWidget {
@@ -44,7 +43,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
 
   _saveDeviceToken() async {
     String fcmToken = await _fcm.getToken();
-    print('WAAAAAAAAAAAAAAAAAAAAAAAAAA');
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
     await muleApiService
@@ -55,14 +53,22 @@ class _NotificationHandlerState extends State<NotificationHandler> {
       Map<String, dynamic> message) async {
     await GetIt.I.get<UserInfoStore>().updateActiveOrder();
 
-    print('Here');
-    print(message);
-    print(message['data']['type']);
     switch (message['data']['type']) {
       case MULE_NEW_REQUEST:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => RequestsScreen()));
+        print("Recieved new request $message");
+        break;
+      case USER_REQUEST_ACCEPTED:
+        GetIt.I.get<UserInfoStore>().updateActiveOrder();
+        break;
+      default:
+        print("Unhandled notification: $message");
     }
+  }
+
+  void _refreshApp() {
+    setState(() {
+      
+    });
   }
 
   @override

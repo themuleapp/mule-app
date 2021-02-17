@@ -37,17 +37,12 @@ class _MyHomePageState extends State<MyHomePage>
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-            child: SlidingUpWidget(
-          controller: controller,
-          screenHeight: screenHeight,
-          mapController: mapController,
-          beginPanel: SearchPanel(
+          child: SlidingUpWidget(
+            controller: controller,
             screenHeight: screenHeight,
-            slidingUpWidgetController: controller,
-            controller: DraggableController(),
             mapController: mapController,
           ),
-        )),
+        ),
       ),
     );
   }

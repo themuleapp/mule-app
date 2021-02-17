@@ -27,12 +27,18 @@ abstract class Panel extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
+  // Has to be called in the init of the state of the implementing class for the controller to work
   void init(State<Panel> panelState) {
     initController(panelState);
   }
 
   void initController(State<Panel> panelState) {
     controller._panelState = panelState;
+  }
+
+  // Should be called whenever the panel is swapped for another and the controller is passed (Using <PanelImplementation>.from())
+  void clearController() {
+    controller._panelState = null;
   }
 
   double get maxHeight {
@@ -62,22 +68,25 @@ class PanelController {
   bool get isAttached {
     return _panelState != null;
   }
-}
 
-class DraggableController extends PanelController {
+  bool get isDraggable {
+    return _panelState is DraggablePanel;
+  }
+
   void open() {
-    (_panelState as DraggablePanel).open();
+    if (isDraggable) (_panelState as DraggablePanel).open();
   }
 
   void close() {
-    (_panelState as DraggablePanel).close();
+    if (isDraggable) (_panelState as DraggablePanel).close();
   }
 
   bool get isOpen {
-    return (_panelState as DraggablePanel).isOpen;
+    return isDraggable && (_panelState as DraggablePanel).isOpen;
   }
 
   double get currentHeight {
+    if (!isDraggable) return _panelState.widget.maxHeight;
     if (isOpen) return _panelState.widget.maxHeight;
     return _panelState.widget.minHeight;
   }

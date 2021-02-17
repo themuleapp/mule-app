@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/panel.dart';
+import 'package:mule/screens/home/slider/request/make_request_panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
@@ -26,6 +27,16 @@ class SearchPanel extends Panel {
           controller: controller,
           backdropOpacity: 0.5,
           key: key,
+        );
+
+  SearchPanel.from(
+    Panel panel,
+  ) : super(
+          slidingUpWidgetController: panel.slidingUpWidgetController,
+          screenHeight: panel.screenHeight,
+          mapController: panel.mapController,
+          controller: panel.controller,
+          backdropOpacity: 0.5,
         );
 
   @override
@@ -211,8 +222,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   }
 
   _onSubmitChoice() {
-    // widget.slidingUpWidgetController.panel = MakeRequestPanel();
-    print("Submitted choice!");
+    widget.slidingUpWidgetController.panel = MakeRequestPanel.from(widget);
   }
 
   @override

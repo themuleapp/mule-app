@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/screens/home/slider/loading/loading_panel.dart';
+import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
@@ -11,23 +13,43 @@ class SlidingUpWidget extends StatefulWidget {
   final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
   final SlidingUpWidgetController controller;
   final MapController mapController;
-  final double radius;
   final double screenHeight;
   final Panel beginPanel;
 
   SlidingUpWidget({
     this.controller,
     this.mapController,
-    this.radius = 20.0,
     this.screenHeight,
-    this.beginPanel,
+    this.beginPanel = null,
   });
 
   @override
   _SlidingUpWidgetState createState() => _SlidingUpWidgetState(
         order: order,
-        panel: beginPanel,
+        panel: (beginPanel == null) ? getPanelFromOrder(order) : beginPanel,
       );
+
+  Panel getPanelFromOrder(OrderData order) {
+    Panel loadingPanel = LoadingPanel(
+      mapController: mapController,
+      slidingUpWidgetController: controller,
+      screenHeight: screenHeight,
+      controller: PanelController(),
+    );
+
+    if (order == null) return SearchPanel.from(loadingPanel);
+
+    switch (order.status) {
+      case (Status.ACCEPTED):
+        return (GetIt.I.get<UserInfoStore>().isMule)
+            ? loadingPanel
+            : loadingPanel;
+      case (Status.OPEN):
+        return WaitingToMatchPanel.from(loadingPanel);
+      default:
+        return SearchPanel.from(loadingPanel);
+    }
+  }
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
@@ -47,147 +69,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     widget.controller?._addState(this);
   }
 
-  // _updatePanel() {
-  //   switch (panelIndex) {
-  //     case PanelIndex.DestinationAndSearch:
-  //       setState(() {
-  //         _minHeight = widget.minHeight;
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = true;
-  //         _backdropTapClosesPanel = true;
-  //         _backdropOpacity = 0.5;
-  //         _buttonList = [currentLocationButton];
-  //         _mapStateCallback = () {
-  //           _mapController.unfocusRoute();
-  //           _mapController.focusCurrentLocation();
-  //         };
-  //       });
-  //       _setCurrentPanel(SearchPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //       ));
-  //       break;
-  //     case PanelIndex.MakeRequest:
-  //       setState(() {
-  //         _minHeight =
-  //             widget.minHeight + .25 * (widget.maxHeight - widget.minHeight);
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = false;
-  //         _backdropTapClosesPanel = false;
-  //         _backdropOpacity = 0.0;
-  //         _buttonList = [cancelButton];
-  //         _mapStateCallback = () {
-  //           _mapController.focusOnRoute();
-  //         };
-  //       });
-  //       _setCurrentPanel(MakeRequestPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //         buttonBridge: cancelButton,
-  //       ));
-  //       break;
-  //     case PanelIndex.WaitingToMatch:
-  //       setState(() {
-  //         _minHeight = widget.minHeight;
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = false;
-  //         _backdropTapClosesPanel = false;
-  //         _backdropOpacity = 0;
-  //         _buttonList = [cancelButton];
-  //         _mapStateCallback = () {
-  //           _mapController.focusOnRoute();
-  //         };
-  //       });
-  //       _setCurrentPanel(WaitingToMatchPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //         buttonBridge: cancelButton,
-  //       ));
-  //       break;
-  //     case PanelIndex.UserMatched:
-  //       setState(() {
-  //         _minHeight = widget.minHeight;
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = false;
-  //         _backdropTapClosesPanel = false;
-  //         _backdropOpacity = 0;
-  //         _buttonList = [currentLocationButton, cancelButton];
-  //         _mapStateCallback = () {
-  //           _mapController.focusOnRoute();
-  //         };
-  //       });
-  //       _setCurrentPanel(UserMatchedPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //         buttonBridge: cancelButton,
-  //       ));
-  //       break;
-  //     case PanelIndex.MuleMatched:
-  //       setState(() {
-  //         _minHeight = widget.minHeight;
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = false;
-  //         _backdropTapClosesPanel = false;
-  //         _backdropOpacity = 0;
-  //         _buttonList = [currentLocationButton, cancelButton, completedButton];
-  //         _mapStateCallback = () {
-  //           _mapController.focusOnRoute();
-  //         };
-  //       });
-  //       _setCurrentPanel(MuleMatchedPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //         buttonBridge: cancelButton,
-  //         buttonBridge2: completedButton,
-  //       ));
-  //       break;
-  //     case PanelIndex.Loading:
-  //       setState(() {
-  //         _minHeight = widget.minHeight;
-  //         _maxHeight = widget.maxHeight;
-  //         _isDraggable = false;
-  //         _backdropTapClosesPanel = false;
-  //         _buttonList = [];
-  //         _backdropOpacity = 0;
-  //       });
-  //       _setCurrentPanel(LoadingPanel(
-  //         slidingUpWidgetController: widget.controller,
-  //         mapController: _mapController,
-  //       ));
-  //       break;
-  //     default:
-  //       throw UnimplementedError("Called panel not implemented");
-  //   }
-  //   if (!_mapController.isMapLoading) {
-  //     _mapStateCallback();
-  //   }
-  // }
-
   set newPanel(Panel panel) {
     setState(() {
       this.panel = panel;
+      panel.clearController();
     });
-  }
-
-  Panel getPanelFromOrder(OrderData order) {
-    // if (order == null)
-    return SearchPanel(
-      mapController: widget.mapController,
-      slidingUpWidgetController: widget.controller,
-      controller: DraggableController(),
-      screenHeight: widget.screenHeight,
-    );
-
-    // switch (order.status) {
-    //   case (Status.ACCEPTED):
-    //     return (GetIt.I.get<UserInfoStore>().isMule)
-    //         ? PanelIndex.MuleMatched
-    //         : PanelIndex.UserMatched;
-    //   case (Status.OPEN):
-    //     return PanelIndex.WaitingToMatch;
-    //   default:
-    //     return PanelIndex.DestinationAndSearch;
-    // }
   }
 
   Widget _panel(ScrollController sc) {
@@ -199,9 +85,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   }
 
   double get currentHeight {
-    if (panel.controller is DraggableController &&
-        panel.controller.isAttached) {
-      return (panel.controller as DraggableController).currentHeight;
+    if (panel.controller.isAttached) {
+      return panel.controller.currentHeight;
     } else {
       return panel.minHeight;
     }
@@ -211,14 +96,14 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   Widget build(BuildContext context) {
     return ext.SlidingUpPanel(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(widget.radius),
-        topRight: Radius.circular(widget.radius),
+        topLeft: Radius.circular(panel.radius),
+        topRight: Radius.circular(panel.radius),
       ),
-      onPanelClosed: () => (panel.controller as DraggableController).close(),
-      onPanelOpened: () => (panel.controller as DraggableController).open(),
-      isDraggable: (panel.controller is DraggableController),
-      backdropTapClosesPanel: (panel.controller is DraggableController) &&
-          panel.backdropTapClosesPanel,
+      onPanelClosed: () => panel.controller.close(),
+      onPanelOpened: () => panel.controller.open(),
+      isDraggable: panel.controller.isDraggable,
+      backdropTapClosesPanel:
+          panel.controller.isDraggable && panel.backdropTapClosesPanel,
       minHeight: panel.minHeight,
       maxHeight: panel.maxHeight,
       controller: _sliderPanelController,

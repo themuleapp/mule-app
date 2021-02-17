@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
@@ -9,25 +10,29 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
-abstract class MatchedPanel extends StatefulWidget {
+abstract class MatchedPanel extends Panel {
   final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
-  final UserData other;
-  final double opacity = 1.0;
-  final SlidingUpWidgetController slidingUpWidgetController;
-  final MapController mapController;
   final String headerString;
+  final UserData match;
 
-  MatchedPanel([
-    this.slidingUpWidgetController,
-    this.mapController,
-    this.other,
+  MatchedPanel({
+    SlidingUpWidgetController slidingUpWidgetController,
+    MapController mapController,
+    PanelController controller,
+    double screenHeight,
     this.headerString,
-  ]);
+    this.match,
+  }) : super(
+          slidingUpWidgetController: slidingUpWidgetController,
+          mapController: mapController,
+          controller: controller,
+          screenHeight: screenHeight,
+        );
 
   @override
   _MatchedPanelState createState() => _MatchedPanelState();
 
-  updateOrder(OrderData order) {
+  void mapStateCallback() {
     mapController.updateDelivery(
       order.acceptedBy.location.toLatLng(),
       order.place.location.toLatLng(),
@@ -58,9 +63,23 @@ abstract class MatchedPanel extends StatefulWidget {
     return Image.asset('assets/images/profile_picture_placeholder.png');
   }
 
+  List<StylizedButton> get buttons {
+    StylizedButton cancel = CancelButton(
+      callback: cancelRequest,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    StylizedButton accept = CompletedButton(
+      callback: cancelRequest,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+
+    return [accept, cancel];
+  }
+
   Future<bool> cancelRequest();
   Future<bool> completeRequest();
-  void _initButtons();
 }
 
 class _MatchedPanelState extends State<MatchedPanel> {
@@ -69,25 +88,22 @@ class _MatchedPanelState extends State<MatchedPanel> {
   @override
   void initState() {
     super.initState();
-    widget._initButtons();
+    widget.init(this);
   }
 
   @override
   build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    widget.updateOrder(widget.order);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: widget.opacity,
+          opacity: 1.0,
           child: Padding(
             padding: EdgeInsets.only(
                 top: AppTheme.elementSize(
-                    screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                    widget.screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
                 left: 16,
                 right: 16),
             child: Text(
@@ -96,7 +112,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: AppTheme.elementSize(
-                    screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
+                    widget.screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
                 color: AppTheme.darkerText,
               ),
             ),
@@ -117,7 +133,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
-                  child: widget.getImage(widget.other),
+                  child: widget.getImage(widget.match),
                 ),
               ),
               Expanded(
@@ -128,12 +144,12 @@ class _MatchedPanelState extends State<MatchedPanel> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      widget.getName(widget.other),
+                      widget.getName(widget.match),
                       style: TextStyle(
                         color: AppTheme.darkerText,
                         fontWeight: FontWeight.w700,
-                        fontSize: AppTheme.elementSize(
-                            screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
+                        fontSize: AppTheme.elementSize(widget.screenHeight, 16,
+                            16, 17, 17, 18, 24, 26, 28),
                       ),
                     ),
                     SizedBox(height: 5),
@@ -144,15 +160,15 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         Icon(
                           Icons.phone,
                           color: AppTheme.darkGrey,
-                          size: AppTheme.elementSize(
-                              screenHeight, 25, 25, 26, 26, 18, 20, 21, 22),
+                          size: AppTheme.elementSize(widget.screenHeight, 25,
+                              25, 26, 26, 18, 20, 21, 22),
                         ),
-                        Text(widget.getFormattedPhoneNumber(widget.other),
+                        Text(widget.getFormattedPhoneNumber(widget.match),
                             style: TextStyle(
                               color: AppTheme.lightGrey,
                               fontWeight: FontWeight.w500,
                               fontSize: AppTheme.elementSize(
-                                screenHeight,
+                                widget.screenHeight,
                                 14,
                                 14,
                                 15,
@@ -180,9 +196,9 @@ class _MatchedPanelState extends State<MatchedPanel> {
                       Icons.chat,
                       color: AppTheme.secondaryBlue,
                       size: AppTheme.elementSize(
-                          screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
+                          widget.screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                     )),
-                onTap: () => _service.sendSms(widget.other.phoneNumber),
+                onTap: () => _service.sendSms(widget.match.phoneNumber),
               )
             ],
           ),
