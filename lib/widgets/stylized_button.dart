@@ -33,7 +33,13 @@ class StylizedButton extends StatelessWidget {
             icon,
             color: iconColor,
           ),
-          onPressed: () => callback(context),
+          onPressed: () {
+            try {
+              callback(context);
+            } catch (_) {
+              callback();
+            }
+          },
         ),
       ),
     );
