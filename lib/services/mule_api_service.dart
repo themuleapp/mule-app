@@ -320,12 +320,14 @@ class MuleApiService {
   }
 
   Future<bool> userDeleteActiveRequest(OrderData order) async {
+    if (order == null) return false;
     Response res = await _makeAuthenticatedDeleteRequest(
         '/requests/user/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
   }
 
   Future<bool> muleDeleteActiveRequest(OrderData order) async {
+    if (order == null) return false;
     Response res = await _makeAuthenticatedDeleteRequest(
         '/requests/mule/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
