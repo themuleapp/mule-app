@@ -6,7 +6,6 @@ import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
 import 'package:mule/screens/home/slider/match/user_matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
-import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';

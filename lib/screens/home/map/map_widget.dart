@@ -19,6 +19,7 @@ import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_helper.dart';
 import 'package:mule/screens/home/map/map_marker.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
@@ -63,6 +64,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   List<LatLng> _markerLocations;
   PolylinePoints polylinePoints = PolylinePoints();
+  Position currentPosition;
 
   @override
   void initState() {
@@ -70,40 +72,39 @@ class _MapWidgetState extends State<MapWidget> {
       getCurrentLocation();
     }
     widget.controller?._setState(this);
+    widget.initCallback();
     super.initState();
   }
 
-  void getCurrentLocation() async {
+  Future<Position> getCurrentLocation() async {
+    Position position = null;
+
     try {
-      Position position = await Geolocator.getCurrentPosition(
+      position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      StreamSubscription<Position> positionStream =
-          Geolocator.getPositionStream(
-                  desiredAccuracy: LocationAccuracy.high, distanceFilter: 30)
-              .listen((Position position) async {
-        if (position != null) {
-          await updateLocationOnServerAndGetMulesAround(position);
-        }
-      });
 
       await updateLocationOnServerAndGetMulesAround(position);
     } catch (e) {
       print(e);
     }
+    return position;
   }
 
   Future updateLocationOnServerAndGetMulesAround(Position position) async {
     LocationData locationData =
         LocationData(lng: position.longitude, lat: position.latitude);
+
     bool updatedSuccessfully =
         await muleApiService.handleUpdateLocation(locationData);
     if (!updatedSuccessfully) {
       print('Location not updated successfully');
     }
-    await getMulesAround(locationData, position);
   }
 
-  Future getMulesAround(LocationData locationData, Position position) async {
+  void _setMuleMarkers(Position position) async {
+    LocationData locationData =
+        LocationData(lng: position.longitude, lat: position.latitude);
+
     MulesAroundRes mulesAround =
         await muleApiService.getMulesAroundMeLocation(locationData);
     GetIt.I.get<LocationStore>().updateCurrentLocation(position);
@@ -123,10 +124,6 @@ class _MapWidgetState extends State<MapWidget> {
     if (!GetIt.I.get<LocationStore>().isLocationLoaded) {
       await getCurrentLocation();
     }
-    LocationData currentLocation = GetIt.I.get<LocationStore>().currentLocation;
-    await updateLocationOnServerAndGetMulesAround(Position(
-        latitude: currentLocation.lat, longitude: currentLocation.lng));
-
     setState(() {
       _isMapLoading = false;
     });
@@ -418,28 +415,34 @@ class _MapWidgetState extends State<MapWidget> {
 class MapController {
   _MapWidgetState _mapWidgetState;
 
-  _setState(_MapWidgetState _mapWidgetState) {
+  void _setState(_MapWidgetState _mapWidgetState) {
     this._mapWidgetState = _mapWidgetState;
   }
 
-  // These functions do not do well asyncronously, so keep the await keyword
-  focusOnRoute() async {
-    await _mapWidgetState._setRouteMarkers();
-    await _mapWidgetState._showPolyLines();
-    _mapWidgetState._setRouteView();
+  void setMuleMarkers() async {
+    Position currentPosition = await _mapWidgetState.getCurrentLocation();
+    await _mapWidgetState._setMuleMarkers(currentPosition);
   }
 
-  unfocusRoute() async {
+  // These functions do not do well asyncronously, so keep the await keyword
+  void focusOnRoute() async {
+    await _mapWidgetState._showPolyLines();
+    await _mapWidgetState._setRouteMarkers();
+    await _mapWidgetState._setRouteView();
+  }
+
+  void unfocusRoute() async {
+    await setMuleMarkers();
     await _mapWidgetState._initMarkers();
     await _mapWidgetState._removePolyLines();
+    await _mapWidgetState._setDefaultView();
+  }
+
+  void focusCurrentLocation() {
     _mapWidgetState._setDefaultView();
   }
 
-  focusCurrentLocation() {
-    _mapWidgetState._setDefaultView();
-  }
-
-  updateDelivery(LatLng muleLocation, LatLng place, LatLng destination,
+  void updateDelivery(LatLng muleLocation, LatLng place, LatLng destination,
       double triggerDistance) async {
     await _mapWidgetState._removePolyLines();
 
