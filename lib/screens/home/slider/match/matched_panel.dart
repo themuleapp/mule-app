@@ -67,12 +67,12 @@ abstract class MatchedPanel extends Panel {
 
   List<StylizedButton> get buttons {
     StylizedButton cancel = CancelButton(
-      callback: cancelRequestCommon,
+      callback: cancelRequest,
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     StylizedButton accept = CompletedButton(
-      callback: cancelRequest,
+      callback: null,
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
@@ -80,10 +80,8 @@ abstract class MatchedPanel extends Panel {
     return [accept, cancel];
   }
 
-  void cancelRequestCommon(BuildContext context) async {
-    if (await cancelRequest()) {
-      slidingUpWidgetController.panel = SearchPanel.from(this);
-    } else {
+  void cancelRequest(BuildContext context) async {
+    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
       createDialogWidget(context, "Oops... Something went wrong!",
           "Something went wrong while trying to cancel your request, please try again later.");
     }
@@ -99,7 +97,6 @@ abstract class MatchedPanel extends Panel {
     return minHeight;
   }
 
-  Future<bool> cancelRequest();
   Future<bool> completeRequest();
 }
 
@@ -111,13 +108,16 @@ class _MatchedPanelState extends State<MatchedPanel> {
     super.initState();
     widget.init(this);
 
-    GetIt.I.get<UserInfoStore>().activeOrder.addListener(() {
-      OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
+  }
 
-      if (newOrder == null) {
-        widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
-      }
-    });
+  void _orderListener() {
+    OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
+
+    if (newOrder == null) {
+      widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
+      dispose();
+    }
   }
 
   @override

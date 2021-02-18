@@ -41,10 +41,7 @@ class WaitingToMatchPanel extends Panel {
         );
 
   cancelRequest(BuildContext context) async {
-    if (await muleApiService
-        .userDeleteActiveRequest(GetIt.I.get<UserInfoStore>().activeOrder)) {
-      slidingUpWidgetController.panel = SearchPanel.from(this);
-    } else {
+    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
       createDialogWidget(
         context,
         "Oops... Something went wrong",
@@ -85,18 +82,21 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
   void initState() {
     super.initState();
     widget.init(this);
-    GetIt.I.get<UserInfoStore>().activeOrder.addListener(() {
-      OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
+  }
 
-      if (newOrder == null) {
-        widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
-      } else if (GetIt.I.get<UserInfoStore>().fullName ==
-          newOrder.acceptedBy.name) {
-        widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
-      } else {
-        widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
-      }
-    });
+  void _orderListener() {
+    OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
+
+    if (newOrder == null) {
+      widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
+    } else if (GetIt.I.get<UserInfoStore>().fullName ==
+        newOrder.acceptedBy.name) {
+      widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
+    } else {
+      widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
+    }
+    dispose();
   }
 
   @override

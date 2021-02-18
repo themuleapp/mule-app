@@ -5,7 +5,6 @@ import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/services/mule_api_service.dart';
-import 'package:mule/services/notifications/notification_service.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 part 'user_info_store.g.dart';
@@ -35,7 +34,7 @@ abstract class _UserInfoStore with Store {
   bool _isMule = true;
 
   @observable
-  OrderData activeOrder = null;
+  OrderData _activeOrder = null;
 
   @action
   void updateEmail(String email) {
@@ -77,40 +76,42 @@ abstract class _UserInfoStore with Store {
   @action
   Future<OrderData> updateActiveOrder() async {
     OrderData newOrder = await muleApiService.getActiveRequest();
-    OrderData oldOrder = activeOrder;
+    OrderData oldOrder = _activeOrder;
 
-    if (activeOrder == null || newOrder == null) {
-      activeOrder = newOrder;
-    } else {
+    if (_activeOrder == null || newOrder == null) {
+      _activeOrder = newOrder;
+    }
+    if (oldOrder != null) {
       oldOrder.update(newOrder);
     }
 
-    if (activeOrder != null) {
+    if (_activeOrder != null) {
       GetIt.I.get<LocationStore>().updateDestination(
             DestinationSuggestion.fromLocationDescription(
-                activeOrder.destination),
+                _activeOrder.destination),
           );
       GetIt.I.get<LocationStore>().updatePlace(
-            PlacesSuggestion.fromLocationDescription(activeOrder.place),
+            PlacesSuggestion.fromLocationDescription(_activeOrder.place),
           );
     }
-    return activeOrder;
+    return _activeOrder;
   }
 
   @action
   Future<bool> deleteActiveOrder() async {
     bool success = false;
 
-    if (activeOrder == null) {
+    if (_activeOrder == null) {
       return success;
     }
-    if (_isMule) {
-      success = await muleApiService.muleDeleteActiveRequest(activeOrder);
+    if (_activeOrder.acceptedBy != null &&
+        _activeOrder.acceptedBy.name == fullName) {
+      success = await muleApiService.muleDeleteActiveRequest(_activeOrder);
     } else {
-      success = await muleApiService.userDeleteActiveRequest(activeOrder);
+      success = await muleApiService.userDeleteActiveRequest(_activeOrder);
     }
     if (success) {
-      activeOrder = null;
+      updateActiveOrder();
       GetIt.I.get<LocationStore>().updateDestination(null);
       GetIt.I.get<LocationStore>().updatePlace(null);
     }
@@ -127,6 +128,8 @@ abstract class _UserInfoStore with Store {
   String get firstName => this._firstName;
   @computed
   bool get isMule => this._isMule;
+  @computed
+  OrderData get activeOrder => this._activeOrder;
 
   ImageProvider get profilePicture => this._profilePicture;
 }

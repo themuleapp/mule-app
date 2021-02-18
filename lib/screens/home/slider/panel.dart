@@ -73,6 +73,11 @@ class PanelController {
     return _panelState is DraggablePanel;
   }
 
+  void clear() {
+    // if (_panelState != null && _panelState.mounted) _panelState.dispose();
+    _panelState = null;
+  }
+
   void open() {
     if (isDraggable) (_panelState as DraggablePanel).open();
   }

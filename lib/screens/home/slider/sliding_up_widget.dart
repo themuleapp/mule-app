@@ -73,8 +73,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   set newPanel(Panel panel) {
     setState(() {
+      this.panel.controller.clear();
       this.panel = panel;
-      panel.clearController();
     });
   }
 
