@@ -57,18 +57,9 @@ class _NotificationHandlerState extends State<NotificationHandler> {
       case MULE_NEW_REQUEST:
         print("Recieved new request $message");
         break;
-      case USER_REQUEST_ACCEPTED:
-        GetIt.I.get<UserInfoStore>().updateActiveOrder();
-        break;
       default:
         print("Unhandled notification: $message");
     }
-  }
-
-  void _refreshApp() {
-    setState(() {
-      
-    });
   }
 
   @override
