@@ -76,6 +76,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       this.panel.controller.cleanup();
       this.panel = panel;
     });
+    this.panel.mapStateCallback();
   }
 
   Widget _panel(ScrollController sc) {

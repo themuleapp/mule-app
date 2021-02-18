@@ -223,6 +223,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
 
   _onSubmitChoice() {
     widget.slidingUpWidgetController.panel = MakeRequestPanel.from(widget);
+    dispose();
   }
 
   @override

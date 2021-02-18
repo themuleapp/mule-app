@@ -91,7 +91,7 @@ class PanelController {
   }
 
   double get currentHeight {
-    if (!isDraggable) return _panelState.widget.maxHeight;
+    if (!isDraggable) return _panelState.widget.minHeight;
     if (isOpen) return _panelState.widget.maxHeight;
     return _panelState.widget.minHeight;
   }
