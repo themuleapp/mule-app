@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
+import 'package:mule/screens/home/slider/match/user_matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/mule_api_service.dart';
@@ -77,19 +79,24 @@ class WaitingToMatchPanel extends Panel {
 }
 
 class WaitingToMatchState extends State<WaitingToMatchPanel> {
-  OrderData order;
   BuildContext context;
 
   @override
   void initState() {
     super.initState();
     widget.init(this);
-  }
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(() {
+      OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
-  void _showAlertDialog() {
-    AlertDialog dialog = AlertDialog(
-      title: Text("Oops, something went wrong... Please try again later!"),
-    );
+      if (newOrder == null) {
+        widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
+      } else if (GetIt.I.get<UserInfoStore>().fullName ==
+          newOrder.acceptedBy.name) {
+        widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
+      } else {
+        widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
+      }
+    });
   }
 
   @override

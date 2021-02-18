@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
-import 'package:mule/screens/home/slider/panel.dart';
-import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 
 class MyHomePage extends StatefulWidget {

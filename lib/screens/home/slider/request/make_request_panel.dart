@@ -54,7 +54,7 @@ class MakeRequestPanel extends Panel {
     bool success = await muleApiService.placeRequest(placeRequestData);
 
     if (success) {
-      GetIt.I.get<UserInfoStore>().updateActiveOrder();
+      await GetIt.I.get<UserInfoStore>().updateActiveOrder();
     }
     return success;
   }

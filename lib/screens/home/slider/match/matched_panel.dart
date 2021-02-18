@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/panel.dart';
+import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 abstract class MatchedPanel extends Panel {
@@ -65,7 +67,7 @@ abstract class MatchedPanel extends Panel {
 
   List<StylizedButton> get buttons {
     StylizedButton cancel = CancelButton(
-      callback: cancelRequest,
+      callback: cancelRequestCommon,
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
@@ -76,6 +78,25 @@ abstract class MatchedPanel extends Panel {
     );
 
     return [accept, cancel];
+  }
+
+  void cancelRequestCommon(BuildContext context) async {
+    if (await cancelRequest()) {
+      slidingUpWidgetController.panel = SearchPanel.from(this);
+    } else {
+      createDialogWidget(context, "Oops... Something went wrong!",
+          "Something went wrong while trying to cancel your request, please try again later.");
+    }
+  }
+
+  @override
+  double get minHeight {
+    return screenHeight / 5;
+  }
+
+  @override
+  double get maxHeight {
+    return minHeight;
   }
 
   Future<bool> cancelRequest();
@@ -89,6 +110,14 @@ class _MatchedPanelState extends State<MatchedPanel> {
   void initState() {
     super.initState();
     widget.init(this);
+
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(() {
+      OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
+
+      if (newOrder == null) {
+        widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
+      }
+    });
   }
 
   @override

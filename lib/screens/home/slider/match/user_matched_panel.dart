@@ -20,9 +20,20 @@ class UserMatchedPanel extends MatchedPanel {
           headerString: "You are en route",
           screenHeight: screenHeight,
         );
+
+  UserMatchedPanel.from(Panel panel)
+      : super(
+          slidingUpWidgetController: panel.slidingUpWidgetController,
+          mapController: panel.mapController,
+          controller: panel.controller,
+          screenHeight: panel.screenHeight,
+          headerString: "En route",
+          match: GetIt.I.get<UserInfoStore>().activeOrder.acceptedBy,
+        );
+
   @override
   Future<bool> cancelRequest() async {
-    return await muleApiService.userDeleteActiveRequest(order);
+    return muleApiService.userDeleteActiveRequest(order);
   }
 
   @override

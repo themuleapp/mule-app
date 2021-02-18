@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/slider/loading/loading_panel.dart';
+import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
+import 'package:mule/screens/home/slider/match/user_matched_panel.dart';
 import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
@@ -41,9 +43,9 @@ class SlidingUpWidget extends StatefulWidget {
 
     switch (order.status) {
       case (Status.ACCEPTED):
-        return (GetIt.I.get<UserInfoStore>().isMule)
-            ? loadingPanel
-            : loadingPanel;
+        return (GetIt.I.get<UserInfoStore>().fullName == order.acceptedBy.name)
+            ? MuleMatchedPanel.from(loadingPanel)
+            : UserMatchedPanel.from(loadingPanel);
       case (Status.OPEN):
         return WaitingToMatchPanel.from(loadingPanel);
       default:
