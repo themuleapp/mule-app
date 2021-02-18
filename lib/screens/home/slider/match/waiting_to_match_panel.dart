@@ -60,7 +60,6 @@ class WaitingToMatchPanel extends Panel {
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
-
     return [cancel];
   }
 

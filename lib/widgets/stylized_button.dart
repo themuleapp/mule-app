@@ -7,7 +7,7 @@ class StylizedButton extends StatelessWidget {
   final EdgeInsets margin;
   final IconData icon;
   final Color iconColor;
-  Function callback;
+  final Function callback;
 
   StylizedButton({
     this.size = 20,

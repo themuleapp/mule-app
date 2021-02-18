@@ -73,7 +73,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   set newPanel(Panel panel) {
     setState(() {
-      this.panel.controller.clear();
+      this.panel.controller.cleanup();
       this.panel = panel;
     });
   }
@@ -128,7 +128,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: currentHeight),
+                    padding: EdgeInsets.only(bottom: panel.minHeight),
                     child: Container(
                       height: panel.buttons.length *
                           (panel.buttonSize + panel.buttonSpacing),
