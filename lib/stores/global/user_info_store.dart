@@ -5,6 +5,7 @@ import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/services/notifications/notification_service.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 part 'user_info_store.g.dart';
@@ -75,7 +76,14 @@ abstract class _UserInfoStore with Store {
 
   @action
   Future<OrderData> updateActiveOrder() async {
-    activeOrder = await muleApiService.getActiveRequest();
+    OrderData newOrder = await muleApiService.getActiveRequest();
+    OrderData oldOrder = activeOrder;
+
+    if (activeOrder == null || newOrder == null) {
+      activeOrder = newOrder;
+    } else {
+      oldOrder.update(newOrder);
+    }
 
     if (activeOrder != null) {
       GetIt.I.get<LocationStore>().updateDestination(

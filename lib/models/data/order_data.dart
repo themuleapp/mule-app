@@ -1,16 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/user_data.dart';
-import 'package:mule/models/data/user_data.dart';
+import 'package:mule/services/notifications/notification_service.dart';
 
 // TODO Should this be in a response?
-class OrderData {
+class OrderData with ChangeNotifier {
   final String id;
   final LocationDesciption place;
   final LocationDesciption destination;
-  final Status status;
   final DateTime createdAt;
   final UserData createdBy;
-  final MuleData acceptedBy;
+
+  MuleData acceptedBy;
+  Status status;
 
   OrderData.fromJson(Map<String, dynamic> jsonData)
       : this.id = jsonData['id'],
@@ -23,6 +25,16 @@ class OrderData {
         this.acceptedBy = (jsonData['acceptedBy'] != null)
             ? MuleData.fromJson(jsonData['acceptedBy'])
             : null;
+
+  void update(OrderData other) {
+    if (other == null) {
+      this.id == null;
+    } else {
+      this.acceptedBy = other.acceptedBy;
+      this.status = other.status;
+    }
+    notifyListeners();
+  }
 }
 
 class LocationDesciption {
