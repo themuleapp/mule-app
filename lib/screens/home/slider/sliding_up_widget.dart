@@ -180,6 +180,10 @@ class SlidingUpWidgetController {
     return _slidingUpWidgetState.panel.controller;
   }
 
+  Panel get panel {
+    return _slidingUpWidgetState.panel;
+  }
+
   set panel(Panel panel) {
     _slidingUpWidgetState.newPanel = panel;
   }

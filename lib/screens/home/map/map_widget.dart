@@ -127,6 +127,7 @@ class _MapWidgetState extends State<MapWidget> {
     setState(() {
       _isMapLoading = false;
     });
+    widget.initCallback();
   }
 
   void _initMarkers() async {
@@ -166,9 +167,9 @@ class _MapWidgetState extends State<MapWidget> {
       position: muleLocation,
       icon: muleIcon,
     );
-    _markers
-      ..clear()
-      ..add(muleMarker);
+    setState(() {
+      _markers..add(muleMarker);
+    });
   }
 
   Future<void> _updateMarkers([double updatedZoom]) async {
@@ -256,6 +257,8 @@ class _MapWidgetState extends State<MapWidget> {
     if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
+      result.points.removeLast();
+      result.points.removeLast();
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
@@ -384,7 +387,7 @@ class _MapWidgetState extends State<MapWidget> {
                   top: 30,
                   bottom: (widget.slidingUpWidgetController == null)
                       ? 0
-                      : widget.slidingUpWidgetController.currentHeight,
+                      : widget.slidingUpWidgetController.panel.minHeight,
                 ),
               ),
             ),
@@ -446,11 +449,9 @@ class MapController {
       double triggerDistance) async {
     await _mapWidgetState._removePolyLines();
 
-    // Check if mule is within certain radius
     PointLatLng target;
     PointLatLng origin =
         PointLatLng(muleLocation.latitude, muleLocation.longitude);
-    //DOESN'T WORK
     if (_mapWidgetState.calculateDistance(muleLocation, place) <
         triggerDistance) {
       target = PointLatLng(place.latitude, place.longitude);
@@ -461,8 +462,9 @@ class MapController {
       origin: origin,
       destination: target,
     );
-    await _mapWidgetState._singleMuleMarker(muleLocation);
+    await _mapWidgetState._setRouteMarkers();
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
+    await _mapWidgetState._singleMuleMarker(muleLocation);
   }
 
   bool get isMapLoading {

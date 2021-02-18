@@ -35,12 +35,13 @@ abstract class MatchedPanel extends Panel {
   _MatchedPanelState createState() => _MatchedPanelState();
 
   void mapStateCallback() {
-    mapController.updateDelivery(
-      order.acceptedBy.location.toLatLng(),
-      order.place.location.toLatLng(),
-      order.destination.location.toLatLng(),
-      .1,
-    );
+    mapController
+      ..updateDelivery(
+        order.acceptedBy.location.toLatLng(),
+        order.place.location.toLatLng(),
+        order.destination.location.toLatLng(),
+        .1,
+      );
   }
 
   String getFormattedPhoneNumber(UserData data) {
