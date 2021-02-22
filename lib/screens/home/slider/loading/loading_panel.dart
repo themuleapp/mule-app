@@ -1,22 +1,31 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
+import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/loading-animation.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
-class LoadingPanel extends StatefulWidget {
-  final SlidingUpWidgetController slidingUpWidgetController;
-  final MapController mapController;
+class LoadingPanel extends Panel {
+  LoadingPanel({
+    PanelController controller,
+    SlidingUpWidgetController slidingUpWidgetController,
+    MapController mapController,
+    double screenHeight,
+  }) : super(
+          mapController: mapController,
+          slidingUpWidgetController: slidingUpWidgetController,
+          screenHeight: screenHeight,
+          controller: controller,
+        );
 
-  const LoadingPanel({
-    Key key,
-    this.slidingUpWidgetController,
-    this.mapController,
-  }) : super(key: key);
+  _LoadingPanelState createState() => _LoadingPanelState();
 
   @override
-  _LoadingPanelState createState() => _LoadingPanelState();
+  void mapStateCallback() {}
+
+  @override
+  List<StylizedButton> get buttons => [];
 }
 
 class _LoadingPanelState extends State<LoadingPanel> {

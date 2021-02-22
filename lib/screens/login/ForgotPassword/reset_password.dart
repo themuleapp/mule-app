@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
@@ -49,7 +49,7 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
       password: password1,
     );
     final Response res =
-        await httpClient.handleResetPassword(verifyPasswordReq);
+        await muleApiService.handleResetPassword(verifyPasswordReq);
     if (res.statusCode == 200) {
       // TODO show a little reminder that it successded
       Navigator.of(context).push(
@@ -106,8 +106,8 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                           child: Text(
                             "Reset Password",
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(
-                                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+                                fontSize: AppTheme.elementSize(screenHeight, 24,
+                                    26, 28, 30, 32, 40, 45, 50),
                                 fontWeight: FontWeight.bold,
                                 color: AppTheme.darkGrey),
                           ),
@@ -157,8 +157,8 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
                               "SUBMIT",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: AppTheme.elementSize(screenHeight,
-                                    14, 15, 16, 17, 18, 26, 28, 30),
+                                fontSize: AppTheme.elementSize(screenHeight, 14,
+                                    15, 16, 17, 18, 26, 28, 30),
                               ),
                             ),
                             onPressed: this._handleSubmit,

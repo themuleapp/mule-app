@@ -1,10 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/config/http_client.dart';
-import 'package:mule/config/notification_types.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/services/notifications/notification_types.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
-import 'package:mule/screens/requests/requests_screen.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
 class NotificationHandler extends StatefulWidget {
   final Widget body;
@@ -42,22 +43,22 @@ class _NotificationHandlerState extends State<NotificationHandler> {
 
   _saveDeviceToken() async {
     String fcmToken = await _fcm.getToken();
-    print('WAAAAAAAAAAAAAAAAAAAAAAAAAA');
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
-    await httpClient
+    await muleApiService
         .uploadDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
   }
 
   Future<dynamic> _foregroundMessageHandler(
       Map<String, dynamic> message) async {
-    print('Here');
-    print(message);
-    print(message['data']['type']);
+    await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+
     switch (message['data']['type']) {
       case MULE_NEW_REQUEST:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => RequestsScreen()));
+        print("Recieved new request $message");
+        break;
+      default:
+        print("Unhandled notification: $message");
     }
   }
 

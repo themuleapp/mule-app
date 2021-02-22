@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
+import 'package:mule/screens/home/slider/panel.dart';
+import 'package:mule/screens/home/slider/search/search_panel.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/models/data/suggestion.dart';
@@ -10,44 +13,94 @@ import 'package:mule/models/req/placeRequest/place_request_data.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
-class MakeRequestPanel extends StatefulWidget {
-  final SlidingUpWidgetController slidingUpWidgetController;
-  final MapController mapController;
-  final double opacity = 1.0;
-  final StylizedButton buttonBridge;
-
+class MakeRequestPanel extends Panel {
   MakeRequestPanel({
-    this.slidingUpWidgetController,
-    this.mapController,
-    this.buttonBridge,
-  });
-  _MakeRequestPanelState createState() => _MakeRequestPanelState();
-}
+    PanelController controller,
+    SlidingUpWidgetController slidingUpWidgetController,
+    MapController mapController,
+    double screenHeight,
+  }) : super(
+          mapController: mapController,
+          controller: controller,
+          slidingUpWidgetController: slidingUpWidgetController,
+          screenHeight: screenHeight,
+        );
 
-class _MakeRequestPanelState extends State<MakeRequestPanel> {
+  MakeRequestPanel.from(Panel panel)
+      : super(
+          mapController: panel.mapController,
+          controller: panel.controller,
+          slidingUpWidgetController: panel.slidingUpWidgetController,
+          screenHeight: panel.screenHeight,
+        );
+
+  _MakeRequestPanelState createState() => _MakeRequestPanelState();
+
+  Future<bool> placeRequest() async {
+    PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
+    DestinationSuggestion destination =
+        GetIt.I.get<LocationStore>().destination;
+
+    PlaceRequestData placeRequestData = PlaceRequestData(
+      LocationDesciption(place.location, place.description),
+      LocationDesciption(destination.location, destination.description),
+    );
+    bool success = await muleApiService.placeRequest(placeRequestData);
+
+    if (success) {
+      await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+    }
+    return success;
+  }
+
   Future<int> getNumMulesAround() async {
     LocationData locationToCheckMulesAround =
         GetIt.I.get<LocationStore>().place.location;
-    MulesAroundRes mulesAroundRes =
-        await httpClient.getMulesAroundMeLocation(locationToCheckMulesAround);
+    MulesAroundRes mulesAroundRes = await muleApiService
+        .getMulesAroundMeLocation(locationToCheckMulesAround);
     return mulesAroundRes.numMules;
   }
 
-  onReturnToSearch() {
-    widget.slidingUpWidgetController.panelIndex =
-        PanelIndex.DestinationAndSearch;
-    widget.mapController.unfocusRoute();
+  @override
+  void mapStateCallback() {
+    mapController..focusOnRoute();
+  }
+
+  void onReturnToSearch() {
+    slidingUpWidgetController.panel = SearchPanel.from(this);
+  }
+
+  List<StylizedButton> get buttons {
+    StylizedButton cancel = CancelButton(
+      size: buttonSize,
+      callback: onReturnToSearch,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [cancel];
   }
 
   @override
+  double get maxHeight {
+    return screenHeight / 3;
+  }
+
+  @override
+  double get minHeight {
+    return maxHeight;
+  }
+}
+
+class _MakeRequestPanelState extends State<MakeRequestPanel> {
+  @override
   void initState() {
     super.initState();
-    widget.buttonBridge?.callback = onReturnToSearch;
+    widget.init(this);
   }
 
   @override
@@ -59,7 +112,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
       children: <Widget>[
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: widget.opacity,
+          opacity: 1.0,
           child: Padding(
             padding: EdgeInsets.only(
                 top: AppTheme.elementSize(
@@ -100,7 +153,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                           screenHeight, 18, 19, 20, 21, 22, 24, 28, 32),
                     ),
                     FutureBuilder(
-                      future: getNumMulesAround(),
+                      future: widget.getNumMulesAround(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState != ConnectionState.done) {
                           return Container(
@@ -145,7 +198,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
                 AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: widget.opacity,
+          opacity: 1.0,
           child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16),
             child: ProgressButton(
@@ -173,39 +226,16 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
               animate: true,
               type: ProgressButtonType.Raised,
               onPressed: () async {
-                int score = await Future.delayed(
-                    const Duration(milliseconds: 2500), () => 42);
-                // After [onPressed], it will trigger animation running backwards, from end to beginning
-                LocationData currentLocation =
-                    GetIt.I.get<LocationStore>().currentLocation;
-                PlacesSuggestion place = GetIt.I.get<LocationStore>().place;
-                DestinationSuggestion destination =
-                    GetIt.I.get<LocationStore>().destination;
-
-                PlaceRequestData placeRequestData = PlaceRequestData(
-                  LocationDesciption(place.location, place.description),
-                  LocationDesciption(
-                      destination.location, destination.description),
-                );
-                bool success = await httpClient.placeRequest(placeRequestData);
-                if (!success) {
+                if (await widget.placeRequest()) {
+                  widget.slidingUpWidgetController.panel =
+                      WaitingToMatchPanel.from(widget);
+                } else {
                   createDialogWidget(
                     context,
                     'There was a problem',
                     'Please try again later!',
                   );
                 }
-                return () async {
-                  // Optional returns is returning a VoidCallback that will be called
-                  // after the animation is stopped at the beginning.
-                  // A best practice would be to do time-consuming task in [onPressed],
-                  // and do page navigation in the returned VoidCallback.
-                  // So that user won't missed out the reverse animation.
-                  if (success) {
-                    widget.slidingUpWidgetController.panelIndex =
-                        PanelIndex.WaitingToMatch;
-                  }
-                };
               },
             ),
           ),

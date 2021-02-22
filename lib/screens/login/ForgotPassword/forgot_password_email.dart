@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/res/errorRes/error_res.dart';
@@ -26,7 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
     }
     final String email = _emailController.text.trim();
     final ForgotPasswordReq forgotPassword = ForgotPasswordReq(email: email);
-    Response res = await httpClient.handleRequestOtp(forgotPassword);
+    Response res = await muleApiService.handleRequestOtp(forgotPassword);
     if (res.statusCode == 200) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => OtpVerification(email: email)));

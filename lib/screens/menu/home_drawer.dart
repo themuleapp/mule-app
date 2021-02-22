@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/config/config.dart';
-import 'package:mule/config/http_client.dart';
-import 'package:mule/config/notification_util.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/services/notifications/notification_util.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/screens/legal/legal.dart';
 import 'package:mule/screens/profile/profile.dart';
@@ -48,7 +47,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   _handleSignOut() async {
     imageCache.clear();
-    await httpClient.handleSignOut();
+    await muleApiService.handleSignOut();
     await NotificationUtil.deleteDeviceToken();
     await Config.deleteToken();
     Navigator.of(context)
@@ -121,7 +120,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   _updateUserIsMule(bool isMule) async {
-    bool isMuleConfirm = await httpClient.setIsMule(isMule);
+    bool isMuleConfirm = await muleApiService.setIsMule(isMule);
     GetIt.I.get<UserInfoStore>().updateIsMule(isMuleConfirm);
 
     setState(() {

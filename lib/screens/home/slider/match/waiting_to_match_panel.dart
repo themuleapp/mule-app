@@ -1,75 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
+import 'package:mule/screens/home/slider/match/user_matched_panel.dart';
+import 'package:mule/screens/home/slider/panel.dart';
+import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'dart:async';
-
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
+
 import 'package:mule/widgets/clip_height.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
-class WaitingToMatchPanel extends StatefulWidget {
-  final SlidingUpWidgetController slidingUpWidgetController;
-  final MapController mapController;
+class WaitingToMatchPanel extends Panel {
   final double loadingBarHeight;
-  final double opacity = 1.0;
-  final StylizedButton buttonBridge;
 
-  WaitingToMatchPanel({
-    this.slidingUpWidgetController,
-    this.mapController,
+  WaitingToMatchPanel(
+    SlidingUpWidgetController slidingUpWidgetController,
+    MapController mapController,
+    PanelController controller,
+    double screenHeight, {
     this.loadingBarHeight = 5.0,
-    this.buttonBridge,
-  });
+  }) : super(
+          slidingUpWidgetController: slidingUpWidgetController,
+          mapController: mapController,
+          controller: controller,
+          screenHeight: screenHeight,
+        );
+
+  WaitingToMatchPanel.from(Panel panel, {this.loadingBarHeight = 5.0})
+      : super(
+          slidingUpWidgetController: panel.slidingUpWidgetController,
+          mapController: panel.mapController,
+          controller: panel.controller,
+          screenHeight: panel.screenHeight,
+        );
+
+  cancelRequest(BuildContext context) async {
+    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
+      createDialogWidget(
+        context,
+        "Oops... Something went wrong",
+        "Something went wrong while trying to cancel your request. Please try again later.",
+      );
+    }
+  }
 
   @override
   WaitingToMatchState createState() => WaitingToMatchState();
+
+  @override
+  List<StylizedButton> get buttons {
+    StylizedButton cancel = CancelButton(
+      callback: cancelRequest,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [cancel];
+  }
+
+  @override
+  void mapStateCallback() {
+    mapController..focusOnRoute();
+  }
+
+  @override
+  double get maxHeight {
+    return minHeight;
+  }
 }
 
 class WaitingToMatchState extends State<WaitingToMatchPanel> {
-  Timer timer;
-  OrderData order;
+  BuildContext context;
 
   @override
   void initState() {
     super.initState();
-    _checkOrder(true);
-    widget.buttonBridge?.callback = cancelRequest;
+    widget.init(this);
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
   }
 
-  _checkOrder(bool keepChecking) async {
-    order = await httpClient.getActiveRequest();
-    if (order != null && order.status == Status.ACCEPTED) {
-      widget.slidingUpWidgetController.panelIndex = PanelIndex.UserMatched;
-    } else if (keepChecking) {
-      _startChecking();
-    }
-  }
+  void _orderListener() {
+    OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
-  _startChecking() {
-    timer = Timer.periodic(Duration(seconds: 10),
-        (timer) async => {if (mounted) _checkOrder(false)});
-  }
-
-  cancelRequest() async {
-    if (order != null && await httpClient.userDeleteActiveRequest(order)) {
-      widget.slidingUpWidgetController.panelIndex =
-          PanelIndex.DestinationAndSearch;
-      timer.cancel();
-      print("Successfully deleted request");
+    if (newOrder == null) {
+      widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
+    } else if (GetIt.I.get<UserInfoStore>().fullName ==
+        newOrder.acceptedBy.name) {
+      widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
     } else {
-      createDialogWidget(
-          context, "There was a problem", "Please try again later!");
+      widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
     }
+    dispose();
   }
 
   @override
   build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final double loadingBar = widget.slidingUpWidgetController.radius * 2;
+    this.context = context;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,12 +109,12 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
           children: <Widget>[
             Center(
               child: Container(
-                height: loadingBar,
+                height: widget.radius * 2,
                 child: ClipRect(
                   clipper: ClipHeightQuarter(height: widget.loadingBarHeight),
                   child: ClipRRect(
                     borderRadius:
-                        BorderRadius.all(Radius.circular(loadingBar / 2)),
+                        BorderRadius.all(Radius.circular(widget.radius)),
                     child: LinearProgressIndicator(
                       minHeight: widget.loadingBarHeight,
                       backgroundColor: AppTheme.secondaryBlue,
@@ -104,11 +135,11 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                     children: <Widget>[
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 500),
-                        opacity: widget.opacity,
+                        opacity: 1.0,
                         child: Padding(
                           padding: EdgeInsets.only(
-                              top: AppTheme.elementSize(
-                                  screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                              top: AppTheme.elementSize(widget.screenHeight, 20,
+                                  22, 24, 26, 0, 0, 0, 0),
                               left: 16,
                               right: 16),
                           child: Text(
@@ -117,7 +148,15 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: AppTheme.elementSize(
-                                  screenHeight, 18, 19, 19, 20, 22, 26, 30, 36),
+                                  widget.screenHeight,
+                                  18,
+                                  19,
+                                  19,
+                                  20,
+                                  22,
+                                  26,
+                                  30,
+                                  36),
                               color: AppTheme.darkerText,
                             ),
                           ),
@@ -131,8 +170,16 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                             "someone accepts your request",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                fontSize: AppTheme.elementSize(screenHeight, 14,
-                                    15, 16, 16, 18, 20, 24, 28),
+                                fontSize: AppTheme.elementSize(
+                                    widget.screenHeight,
+                                    14,
+                                    15,
+                                    16,
+                                    16,
+                                    18,
+                                    20,
+                                    24,
+                                    28),
                                 fontWeight: FontWeight.w500,
                                 color: AppTheme.darkGrey)),
                       ),
@@ -142,8 +189,8 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                 Container(
                   padding: const EdgeInsets.only(top: 16, right: 16),
                   child: Image.asset('assets/images/student_waiting.png',
-                      height: AppTheme.elementSize(screenHeight, 100, 110, 120,
-                          130, 150, 150, 160, 160)),
+                      height: AppTheme.elementSize(widget.screenHeight, 100,
+                          110, 120, 130, 150, 150, 160, 160)),
                 ),
               ],
             ),
