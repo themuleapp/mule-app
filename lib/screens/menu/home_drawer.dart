@@ -77,20 +77,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.chat),
       ),
       DrawerList(
+        index: DrawerIndex.Help,
+        labelName: 'Help',
+        icon: Icon(Icons.help),
+      ),
+      DrawerList(
         index: DrawerIndex.Settings,
         labelName: 'Settings',
         icon: Icon(Icons.settings),
       ),
-      // DrawerList(
-      //   index: DrawerIndex.Feedback,
-      //   labelName: 'Feedback',
-      //   icon: Icon(Icons.feedback),
-      // ),
-      // DrawerList(
-      //   index: DrawerIndex.Help,
-      //   labelName: 'Report',
-      //   icon: Icon(Icons.report_problem),
-      // ),
     ];
   }
 
@@ -110,6 +105,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         index: DrawerIndex.Chat,
         labelName: 'Chat',
         icon: Icon(Icons.chat),
+      ),
+      DrawerList(
+        index: DrawerIndex.Help,
+        labelName: 'Help',
+        icon: Icon(Icons.help),
       ),
       DrawerList(
         index: DrawerIndex.Settings,
@@ -473,8 +473,6 @@ enum DrawerIndex {
   Chat,
   Settings,
   Help,
-  Feedback,
-  Testing,
 }
 
 class DrawerList {
