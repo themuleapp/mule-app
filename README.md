@@ -133,5 +133,5 @@ Our team of developers deserve all the appreciation in the world! Without them, 
 <!-- CONTACT -->
 ## Contact
 
-Feel free to [Email](mailto:whisperingmule@gmail.com?subject=[GitHub]%20Mule%20App%20Repository) us if you have any questions or feedback!\
-You can also visit our [Website](https://whisperingmule.com) for more information.
+Feel free to [Email](mailto:hello@themuleapp.com?subject=[GitHub]%20Mule%20App%20Repository) us if you have any questions or feedback!\
+You can also visit our [Website](https://themuleapp.com) for more information.
