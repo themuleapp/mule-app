@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpScreen extends StatefulWidget {
   @override
@@ -12,6 +13,21 @@ class _HelpScreenState extends State<HelpScreen> {
     super.initState();
   }
 
+    _launchURL() async {
+    const url = 'https://www.themuleapp.com/support';
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: true,
+        enableJavaScript: true,
+        enableDomStorage: true,
+        forceSafariVC: true,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -25,6 +41,7 @@ class _HelpScreenState extends State<HelpScreen> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(
@@ -39,7 +56,8 @@ class _HelpScreenState extends State<HelpScreen> {
                     Container(
                       padding: const EdgeInsets.only(top: 25),
                       child: Text(
-                        'Facing a problem?',
+                        'Facing a problem or have a suggestion?',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: AppTheme.elementSize(
                               screenHeight, 20, 21, 22, 23, 25, 27, 28, 30),
@@ -58,7 +76,6 @@ class _HelpScreenState extends State<HelpScreen> {
                         ),
                       ),
                     ),
-                    _buildComposer(screenHeight),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Center(
@@ -84,12 +101,13 @@ class _HelpScreenState extends State<HelpScreen> {
                               onTap: () {
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
+                                _launchURL();
                               },
                               child: Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Text(
-                                    'Send',
+                                    'Get help',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white,
@@ -106,56 +124,6 @@ class _HelpScreenState extends State<HelpScreen> {
                       ),
                     ),
                   ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildComposer(double screenHeight) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 32, right: 32),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.withOpacity(0.8),
-                offset: const Offset(4, 4),
-                blurRadius: 8),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Container(
-            padding: const EdgeInsets.all(4.0),
-            constraints: const BoxConstraints(minHeight: 80, maxHeight: 160),
-            color: AppTheme.white,
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-              child: TextField(
-                maxLines: null,
-                enableSuggestions: true,
-                textCapitalization: TextCapitalization.sentences,
-                onChanged: (String txt) {},
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontSize: 16,
-                  color: AppTheme.darkGrey,
-                ),
-                cursorColor: AppTheme.lightBlue,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Report a problem...',
-                    hintStyle: TextStyle(
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 14, 15, 16, 17, 18, 20, 24, 26),
-                    )
                 ),
               ),
             ),
