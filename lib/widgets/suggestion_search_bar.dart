@@ -65,12 +65,17 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
     );
   }
 
+  Future<List<Suggestion>> _getSuggestions() async {
+    List<Suggestion> suggestions = await suggestionCallback(controller.text);
+    return (suggestions == null) ? [] : suggestions;
+  }
+
   _controllerHandler() async {
     if (controller.text.isEmpty || !focusNode.hasFocus) {
       _clear();
       return;
     }
-    List<Suggestion> suggestions = await suggestionCallback(controller.text);
+    List<Suggestion> suggestions = await _getSuggestions();
     _createSearchResultList(suggestions);
   }
 

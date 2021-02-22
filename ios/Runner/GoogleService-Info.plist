@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>663259817873-eifocfr58a2mnbpj1ers3751skrc23h4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.663259817873-eifocfr58a2mnbpj1ers3751skrc23h4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnYHLWp6h-qKu4_323uyQHNYGIWUgi5lo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>663259817873</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.themuleapp.app</string>
+	<key>PROJECT_ID</key>
+	<string>mule-beta</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mule-beta.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:663259817873:ios:fadb8651ed6c5830ef9c30</string>
+	<key>DATABASE_URL</key>
+	<string>https://mule-beta.firebaseio.com</string>
+</dict>
+</plist>

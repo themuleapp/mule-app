@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/forgotPassword/forgot_password_req.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
@@ -25,7 +25,8 @@ class _OtpVerificationState extends State<OtpVerification>
   final TextEditingController _otpController = TextEditingController();
 
   _handleResendResetCode() async {
-    await httpClient.handleReRequestOtp(ForgotPasswordReq(email: widget.email));
+    await muleApiService
+        .handleReRequestOtp(ForgotPasswordReq(email: widget.email));
     createDialogWidget(
         context, 'Another reset token has been sent your way!', '');
   }
@@ -36,7 +37,7 @@ class _OtpVerificationState extends State<OtpVerification>
     }
 
     final String otp = _otpController.text;
-    final Response res = await httpClient.handleVerifyTokenAndEmail(
+    final Response res = await muleApiService.handleVerifyTokenAndEmail(
         VerifyTokenAndEmailReq(email: widget.email, resetToken: otp));
     if (res.statusCode == 200) {
       Navigator.of(context).push(

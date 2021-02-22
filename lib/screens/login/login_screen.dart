@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/login/login_data.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
     );
-    final res = await httpClient.handleLogin(loginData);
+    final res = await muleApiService.handleLogin(loginData);
     final status = res.statusCode;
     // range 0 - 399
     if (status < 400) {

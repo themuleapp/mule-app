@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
@@ -117,7 +117,7 @@ class _RequestsScreenState extends State<RequestsScreen>
     if (action == RequestsScreen.ACCEPT) {
       // Send api request
       // Remove from local list
-      success = await httpClient.acceptRequest(requestId);
+      success = await muleApiService.acceptRequest(requestId);
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
@@ -125,7 +125,7 @@ class _RequestsScreenState extends State<RequestsScreen>
     } else {
       // Send api request
       // Remove from local list
-      success = await httpClient.dismissRequest(requestId);
+      success = await muleApiService.dismissRequest(requestId);
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
@@ -298,9 +298,9 @@ class _RequestsScreenState extends State<RequestsScreen>
 
 Future<Map<Status, List<OrderData>>> getOrders() async {
   List<OrderData> orders = [];
-  List<OrderData> openOrders = await httpClient.getOpenRequests();
-  List<OrderData> history = await httpClient.getMuleHistory();
-  OrderData accepted = await httpClient.getActiveRequest();
+  List<OrderData> openOrders = await muleApiService.getOpenRequests();
+  List<OrderData> history = await muleApiService.getMuleHistory();
+  OrderData accepted = await muleApiService.getActiveRequest();
 
   if (openOrders == null || history == null) {
     return {};

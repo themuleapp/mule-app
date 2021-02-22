@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
@@ -39,7 +39,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
   Future<bool> _updateImage(File image) async {
     if (image == null) return false;
 
-    bool isSuccessfulUpload = await httpClient.uploadProfilePicture(_image);
+    bool isSuccessfulUpload = await muleApiService.uploadProfilePicture(_image);
 
     if (isSuccessfulUpload) {
       await GetIt.I.get<UserInfoStore>().updateProfilePicture();

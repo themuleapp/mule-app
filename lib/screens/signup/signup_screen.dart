@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
@@ -69,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       password: password1,
     );
 
-    final Response res = await httpClient.handleSignup(signupData);
+    final Response res = await muleApiService.handleSignup(signupData);
     final success = res.statusCode;
     if (success == 201) {
       final ProfileRes authRes = ProfileRes.fromJson(res.data);

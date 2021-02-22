@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/config/http_client.dart';
 import 'package:mule/models/data/order_data.dart';
-import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
@@ -31,8 +29,8 @@ class _OrdersScreenState extends State<OrdersScreen>
     });
   }
 
-  ListView generateItemsList(
-      Status orderStatus, Map<Status, List<OrderData>> orders, double screenHeight) {
+  ListView generateItemsList(Status orderStatus,
+      Map<Status, List<OrderData>> orders, double screenHeight) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -64,8 +62,8 @@ class _OrdersScreenState extends State<OrdersScreen>
             ),
             Padding(
                 padding: EdgeInsets.only(bottom: 8),
-                child: orderInformationCard(
-                    order.place.description, order.destination.description, screenHeight)),
+                child: orderInformationCard(order.place.description,
+                    order.destination.description, screenHeight)),
           ],
         ));
   }
@@ -106,8 +104,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
-                      generateItemsList(Status.ACCEPTED, snapshot.data, screenHeight),
-                      generateItemsList(Status.COMPLETED, snapshot.data, screenHeight),
+                      generateItemsList(
+                          Status.ACCEPTED, snapshot.data, screenHeight),
+                      generateItemsList(
+                          Status.COMPLETED, snapshot.data, screenHeight),
                     ],
                   ),
                 );
@@ -163,8 +163,8 @@ class _OrdersScreenState extends State<OrdersScreen>
 
 Future<Map<Status, List<OrderData>>> getOrders() async {
   List<OrderData> orders = [];
-  List<OrderData> history = await httpClient.getUserHistory();
-  OrderData ongoing = await httpClient.getActiveRequest();
+  List<OrderData> history = await muleApiService.getUserHistory();
+  OrderData ongoing = await muleApiService.getActiveRequest();
 
   if (history == null) {
     return {};

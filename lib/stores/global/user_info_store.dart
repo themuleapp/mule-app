@@ -1,7 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mule/models/data/order_data.dart';
+import 'package:mule/models/data/suggestion.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:flutter/material.dart';
-import 'package:mule/config/http_client.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/stores/location/location_store.dart';
 
 part 'user_info_store.g.dart';
 
@@ -26,9 +30,11 @@ abstract class _UserInfoStore with Store {
   @observable
   ImageProvider _profilePicture = AssetImage(_defaultImagePath);
 
-  // TODO add updateIsMule and add to updateEverythingFromRes
   @observable
   bool _isMule = true;
+
+  @observable
+  OrderData _activeOrder = null;
 
   @action
   void updateEmail(String email) {
@@ -62,9 +68,54 @@ abstract class _UserInfoStore with Store {
 
   @action
   Future<void> updateProfilePicture() async {
-    ImageProvider imageProvider = await httpClient.getProfilePicture();
+    ImageProvider imageProvider = await muleApiService.getProfilePicture();
 
     if (imageProvider != null) this._profilePicture = imageProvider;
+  }
+
+  @action
+  Future<OrderData> updateActiveOrder() async {
+    OrderData newOrder = await muleApiService.getActiveRequest();
+    OrderData oldOrder = _activeOrder;
+
+    if (_activeOrder == null || newOrder == null) {
+      _activeOrder = newOrder;
+    }
+    if (oldOrder != null) {
+      oldOrder.update(newOrder);
+    }
+
+    if (_activeOrder != null) {
+      GetIt.I.get<LocationStore>().updateDestination(
+            DestinationSuggestion.fromLocationDescription(
+                _activeOrder.destination),
+          );
+      GetIt.I.get<LocationStore>().updatePlace(
+            PlacesSuggestion.fromLocationDescription(_activeOrder.place),
+          );
+    }
+    return _activeOrder;
+  }
+
+  @action
+  Future<bool> deleteActiveOrder() async {
+    bool success = false;
+
+    if (_activeOrder == null) {
+      return success;
+    }
+    if (_activeOrder.acceptedBy != null &&
+        _activeOrder.acceptedBy.name == fullName) {
+      success = await muleApiService.muleDeleteActiveRequest(_activeOrder);
+    } else {
+      success = await muleApiService.userDeleteActiveRequest(_activeOrder);
+    }
+    if (success) {
+      updateActiveOrder();
+      GetIt.I.get<LocationStore>().updateDestination(null);
+      GetIt.I.get<LocationStore>().updatePlace(null);
+    }
+    return success;
   }
 
   @computed
@@ -77,6 +128,8 @@ abstract class _UserInfoStore with Store {
   String get firstName => this._firstName;
   @computed
   bool get isMule => this._isMule;
+  @computed
+  OrderData get activeOrder => this._activeOrder;
 
   ImageProvider get profilePicture => this._profilePicture;
 }

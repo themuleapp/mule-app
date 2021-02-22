@@ -16,10 +16,10 @@ import 'package:mule/models/req/verifyPassword/verify_password.dart';
 import 'package:mule/models/req/verifyTokenAndEmail/verify_token_and_email_req.dart';
 import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 
-class HttpClient {
+class MuleApiService {
   Dio _dio;
 
-  HttpClient() {
+  MuleApiService() {
     _dio = Dio(
       BaseOptions(
         baseUrl: Config.BASE_URL,
@@ -319,9 +319,17 @@ class HttpClient {
     }
   }
 
-  Future<bool> deleteActiveRequest(OrderData order) async {
+  Future<bool> userDeleteActiveRequest(OrderData order) async {
+    if (order == null) return false;
     Response res = await _makeAuthenticatedDeleteRequest(
         '/requests/user/cancel', {"requestId": order.id});
+    return res.data['status'] == 200;
+  }
+
+  Future<bool> muleDeleteActiveRequest(OrderData order) async {
+    if (order == null) return false;
+    Response res = await _makeAuthenticatedDeleteRequest(
+        '/requests/mule/cancel', {"requestId": order.id});
     return res.data['status'] == 200;
   }
 
@@ -344,4 +352,4 @@ class HttpClient {
   }
 }
 
-HttpClient httpClient = new HttpClient();
+MuleApiService muleApiService = new MuleApiService();
