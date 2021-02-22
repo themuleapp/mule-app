@@ -54,6 +54,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="1" /></a>
 * [MongoDB](https://www.mongodb.com/)
 * [Google Cloud Platform](https://cloud.google.com/)
 * [Heroku](https://www.heroku.com/)
+* [Firebase](https://firebase.google.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -125,6 +126,11 @@ Our team of developers deserve all the appreciation in the world! Without them, 
 * [Fluster](https://pub.dev/packages/fluster)
 * [Flutter Cache Manager](https://pub.dev/packages/flutter_cache_manager)
 * [Flutter Polyline Points](https://pub.dev/packages/flutter_polyline_points)
+* [Flutter Progress Button](https://pub.dev/packages/flutter_progress_button)
+* [Firebase Messaging](https://pub.dev/packages/firebase_messaging)
+* [LatLong](https://pub.dev/packages/latlong)
+* [Intl](https://pub.dev/packages/intl)
+* [URL Launcher](https://pub.dev/packages/url_launcher)
 
 ### Dev Dependencies
 * [Build Runner](https://pub.dev/packages/build_runner)
