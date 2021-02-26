@@ -58,11 +58,11 @@ class _NotificationHandlerState extends State<NotificationHandler> {
       Map<String, dynamic> message) async {
     await GetIt.I.get<UserInfoStore>().updateActiveOrder();
     print(message);
-    switch (message['data']['type']) {
+    switch (message['type']) {
       case MULE_NEW_REQUEST:
         NotificationUtil.displaySnackbar(
-            title: message['notification']['title'],
-            body: message['notification']['body'],
+            title: message['aps']['alert']['title'],
+            body: message['aps']['alert']['body'],
             context: context,
             onHandle: () {
               Navigator.of(context).push(
