@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:mule/models/data/notification_message.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 import 'package:mule/services/notifications/notification_util.dart';
@@ -57,12 +58,16 @@ class _NotificationHandlerState extends State<NotificationHandler> {
   Future<dynamic> _foregroundMessageHandler(
       Map<String, dynamic> message) async {
     await GetIt.I.get<UserInfoStore>().updateActiveOrder();
-    print(message);
-    switch (message['type']) {
+
+    // Unify message form
+    NotificationMessage notificationMessage = NotificationMessage(message);
+
+    print(notificationMessage.type);
+    switch (notificationMessage.type) {
       case MULE_NEW_REQUEST:
         NotificationUtil.displaySnackbar(
-            title: message['aps']['alert']['title'],
-            body: message['aps']['alert']['body'],
+            title: notificationMessage.title,
+            body: notificationMessage.body,
             context: context,
             onHandle: () {
               Navigator.of(context).push(
@@ -71,8 +76,8 @@ class _NotificationHandlerState extends State<NotificationHandler> {
         break;
       case USER_REQUEST_ACCEPTED:
         NotificationUtil.displaySnackbar(
-            title: message['notification']['title'],
-            body: message['notification']['body'],
+            title: notificationMessage.title,
+            body: notificationMessage.body,
             context: context,
             onHandle: () {
               Navigator.of(context).push(
@@ -81,34 +86,37 @@ class _NotificationHandlerState extends State<NotificationHandler> {
         break;
       case MULE_DELIVERY_CONFIRMED:
         // TODO
-        createDialogWidget(context, message['notification']['title'],
-            message['notification']['body']);
+        createDialogWidget(
+          context,
+          notificationMessage.title,
+          notificationMessage.body
+        );
         break;
       case USER_DELIVERED_CONFIRMED:
         NotificationUtil.displaySnackbar(
-          title: message['notification']['title'],
-          body: message['notification']['body'],
+          title: notificationMessage.title,
+          body: notificationMessage.body,
           context: context,
         );
         break;
       case USER_CANCELLED:
         NotificationUtil.displaySnackbar(
-          title: message['notification']['title'],
-          body: message['notification']['body'],
+          title: notificationMessage.title,
+          body: notificationMessage.body,
           context: context,
         );
         break;
       case MULE_CANCELLED:
         NotificationUtil.displaySnackbar(
-          title: message['notification']['title'],
-          body: message['notification']['body'],
+          title: notificationMessage.title,
+          body: notificationMessage.body,
           context: context,
         );
         break;
       case USER_REQUEST_TIMEOUT:
         NotificationUtil.displaySnackbar(
-          title: message['notification']['title'],
-          body: message['notification']['body'],
+          title: notificationMessage.title,
+          body: notificationMessage.body,
           context: context,
         );
         break;
