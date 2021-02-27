@@ -8,7 +8,6 @@ import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/screens/login/login_screen.dart';
-import 'package:mule/screens/signup/phone_otp.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
 

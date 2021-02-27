@@ -1,10 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:google_maps_webservice/directions.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/suggestion.dart';
 import 'package:dio/dio.dart';
-import 'package:mule/models/data/user_data.dart';
 import 'package:mule/stores/location/location_store.dart';
 
 class ExternalApi {
