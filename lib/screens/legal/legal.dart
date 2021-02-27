@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Legal extends StatelessWidget {
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: true,
+        enableJavaScript: true,
+        enableDomStorage: true,
+        forceSafariVC: true,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -72,10 +87,9 @@ class Legal extends StatelessWidget {
                 size: AppTheme.elementSize(
                     screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
               ),
-              /*onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PrivacyPolicy()));
-              },*/
+              onTap: () {
+                _launchURL('https://www.themuleapp.com/privacy');
+              },
             ),
             Divider(),
             ListTile(
@@ -104,10 +118,9 @@ class Legal extends StatelessWidget {
                 size: AppTheme.elementSize(
                     screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
               ),
-              /*onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TermsOfService()));
-              },*/
+              onTap: () {
+                _launchURL('https://www.themuleapp.com/terms-of-use');
+              },
             ),
             Divider(),
             ListTile(
