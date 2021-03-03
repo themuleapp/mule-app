@@ -141,16 +141,21 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
         child: Container(
           padding: EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.darkGrey),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkGrey),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
