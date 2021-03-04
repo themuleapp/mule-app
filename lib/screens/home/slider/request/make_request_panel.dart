@@ -139,7 +139,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
               left: 16,
               right: 16,
               bottom:
-                  AppTheme.elementSize(screenHeight, 2, 3, 4, 6, 8, 10, 12, 14),
+                  AppTheme.elementSize(screenHeight, 2, 3, 4, 5, 6, 7, 10, 12),
               top: AppTheme.elementSize(
                   screenHeight, 6, 7, 10, 12, 16, 18, 20, 22)),
           child: Row(
@@ -198,7 +198,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
             GetIt.I.get<LocationStore>().destination.description, screenHeight),
         SizedBox(
             height:
-                AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
+                AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 5, 7, 10, 10)),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: 1.0,
