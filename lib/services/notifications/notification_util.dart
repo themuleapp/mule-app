@@ -14,7 +14,10 @@ class NotificationUtil {
   }
 
   static void displaySnackbar(
-      {@required String title, @required String body, @required BuildContext context, Function onHandle = null}) {
+      {@required String title,
+      @required String body,
+      @required BuildContext context,
+      Function onHandle = null}) {
     showFlash(
       context: context,
       // duration: const Duration(seconds: 2),
@@ -22,32 +25,51 @@ class NotificationUtil {
       builder: (_, controller) {
         return Flash(
           controller: controller,
-          backgroundColor: Colors.white,
+          backgroundColor: AppTheme.white,
           brightness: Brightness.light,
           boxShadows: [BoxShadow(blurRadius: 4)],
           barrierBlur: 3.0,
-          barrierColor: Colors.black38,
+          barrierColor: AppTheme.darkestGrey,
           barrierDismissible: true,
           style: FlashStyle.floating,
           position: FlashPosition.top,
           child: FlashBar(
-            title: Text(title, style: TextStyle( fontSize: 25.0)),
-            message: Text(body),
+            title: Text(
+              title,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+                color: AppTheme.darkerText,
+              ),
+            ),
+            message: Text(
+              body,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: AppTheme.fontName,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                color: AppTheme.darkText,
+              ),
+            ),
             showProgressIndicator: true,
-            actions: [
-              // If there's a handle function display it!
-              if (onHandle != null) FlatButton(
-                  onPressed: () {
-                    onHandle();
-                    controller.dismiss();
-                  },
-                  child: Text('GO', style: TextStyle(color: AppTheme.lightBlue)),
+            progressIndicatorBackgroundColor: AppTheme.secondaryBlue,
+            progressIndicatorValueColor:
+                AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
+            primaryAction: TextButton(
+              onPressed: () => controller.dismiss(),
+              child: Text(
+                'Dismiss',
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: AppTheme.lightBlue,
                 ),
-              FlatButton(
-                onPressed: () => controller.dismiss(),
-                child: Text('DISMISS', style: TextStyle(color: AppTheme.lightBlue)),
-              )
-            ],
+              ),
+            ),
           ),
         );
       },
