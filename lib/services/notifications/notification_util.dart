@@ -27,10 +27,10 @@ class NotificationUtil {
           controller: controller,
           backgroundColor: Colors.black87,
           borderRadius: BorderRadius.circular(8.0),
-          borderColor: Colors.blue,
+          borderColor: AppTheme.lightBlue,
           position: FlashPosition.top,
           style: FlashStyle.floating,
-          enableDrag: false,
+          enableDrag: true,
           onTap: () => controller.dismiss(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
