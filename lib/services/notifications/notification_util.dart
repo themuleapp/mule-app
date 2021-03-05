@@ -20,54 +20,24 @@ class NotificationUtil {
       Function onHandle = null}) {
     showFlash(
       context: context,
-      // duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 5),
       persistent: true,
       builder: (_, controller) {
         return Flash(
           controller: controller,
-          backgroundColor: AppTheme.white,
-          brightness: Brightness.light,
-          boxShadows: [BoxShadow(blurRadius: 4)],
-          barrierBlur: 3.0,
-          barrierColor: AppTheme.darkestGrey,
-          barrierDismissible: true,
-          style: FlashStyle.floating,
+          backgroundColor: Colors.black87,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: Colors.blue,
           position: FlashPosition.top,
-          child: FlashBar(
-            title: Text(
-              title,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: AppTheme.fontName,
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-                color: AppTheme.darkerText,
-              ),
-            ),
-            message: Text(
-              body,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: AppTheme.fontName,
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-                color: AppTheme.darkText,
-              ),
-            ),
-            showProgressIndicator: true,
-            progressIndicatorBackgroundColor: AppTheme.secondaryBlue,
-            progressIndicatorValueColor:
-                AlwaysStoppedAnimation<Color>(AppTheme.lightBlue),
-            primaryAction: TextButton(
-              onPressed: () => controller.dismiss(),
+          style: FlashStyle.floating,
+          enableDrag: false,
+          onTap: () => controller.dismiss(),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: DefaultTextStyle(
+              style: TextStyle(color: Colors.white),
               child: Text(
-                'Dismiss',
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                  color: AppTheme.lightBlue,
-                ),
+                body,
               ),
             ),
           ),
