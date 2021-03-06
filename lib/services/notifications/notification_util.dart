@@ -25,19 +25,39 @@ class NotificationUtil {
       builder: (_, controller) {
         return Flash(
           controller: controller,
-          backgroundColor: Colors.black87,
+          backgroundColor: AppTheme.white,
           borderRadius: BorderRadius.circular(8.0),
-          borderColor: AppTheme.lightBlue,
           position: FlashPosition.top,
           style: FlashStyle.floating,
           enableDrag: true,
           onTap: () => controller.dismiss(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: DefaultTextStyle(
-              style: TextStyle(color: Colors.white),
-              child: Text(
-                body,
+            child: Container(
+              height: 48,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 21,
+                      color: AppTheme.darkerText,
+                    ),
+                  ),
+                  Text(
+                    body,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: AppTheme.darkerText,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
