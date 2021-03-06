@@ -25,8 +25,9 @@ class NotificationUtil {
       builder: (_, controller) {
         return Flash(
           controller: controller,
-          backgroundColor: AppTheme.white,
+          backgroundColor: AppTheme.lightBlue.withOpacity(1.0),
           borderRadius: BorderRadius.circular(8.0),
+          barrierBlur: 80,
           position: FlashPosition.top,
           style: FlashStyle.floating,
           enableDrag: true,
@@ -43,18 +44,20 @@ class NotificationUtil {
                     title,
                     textAlign: TextAlign.left,
                     style: TextStyle(
+                      fontFamily: AppTheme.fontName,
                       fontWeight: FontWeight.w700,
-                      fontSize: 21,
-                      color: AppTheme.darkerText,
+                      fontSize: 20,
+                      color: AppTheme.white,
                     ),
                   ),
                   Text(
                     body,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w400,
+                      color: AppTheme.white,
                       fontSize: 16,
-                      color: AppTheme.darkerText,
                     ),
                   ),
                 ],
