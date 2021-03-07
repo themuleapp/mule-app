@@ -97,52 +97,46 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ext.SlidingUpPanel(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(panel.radius),
-            topRight: Radius.circular(panel.radius),
+    return Material(
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          ext.SlidingUpPanel(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(panel.radius),
+              topRight: Radius.circular(panel.radius),
+            ),
+            onPanelClosed: () => panel.controller.close(),
+            onPanelOpened: () => panel.controller.open(),
+            // TODO: Check at search and destination panel
+            isDraggable: panel.controller.isDraggable,
+            minHeight: panel.minHeight,
+            maxHeight: panel.maxHeight,
+            controller: _sliderPanelController,
+            backdropEnabled: true,
+            backdropOpacity: panel.backdropOpacity,
+            panelBuilder: (sc) => _panel(sc),
+            body: MapWidget(
+              controller: widget.mapController,
+              slidingUpWidgetController: widget.controller,
+              initCallback: panel.mapStateCallback,
+              isDraggable: panel.isMapDraggable,
+            ),
           ),
-          onPanelClosed: () => panel.controller.close(),
-          onPanelOpened: () => panel.controller.open(),
-          // TODO: Check at search and destination panel
-          isDraggable: panel.controller.isDraggable,
-          minHeight: panel.minHeight,
-          maxHeight: panel.maxHeight,
-          controller: _sliderPanelController,
-          backdropEnabled: true,
-          backdropOpacity: panel.backdropOpacity,
-          panelBuilder: (sc) => _panel(sc),
-          body: MapWidget(
-            controller: widget.mapController,
-            slidingUpWidgetController: widget.controller,
-            initCallback: panel.mapStateCallback,
-            isDraggable: panel.isMapDraggable,
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Container(
-                  height: (panel.buttons.length) *
-                      (panel.buttonSize + panel.buttonSpacing),
-                  width: panel.buttonSize + panel.buttonSpacing,
-                  child: Column(
-                    children: panel.buttons,
-                  ),
-                ),
+          Positioned(
+            right: 0.0,
+            bottom: widget.controller.currentHeight,
+            child: Container(
+              height: (panel.buttons.length) *
+                  (panel.buttonSize + panel.buttonSpacing),
+              width: panel.buttonSize + panel.buttonSpacing,
+              child: Column(
+                children: panel.buttons,
               ),
-            ],
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
