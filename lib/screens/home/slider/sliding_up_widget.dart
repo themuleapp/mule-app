@@ -104,9 +104,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       ),
       onPanelClosed: () => panel.controller.close(),
       onPanelOpened: () => panel.controller.open(),
+      // TODO: Check at search and destination panel
       isDraggable: panel.controller.isDraggable,
-      backdropTapClosesPanel:
-          panel.controller.isDraggable && panel.backdropTapClosesPanel,
       minHeight: panel.minHeight,
       maxHeight: panel.maxHeight,
       controller: _sliderPanelController,
@@ -120,6 +119,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               controller: widget.mapController,
               slidingUpWidgetController: widget.controller,
               initCallback: panel.mapStateCallback,
+              isDraggable: panel.isMapDraggable,
             ),
             Align(
               alignment: Alignment.bottomRight,

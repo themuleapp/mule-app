@@ -13,6 +13,7 @@ abstract class Panel extends StatefulWidget {
   final double screenHeight;
   final double backdropOpacity;
   final bool backdropTapClosesPanel;
+  final bool isMapDraggable;
 
   Panel({
     @required this.slidingUpWidgetController,
@@ -24,6 +25,7 @@ abstract class Panel extends StatefulWidget {
     this.radius = 20,
     this.buttonSize = 50.0,
     this.buttonSpacing = 20.0,
+    this.isMapDraggable = true,
     Key key,
   }) : super(key: key);
 
