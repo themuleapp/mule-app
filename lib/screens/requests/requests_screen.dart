@@ -118,6 +118,9 @@ class _RequestsScreenState extends State<RequestsScreen>
       // Send api request
       // Remove from local list
       success = await muleApiService.acceptRequest(requestId);
+      if (success) {
+        await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+      }
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
