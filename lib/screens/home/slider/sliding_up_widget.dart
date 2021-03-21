@@ -101,8 +101,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   Widget build(BuildContext context) {
     // This is stupid, but please don't remove it
     // You're more than welcome to create a custom slider-panel widget instead of this shitty 3rd party one
-    _sliderPanelController.close();
-
+    if(_sliderPanelController.isAttached) {
+      _sliderPanelController.close();
+    }
     return Material(
       child: Stack(
         alignment: Alignment.topCenter,
