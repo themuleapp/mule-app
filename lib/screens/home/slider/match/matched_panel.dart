@@ -7,6 +7,7 @@ import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/models/data/location_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
@@ -78,6 +79,8 @@ abstract class MatchedPanel extends Panel {
 
   launchMaps() async {
     String origin =
+        "${GetIt.I.get<LocationStore>().currentLocation.lat},${GetIt.I.get<LocationStore>().currentLocation.lng}";
+    String source =
         "${GetIt.I.get<LocationStore>().place.location.lat},${GetIt.I.get<LocationStore>().place.location.lng}";
     String destination =
         "${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}";
@@ -86,6 +89,8 @@ abstract class MatchedPanel extends Panel {
         origin +
         "&destination=" +
         destination +
+        "&waypoints=" +
+        source +
         "&travelmode=walking&dir_action=navigate";
     if (await canLaunch(url)) {
       await launch(url);
@@ -139,7 +144,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
           child: Padding(
             padding: EdgeInsets.only(
                 top: AppTheme.elementSize(
-                    widget.screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                    widget.screenHeight, 20, 22, 24, 26, 26, 28, 32, 34),
                 left: 16,
                 right: 16),
             child: Text(
