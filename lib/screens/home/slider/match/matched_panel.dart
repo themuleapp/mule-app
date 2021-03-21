@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
@@ -11,6 +12,8 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
+import 'package:mule/stores/location/location_store.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class MatchedPanel extends Panel {
   final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
@@ -70,6 +73,24 @@ abstract class MatchedPanel extends Panel {
     if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
       createDialogWidget(context, "Oops... Something went wrong!",
           "Something went wrong while trying to cancel your request, please try again later.");
+    }
+  }
+
+  launchMaps() async {
+    String origin =
+        "${GetIt.I.get<LocationStore>().place.location.lat},${GetIt.I.get<LocationStore>().place.location.lng}";
+    String destination =
+        "${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}";
+
+    String url = "https://www.google.com/maps/dir/?api=1&origin=" +
+        origin +
+        "&destination=" +
+        destination +
+        "&travelmode=walking&dir_action=navigate";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
