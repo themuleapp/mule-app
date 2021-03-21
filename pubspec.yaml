@@ -29,7 +29,7 @@ dependencies:
   flutter_mobx:
   avatar_glow:
   email_validator:
-  dio:
+  dio: ^3.0.6
   font_awesome_flutter:
   flutter_secure_storage:
   google_maps_flutter:
@@ -38,7 +38,7 @@ dependencies:
   permission_handler:
   google_maps_webservice:
   flutter_typeahead:
-  image_picker:
+  image_picker: ^0.6.7
   fluster:
   flutter_cache_manager:
   flutter_polyline_points:
