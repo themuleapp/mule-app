@@ -86,10 +86,10 @@ class NavigateButton extends StylizedButton {
   NavigateButton({double size, Function callback, EdgeInsets margin})
       : super(
           size: size,
-          color: AppTheme.darkBlue,
+          color: AppTheme.secondaryBlue,
           margin: margin,
           iconColor: AppTheme.white,
           callback: callback,
-          icon: Icons.navigation,
+          icon: Icons.directions,
         );
 }
