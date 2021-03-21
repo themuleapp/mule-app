@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/services/mule_api_service.dart';
@@ -8,8 +9,8 @@ import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
 import 'package:mule/models/res/profileRes/profile_res.dart';
 import 'package:mule/screens/login/login_screen.dart';
-import 'package:mule/screens/signup/phone_otp.dart';
 import 'package:mule/widgets/alert_widget.dart';
+import 'package:mule/widgets/button.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
 
 import '../../navigation_home_screen.dart';
@@ -140,16 +141,21 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
         child: Container(
           padding: EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.darkGrey),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: AppTheme.elementSize(
+                              screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkGrey),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -161,25 +167,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 height: AppTheme.elementSize(
                     screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 30.0),
-                height: AppTheme.elementSize(
-                    screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
-                child: FlatButton(
-                  color: AppTheme.lightBlue,
-                  onPressed: this._handleSubmit,
-                  child: Text(
-                    "SIGN UP",
-                    style: TextStyle(
-                      color: AppTheme.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 14, 15, 16, 17, 18, 26, 28, 30),
-                    ),
-                  ),
-                ),
-              )
+              button('Sign up', _handleSubmit, screenHeight, context)
             ],
           ),
         ),

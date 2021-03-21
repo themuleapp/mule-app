@@ -37,6 +37,7 @@ class WaitingToMatchPanel extends Panel {
           mapController: panel.mapController,
           controller: panel.controller,
           screenHeight: panel.screenHeight,
+          isMapDraggable: false,
         );
 
   cancelRequest(BuildContext context) async {
@@ -64,7 +65,7 @@ class WaitingToMatchPanel extends Panel {
 
   @override
   void mapStateCallback() {
-    mapController..focusOnRoute();
+    mapController..setRouteView();
   }
 
   @override

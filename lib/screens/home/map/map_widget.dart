@@ -11,7 +11,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
-import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/services/ext_api_calls.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/models/data/location_data.dart';
@@ -19,7 +18,6 @@ import 'package:mule/models/res/mulesAroundRes/mules_around_res.dart';
 import 'package:mule/screens/home/map/map_helper.dart';
 import 'package:mule/screens/home/map/map_marker.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:mule/widgets/loading-animation.dart';
 
@@ -27,11 +25,13 @@ class MapWidget extends StatefulWidget {
   final MapController controller;
   final SlidingUpWidgetController slidingUpWidgetController;
   final Function initCallback;
+  final isDraggable;
 
   MapWidget({
     this.controller,
     this.slidingUpWidgetController,
     this.initCallback,
+    this.isDraggable,
   });
 
   @override
@@ -75,6 +75,10 @@ class _MapWidgetState extends State<MapWidget> {
     widget.initCallback();
     super.initState();
   }
+
+  // void set draggable(bool isDraggable) {
+  //   setState(() => this.isDraggable = isDraggable);
+  // }
 
   Future<Position> getCurrentLocation() async {
     Position position = null;
@@ -363,8 +367,8 @@ class _MapWidgetState extends State<MapWidget> {
             child: Observer(
               builder: (_) => GoogleMap(
                 mapType: MapType.normal,
-                scrollGesturesEnabled: true,
-                zoomGesturesEnabled: true,
+                scrollGesturesEnabled: widget.isDraggable,
+                zoomGesturesEnabled: widget.isDraggable,
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
@@ -434,14 +438,22 @@ class MapController {
     await _mapWidgetState._setMuleMarkers(currentPosition);
   }
 
-  // These functions do not do well asyncronously, so keep the await keyword
   void focusOnRoute() async {
+    await _mapWidgetState._setRouteView();
+  }
+
+  // void set draggable(bool isDraggable) {
+  //   _mapWidgetState.draggable = isDraggable;
+  // }
+
+  // These functions do not do well asyncronously, so keep the await keyword
+  void setRouteView() async {
     await _mapWidgetState._showPolyLines();
     await _mapWidgetState._setRouteMarkers();
     await _mapWidgetState._setRouteView();
   }
 
-  void unfocusRoute() async {
+  void unsetRouteView() async {
     await setMuleMarkers();
     await _mapWidgetState._initMarkers();
     await _mapWidgetState._removePolyLines();

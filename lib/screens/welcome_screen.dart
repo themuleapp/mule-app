@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage>
                     shape: CircleBorder(),
                     child: CircleAvatar(
                       backgroundColor: Colors.grey[100],
-                      child: Image.asset('assets/images/logo.png'),
+                      child: Image.asset('assets/images/m_logo.png'),
                       radius: AppTheme.elementSize(
                           screenHeight, 75, 85, 90, 95, 100, 155, 160, 185),
                     )

@@ -38,6 +38,7 @@ class MakeRequestPanel extends Panel {
           controller: panel.controller,
           slidingUpWidgetController: panel.slidingUpWidgetController,
           screenHeight: panel.screenHeight,
+          isMapDraggable: false,
         );
 
   _MakeRequestPanelState createState() => _MakeRequestPanelState();
@@ -69,7 +70,7 @@ class MakeRequestPanel extends Panel {
 
   @override
   void mapStateCallback() {
-    mapController..focusOnRoute();
+    mapController..setRouteView();
   }
 
   void onReturnToSearch() {
@@ -106,27 +107,31 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: 1.0,
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: AppTheme.elementSize(
-                    screenHeight, 20, 22, 24, 26, 32, 34, 36, 38),
-                left: 16,
-                right: 16),
-            child: Text(
-              'Confirm Details',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppTheme.elementSize(
-                    screenHeight, 18, 19, 20, 21, 22, 26, 30, 36),
-                color: AppTheme.darkerText,
+        Container(
+          alignment: Alignment.centerLeft,
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: 1.0,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: AppTheme.elementSize(
+                      screenHeight, 20, 22, 24, 26, 32, 34, 36, 38),
+                  left: 16,
+                  right: 16),
+              child: Text(
+                'Confirm Details',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 18, 19, 20, 21, 22, 26, 30, 36),
+                  color: AppTheme.darkerText,
+                ),
               ),
             ),
           ),
@@ -136,7 +141,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
               left: 16,
               right: 16,
               bottom:
-                  AppTheme.elementSize(screenHeight, 2, 3, 4, 6, 8, 10, 12, 14),
+                  AppTheme.elementSize(screenHeight, 2, 3, 4, 5, 6, 7, 10, 12),
               top: AppTheme.elementSize(
                   screenHeight, 6, 7, 10, 12, 16, 18, 20, 22)),
           child: Row(
@@ -195,7 +200,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
             GetIt.I.get<LocationStore>().destination.description, screenHeight),
         SizedBox(
             height:
-                AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
+                AppTheme.elementSize(screenHeight, 0, 0, 0, 2, 5, 7, 10, 10)),
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: 1.0,
