@@ -14,40 +14,55 @@ class NotificationUtil {
   }
 
   static void displaySnackbar(
-      {@required String title, @required String body, @required BuildContext context, Function onHandle = null}) {
+      {@required String title,
+      @required String body,
+      @required BuildContext context,
+      Function onHandle = null}) {
     showFlash(
       context: context,
-      // duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 5),
       persistent: true,
       builder: (_, controller) {
         return Flash(
           controller: controller,
-          backgroundColor: Colors.white,
-          brightness: Brightness.light,
-          boxShadows: [BoxShadow(blurRadius: 4)],
-          barrierBlur: 3.0,
-          barrierColor: Colors.black38,
-          barrierDismissible: true,
-          style: FlashStyle.floating,
+          backgroundColor: AppTheme.lightBlue.withOpacity(1.0),
+          borderRadius: BorderRadius.circular(8.0),
+          barrierBlur: 80,
           position: FlashPosition.top,
-          child: FlashBar(
-            title: Text(title, style: TextStyle( fontSize: 25.0)),
-            message: Text(body),
-            showProgressIndicator: true,
-            actions: [
-              // If there's a handle function display it!
-              if (onHandle != null) FlatButton(
-                  onPressed: () {
-                    onHandle();
-                    controller.dismiss();
-                  },
-                  child: Text('GO', style: TextStyle(color: AppTheme.lightBlue)),
-                ),
-              FlatButton(
-                onPressed: () => controller.dismiss(),
-                child: Text('DISMISS', style: TextStyle(color: AppTheme.lightBlue)),
-              )
-            ],
+          style: FlashStyle.floating,
+          enableDrag: true,
+          onTap: () => controller.dismiss(),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Container(
+              height: 48,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: AppTheme.white,
+                    ),
+                  ),
+                  Text(
+                    body,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: AppTheme.fontName,
+                      fontWeight: FontWeight.w400,
+                      color: AppTheme.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
