@@ -18,22 +18,22 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
   final picker = ImagePicker();
 
   Future _getImageFromCamera() async {
-    // final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
 
-    // setState(() {
-    //   _image = pickedFile == null ? null : File(pickedFile.path);
-    // });
+    setState(() {
+      _image = pickedFile == null ? null : File(pickedFile.path);
+    });
   }
 
   Future _getImageFromGallery() async {
-    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    // if (pickedFile == null) {
-    //   return;
-    // }
-    // setState(() {
-    //   _image = File(pickedFile.path);
-    // });
+    if (pickedFile == null) {
+      return;
+    }
+    setState(() {
+      _image = File(pickedFile.path);
+    });
   }
 
   Future<bool> _updateImage(File image) async {
