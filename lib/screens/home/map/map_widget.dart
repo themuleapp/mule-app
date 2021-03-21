@@ -221,16 +221,24 @@ class _MapWidgetState extends State<MapWidget> {
 
     // source pin
     _markers.add(Marker(
-        markerId: MarkerId('sourcePin'),
-        position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
-            GetIt.I.get<LocationStore>().place.location.lng),
-        icon: sourceIcon));
+      markerId: MarkerId('sourcePin'),
+      position: LatLng(GetIt.I.get<LocationStore>().place.location.lat,
+          GetIt.I.get<LocationStore>().place.location.lng),
+      icon: sourceIcon,
+      infoWindow: InfoWindow(
+          title: GetIt.I.get<LocationStore>().place.vicinity,
+          snippet: 'Source'),
+    ));
     // destination pin
     _markers.add(Marker(
-        markerId: MarkerId('destPin'),
-        position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
-            GetIt.I.get<LocationStore>().destination.location.lng),
-        icon: destinationIcon));
+      markerId: MarkerId('destPin'),
+      position: LatLng(GetIt.I.get<LocationStore>().destination.location.lat,
+          GetIt.I.get<LocationStore>().destination.location.lng),
+      icon: destinationIcon,
+      infoWindow: InfoWindow(
+          title: GetIt.I.get<LocationStore>().destination.vicinity,
+          snippet: 'Destination'),
+    ));
 
     setState(() {
       _areMarkersLoading = false;
