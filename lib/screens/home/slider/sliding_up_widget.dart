@@ -123,15 +123,18 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               isDraggable: panel.isMapDraggable,
             ),
           ),
-          Positioned(
-            right: 0.0,
-            bottom: widget.controller.currentHeight,
-            child: Container(
-              height: (panel.buttons.length) *
-                  (panel.buttonSize + panel.buttonSpacing),
-              width: panel.buttonSize + panel.buttonSpacing,
-              child: Column(
-                children: panel.buttons,
+          Visibility(
+            visible: panel.controller.isOpen,
+            child: Positioned(
+              right: 0.0,
+              bottom: widget.controller.currentHeight,
+              child: Container(
+                height: (panel.buttons.length) *
+                    (panel.buttonSize + panel.buttonSpacing),
+                width: panel.buttonSize + panel.buttonSpacing,
+                child: Column(
+                  children: panel.buttons,
+                ),
               ),
             ),
           ),
