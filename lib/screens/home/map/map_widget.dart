@@ -226,7 +226,8 @@ class _MapWidgetState extends State<MapWidget> {
           GetIt.I.get<LocationStore>().place.location.lng),
       icon: sourceIcon,
       infoWindow: InfoWindow(
-          title: GetIt.I.get<LocationStore>().place.name, snippet: 'Source'),
+          title: GetIt.I.get<LocationStore>().place.vicinity,
+          snippet: 'Source'),
     ));
     // destination pin
     _markers.add(Marker(
@@ -235,7 +236,7 @@ class _MapWidgetState extends State<MapWidget> {
           GetIt.I.get<LocationStore>().destination.location.lng),
       icon: destinationIcon,
       infoWindow: InfoWindow(
-          title: GetIt.I.get<LocationStore>().destination.name,
+          title: GetIt.I.get<LocationStore>().destination.vicinity,
           snippet: 'Destination'),
     ));
 
