@@ -38,6 +38,7 @@ class MakeRequestPanel extends Panel {
           controller: panel.controller,
           slidingUpWidgetController: panel.slidingUpWidgetController,
           screenHeight: panel.screenHeight,
+          isMapDraggable: false,
         );
 
   _MakeRequestPanelState createState() => _MakeRequestPanelState();
@@ -69,7 +70,7 @@ class MakeRequestPanel extends Panel {
 
   @override
   void mapStateCallback() {
-    mapController..focusOnRoute();
+    mapController..setRouteView();
   }
 
   void onReturnToSearch() {
@@ -106,6 +107,7 @@ class _MakeRequestPanelState extends State<MakeRequestPanel> {
   @override
   build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

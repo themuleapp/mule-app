@@ -43,7 +43,7 @@ class SearchPanel extends Panel {
   void mapStateCallback() {
     if (!mapController.isMapLoading)
       mapController
-        ..unfocusRoute()
+        ..unsetRouteView()
         ..focusCurrentLocation();
   }
 
