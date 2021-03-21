@@ -66,21 +66,6 @@ abstract class MatchedPanel extends Panel {
     return Image.asset('assets/images/profile_picture_placeholder.png');
   }
 
-  List<StylizedButton> get buttons {
-    StylizedButton cancel = CancelButton(
-      callback: cancelRequest,
-      size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonSpacing),
-    );
-    StylizedButton accept = CompletedButton(
-      callback: null,
-      size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonSpacing),
-    );
-
-    return [accept, cancel];
-  }
-
   void cancelRequest(BuildContext context) async {
     if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
       createDialogWidget(context, "Oops... Something went wrong!",
