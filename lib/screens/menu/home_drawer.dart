@@ -71,11 +71,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Orders',
         icon: Icon(Icons.shopping_basket),
       ),
-      DrawerList(
-        index: DrawerIndex.Chat,
-        labelName: 'Chat',
-        icon: Icon(Icons.chat),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Chat,
+      //   labelName: 'Chat',
+      //   icon: Icon(Icons.chat),
+      // ),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',
@@ -101,11 +101,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Orders',
         icon: Icon(Icons.shopping_basket),
       ),
-      DrawerList(
-        index: DrawerIndex.Chat,
-        labelName: 'Chat',
-        icon: Icon(Icons.chat),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Chat,
+      //   labelName: 'Chat',
+      //   icon: Icon(Icons.chat),
+      // ),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',
