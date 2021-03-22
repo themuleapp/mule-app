@@ -158,107 +158,107 @@ class _LoginScreenState extends State<LoginScreen> with InputValidation {
                     screenHeight, 30, 30, 30, 30, 30, 40, 42, 44),
               ),
               button('Log in', handleSubmt, screenHeight, context),
-              SizedBox(
-                height: AppTheme.elementSize(
-                    screenHeight, 22, 24, 26, 28, 30, 36, 42, 44),
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      "Or connect using social account",
-                      style: TextStyle(
-                        fontSize: AppTheme.elementSize(
-                            screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppTheme.elementSize(
-                          screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
-                    ),
-                    Container(
-                      height: AppTheme.elementSize(
-                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
-                      child: FlatButton(
-                        onPressed: () {
-                          createDialogWidget(
-                              context,
-                              'We are still working on this :( ',
-                              'We\'re sorry, this feature is not yet available but will be rolled out soon');
-                        },
-                        color: AppTheme.facebookBlue,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.facebookSquare,
-                              size: AppTheme.elementSize(
-                                  screenHeight, 25, 25, 26, 27, 28, 31, 35, 38),
-                              color: Colors.white,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Connect with Facebook",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: AppTheme.elementSize(screenHeight,
-                                      14, 15, 16, 16, 17, 23, 28, 30),
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.redAccent,
-                          ),
-                          borderRadius: BorderRadius.circular(3.0)),
-                      margin: EdgeInsets.only(
-                        top: 10.0,
-                      ),
-                      height: AppTheme.elementSize(
-                          screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
-                      child: FlatButton(
-                        onPressed: () {
-                          createDialogWidget(
-                              context,
-                              'We are still working on this :( ',
-                              'We\'re sorry, this feature is not yet available but will be rolled out soon');
-                        },
-                        color: AppTheme.white,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.google,
-                              size: AppTheme.elementSize(
-                                  screenHeight, 25, 25, 26, 27, 28, 31, 35, 38),
-                              color: Colors.redAccent,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Sign in with Google",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppTheme.elementSize(screenHeight,
-                                      14, 15, 16, 16, 17, 23, 28, 30),
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              // SizedBox(
+              //   height: AppTheme.elementSize(
+              //       screenHeight, 22, 24, 26, 28, 30, 36, 42, 44),
+              // ),
+              // Container(
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.stretch,
+              //     children: <Widget>[
+              //       Text(
+              //         "Or connect using social account",
+              //         style: TextStyle(
+              //           fontSize: AppTheme.elementSize(
+              //               screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
+              //           fontWeight: FontWeight.w700,
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         height: AppTheme.elementSize(
+              //             screenHeight, 10, 12, 14, 16, 18, 20, 22, 24),
+              //       ),
+              //       Container(
+              //         height: AppTheme.elementSize(
+              //             screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
+              //         child: FlatButton(
+              //           onPressed: () {
+              //             createDialogWidget(
+              //                 context,
+              //                 'We are still working on this :( ',
+              //                 'We\'re sorry, this feature is not yet available but will be rolled out soon');
+              //           },
+              //           color: AppTheme.facebookBlue,
+              //           child: Row(
+              //             children: <Widget>[
+              //               Icon(
+              //                 FontAwesomeIcons.facebookSquare,
+              //                 size: AppTheme.elementSize(
+              //                     screenHeight, 25, 25, 26, 27, 28, 31, 35, 38),
+              //                 color: Colors.white,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   "Connect with Facebook",
+              //                   textAlign: TextAlign.center,
+              //                   style: TextStyle(
+              //                     fontWeight: FontWeight.w500,
+              //                     fontSize: AppTheme.elementSize(screenHeight,
+              //                         14, 15, 16, 16, 17, 23, 28, 30),
+              //                     color: Colors.white,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         decoration: BoxDecoration(
+              //             border: Border.all(
+              //               color: Colors.redAccent,
+              //             ),
+              //             borderRadius: BorderRadius.circular(3.0)),
+              //         margin: EdgeInsets.only(
+              //           top: 10.0,
+              //         ),
+              //         height: AppTheme.elementSize(
+              //             screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
+              //         child: FlatButton(
+              //           onPressed: () {
+              //             createDialogWidget(
+              //                 context,
+              //                 'We are still working on this :( ',
+              //                 'We\'re sorry, this feature is not yet available but will be rolled out soon');
+              //           },
+              //           color: AppTheme.white,
+              //           child: Row(
+              //             children: <Widget>[
+              //               Icon(
+              //                 FontAwesomeIcons.google,
+              //                 size: AppTheme.elementSize(
+              //                     screenHeight, 25, 25, 26, 27, 28, 31, 35, 38),
+              //                 color: Colors.redAccent,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   "Sign in with Google",
+              //                   textAlign: TextAlign.center,
+              //                   style: TextStyle(
+              //                     fontWeight: FontWeight.bold,
+              //                     fontSize: AppTheme.elementSize(screenHeight,
+              //                         14, 15, 16, 16, 17, 23, 28, 30),
+              //                     color: Colors.redAccent,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),
