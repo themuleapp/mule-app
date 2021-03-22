@@ -93,7 +93,6 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
 
   @override
   Widget build(BuildContext context) {
-    //final ThemeData _theme = Theme.of(context);
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
@@ -113,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               Navigator.of(context).pop();
             }
           },
-          color: AppTheme.lightBlue,
+          color: AppTheme.black,
         ),
         actions: <Widget>[
           GestureDetector(
@@ -127,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: AppTheme.lightBlue,
+                  color: AppTheme.secondaryBlue,
                   fontSize: AppTheme.elementSize(
                       screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,
@@ -167,7 +166,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
                 height: AppTheme.elementSize(
                     screenHeight, 22, 24, 26, 28, 30, 40, 45, 50),
               ),
-              button('Sign up', _handleSubmit, screenHeight, context)
+              button('Sign Up', _handleSubmit, screenHeight, context)
             ],
           ),
         ),
