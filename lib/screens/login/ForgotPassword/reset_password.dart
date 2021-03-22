@@ -80,7 +80,6 @@ class _ResetPasswordState extends State<ResetPassword> with InputValidation {
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
                 screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
-            color: AppTheme.lightBlue,
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
