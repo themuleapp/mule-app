@@ -23,44 +23,46 @@ class NotificationUtil {
       duration: const Duration(seconds: 5),
       persistent: true,
       builder: (_, controller) {
-        return Flash(
-          controller: controller,
-          backgroundColor: AppTheme.lightBlue.withOpacity(1.0),
-          borderRadius: BorderRadius.circular(8.0),
-          barrierBlur: 80,
-          position: FlashPosition.top,
-          style: FlashStyle.floating,
-          enableDrag: true,
-          onTap: () => controller.dismiss(),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              height: 48,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: AppTheme.white,
+        return Padding(
+          padding: EdgeInsets.only(left: 12, right: 12),
+          child: Flash(
+            controller: controller,
+            backgroundColor: AppTheme.lightBlue.withOpacity(1.0),
+            borderRadius: BorderRadius.circular(8.0),
+            barrierBlur: 80,
+            position: FlashPosition.top,
+            style: FlashStyle.floating,
+            enableDrag: true,
+            onTap: () => controller.dismiss(),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: FittedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        color: AppTheme.white,
+                      ),
                     ),
-                  ),
-                  Text(
-                    body,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w400,
-                      color: AppTheme.white,
-                      fontSize: 16,
+                    Text(
+                      body,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme.white,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
