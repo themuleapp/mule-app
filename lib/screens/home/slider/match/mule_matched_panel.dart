@@ -4,6 +4,7 @@ import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 import 'matched_panel.dart';
@@ -39,7 +40,7 @@ class MuleMatchedPanel extends MatchedPanel {
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     StylizedButton accept = CompletedButton(
-      callback: null,
+      callback: completeRequest,
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
@@ -52,7 +53,8 @@ class MuleMatchedPanel extends MatchedPanel {
   }
 
   @override
-  Future<bool> completeRequest() async {
-    print("Completed request");
+  Future<bool> completeRequest(context, order) async {
+    createOrderCompletionDialogue(
+        context, "Are you sure that you have completed this delivery?", order);
   }
 }

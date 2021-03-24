@@ -28,7 +28,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     super.initState();
     if (Platform.isIOS) {
       // When permission is given send the token to the server
-      print("In iOS check...............................................");
       _fcm.onIosSettingsRegistered.listen((event) => _saveDeviceToken());
       _fcm.requestNotificationPermissions(IosNotificationSettings());
     } else {
@@ -47,7 +46,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
   }
 
   _saveDeviceToken() async {
-    print("In save device token");
     String fcmToken = await _fcm.getToken();
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
@@ -62,7 +60,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     // Unify message form
     NotificationMessage notificationMessage = NotificationMessage(message);
 
-    print(notificationMessage.type);
     switch (notificationMessage.type) {
       case MULE_NEW_REQUEST:
         NotificationUtil.displaySnackbar(

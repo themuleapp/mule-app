@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
-createOrderCompletionDialogue(context) async {
+createOrderCompletionDialogue(context, text, order) async {
   // flutter defined function
   return await showDialog(
     context: context,
     builder: (BuildContext context) {
       // return object of type Dialog
       return AlertDialog(
-        content: Text("Have you completed this delivery?"),
+        content: text,
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -20,8 +23,17 @@ createOrderCompletionDialogue(context) async {
                 fontSize: 14,
               ),
             ),
-            onPressed: () {
-              Navigator.pop(context, true);
+            onPressed: () async {
+              if (GetIt.I.get<UserInfoStore>().fullName ==
+                  order.acceptedBy.name) {
+                if (await muleApiService.muleCompleteRequest(order.id)) {
+                  await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+                }
+              } else {
+                if (await muleApiService.userCompleteRequest(order.id)) {
+                  await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+                }
+              }
             },
           ),
           FlatButton(
@@ -30,7 +42,7 @@ createOrderCompletionDialogue(context) async {
               style: TextStyle(
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w500,
-                color: AppTheme.lightBlue,
+                color: Colors.red,
                 fontSize: 14,
               ),
             ),
