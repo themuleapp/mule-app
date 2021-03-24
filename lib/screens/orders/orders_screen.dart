@@ -51,7 +51,7 @@ class _OrdersScreenState extends State<OrdersScreen>
             Padding(
               padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
               child: Text(
-                "${DateFormat('MMM dd - H:m a').format(order.createdAt.toLocal()).toUpperCase()}",
+                "${DateFormat('MMM dd - h:mm a').format(order.createdAt.toLocal()).toUpperCase()}",
                 style: TextStyle(
                   color: AppTheme.darkGrey,
                   fontFamily: AppTheme.fontName,

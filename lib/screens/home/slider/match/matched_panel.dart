@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/models/data/location_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
+import 'package:mule/stores/location/location_store.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class MatchedPanel extends Panel {
   final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
@@ -66,25 +70,32 @@ abstract class MatchedPanel extends Panel {
     return Image.asset('assets/images/profile_picture_placeholder.png');
   }
 
-  List<StylizedButton> get buttons {
-    StylizedButton cancel = CancelButton(
-      callback: cancelRequest,
-      size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonSpacing),
-    );
-    StylizedButton accept = CompletedButton(
-      callback: null,
-      size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonSpacing),
-    );
-
-    return [accept, cancel];
-  }
-
   void cancelRequest(BuildContext context) async {
     if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
       createDialogWidget(context, "Oops... Something went wrong!",
           "Something went wrong while trying to cancel your request, please try again later.");
+    }
+  }
+
+  launchMaps() async {
+    String origin =
+        "${GetIt.I.get<LocationStore>().currentLocation.lat},${GetIt.I.get<LocationStore>().currentLocation.lng}";
+    String source =
+        "${GetIt.I.get<LocationStore>().place.location.lat},${GetIt.I.get<LocationStore>().place.location.lng}";
+    String destination =
+        "${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}";
+
+    String url = "https://www.google.com/maps/dir/?api=1&origin=" +
+        origin +
+        "&destination=" +
+        destination +
+        "&waypoints=" +
+        source +
+        "&travelmode=walking&dir_action=navigate";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -133,7 +144,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
           child: Padding(
             padding: EdgeInsets.only(
                 top: AppTheme.elementSize(
-                    widget.screenHeight, 20, 22, 24, 26, 0, 0, 0, 0),
+                    widget.screenHeight, 20, 22, 24, 26, 26, 28, 32, 34),
                 left: 16,
                 right: 16),
             child: Text(

@@ -21,7 +21,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -63,5 +63,10 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    	<string>googlechromes</string>
+    	<string>comgooglemaps</string>
+	</array>
 </dict>
 </plist>
