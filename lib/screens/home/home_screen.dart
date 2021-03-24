@@ -35,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage>
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
+          physics:
+              const PageScrollPhysics(parent: NeverScrollableScrollPhysics()),
           child: SlidingUpWidget(
             controller: controller,
             screenHeight: screenHeight,

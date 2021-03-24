@@ -79,6 +79,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       this.panel = panel;
     });
     this.panel.mapStateCallback();
+    _sliderPanelController.close();
   }
 
   Widget _panel(ScrollController sc) {
@@ -101,9 +102,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   Widget build(BuildContext context) {
     // This is stupid, but please don't remove it
     // You're more than welcome to create a custom slider-panel widget instead of this shitty 3rd party one
-    if(_sliderPanelController.isAttached) {
-      _sliderPanelController.close();
-    }
     return Material(
       child: Stack(
         alignment: Alignment.topCenter,
@@ -115,7 +113,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             ),
             onPanelClosed: () => panel.controller.close(),
             onPanelOpened: () => panel.controller.open(),
-            isDraggable: panel.controller.isDraggable,
+            isDraggable: true,
             minHeight: panel.minHeight,
             maxHeight: panel.maxHeight,
             controller: _sliderPanelController,
