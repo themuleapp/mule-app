@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
@@ -43,7 +44,8 @@ class UserMatchedPanel extends MatchedPanel {
   }
 
   @override
-  Future<bool> completeRequest(context, order) async {
+  void completeRequest(BuildContext context) async {
+    OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
     createOrderCompletionDialogue(
         context, "Are you sure that you have received this delivery?", order);
   }

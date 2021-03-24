@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 
-createOrderCompletionDialogue(context, text, order) async {
+Future<bool> createOrderCompletionDialogue(
+    BuildContext context, String text, OrderData order) async {
   // flutter defined function
-  return await showDialog(
+  bool success = false;
+  showDialog(
     context: context,
     builder: (BuildContext context) {
       // return object of type Dialog
       return AlertDialog(
-        content: text,
+        content: Text(text),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -26,13 +29,9 @@ createOrderCompletionDialogue(context, text, order) async {
             onPressed: () async {
               if (GetIt.I.get<UserInfoStore>().fullName ==
                   order.acceptedBy.name) {
-                if (await muleApiService.muleCompleteRequest(order.id)) {
-                  await GetIt.I.get<UserInfoStore>().updateActiveOrder();
-                }
+                success = await muleApiService.muleCompleteRequest(order.id);
               } else {
-                if (await muleApiService.userCompleteRequest(order.id)) {
-                  await GetIt.I.get<UserInfoStore>().updateActiveOrder();
-                }
+                success = await muleApiService.userCompleteRequest(order.id);
               }
             },
           ),
@@ -56,4 +55,5 @@ createOrderCompletionDialogue(context, text, order) async {
       );
     },
   );
+  return success;
 }

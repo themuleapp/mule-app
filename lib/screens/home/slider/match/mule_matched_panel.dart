@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
@@ -53,8 +55,23 @@ class MuleMatchedPanel extends MatchedPanel {
   }
 
   @override
-  Future<bool> completeRequest(context, order) async {
-    createOrderCompletionDialogue(
+  void completeRequest(BuildContext context) async {
+    OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
+    bool success = await createOrderCompletionDialogue(
         context, "Are you sure that you have completed this delivery?", order);
+    if (success) {
+      // TODO: Create a new panel that waits for user confirmation
+      createDialogWidget(
+        context,
+        "YAY",
+        "You delivered",
+      );
+    } else {
+      createDialogWidget(
+        context,
+        "Oops... Something went wrong",
+        "Something went wrong while trying to confirm your delivery. Please try again later.",
+      );
+    }
   }
 }

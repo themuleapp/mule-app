@@ -109,7 +109,7 @@ abstract class MatchedPanel extends Panel {
     return minHeight;
   }
 
-  Future<bool> completeRequest(context, OrderData order);
+  void completeRequest(BuildContext context);
 }
 
 class _MatchedPanelState extends State<MatchedPanel> {
