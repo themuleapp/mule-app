@@ -43,8 +43,12 @@ class MuleMatchedPanel extends MatchedPanel {
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
-
-    return [accept, cancel];
+    StylizedButton navigate = NavigateButton(
+      callback: launchMaps,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [accept, cancel, navigate];
   }
 
   @override
