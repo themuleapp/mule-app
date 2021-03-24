@@ -53,7 +53,6 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
             Icons.arrow_back_ios,
             size: AppTheme.elementSize(
                 screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
-            color: AppTheme.lightBlue,
           ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
@@ -74,7 +73,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with InputValidation {
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: AppTheme.lightBlue,
+                  color: AppTheme.secondaryBlue,
                   fontSize: AppTheme.elementSize(
                       screenHeight, 16, 17, 18, 20, 22, 24, 30, 38),
                   fontWeight: FontWeight.w700,

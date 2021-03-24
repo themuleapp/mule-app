@@ -49,6 +49,7 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppTheme.white,
       resizeToAvoidBottomInset: false,
@@ -57,7 +58,11 @@ class _ChangeProfilePictureState extends State<ChangeProfilePicture> {
         automaticallyImplyLeading: false,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: AppTheme.elementSize(
+                screenHeight, 25, 25, 25, 25, 27, 33, 38, 45),
+          ),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();

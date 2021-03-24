@@ -21,11 +21,11 @@ Widget button(String text, Function callback, double screenHeight, context) {
       ),
       progressWidget: CircularProgressIndicator(
           backgroundColor: AppTheme.white,
-          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.secondaryBlue)),
+          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.lightBlue)),
       width: MediaQuery.of(context).size.width,
       height:
           AppTheme.elementSize(screenHeight, 36, 38, 42, 48, 48, 48, 48, 48),
-      color: AppTheme.lightBlue,
+      color: AppTheme.secondaryBlue,
       borderRadius:
           AppTheme.elementSize(screenHeight, 8, 10, 12, 16, 16, 16, 16, 16),
       animate: true,
