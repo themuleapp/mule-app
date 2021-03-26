@@ -136,6 +136,8 @@ class _OrdersScreenState extends State<OrdersScreen>
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
+        physics:
+            const PageScrollPhysics(parent: NeverScrollableScrollPhysics()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
