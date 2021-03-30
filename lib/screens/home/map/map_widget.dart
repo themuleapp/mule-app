@@ -170,6 +170,9 @@ class _MapWidgetState extends State<MapWidget> {
       markerId: MarkerId("MULEMARKER"),
       position: muleLocation,
       icon: muleIcon,
+      infoWindow: InfoWindow(
+        title: 'Mule Location',
+      ),
     );
     setState(() {
       _markers..add(muleMarker);
