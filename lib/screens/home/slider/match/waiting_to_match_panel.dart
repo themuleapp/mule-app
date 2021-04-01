@@ -144,7 +144,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
                               left: 16,
                               right: 16),
                           child: Text(
-                            'Your request has been sent!',
+                            'Request has been sent!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
