@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
+
+import 'custom_text_form_field.dart';
 
 Future<bool> enterPinDialogue(
     BuildContext context, String text, OrderData order) async {
@@ -12,9 +15,10 @@ Future<bool> enterPinDialogue(
     builder: (BuildContext context) {
       return AlertDialog(
         content: Container(
-          height: 250,
+          height: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
                 "Enter the PIN",
@@ -36,11 +40,51 @@ Future<bool> enterPinDialogue(
                     fontWeight: FontWeight.w500,
                     color: AppTheme.darkGrey),
               ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: CustomTextFormField(
+                      keyboardType: TextInputType.number,
+                      hintText: "",
+                      verticalPadding: 25.0,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: CustomTextFormField(
+                      keyboardType: TextInputType.number,
+                      hintText: "",
+                      verticalPadding: 25.0,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: CustomTextFormField(
+                      keyboardType: TextInputType.number,
+                      hintText: "",
+                      verticalPadding: 25.0,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: CustomTextFormField(
+                      keyboardType: TextInputType.number,
+                      hintText: "",
+                      verticalPadding: 25.0,
+                    ),
+                  )
+                ],
+              ),
               SizedBox(
                 height: AppTheme.elementSize(
-                    screenHeight, 6, 8, 9, 10, 12, 12, 14, 16),
+                    screenHeight, 14, 16, 18, 19, 20, 21, 22, 24),
               ),
-              //TODO: Add PIN fields
               Center(
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 500),
