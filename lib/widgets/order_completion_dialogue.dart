@@ -9,7 +9,7 @@ Future<bool> createOrderCompletionDialogue(
     BuildContext context, String text, OrderData order) async {
   // flutter defined function
   bool success = false;
-  showDialog(
+  await showDialog(
     context: context,
     builder: (BuildContext context) {
       // return object of type Dialog
@@ -33,6 +33,7 @@ Future<bool> createOrderCompletionDialogue(
               } else {
                 success = await muleApiService.userCompleteRequest(order.id);
               }
+              Navigator.pop(context, false);
             },
           ),
           FlatButton(
