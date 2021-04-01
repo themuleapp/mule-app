@@ -9,6 +9,7 @@ import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
+import 'await_user_confirmation.dart';
 import 'matched_panel.dart';
 
 class MuleMatchedPanel extends MatchedPanel {
@@ -61,11 +62,7 @@ class MuleMatchedPanel extends MatchedPanel {
         context, "Are you sure that you have completed this delivery?", order);
     if (success) {
       // TODO: Create a new panel that waits for user confirmation
-      createDialogWidget(
-        context,
-        "YAY",
-        "You delivered",
-      );
+      slidingUpWidgetController.panel = AwaitUserConfirmationPanel.from(this);
     } else {
       createDialogWidget(
         context,
