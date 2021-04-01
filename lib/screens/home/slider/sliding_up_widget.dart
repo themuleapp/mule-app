@@ -128,6 +128,23 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             ),
           ),
           Visibility(
+              visible: GetIt.I.get<UserInfoStore>().activeOrder?.status == Status.ACCEPTED
+                        && GetIt.I.get<UserInfoStore>().activeOrder.createdBy.name == GetIt.I.get<UserInfoStore>().fullName,
+              child: Positioned(
+                top: MediaQuery.of(context).padding.top + 8, right: 8,
+                 child: Container(
+
+              width: 2.5 * panel.buttonSize,
+              height: panel.buttonSize,
+              decoration: BoxDecoration(boxShadow: [BoxShadow(blurRadius: 5.0, color: Colors.black12)]
+                  , color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              child: Padding( padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Expanded(child: Center(child: Text("UwU", style: TextStyle(fontFamily: 'RobotoMono', fontWeight: FontWeight.bold, letterSpacing: 3.0, fontSize: 16.0)))),
+                    Icon(Icons.lock, color: Colors.black),
+              ],)
+              ), ),),),
+          Visibility(
             visible: !panel.controller.isOpen,
             child: Positioned(
               right: 0.0,
