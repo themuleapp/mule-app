@@ -201,8 +201,8 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         Icon(
                           Icons.phone,
                           color: AppTheme.darkGrey,
-                          size: AppTheme.elementSize(widget.screenHeight, 25,
-                              25, 26, 26, 18, 20, 21, 22),
+                          size: AppTheme.elementSize(widget.screenHeight, 16,
+                              16, 17, 17, 18, 20, 21, 22),
                         ),
                         Text(widget.getFormattedPhoneNumber(widget.match),
                             style: TextStyle(

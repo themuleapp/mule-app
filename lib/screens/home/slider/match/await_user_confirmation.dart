@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/models/data/user_data.dart';
 import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
 import 'package:mule/screens/home/slider/match/user_matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
@@ -9,11 +10,13 @@ import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/services/messages_service.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 
 import 'package:mule/widgets/clip_height.dart';
 import 'package:mule/widgets/stylized_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AwaitUserConfirmationPanel extends Panel {
   final double loadingBarHeight;
@@ -40,27 +43,43 @@ class AwaitUserConfirmationPanel extends Panel {
           isMapDraggable: false,
         );
 
-  cancelRequest(BuildContext context) async {
-    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
-      createDialogWidget(
-        context,
-        "Oops... Something went wrong",
-        "Something went wrong while trying to cancel your request. Please try again later.",
+  getHelp(BuildContext context) async {
+    const url = 'https://www.themuleapp.com/support';
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: true,
+        enableJavaScript: true,
+        enableDomStorage: true,
+        forceSafariVC: true,
       );
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
+  launchChat() {
+    final OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
+    final MessagesService _service = GetIt.I.get<MessagesService>();
+    _service.sendSms(order.createdBy.phoneNumber);
+  }
+  
   @override
   AwaitUserConfirmationState createState() => AwaitUserConfirmationState();
 
   @override
   List<StylizedButton> get buttons {
-    StylizedButton cancel = CancelButton(
-      callback: cancelRequest,
+    StylizedButton help = HelpButton(
+      callback: getHelp,
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
-    return [cancel];
+    StylizedButton chat = ChatButton(
+      callback: launchChat,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [help, chat];
   }
 
   @override
@@ -144,7 +163,7 @@ class AwaitUserConfirmationState extends State<AwaitUserConfirmationPanel> {
                               left: 16,
                               right: 16),
                           child: Text(
-                            'Your confirmation has been sent!',
+                            'Confirmation has been sent!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
@@ -167,8 +186,7 @@ class AwaitUserConfirmationState extends State<AwaitUserConfirmationPanel> {
                         padding: const EdgeInsets.only(
                             top: 16, left: 16, right: 16, bottom: 8),
                         child: Text(
-                            "Hang tight! We will notify you as soon as "
-                            "someone accepts your request",
+                            "We will notify you when we confirm the delivery with the customer!",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: AppTheme.elementSize(
