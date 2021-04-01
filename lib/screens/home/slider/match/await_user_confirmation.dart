@@ -207,7 +207,7 @@ class AwaitUserConfirmationState extends State<AwaitUserConfirmationPanel> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 16, right: 16),
-                  child: Image.asset('assets/images/student_waiting.png',
+                  child: Image.asset('assets/images/waiting_confirmation.png',
                       height: AppTheme.elementSize(widget.screenHeight, 100,
                           110, 120, 130, 150, 150, 160, 160)),
                 ),
