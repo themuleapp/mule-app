@@ -100,7 +100,7 @@ class AwaitUserConfirmationState extends State<AwaitUserConfirmationPanel> {
   void initState() {
     super.initState();
     widget.init(this);
-    // GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
+    GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
   }
 
   void _orderListener() {
@@ -108,12 +108,7 @@ class AwaitUserConfirmationState extends State<AwaitUserConfirmationPanel> {
 
     if (newOrder == null) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
-    } else if (GetIt.I.get<UserInfoStore>().fullName ==
-        newOrder.acceptedBy.name) {
-      widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
-    } else {
-      widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
-    }
+    } 
     dispose();
   }
 

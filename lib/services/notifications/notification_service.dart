@@ -82,11 +82,10 @@ class _NotificationHandlerState extends State<NotificationHandler> {
             });
         break;
       case MULE_DELIVERY_CONFIRMED:
-        // TODO
-        createDialogWidget(
-          context,
-          notificationMessage.title,
-          notificationMessage.body
+        NotificationUtil.displaySnackbar(
+          title: notificationMessage.title,
+          body: notificationMessage.body,
+          context: context,
         );
         break;
       case USER_DELIVERED_CONFIRMED:
