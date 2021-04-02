@@ -10,7 +10,7 @@ createOrderCompletionDialogue(context) async {
       return AlertDialog(
         content: Text("Have you completed this delivery?"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
               "Yes",
               style: TextStyle(
@@ -24,7 +24,7 @@ createOrderCompletionDialogue(context) async {
               Navigator.pop(context, true);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               "Not yet",
               style: TextStyle(
