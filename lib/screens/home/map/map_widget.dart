@@ -42,7 +42,6 @@ class _MapWidgetState extends State<MapWidget> {
   double _currentZoom = null;
   bool _isFocusedOnRoute = false;
   bool _isMapLoading = true;
-  bool _areMarkersLoading = true;
 
   Completer<GoogleMapController> _mapCompleter = Completer();
   GoogleMapController googleMapController;
@@ -185,10 +184,6 @@ class _MapWidgetState extends State<MapWidget> {
       _currentZoom = updatedZoom;
     }
 
-    setState(() {
-      _areMarkersLoading = true;
-    });
-
     final updatedMarkers = await MapHelper.getClusterMarkers(
       _clusterManager,
       _currentZoom,
@@ -200,10 +195,6 @@ class _MapWidgetState extends State<MapWidget> {
     _markers
       ..clear()
       ..addAll(updatedMarkers);
-
-    setState(() {
-      _areMarkersLoading = false;
-    });
   }
 
   _setRouteMarkers() async {
@@ -216,7 +207,6 @@ class _MapWidgetState extends State<MapWidget> {
 
     setState(() {
       _isFocusedOnRoute = true;
-      _areMarkersLoading = true;
     });
 
     // source pin
@@ -239,10 +229,6 @@ class _MapWidgetState extends State<MapWidget> {
           title: GetIt.I.get<LocationStore>().destination.vicinity,
           snippet: 'Destination'),
     ));
-
-    setState(() {
-      _areMarkersLoading = false;
-    });
   }
 
   _showPolyLines({PointLatLng origin, PointLatLng destination}) async {

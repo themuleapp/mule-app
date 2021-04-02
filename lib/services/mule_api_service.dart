@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/painting.dart';
 import 'package:mule/config/config.dart';
@@ -28,10 +27,6 @@ class MuleApiService {
         validateStatus: (status) => true,
       ),
     );
-  }
-
-  Future<Response> _makeGetRequest(String path) async {
-    return await _dio.get(path);
   }
 
   Future<Response> _makeAuthenticatedGetRequest(String path) async {
@@ -213,8 +208,6 @@ class MuleApiService {
   }
 
   Future<ImageProvider> getProfilePicture() async {
-    Random rng = Random();
-    int number = rng.nextInt(100);
 
     Response<dynamic> res = await _makeAuthenticatedGetRequest(
         "${Config.BASE_URL}profile/profile-image");
@@ -227,6 +220,7 @@ class MuleApiService {
       return NetworkImage("${Config.BASE_URL}profile/profile-image",
           headers: {"Authorization": token});
     }
+    return null;
   }
 
   Future<bool> acceptRequest(String requestId) async {

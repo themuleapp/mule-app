@@ -54,5 +54,6 @@ class MuleMatchedPanel extends MatchedPanel {
   @override
   Future<bool> completeRequest() async {
     print("Completed request");
+    return true;
   }
 }
