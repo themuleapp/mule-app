@@ -151,10 +151,11 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
           border: InputBorder.none,
           contentPadding: EdgeInsets.only(top: 15),
           hintText: widget.hintText,
-          prefixIcon: IconButton(
-            splashColor: AppTheme.lightBlue,
-            icon: widget.icon,
-            onPressed: () {},
+          prefixIcon: widget.icon,
+          suffixIcon: IconButton(
+            icon: Icon(Icons.clear, color: Colors.black38),
+            splashRadius: 20,
+            onPressed: () => controller.text = "",
           ),
         ),
       ),
