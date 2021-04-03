@@ -80,6 +80,10 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   }
 
   _timedoutSuggestionsBuilder() {
+    if (controller.text.isEmpty || !focusNode.hasFocus) {
+      _clear();
+      return;
+    }
     if(controllerTimer == null) {
       controllerTimer = RestartableTimer(Duration(seconds: widget.timeout), () => _buildSuggestionsList());
     } else {
@@ -155,7 +159,10 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
           suffixIcon: IconButton(
             icon: Icon(Icons.clear, color: Colors.black38),
             splashRadius: 20,
-            onPressed: () => controller.text = "",
+            onPressed: () {
+              controller.text = "";
+              _clear();
+            }
           ),
         ),
       ),
