@@ -124,18 +124,21 @@ class _RequestsScreenState extends State<RequestsScreen>
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      dispose();
       //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
       // Remove from local list
       success = await muleApiService.dismissRequest(requestId);
+
+      if(success) {
+        _updateOrders();
+      }
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
-    } else {
-      _updateOrders();
-    }
+    }   
   }
 
   Widget slideRightBackground() {
