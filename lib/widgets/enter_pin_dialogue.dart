@@ -3,13 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
-
-import 'custom_text_form_field.dart';
+  
+FocusNode textfield; 
 
 Future<bool> enterPinDialogue(
     BuildContext context, String text, OrderData order) async {
   bool success = false;
   final screenHeight = MediaQuery.of(context).size.height;
+  List<TextEditingController> textEditors = [];
+
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -41,46 +43,8 @@ Future<bool> enterPinDialogue(
                     color: AppTheme.darkGrey),
               ),
               Row(
-                children: <Widget>[
-                  Expanded(
-                    child: CustomTextFormField(
-                      keyboardType: TextInputType.number,
-                      hintText: "",
-                      verticalPadding: 25.0,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.0,
-                  ),
-                  Expanded(
-                    child: CustomTextFormField(
-                      keyboardType: TextInputType.number,
-                      hintText: "",
-                      verticalPadding: 25.0,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.0,
-                  ),
-                  Expanded(
-                    child: CustomTextFormField(
-                      keyboardType: TextInputType.number,
-                      hintText: "",
-                      verticalPadding: 25.0,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.0,
-                  ),
-                  Expanded(
-                    child: CustomTextFormField(
-                      keyboardType: TextInputType.number,
-                      hintText: "",
-                      verticalPadding: 25.0,
-                    ),
-                  )
-                ],
-              ),
+                children: _buildPinField(textEditors: textEditors),
+                ),
               SizedBox(
                 height: AppTheme.elementSize(
                     screenHeight, 14, 16, 18, 19, 20, 21, 22, 24),
@@ -119,6 +83,10 @@ Future<bool> enterPinDialogue(
                       onPressed: () async {
                         await Future.delayed(
                             const Duration(milliseconds: 1000), () => 42);
+                        String pin = "";
+                        textEditors.forEach((e) => pin += e.text);
+                        print(pin);
+                        Navigator.of(context).pop();
                       },
                     ),
                   ),
@@ -132,3 +100,61 @@ Future<bool> enterPinDialogue(
   );
   return success;
 }
+
+List<Widget> _buildPinField({int numberOfFields=4, List<TextEditingController> textEditors}) {
+  if(numberOfFields < 0) {
+    throw Exception("Invalid argument, number of fields must be at least 0");
+  }
+  List<Widget> list = [];
+  List<FocusNode> focusList = [];
+
+  // Populate focusList
+  focusList.add(null);
+  for(var i=0; i<numberOfFields; i++) {
+    focusList.add(FocusNode());
+  }
+  focusList.add(null);
+ 
+  // Assign each textfield a focusNode, as well as a reference to the textfield before/after it
+  var i;
+  for(i=1; i<numberOfFields; i++) {
+    list.add(_textField(textEditors, focusList[i], focusList[i-1], focusList[i+1]));
+    list.add(_spacing());
+  }
+  list.add(_textField(textEditors, focusList[i], focusList[i-1], focusList[i+1]));
+ 
+  // Request focus for first textfield
+  focusList[1].requestFocus();
+  return list;
+}
+
+Widget _textField(List<TextEditingController> controllers, FocusNode myFocus, FocusNode previousFocus, FocusNode nextFocus) {
+  TextEditingController controller = TextEditingController();
+  controllers?.add(controller);
+
+  return Expanded(
+    child: TextField(
+      focusNode: myFocus,
+      controller: controller,
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        LengthLimitingTextInputFormatter(1),
+      ],
+      onChanged: (field) {
+        if(field.isEmpty) {
+          previousFocus?.requestFocus();
+        } else {
+          nextFocus?.requestFocus();
+        }
+      }
+    ),
+  );
+}
+
+Widget _spacing() {
+  return SizedBox(
+    width: 20.0,
+  );
+}
+
