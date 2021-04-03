@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mule/config/app_theme.dart';
@@ -14,6 +17,8 @@ class SuggestionSearchBar extends StatefulWidget {
   final double elevation;
   final Icon icon;
 
+  final timeout;
+
   const SuggestionSearchBar({
     Key key,
     @required this.controller,
@@ -24,6 +29,7 @@ class SuggestionSearchBar extends StatefulWidget {
     this.spacing,
     this.elevation,
     this.icon,
+    this.timeout = 1,
   }) : super(key: key);
 
   @override
@@ -41,6 +47,9 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   final Function suggestionCallback;
   final FocusNode focusNode;
 
+  RestartableTimer controllerTimer; 
+  String query;
+
   _SuggestionSearchBarState({
     @required this.controller,
     @required this.suggestionCallback,
@@ -49,7 +58,6 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
 
   @override
   void initState() {
-    controller.addListener(() => _controllerHandler());
     focusNode.addListener(() => _focusHandler());
     super.initState();
   }
@@ -57,6 +65,7 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> content = [];
+
     content.add(_searchBar(focusNode, controller));
     content.addAll(this.children);
 
@@ -65,23 +74,36 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
     );
   }
 
-  Future<List<Suggestion>> _getSuggestions() async {
-    List<Suggestion> suggestions = await suggestionCallback(controller.text);
+  Future<List<Suggestion>> _getSuggestions(String query) async {
+    List<Suggestion> suggestions = await suggestionCallback(query);
     return (suggestions == null) ? [] : suggestions;
   }
 
-  _controllerHandler() async {
+  _timedoutSuggestionsBuilder() {
+    if(controllerTimer == null) {
+      controllerTimer = RestartableTimer(Duration(seconds: widget.timeout), () => _buildSuggestionsList());
+    } else {
+      controllerTimer.reset();
+    }
+    setState (() {
+      children = [SizedBox(height: 50), CircularProgressIndicator()];
+    });
+  }
+
+  _buildSuggestionsList() async {
     if (controller.text.isEmpty || !focusNode.hasFocus) {
       _clear();
       return;
     }
-    List<Suggestion> suggestions = await _getSuggestions();
+    List<Suggestion> suggestions = await _getSuggestions(controller.text);
     _createSearchResultList(suggestions);
   }
 
   _focusHandler() {
     if (focusNode.hasFocus == false) {
       _clear();
+    } else if (children.isEmpty) {
+      _timedoutSuggestionsBuilder();
     }
   }
 
@@ -122,6 +144,9 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
         cursorColor: AppTheme.lightBlue,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.go,
+        onChanged: (_) => (widget.timeout == null || widget.timeout < 0) 
+            ? _buildSuggestionsList() 
+            : _timedoutSuggestionsBuilder(),
         decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: EdgeInsets.only(top: 15),

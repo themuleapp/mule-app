@@ -72,13 +72,12 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   bool destinationSelected = false;
 
   Widget _getForm(bool open, screenHeight) {
-    if (!open) {
-      _destinationFocusNode.unfocus();
-      _searchFocusNode.unfocus();
-    } else if (destinationSelected) {
-      _searchFocusNode.requestFocus();
-    } else {
-      _destinationFocusNode.requestFocus();
+    if (open) {
+      if (!destinationSelected) {
+        _destinationFocusNode.requestFocus();
+      } else {
+        _searchFocusNode.requestFocus();
+      }
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +106,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
           height: 20,
         ),
         AnimatedOpacity(
-          opacity: (!destinationSelected || !open) ? 0.0 : 1.0,
+          opacity: (!destinationSelected || _destinationFocusNode.hasFocus || !open) ? 0.0 : 1.0,
           duration: Duration(milliseconds: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,8 +216,15 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
 
   _handleFocus() {
     if (_destinationFocusNode.hasFocus) {
-      return widget.slidingUpWidgetController.open();
+      if(!isOpen) {
+        widget.slidingUpWidgetController.open();
+      } else {
+        setState(() =>
+          destinationSelected = false
+        );
+      }
     }
+
   }
 
   _onSubmitChoice() {
@@ -229,6 +235,9 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   @override
   void close() {
     if (!isOpen) return;
+      
+    _destinationFocusNode.unfocus();
+    _searchFocusNode.unfocus();
 
     setState(() {
       isOpen = false;
