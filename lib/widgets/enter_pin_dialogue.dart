@@ -17,6 +17,7 @@ Future<bool> enterPinDialogue(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
         content: Container(
           height: 300,
           child: Column(
