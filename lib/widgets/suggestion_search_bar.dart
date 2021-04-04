@@ -220,10 +220,6 @@ class _SuggestionSearchBarState extends State<SuggestionSearchBar> {
     return ListTile(
       title: Text(suggestion.name),
       subtitle: Text(suggestion.vicinity),
-      trailing: Icon(
-        Icons.info_outline,
-        color: AppTheme.secondaryBlue,
-      ),
     );
   }
 
