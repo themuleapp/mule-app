@@ -44,6 +44,10 @@ Future<bool> enterPinDialogue(
                     fontWeight: FontWeight.w500,
                     color: AppTheme.darkGrey),
               ),
+              SizedBox(
+                height: AppTheme.elementSize(
+                    screenHeight, 6, 8, 9, 10, 12, 12, 14, 16),
+              ),
               Row(
                 children: _buildPinField(textEditors: textEditors),
                 ),
@@ -137,6 +141,16 @@ Widget _textField(List<TextEditingController> controllers, FocusNode myFocus, Fo
     child: TextField(
       focusNode: myFocus,
       controller: controller,
+      showCursor: false,
+      enableInteractiveSelection: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blueAccent,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
