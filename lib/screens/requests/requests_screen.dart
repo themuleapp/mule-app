@@ -318,6 +318,7 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
     orders.add(accepted);
   }
   orders..addAll(openOrders)..addAll(history);
+  // TODO this is not needed anymore
   orders.removeWhere((element) =>
       element.createdBy.name == GetIt.I.get<UserInfoStore>().fullName);
   return _sortOrders(orders);
@@ -334,6 +335,6 @@ Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
 
   // Sort orders by time of creation
   sortedOrders.forEach((status, list) =>
-      list.sort((a, b) => a.createdAt.compareTo(b.createdAt)));
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt)));
   return sortedOrders;
 }
