@@ -93,3 +93,27 @@ class NavigateButton extends StylizedButton {
           icon: Icons.directions,
         );
 }
+
+class HelpButton extends StylizedButton {
+  HelpButton({double size, Function callback, EdgeInsets margin})
+      : super(
+          size: size,
+          color: Colors.red,
+          margin: margin,
+          iconColor: AppTheme.white,
+          callback: callback,
+          icon: Icons.help,
+        );
+}
+
+class ChatButton extends StylizedButton {
+  ChatButton({double size, Function callback, EdgeInsets margin})
+      : super(
+          size: size,
+          color: AppTheme.white,
+          margin: margin,
+          iconColor: AppTheme.secondaryBlue,
+          callback: callback,
+          icon: Icons.chat,
+        );
+}

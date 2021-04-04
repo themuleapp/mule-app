@@ -11,6 +11,7 @@ class OrderData with ChangeNotifier {
   final UserData createdBy;
 
   MuleData acceptedBy;
+  String confirmationCode;
   Status status;
 
   OrderData.fromJson(Map<String, dynamic> jsonData)

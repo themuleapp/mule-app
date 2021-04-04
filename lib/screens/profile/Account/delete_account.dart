@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/services/mule_api_service.dart';
-import 'package:mule/models/res/errorRes/error_res.dart';
 import 'package:mule/models/req/deleteAccount/delete_account_req.dart';
 import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
@@ -36,7 +35,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
       );
     } else {
       // TODO Response data field seems to be of the incorrect type
-      ErrorRes errRes = ErrorRes.fromJson(res.data);
       createDialogWidget(context, 'Failed!', 'Please try again');
     }
   }

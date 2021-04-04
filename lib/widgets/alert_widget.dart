@@ -12,7 +12,7 @@ void createDialogWidget(context, title, content) {
         content: new Text(content),
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
-          new FlatButton(
+          new TextButton(
             child: new Text(
               "Close",
               style: TextStyle(

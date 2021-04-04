@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:get_it/get_it.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';

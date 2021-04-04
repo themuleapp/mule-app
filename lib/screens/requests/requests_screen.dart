@@ -124,18 +124,21 @@ class _RequestsScreenState extends State<RequestsScreen>
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      dispose();
       //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
       // Remove from local list
       success = await muleApiService.dismissRequest(requestId);
+
+      if(success) {
+        _updateOrders();
+      }
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
-    } else {
-      _updateOrders();
-    }
+    }   
   }
 
   Widget slideRightBackground() {
@@ -275,26 +278,29 @@ class _RequestsScreenState extends State<RequestsScreen>
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding:
-                EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
-            child: Text(
-              "Requests",
-              style: TextStyle(
-                fontFamily: AppTheme.fontName,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.darkGrey,
-                fontSize: AppTheme.elementSize(
-                    screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+        physics:
+            const PageScrollPhysics(parent: NeverScrollableScrollPhysics()),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding:
+                  EdgeInsets.only(top: 20.0, left: 20, right: 20, bottom: 30),
+              child: Text(
+                "Requests",
+                style: TextStyle(
+                  fontFamily: AppTheme.fontName,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.darkGrey,
+                  fontSize: AppTheme.elementSize(
+                      screenHeight, 24, 26, 28, 30, 32, 40, 45, 50),
+                ),
               ),
             ),
-          ),
-          requestTypeTabs(screenHeight),
-        ],
-      )),
+            requestTypeTabs(screenHeight),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -312,6 +318,7 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
     orders.add(accepted);
   }
   orders..addAll(openOrders)..addAll(history);
+  // TODO this is not needed anymore
   orders.removeWhere((element) =>
       element.createdBy.name == GetIt.I.get<UserInfoStore>().fullName);
   return _sortOrders(orders);
@@ -328,6 +335,6 @@ Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
 
   // Sort orders by time of creation
   sortedOrders.forEach((status, list) =>
-      list.sort((a, b) => a.createdAt.compareTo(b.createdAt)));
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt)));
   return sortedOrders;
 }

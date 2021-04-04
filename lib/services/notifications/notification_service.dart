@@ -5,7 +5,6 @@ import 'package:mule/models/data/notification_message.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 import 'package:mule/services/notifications/notification_util.dart';
-import 'package:mule/widgets/alert_widget.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/services/notifications/notification_types.dart';
@@ -28,7 +27,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     super.initState();
     if (Platform.isIOS) {
       // When permission is given send the token to the server
-      print("In iOS check...............................................");
       _fcm.onIosSettingsRegistered.listen((event) => _saveDeviceToken());
       _fcm.requestNotificationPermissions(IosNotificationSettings());
     } else {
@@ -47,7 +45,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
   }
 
   _saveDeviceToken() async {
-    print("In save device token");
     String fcmToken = await _fcm.getToken();
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
@@ -62,7 +59,6 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     // Unify message form
     NotificationMessage notificationMessage = NotificationMessage(message);
 
-    print(notificationMessage.type);
     switch (notificationMessage.type) {
       case MULE_NEW_REQUEST:
         NotificationUtil.displaySnackbar(
@@ -85,11 +81,10 @@ class _NotificationHandlerState extends State<NotificationHandler> {
             });
         break;
       case MULE_DELIVERY_CONFIRMED:
-        // TODO
-        createDialogWidget(
-          context,
-          notificationMessage.title,
-          notificationMessage.body
+        NotificationUtil.displaySnackbar(
+          title: notificationMessage.title,
+          body: notificationMessage.body,
+          context: context,
         );
         break;
       case USER_DELIVERED_CONFIRMED:

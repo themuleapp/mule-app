@@ -35,7 +35,7 @@ dependencies:
   google_maps_flutter:
   sliding_up_panel:
   geolocator:
-  permission_handler:
+  permission_handler: ^5.1.0
   google_maps_webservice:
   flutter_typeahead:
   image_picker: ^0.6.7
@@ -43,7 +43,7 @@ dependencies:
   flutter_cache_manager:
   flutter_polyline_points:
   flutter_progress_button:
-  firebase_messaging:
+  firebase_messaging: 
   latlong: ^0.6.1
   intl:
   url_launcher:

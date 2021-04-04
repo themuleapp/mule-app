@@ -1,8 +1,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/whisperingmule/mule-app">
-    <img src="./assets/images/logo.png" alt="Logo" width="150" height="150">
+  <a href="https://github.com/themuleapp/mule-app">
+    <img src="./assets/images/mule_logo.png" alt="Logo" height="80">
   </a>
 
   <h3 align="center">Mule</h3>
@@ -10,7 +10,7 @@
   <p align="center">
     Get delivered on the go.
     <br />
-    <a href="https://github.com/whisperingmule/mule-app/blob/master/README.md"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/themuleapp/mule-app/blob/master/README.md"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 </p>
@@ -72,7 +72,7 @@ To get a local copy up and running follow these simple steps.
 ```sh
 git clone https://github.com/whisperingmule/mule-app.git
 ```
-2. Also clone the [mule-backend](https://github.com/whisperingmule/mule-backend) repository if you will be working on the backend (Optional)
+2. Also clone the [mule-backend](https://github.com/themuleapp/mule-backend) repository if you will be working on the backend (Optional)
 ```sh
 git clone https://github.com/whisperingmule/mule-backend.git
 ```
@@ -87,14 +87,14 @@ You need to have a device connected, or a simulator open, for flutter run to wor
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/whisperingmule/mule-app/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/themuleapp/mule-app/issues) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTIONS AND GITHUB WORKFLOW -->
 ## Contributions
 
 Contributions are what help us grow abd make us such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-Please follow the [GitHub Workflow](https://github.com/whisperingmule/mule-app/blob/master/github-workflow.md) while making contributions.
+Please follow the [GitHub Workflow](https://github.com/themuleapp/mule-app/blob/master/github-workflow.md) while making contributions.
 
 ### Authors and Acknowledgements
 
