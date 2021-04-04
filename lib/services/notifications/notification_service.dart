@@ -5,7 +5,6 @@ import 'package:mule/models/data/notification_message.dart';
 import 'package:mule/models/req/deviceToken/device_token_req.dart';
 import 'package:mule/screens/requests/requests_screen.dart';
 import 'package:mule/services/notifications/notification_util.dart';
-import 'package:mule/widgets/alert_widget.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/services/notifications/notification_types.dart';
