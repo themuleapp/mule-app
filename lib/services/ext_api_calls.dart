@@ -19,7 +19,7 @@ class ExternalApi {
     // testlocation:
     // location=40.793429,-77.860314
     String request = '$baseURL?input=$searchTerm&key=$googleApiKey' +
-        '&location=${GetIt.I.get<LocationStore>().currentLocation},${GetIt.I.get<LocationStore>().currentLocation}' +
+        '&location=${GetIt.I.get<LocationStore>().currentLocation.lat},${GetIt.I.get<LocationStore>().currentLocation.lng}' +
         '&radius=${Config.DESTINATION_SEARCH_RADIUS}&strictbounds';
 
     Response res = await Dio().get(request);
