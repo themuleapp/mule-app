@@ -55,19 +55,18 @@ class MuleMatchedPanel extends MatchedPanel {
     return [accept, cancel, navigate];
   }
 
-  @override
   void completeRequest(BuildContext context) async {
     OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
     bool success = await enterPinDialogue(
         context, "Are you sure that you have completed this delivery?", order);
-    if(success == null) {
+    if (success == null) {
       return;
     }
     if (success) {
       createDialogWidget(
         context,
-        "Thank you for your order!",
-        ":)",
+        "Thank you!",
+        "You have successfully delivered the order!",
       );
       slidingUpWidgetController.panel = SearchPanel.from(this);
     } else {

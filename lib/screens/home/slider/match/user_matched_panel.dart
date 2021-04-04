@@ -1,12 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
-import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class UserMatchedPanel extends MatchedPanel {
@@ -41,12 +39,5 @@ class UserMatchedPanel extends MatchedPanel {
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     return [cancel];
-  }
-
-  @override
-  void completeRequest(BuildContext context) async {
-    OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
-    createOrderCompletionDialogue(
-        context, "Are you sure that you have received this delivery?", order);
   }
 }
