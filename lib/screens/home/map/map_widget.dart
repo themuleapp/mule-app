@@ -173,6 +173,7 @@ class _MapWidgetState extends State<MapWidget> {
       infoWindow: InfoWindow(
         title: 'Mule Location',
       ),
+      consumeTapEvents: true
     );
     setState(() {
       _markers..add(muleMarker);
@@ -476,8 +477,7 @@ class MapController {
     _mapWidgetState._setDefaultView();
   }
 
-  void updateDelivery(LatLng muleLocation, LatLng place, LatLng destination,
-      double triggerDistance) async {
+  void updateDelivery(LatLng muleLocation, LatLng place, LatLng destination, bool showMule) async {
     await _mapWidgetState._removePolyLines();
 
     PointLatLng placePoint  = PointLatLng(place.latitude, place.longitude);
@@ -485,13 +485,15 @@ class MapController {
     PointLatLng mulePoint = PointLatLng(muleLocation.latitude, muleLocation.longitude);
     
     await _mapWidgetState._showPolyLines(
-      origin: placePoint,
+      origin: mulePoint,
       destination: destinationPoint,
-      waypoints: [mulePoint],
+      waypoints: [placePoint],
     );
     await _mapWidgetState._setRouteMarkers();
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
-    await _mapWidgetState._singleMuleMarker(muleLocation);
+    if (showMule) {
+      await _mapWidgetState._singleMuleMarker(muleLocation);
+    }
   }
 
   bool get isMapLoading {
