@@ -106,7 +106,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
           height: 20,
         ),
         AnimatedOpacity(
-          opacity: (!destinationSelected || _destinationFocusNode.hasFocus || !open) ? 0.0 : 1.0,
+          opacity: (!destinationSelected || !open) ? 0.0 : 1.0,
           duration: Duration(milliseconds: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
