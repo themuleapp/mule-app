@@ -60,6 +60,9 @@ class MuleMatchedPanel extends MatchedPanel {
     OrderData order = GetIt.I.get<UserInfoStore>().activeOrder;
     bool success = await enterPinDialogue(
         context, "Are you sure that you have completed this delivery?", order);
+    if(success == null) {
+      return;
+    }
     if (success) {
       createDialogWidget(
         context,

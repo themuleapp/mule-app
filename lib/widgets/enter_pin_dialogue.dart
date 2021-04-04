@@ -9,7 +9,7 @@ FocusNode textfield;
 
 Future<bool> enterPinDialogue(
     BuildContext context, String text, OrderData order) async {
-  bool success = false;
+  bool success = null;
   final screenHeight = MediaQuery.of(context).size.height;
   List<TextEditingController> textEditors = [];
 
