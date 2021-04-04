@@ -10,7 +10,7 @@ createConfirmDialogue(context, actionType) async {
       return AlertDialog(
         content: Text("Are you sure you want to $actionType this request?"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
               "Yes",
               style: TextStyle(
@@ -26,7 +26,7 @@ createConfirmDialogue(context, actionType) async {
               Navigator.pop(context, true);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               "Cancel",
               style: TextStyle(

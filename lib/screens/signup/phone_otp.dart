@@ -120,8 +120,10 @@ class PhoneOTP extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: AppTheme.elementSize(
                         screenHeight, 36, 38, 40, 42, 45, 56, 62, 70),
-                    child: FlatButton(
-                      color: AppTheme.lightBlue,
+                    child: TextButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppTheme.lightBlue)),
                       child: Text(
                         "VERIFY",
                         style: TextStyle(

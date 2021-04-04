@@ -11,5 +11,5 @@ class ErrorRes {
 
   ErrorRes.fromJson(Map<String, dynamic> jsonData)
       : this.status = jsonData['status'],
-        errors = List()..addAll(jsonData['errors'].cast<String>());
+        errors = []..addAll(jsonData['errors'].cast<String>());
 }

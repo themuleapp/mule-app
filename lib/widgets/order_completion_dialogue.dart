@@ -16,7 +16,7 @@ Future<bool> createOrderCompletionDialogue(
       return AlertDialog(
         content: Text(text),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(
               "Yes",
               style: TextStyle(
@@ -36,7 +36,7 @@ Future<bool> createOrderCompletionDialogue(
               Navigator.pop(context, false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               "Not yet",
               style: TextStyle(

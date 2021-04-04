@@ -25,12 +25,6 @@ class _OrdersScreenState extends State<OrdersScreen>
     _tabController = TabController(length: 2, vsync: this);
   }
 
-  _updateOrders() {
-    setState(() {
-      myOrders = getOrders();
-    });
-  }
-
   ListView generateItemsList(Status orderStatus,
       Map<Status, List<OrderData>> orders, double screenHeight) {
     return ListView.builder(
