@@ -298,7 +298,9 @@ class MuleApiService {
     if (res.data['request'] == null) {
       return null;
     }
-    return OrderData.fromJson(res.data['request']);
+    OrderData newOrder = OrderData.fromJson(res.data['request']);
+    newOrder.confirmationCode = res.data['confirmationCode'];
+    return newOrder;
   }
 
   Future<void> uploadDeviceToken(DeviceTokenReq uploadDeviceTokenReq) async {
@@ -333,9 +335,11 @@ class MuleApiService {
     return res.data['status'] == 200;
   }
 
-  Future<bool> muleCompleteRequest(String requestId) async {
+  Future<bool> completeRequest(String requestId, String confirmationCode) async {
     Response res = await _makeAuthenticatedPostRequest(
-        '/requests/mule/confirm', {'requestId': requestId});
+        '/requests/confirm', {'requestId': requestId, 'confirmationCode': confirmationCode});
+    print(res);
+
     if (res.statusCode != 200) {
       return false;
     }

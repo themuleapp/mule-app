@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/messages_service.dart';
 import 'package:mule/models/data/user_data.dart';
 import 'package:mule/models/data/order_data.dart';
-import 'package:mule/models/data/location_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
-import 'package:mule/widgets/stylized_button.dart';
 import 'package:mule/stores/location/location_store.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -108,8 +105,6 @@ abstract class MatchedPanel extends Panel {
   double get maxHeight {
     return minHeight;
   }
-
-  Future<bool> completeRequest();
 }
 
 class _MatchedPanelState extends State<MatchedPanel> {
@@ -126,7 +121,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
   void _orderListener() {
     OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
-    if (newOrder == null) {
+    if (newOrder == null || newOrder.status == Status.COMPLETED) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
       dispose();
     }
@@ -201,8 +196,8 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         Icon(
                           Icons.phone,
                           color: AppTheme.darkGrey,
-                          size: AppTheme.elementSize(widget.screenHeight, 25,
-                              25, 26, 26, 18, 20, 21, 22),
+                          size: AppTheme.elementSize(widget.screenHeight, 16,
+                              16, 17, 17, 18, 20, 21, 22),
                         ),
                         Text(widget.getFormattedPhoneNumber(widget.match),
                             style: TextStyle(

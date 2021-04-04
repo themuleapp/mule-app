@@ -53,10 +53,10 @@ class MakeRequestPanel extends Panel {
       LocationDesciption(destination.location, destination.description),
     );
     bool success = await muleApiService.placeRequest(placeRequestData);
-
     if (success) {
       await GetIt.I.get<UserInfoStore>().updateActiveOrder();
     }
+    print("but here would be better!");
     return success;
   }
 

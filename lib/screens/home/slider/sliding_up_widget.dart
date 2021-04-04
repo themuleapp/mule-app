@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/slider/loading/loading_panel.dart';
 import 'package:mule/screens/home/slider/match/mule_matched_panel.dart';
@@ -100,8 +101,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // This is stupid, but please don't remove it
-    // You're more than welcome to create a custom slider-panel widget instead of this shitty 3rd party one
     return Material(
       child: Stack(
         alignment: Alignment.topCenter,
@@ -125,6 +124,66 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
               slidingUpWidgetController: widget.controller,
               initCallback: panel.mapStateCallback,
               isDraggable: panel.isMapDraggable,
+            ),
+          ),
+          Visibility(
+            visible: GetIt.I.get<UserInfoStore>().activeOrder?.status ==
+                    Status.ACCEPTED &&
+                GetIt.I.get<UserInfoStore>().activeOrder.createdBy.name ==
+                    GetIt.I.get<UserInfoStore>().fullName,
+            child: Positioned(
+              top: MediaQuery.of(context).padding.top + 8,
+              right: 8,
+              child: Container(
+                width: 2.5 * panel.buttonSize,
+                height: panel.buttonSize,
+                decoration: BoxDecoration(
+                  color: AppTheme.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.6),
+                        offset: const Offset(4, 4),
+                        blurRadius: 8.0),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                              (GetIt.I.get<UserInfoStore>().activeOrder?.confirmationCode == null)
+                              ? "" 
+                              : GetIt.I.get<UserInfoStore>().activeOrder?.confirmationCode,
+                            style: TextStyle(
+                              fontFamily: AppTheme.fontName,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 3.0,
+                              fontSize: AppTheme.elementSize(
+                                  widget.screenHeight,
+                                  14,
+                                  15,
+                                  16,
+                                  17,
+                                  18,
+                                  19,
+                                  21,
+                                  22),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.verified_user,
+                        color: Colors.greenAccent[700],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           Visibility(

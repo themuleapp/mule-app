@@ -40,9 +40,4 @@ class UserMatchedPanel extends MatchedPanel {
     );
     return [cancel];
   }
-
-  @override
-  Future<bool> completeRequest() async {
-    print("Completed request");
-  }
 }
