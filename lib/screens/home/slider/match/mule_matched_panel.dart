@@ -1,9 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
-import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/stylized_button.dart';
 
 import 'matched_panel.dart';
 
@@ -31,6 +32,24 @@ class MuleMatchedPanel extends MatchedPanel {
           headerString: "You are en route",
           match: GetIt.I.get<UserInfoStore>().activeOrder.createdBy,
         );
+  List<StylizedButton> get buttons {
+    StylizedButton cancel = CancelButton(
+      callback: cancelRequest,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    StylizedButton accept = CompletedButton(
+      callback: null,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    StylizedButton navigate = NavigateButton(
+      callback: launchMaps,
+      size: buttonSize,
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [accept, cancel, navigate];
+  }
 
   @override
   Future<bool> completeRequest() async {

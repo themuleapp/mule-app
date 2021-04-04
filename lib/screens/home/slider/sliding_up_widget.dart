@@ -23,7 +23,9 @@ class SlidingUpWidget extends StatefulWidget {
     this.mapController,
     this.screenHeight,
     this.beginPanel = null,
-  });
+  }) {
+    GetIt.I.get<UserInfoStore>().updateActiveOrder();
+  }
 
   @override
   _SlidingUpWidgetState createState() => _SlidingUpWidgetState(
@@ -77,6 +79,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
       this.panel = panel;
     });
     this.panel.mapStateCallback();
+    _sliderPanelController.close();
   }
 
   Widget _panel(ScrollController sc) {
@@ -97,53 +100,49 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ext.SlidingUpPanel(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(panel.radius),
-        topRight: Radius.circular(panel.radius),
-      ),
-      onPanelClosed: () => panel.controller.close(),
-      onPanelOpened: () => panel.controller.open(),
-      isDraggable: panel.controller.isDraggable,
-      backdropTapClosesPanel:
-          panel.controller.isDraggable && panel.backdropTapClosesPanel,
-      minHeight: panel.minHeight,
-      maxHeight: panel.maxHeight,
-      controller: _sliderPanelController,
-      backdropEnabled: true,
-      backdropOpacity: panel.backdropOpacity,
-      panelBuilder: (sc) => _panel(sc),
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            MapWidget(
+    // This is stupid, but please don't remove it
+    // You're more than welcome to create a custom slider-panel widget instead of this shitty 3rd party one
+    return Material(
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          ext.SlidingUpPanel(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(panel.radius),
+              topRight: Radius.circular(panel.radius),
+            ),
+            onPanelClosed: () => panel.controller.close(),
+            onPanelOpened: () => panel.controller.open(),
+            isDraggable: true,
+            minHeight: panel.minHeight,
+            maxHeight: panel.maxHeight,
+            controller: _sliderPanelController,
+            backdropEnabled: true,
+            backdropOpacity: panel.backdropOpacity,
+            panelBuilder: (sc) => _panel(sc),
+            body: MapWidget(
               controller: widget.mapController,
               slidingUpWidgetController: widget.controller,
               initCallback: panel.mapStateCallback,
+              isDraggable: panel.isMapDraggable,
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: panel.minHeight),
-                    child: Container(
-                      height: panel.buttons.length *
-                          (panel.buttonSize + panel.buttonSpacing),
-                      width: panel.buttonSize + panel.buttonSpacing,
-                      child: Column(
-                        children: panel.buttons,
-                      ),
-                    ),
-                  ),
-                ],
+          ),
+          Visibility(
+            visible: !panel.controller.isOpen,
+            child: Positioned(
+              right: 0.0,
+              bottom: widget.controller.currentHeight,
+              child: Container(
+                height: (panel.buttons.length) *
+                    (panel.buttonSize + panel.buttonSpacing),
+                width: panel.buttonSize + panel.buttonSpacing,
+                child: Column(
+                  children: panel.buttons,
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

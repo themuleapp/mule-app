@@ -81,7 +81,7 @@ class _RequestsScreenState extends State<RequestsScreen>
             Padding(
               padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16),
               child: Text(
-                "${DateFormat('MMM dd - H:m a').format(order.createdAt.toLocal()).toUpperCase()}",
+                "${DateFormat('MMM dd - h:mm a').format(order.createdAt.toLocal()).toUpperCase()}",
                 style: TextStyle(
                   color: AppTheme.darkGrey,
                   fontFamily: AppTheme.fontName,
@@ -118,6 +118,9 @@ class _RequestsScreenState extends State<RequestsScreen>
       // Send api request
       // Remove from local list
       success = await muleApiService.acceptRequest(requestId);
+      if (success) {
+        await GetIt.I.get<UserInfoStore>().updateActiveOrder();
+      }
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mule/models/data/location_data.dart';
 import 'package:mule/models/data/user_data.dart';
-import 'package:mule/services/notifications/notification_service.dart';
 
 // TODO Should this be in a response?
 class OrderData with ChangeNotifier {
