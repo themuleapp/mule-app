@@ -13,13 +13,13 @@ class ExternalApi {
     if (searchTerm.isEmpty) {
       return null;
     }
-    LocationData locationData = Config.pennStateLocation;
+    //LocationData locationData = Config.pennStateLocation;
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     // testlocation:
     // location=40.793429,-77.860314
     String request = '$baseURL?input=$searchTerm&key=$googleApiKey' +
-        '&location=${locationData.lat},${locationData.lng}' +
+        '&location=${GetIt.I.get<LocationStore>().currentLocation},${GetIt.I.get<LocationStore>().currentLocation}' +
         '&radius=${Config.DESTINATION_SEARCH_RADIUS}&strictbounds';
 
     Response res = await Dio().get(request);
