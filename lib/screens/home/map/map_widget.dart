@@ -383,6 +383,7 @@ class _MapWidgetState extends State<MapWidget> {
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
+                mapToolbarEnabled: false,
                 markers: _markers,
                 polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
