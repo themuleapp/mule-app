@@ -155,7 +155,9 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                       Expanded(
                         child: Center(
                           child: Text(
-                            "4578",
+                              (GetIt.I.get<UserInfoStore>().activeOrder?.confirmationCode == null)
+                              ? "" 
+                              : GetIt.I.get<UserInfoStore>().activeOrder?.confirmationCode,
                             style: TextStyle(
                               fontFamily: AppTheme.fontName,
                               fontWeight: FontWeight.w700,

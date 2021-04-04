@@ -29,9 +29,9 @@ Future<bool> createOrderCompletionDialogue(
             onPressed: () async {
               if (GetIt.I.get<UserInfoStore>().fullName ==
                   order.acceptedBy.name) {
-                success = await muleApiService.muleCompleteRequest(order.id);
+                // success = await muleApiService.muleCompleteRequest(order.id);
               } else {
-                success = await muleApiService.userCompleteRequest(order.id);
+                // success = await muleApiService.userCompleteRequest(order.id);
               }
               Navigator.pop(context, false);
             },

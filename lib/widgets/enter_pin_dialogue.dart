@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
+import 'package:mule/services/mule_api_service.dart';
   
 FocusNode textfield; 
 
@@ -81,11 +82,10 @@ Future<bool> enterPinDialogue(
                       animate: true,
                       type: ProgressButtonType.Raised,
                       onPressed: () async {
-                        await Future.delayed(
-                            const Duration(milliseconds: 1000), () => 42);
                         String pin = "";
                         textEditors.forEach((e) => pin += e.text);
                         print(pin);
+                        success = await muleApiService.completeRequest(order.id, pin); 
                         Navigator.of(context).pop();
                       },
                     ),

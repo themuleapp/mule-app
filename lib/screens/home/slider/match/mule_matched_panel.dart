@@ -4,13 +4,12 @@ import 'package:mule/models/data/order_data.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
+import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/enter_pin_dialogue.dart';
-import 'package:mule/widgets/order_completion_dialogue.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
-import 'await_user_confirmation.dart';
 import 'matched_panel.dart';
 
 class MuleMatchedPanel extends MatchedPanel {
@@ -62,8 +61,12 @@ class MuleMatchedPanel extends MatchedPanel {
     bool success = await enterPinDialogue(
         context, "Are you sure that you have completed this delivery?", order);
     if (success) {
-      // TODO: Create a new panel that waits for user confirmation
-      slidingUpWidgetController.panel = AwaitUserConfirmationPanel.from(this);
+      createDialogWidget(
+        context,
+        "Thank you for your order!",
+        ":)",
+      );
+      slidingUpWidgetController.panel = SearchPanel.from(this);
     } else {
       createDialogWidget(
         context,

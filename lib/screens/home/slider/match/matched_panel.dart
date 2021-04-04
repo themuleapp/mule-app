@@ -126,7 +126,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
   void _orderListener() {
     OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
-    if (newOrder == null) {
+    if (newOrder == null || newOrder.status == Status.COMPLETED) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
       dispose();
     }
