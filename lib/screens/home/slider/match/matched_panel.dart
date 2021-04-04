@@ -41,7 +41,7 @@ abstract class MatchedPanel extends Panel {
         order.acceptedBy.location.toLatLng(),
         order.place.location.toLatLng(),
         order.destination.location.toLatLng(),
-        .1,
+        order.createdBy.name == GetIt.I.get<UserInfoStore>().fullName,
       );
   }
 
@@ -105,8 +105,6 @@ abstract class MatchedPanel extends Panel {
   double get maxHeight {
     return minHeight;
   }
-
-  Future<bool> completeRequest();
 }
 
 class _MatchedPanelState extends State<MatchedPanel> {
@@ -123,7 +121,7 @@ class _MatchedPanelState extends State<MatchedPanel> {
   void _orderListener() {
     OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
-    if (newOrder == null) {
+    if (newOrder == null || newOrder.status == Status.COMPLETED) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
       dispose();
     }
@@ -198,8 +196,8 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         Icon(
                           Icons.phone,
                           color: AppTheme.darkGrey,
-                          size: AppTheme.elementSize(widget.screenHeight, 25,
-                              25, 26, 26, 18, 20, 21, 22),
+                          size: AppTheme.elementSize(widget.screenHeight, 16,
+                              16, 17, 17, 18, 20, 21, 22),
                         ),
                         Text(widget.getFormattedPhoneNumber(widget.match),
                             style: TextStyle(

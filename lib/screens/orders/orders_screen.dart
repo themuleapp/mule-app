@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/services/mule_api_service.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
@@ -165,7 +167,8 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
   if (history == null) {
     return {};
   }
-  if (ongoing != null) {
+  // Only show this one if I'm the user (creator) of it.
+  if (ongoing != null && GetIt.I.get<UserInfoStore>().fullName != ongoing.acceptedBy.name) {
     orders.add(ongoing);
   }
   orders..addAll(history);
