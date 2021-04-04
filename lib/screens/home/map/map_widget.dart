@@ -170,6 +170,10 @@ class _MapWidgetState extends State<MapWidget> {
       markerId: MarkerId("MULEMARKER"),
       position: muleLocation,
       icon: muleIcon,
+      infoWindow: InfoWindow(
+        title: 'Mule Location',
+      ),
+      consumeTapEvents: true
     );
     setState(() {
       _markers..add(muleMarker);
@@ -245,10 +249,13 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  _showPolyLines({PointLatLng origin, PointLatLng destination}) async {
+  _showPolyLines({PointLatLng origin, PointLatLng destination, List<PointLatLng> waypoints}) async {
     // Polylines should be cleared when not used or updating
     if (_polylineCoords != null && !_polylineCoords.isEmpty) {
       return;
+    }
+    if (waypoints == null) {
+      waypoints = [];
     }
     List<LatLng> polylineCoordinates = [];
 
@@ -263,15 +270,19 @@ class _MapWidgetState extends State<MapWidget> {
       );
     }
 
+    List<PolylineWayPoint> polylinewaypoints = [];
+    waypoints.forEach((e) => polylinewaypoints.add(PolylineWayPoint(location: "${e.latitude}, ${e.longitude}")));
+
     PolylineResult result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey, origin, destination,
-        travelMode: TravelMode.walking);
+        travelMode: TravelMode.walking,
+        wayPoints: polylinewaypoints
+    );
     if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
-      result.points.removeLast();
-      result.points.removeLast();
-      result.points.forEach((PointLatLng point) {
+      List<PointLatLng> uniquePoints = result.points;
+      uniquePoints.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
@@ -373,6 +384,7 @@ class _MapWidgetState extends State<MapWidget> {
                 myLocationEnabled: true,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
+                mapToolbarEnabled: false,
                 markers: _markers,
                 polylines: _polylines,
                 onMapCreated: (controller) => _onMapCreated(controller),
@@ -465,26 +477,23 @@ class MapController {
     _mapWidgetState._setDefaultView();
   }
 
-  void updateDelivery(LatLng muleLocation, LatLng place, LatLng destination,
-      double triggerDistance) async {
+  void updateDelivery(LatLng muleLocation, LatLng place, LatLng destination, bool showMule) async {
     await _mapWidgetState._removePolyLines();
 
-    PointLatLng target;
-    PointLatLng origin =
-        PointLatLng(muleLocation.latitude, muleLocation.longitude);
-    if (_mapWidgetState.calculateDistance(muleLocation, place) <
-        triggerDistance) {
-      target = PointLatLng(place.latitude, place.longitude);
-    } else {
-      target = PointLatLng(destination.latitude, destination.longitude);
-    }
+    PointLatLng placePoint  = PointLatLng(place.latitude, place.longitude);
+    PointLatLng destinationPoint = PointLatLng(destination.latitude, destination.longitude);
+    PointLatLng mulePoint = PointLatLng(muleLocation.latitude, muleLocation.longitude);
+    
     await _mapWidgetState._showPolyLines(
-      origin: origin,
-      destination: target,
+      origin: mulePoint,
+      destination: destinationPoint,
+      waypoints: [placePoint],
     );
     await _mapWidgetState._setRouteMarkers();
     await _mapWidgetState._setRouteView(focusLocation: [muleLocation]);
-    await _mapWidgetState._singleMuleMarker(muleLocation);
+    if (showMule) {
+      await _mapWidgetState._singleMuleMarker(muleLocation);
+    }
   }
 
   bool get isMapLoading {

@@ -41,7 +41,7 @@ abstract class MatchedPanel extends Panel {
         order.acceptedBy.location.toLatLng(),
         order.place.location.toLatLng(),
         order.destination.location.toLatLng(),
-        .1,
+        order.createdBy.name == GetIt.I.get<UserInfoStore>().fullName,
       );
   }
 
