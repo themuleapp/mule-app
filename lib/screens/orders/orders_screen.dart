@@ -70,7 +70,7 @@ class _OrdersScreenState extends State<OrdersScreen>
         children: <Widget>[
           TabBar(
             tabs: [
-              tab('Upcoming', screenHeight),
+              tab('Ongoing', screenHeight),
               tab('Past', screenHeight),
             ],
             unselectedLabelColor: AppTheme.lightestGrey,
