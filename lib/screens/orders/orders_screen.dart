@@ -168,7 +168,8 @@ Future<Map<Status, List<OrderData>>> getOrders() async {
     return {};
   }
   // Only show this one if I'm the user (creator) of it.
-  if (ongoing != null && GetIt.I.get<UserInfoStore>().fullName != ongoing.acceptedBy.name) {
+  if (ongoing != null &&
+      GetIt.I.get<UserInfoStore>().fullName != ongoing.acceptedBy.name) {
     orders.add(ongoing);
   }
   orders..addAll(history);
@@ -186,6 +187,6 @@ Map<Status, List<OrderData>> _sortOrders(List<OrderData> orders) {
 
   // Sort orders by time of creation
   sortedOrders.forEach((status, list) =>
-      list.sort((a, b) => a.createdAt.compareTo(b.createdAt)));
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt)));
   return sortedOrders;
 }
