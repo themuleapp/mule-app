@@ -103,7 +103,7 @@ class Legal extends StatelessWidget {
                     screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
               ),
               title: Text(
-                "Terms of Service",
+                "Terms of Use",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
