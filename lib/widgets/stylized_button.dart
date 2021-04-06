@@ -82,18 +82,6 @@ class CompletedButton extends StylizedButton {
         );
 }
 
-class NavigateButton extends StylizedButton {
-  NavigateButton({double size, Function callback, EdgeInsets margin})
-      : super(
-          size: size,
-          color: AppTheme.secondaryBlue,
-          margin: margin,
-          iconColor: AppTheme.white,
-          callback: callback,
-          icon: Icons.directions,
-        );
-}
-
 class HelpButton extends StylizedButton {
   HelpButton({double size, Function callback, EdgeInsets margin})
       : super(
