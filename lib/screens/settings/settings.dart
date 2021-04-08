@@ -94,8 +94,8 @@ class Settings extends StatelessWidget {
                   size: AppTheme.elementSize(
                       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                 ),
-                onTap: () {
-                  AppSettings.openLocationSettings;
+                onTap: () async {
+                  await AppSettings.openLocationSettings();
                 },
               ),
               Divider(),
@@ -125,8 +125,8 @@ class Settings extends StatelessWidget {
                   size: AppTheme.elementSize(
                       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                 ),
-                onTap: () {
-                  AppSettings.openNotificationSettings;
+                onTap: () async {
+                  await AppSettings.openNotificationSettings();
                 },
               ),
               Divider(),
