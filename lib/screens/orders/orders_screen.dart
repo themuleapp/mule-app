@@ -96,7 +96,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                   // DO SOMETHING
                 }
                 return Container(
-                  height: screenHeight - 250,
+                  height: screenHeight - (screenHeight / 4),
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[

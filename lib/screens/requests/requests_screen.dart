@@ -239,7 +239,7 @@ class _RequestsScreenState extends State<RequestsScreen>
                   // DO SOMETHING
                 }
                 return Container(
-                  height: screenHeight - 250,
+                  height: screenHeight - (screenHeight / 4),
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
