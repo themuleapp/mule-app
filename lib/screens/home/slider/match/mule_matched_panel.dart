@@ -47,7 +47,14 @@ class MuleMatchedPanel extends MatchedPanel {
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
-    return [accept, cancel];
+    StylizedButton currentLocationButton = CurrentLocationButton(
+      size: buttonSize,
+      callback: () {
+        if (!mapController.isMapLoading) mapController.focusCurrentLocation();
+      },
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [accept, cancel, currentLocationButton];
   }
 
   void completeRequest(BuildContext context) async {
