@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/home/slider/match/waiting_to_match_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
 import 'package:mule/screens/home/slider/search/search_panel.dart';
 import 'package:mule/services/messages_service.dart';
@@ -102,6 +103,9 @@ class _MatchedPanelState extends State<MatchedPanel> {
     if (newOrder == null || newOrder.status == Status.COMPLETED) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
       dispose();
+    }
+    if (newOrder.status == Status.OPEN) {
+      widget.slidingUpWidgetController.panel = WaitingToMatchPanel.from(widget);
     }
   }
 
