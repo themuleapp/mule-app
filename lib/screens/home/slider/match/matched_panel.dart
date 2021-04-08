@@ -74,28 +74,6 @@ abstract class MatchedPanel extends Panel {
     }
   }
 
-  launchMaps() async {
-    String origin =
-        "${GetIt.I.get<LocationStore>().currentLocation.lat},${GetIt.I.get<LocationStore>().currentLocation.lng}";
-    String source =
-        "${GetIt.I.get<LocationStore>().place.location.lat},${GetIt.I.get<LocationStore>().place.location.lng}";
-    String destination =
-        "${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}";
-
-    String url = "https://www.google.com/maps/dir/?api=1&origin=" +
-        origin +
-        "&destination=" +
-        destination +
-        "&waypoints=" +
-        source +
-        "&travelmode=walking&dir_action=navigate";
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   double get minHeight {
     return screenHeight / 5;
@@ -124,6 +102,28 @@ class _MatchedPanelState extends State<MatchedPanel> {
     if (newOrder == null || newOrder.status == Status.COMPLETED) {
       widget.slidingUpWidgetController.panel = SearchPanel.from(widget);
       dispose();
+    }
+  }
+
+  void _launchMaps() async {
+    String origin =
+        "${GetIt.I.get<LocationStore>().currentLocation.lat},${GetIt.I.get<LocationStore>().currentLocation.lng}";
+    String source =
+        "${GetIt.I.get<LocationStore>().place.location.lat},${GetIt.I.get<LocationStore>().place.location.lng}";
+    String destination =
+        "${GetIt.I.get<LocationStore>().destination.location.lat},${GetIt.I.get<LocationStore>().destination.location.lng}";
+
+    String url = "https://www.google.com/maps/dir/?api=1&origin=" +
+        origin +
+        "&destination=" +
+        destination +
+        "&waypoints=" +
+        source +
+        "&travelmode=walking&dir_action=navigate";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -235,7 +235,37 @@ class _MatchedPanelState extends State<MatchedPanel> {
                           widget.screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                     )),
                 onTap: () => _service.sendSms(widget.match.phoneNumber),
-              )
+              ),
+              Visibility(
+                visible:
+                    GetIt.I.get<UserInfoStore>().activeOrder.createdBy.name !=
+                        GetIt.I.get<UserInfoStore>().fullName,
+                child: SizedBox(
+                  width: AppTheme.elementSize(
+                      widget.screenHeight, 8, 8, 8, 9, 12, 14, 16, 18),
+                ),
+              ),
+              Visibility(
+                visible:
+                    GetIt.I.get<UserInfoStore>().activeOrder.createdBy.name !=
+                        GetIt.I.get<UserInfoStore>().fullName,
+                child: GestureDetector(
+                  child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        color: AppTheme.lightGrey.withOpacity(0.1),
+                      ),
+                      child: Icon(
+                        Icons.directions,
+                        color: AppTheme.secondaryBlue,
+                        size: AppTheme.elementSize(widget.screenHeight, 25, 25,
+                            26, 26, 28, 36, 38, 40),
+                      )),
+                  onTap: () => _launchMaps(),
+                ),
+              ),
             ],
           ),
         )
