@@ -32,7 +32,7 @@ class _RequestsScreenState extends State<RequestsScreen>
 
   @override
   initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -131,14 +131,14 @@ class _RequestsScreenState extends State<RequestsScreen>
       // Remove from local list
       success = await muleApiService.dismissRequest(requestId);
 
-      if(success) {
+      if (success) {
         _updateOrders();
       }
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
-    }   
+    }
   }
 
   Widget slideRightBackground() {
@@ -214,7 +214,6 @@ class _RequestsScreenState extends State<RequestsScreen>
           TabBar(
             tabs: [
               tab('Available', screenHeight),
-              tab('Dismissed', screenHeight),
               tab('Completed', screenHeight),
             ],
             unselectedLabelColor: AppTheme.lightestGrey,
@@ -240,14 +239,12 @@ class _RequestsScreenState extends State<RequestsScreen>
                   // DO SOMETHING
                 }
                 return Container(
-                  height: screenHeight,
+                  height: screenHeight - (screenHeight / 4),
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
                       generateItemsList(
                           Status.OPEN, snapshot.data, true, screenHeight),
-                      generateItemsList(
-                          Status.DISMISSED, snapshot.data, false, screenHeight),
                       generateItemsList(
                           Status.COMPLETED, snapshot.data, false, screenHeight),
                     ],
