@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/profile/profile.dart';
@@ -93,6 +94,9 @@ class Settings extends StatelessWidget {
                   size: AppTheme.elementSize(
                       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                 ),
+                onTap: () async {
+                  await AppSettings.openLocationSettings();
+                },
               ),
               Divider(),
               ListTile(
@@ -121,6 +125,9 @@ class Settings extends StatelessWidget {
                   size: AppTheme.elementSize(
                       screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
                 ),
+                onTap: () async {
+                  await AppSettings.openNotificationSettings();
+                },
               ),
               Divider(),
               SizedBox(
