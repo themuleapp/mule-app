@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
@@ -12,6 +13,7 @@ import 'package:mule/screens/login/login_screen.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/button.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../navigation_home_screen.dart';
 import '../../stores/global/user_info_store.dart';
@@ -88,6 +90,20 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       } else if (errorMessages.contains('email')) {
         _clearEmail();
       }
+    }
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: true,
+        enableJavaScript: true,
+        enableDomStorage: true,
+        forceSafariVC: true,
+      );
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -262,15 +278,56 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
             height: AppTheme.elementSize(
                 screenHeight, 25, 25, 25, 26, 26, 35, 40, 43),
           ),
-          Text(
-            "By clicking \"Sign Up\" you agree to our terms and conditions as well as our privacy policy",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppTheme.darkGrey,
-              fontSize: AppTheme.elementSize(
-                  screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "By clicking \"Sign Up\" below you agree to our ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.darkGrey,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+                  ),
+                ),
+                TextSpan(
+                  text: "terms of use",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.lightBlue,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      _launchURL('https://www.themuleapp.com/terms-of-use');
+                    },
+                ),
+                TextSpan(
+                  text: " as well as our ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.darkGrey,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+                  ),
+                ),
+                TextSpan(
+                  text: "privacy policy",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.lightBlue,
+                    fontSize: AppTheme.elementSize(
+                        screenHeight, 14, 14, 14, 15, 16, 20, 24, 28),
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () async {
+                      _launchURL('https://www.themuleapp.com/privacy');
+                    },
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );

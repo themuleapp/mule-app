@@ -97,13 +97,13 @@ class Legal extends StatelessWidget {
                 horizontal: 0.0,
               ),
               leading: Icon(
-                Icons.verified_user,
+                Icons.description,
                 color: AppTheme.secondaryBlue,
                 size: AppTheme.elementSize(
                     screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
               ),
               title: Text(
-                "Terms of Service",
+                "Terms of Use",
                 style: TextStyle(
                   fontFamily: AppTheme.fontName,
                   fontWeight: FontWeight.w500,
@@ -121,38 +121,6 @@ class Legal extends StatelessWidget {
               onTap: () {
                 _launchURL('https://www.themuleapp.com/terms-of-use');
               },
-            ),
-            Divider(),
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 0.0,
-              ),
-              leading: Icon(
-                Icons.insert_drive_file,
-                color: AppTheme.secondaryBlue,
-                size: AppTheme.elementSize(
-                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-              ),
-              title: Text(
-                "Licenses",
-                style: TextStyle(
-                  fontFamily: AppTheme.fontName,
-                  fontWeight: FontWeight.w500,
-                  fontSize: AppTheme.elementSize(
-                      screenHeight, 16, 16, 17, 17, 18, 24, 26, 28),
-                  color: AppTheme.darkGrey,
-                ),
-              ),
-              trailing: Icon(
-                Icons.chevron_right,
-                color: AppTheme.secondaryBlue,
-                size: AppTheme.elementSize(
-                    screenHeight, 25, 25, 26, 26, 28, 36, 38, 40),
-              ),
-              /*onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Licenses()));
-              },*/
             ),
             Divider(),
             SizedBox(
