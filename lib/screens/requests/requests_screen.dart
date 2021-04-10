@@ -126,6 +126,7 @@ class _RequestsScreenState extends State<RequestsScreen>
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      await Future.delayed(const Duration(milliseconds: 1000), () => 42);
       createReminderWidget(context, "Remember to", [
         "Coordinate with the customer about the order specifics",
         "Provide the customer with a receipt",
