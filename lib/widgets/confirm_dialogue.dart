@@ -8,6 +8,8 @@ createConfirmDialogue(context, actionType) async {
     builder: (BuildContext context) {
       // return object of type Dialog
       return AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
         content: Text("Are you sure you want to $actionType this request?"),
         actions: <Widget>[
           TextButton(
