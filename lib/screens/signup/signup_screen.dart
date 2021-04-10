@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/screens/instructions/instructions.dart';
 import 'package:mule/services/mule_api_service.dart';
 import 'package:mule/mixins/input_validation.dart';
 import 'package:mule/models/req/signup/signup_data.dart';
@@ -79,8 +80,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidation {
       // user is signed up successfully
       // Navigator.of(context)
       //     .push(MaterialPageRoute(builder: (context) => PhoneOTP()));
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Instructions()));
     } else {
       final errorMessages = res.data['errors'].join('\n');
       createDialogWidget(context, 'Cannot sign up', errorMessages);

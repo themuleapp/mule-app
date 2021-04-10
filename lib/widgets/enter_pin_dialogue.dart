@@ -4,8 +4,8 @@ import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mule/config/app_theme.dart';
 import 'package:mule/models/data/order_data.dart';
 import 'package:mule/services/mule_api_service.dart';
-  
-FocusNode textfield; 
+
+FocusNode textfield;
 
 Future<bool> enterPinDialogue(
     BuildContext context, String text, OrderData order) async {
@@ -17,7 +17,8 @@ Future<bool> enterPinDialogue(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
         content: Container(
           height: 300,
           child: Column(
@@ -50,7 +51,7 @@ Future<bool> enterPinDialogue(
               ),
               Row(
                 children: _buildPinField(textEditors: textEditors),
-                ),
+              ),
               SizedBox(
                 height: AppTheme.elementSize(
                     screenHeight, 14, 16, 18, 19, 20, 21, 22, 24),
@@ -90,7 +91,8 @@ Future<bool> enterPinDialogue(
                         String pin = "";
                         textEditors.forEach((e) => pin += e.text);
                         print(pin);
-                        success = await muleApiService.completeRequest(order.id, pin); 
+                        success =
+                            await muleApiService.completeRequest(order.id, pin);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -106,8 +108,9 @@ Future<bool> enterPinDialogue(
   return success;
 }
 
-List<Widget> _buildPinField({int numberOfFields=4, List<TextEditingController> textEditors}) {
-  if(numberOfFields < 0) {
+List<Widget> _buildPinField(
+    {int numberOfFields = 4, List<TextEditingController> textEditors}) {
+  if (numberOfFields < 0) {
     throw Exception("Invalid argument, number of fields must be at least 0");
   }
   List<Widget> list = [];
@@ -115,55 +118,57 @@ List<Widget> _buildPinField({int numberOfFields=4, List<TextEditingController> t
 
   // Populate focusList
   focusList.add(null);
-  for(var i=0; i<numberOfFields; i++) {
+  for (var i = 0; i < numberOfFields; i++) {
     focusList.add(FocusNode());
   }
   focusList.add(null);
- 
+
   // Assign each textfield a focusNode, as well as a reference to the textfield before/after it
   var i;
-  for(i=1; i<numberOfFields; i++) {
-    list.add(_textField(textEditors, focusList[i], focusList[i-1], focusList[i+1]));
+  for (i = 1; i < numberOfFields; i++) {
+    list.add(_textField(
+        textEditors, focusList[i], focusList[i - 1], focusList[i + 1]));
     list.add(_spacing());
   }
-  list.add(_textField(textEditors, focusList[i], focusList[i-1], focusList[i+1]));
- 
+  list.add(_textField(
+      textEditors, focusList[i], focusList[i - 1], focusList[i + 1]));
+
   // Request focus for first textfield
   focusList[1].requestFocus();
   return list;
 }
 
-Widget _textField(List<TextEditingController> controllers, FocusNode myFocus, FocusNode previousFocus, FocusNode nextFocus) {
+Widget _textField(List<TextEditingController> controllers, FocusNode myFocus,
+    FocusNode previousFocus, FocusNode nextFocus) {
   TextEditingController controller = TextEditingController();
   controllers?.add(controller);
 
   return Expanded(
     child: TextField(
-      focusNode: myFocus,
-      controller: controller,
-      showCursor: false,
-      enableInteractiveSelection: false,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.blueAccent,
+        focusNode: myFocus,
+        controller: controller,
+        showCursor: false,
+        enableInteractiveSelection: false,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.blueAccent,
+            ),
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          borderRadius: BorderRadius.circular(10.0),
         ),
-      ),
-      textAlign: TextAlign.center,
-      keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(1),
-      ],
-      onChanged: (field) {
-        if(field.isEmpty) {
-          previousFocus?.requestFocus();
-        } else {
-          nextFocus?.requestFocus();
-        }
-      }
-    ),
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          LengthLimitingTextInputFormatter(1),
+        ],
+        onChanged: (field) {
+          if (field.isEmpty) {
+            previousFocus?.requestFocus();
+          } else {
+            nextFocus?.requestFocus();
+          }
+        }),
   );
 }
 
@@ -172,4 +177,3 @@ Widget _spacing() {
     width: 20.0,
   );
 }
-

@@ -12,7 +12,9 @@ import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
+import 'package:mule/widgets/reminder_widget.dart';
 import 'package:mule/widgets/tab.dart';
+import 'package:mule/widgets/unordered_list.dart';
 
 import '../../navigation_home_screen.dart';
 
@@ -124,8 +126,14 @@ class _RequestsScreenState extends State<RequestsScreen>
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      await Future.delayed(const Duration(milliseconds: 1000), () => 42);
+      createReminderWidget(context, "Remember to", [
+        "Coordinate with the customer about the order specifics",
+        "Provide the customer with a receipt",
+        "Ask for the PIN to complete the delivery",
+        "Wear a mask, be compliant with guidelines and help keep your community safe"
+      ]);
       dispose();
-      //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
       // Remove from local list
