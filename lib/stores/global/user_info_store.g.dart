@@ -36,6 +36,19 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
       (_$firstNameComputed ??= Computed<String>(() => super.firstName,
               name: '_UserInfoStore.firstName'))
           .value;
+  Computed<bool> _$isMuleComputed;
+
+  @override
+  bool get isMule => (_$isMuleComputed ??=
+          Computed<bool>(() => super.isMule, name: '_UserInfoStore.isMule'))
+      .value;
+  Computed<OrderData> _$activeOrderComputed;
+
+  @override
+  OrderData get activeOrder =>
+      (_$activeOrderComputed ??= Computed<OrderData>(() => super.activeOrder,
+              name: '_UserInfoStore.activeOrder'))
+          .value;
 
   final _$_firstNameAtom = Atom(name: '_UserInfoStore._firstName');
 
@@ -100,15 +113,45 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   final _$_profilePictureAtom = Atom(name: '_UserInfoStore._profilePicture');
 
   @override
-  ImageProvider<dynamic> get _profilePicture {
+  ImageProvider<Object> get _profilePicture {
     _$_profilePictureAtom.reportRead();
     return super._profilePicture;
   }
 
   @override
-  set _profilePicture(ImageProvider<dynamic> value) {
+  set _profilePicture(ImageProvider<Object> value) {
     _$_profilePictureAtom.reportWrite(value, super._profilePicture, () {
       super._profilePicture = value;
+    });
+  }
+
+  final _$_isMuleAtom = Atom(name: '_UserInfoStore._isMule');
+
+  @override
+  bool get _isMule {
+    _$_isMuleAtom.reportRead();
+    return super._isMule;
+  }
+
+  @override
+  set _isMule(bool value) {
+    _$_isMuleAtom.reportWrite(value, super._isMule, () {
+      super._isMule = value;
+    });
+  }
+
+  final _$_activeOrderAtom = Atom(name: '_UserInfoStore._activeOrder');
+
+  @override
+  OrderData get _activeOrder {
+    _$_activeOrderAtom.reportRead();
+    return super._activeOrder;
+  }
+
+  @override
+  set _activeOrder(OrderData value) {
+    _$_activeOrderAtom.reportWrite(value, super._activeOrder, () {
+      super._activeOrder = value;
     });
   }
 
@@ -119,6 +162,22 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   Future<void> updateProfilePicture() {
     return _$updateProfilePictureAsyncAction
         .run(() => super.updateProfilePicture());
+  }
+
+  final _$updateActiveOrderAsyncAction =
+      AsyncAction('_UserInfoStore.updateActiveOrder');
+
+  @override
+  Future<OrderData> updateActiveOrder() {
+    return _$updateActiveOrderAsyncAction.run(() => super.updateActiveOrder());
+  }
+
+  final _$deleteActiveOrderAsyncAction =
+      AsyncAction('_UserInfoStore.deleteActiveOrder');
+
+  @override
+  Future<bool> deleteActiveOrder() {
+    return _$deleteActiveOrderAsyncAction.run(() => super.deleteActiveOrder());
   }
 
   final _$_UserInfoStoreActionController =
@@ -158,6 +217,17 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   }
 
   @override
+  void updateIsMule(bool isMule) {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.updateIsMule');
+    try {
+      return super.updateIsMule(isMule);
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void updateEverythingFromrRes(ProfileRes res) {
     final _$actionInfo = _$_UserInfoStoreActionController.startAction(
         name: '_UserInfoStore.updateEverythingFromrRes');
@@ -174,7 +244,9 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
 fullName: ${fullName},
 email: ${email},
 phoneNumber: ${phoneNumber},
-firstName: ${firstName}
+firstName: ${firstName},
+isMule: ${isMule},
+activeOrder: ${activeOrder}
     ''';
   }
 }
