@@ -62,7 +62,7 @@ class _InstructionsState extends State<Instructions> {
                     Text(
                       "Thank you for signing up! We\'re super excited that you\'re here!",
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                           fontSize: AppTheme.elementSize(
                               screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                           color: AppTheme.darkGrey),
@@ -74,7 +74,7 @@ class _InstructionsState extends State<Instructions> {
                     Text(
                       "A few things before we start...",
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: AppTheme.elementSize(
                               screenHeight, 14, 15, 16, 17, 18, 20, 24, 28),
                           color: AppTheme.darkGrey),
