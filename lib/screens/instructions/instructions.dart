@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/navigation_home_screen.dart';
 import 'package:mule/widgets/button.dart';
 import 'package:mule/widgets/unordered_list.dart';
-import '../../navigation_home_screen.dart';
 
 class Instructions extends StatefulWidget {
   @override
@@ -11,8 +11,8 @@ class Instructions extends StatefulWidget {
 
 class _InstructionsState extends State<Instructions> {
   void _handleSubmit() async {
-    // Navigator.of(context)
-    //     .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
   }
 
   @override
