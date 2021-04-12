@@ -13,6 +13,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 
 import 'package:mule/widgets/clip_height.dart';
+import 'package:mule/widgets/reminder_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
 class WaitingToMatchPanel extends Panel {
@@ -84,7 +85,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
     GetIt.I.get<UserInfoStore>().activeOrder.addListener(_orderListener);
   }
 
-  void _orderListener() {
+  void _orderListener() async {
     OrderData newOrder = GetIt.I.get<UserInfoStore>().activeOrder;
 
     if (newOrder == null) {
@@ -93,6 +94,13 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
         newOrder.acceptedBy.name) {
       widget.slidingUpWidgetController.panel = MuleMatchedPanel.from(widget);
     } else {
+      await Future.delayed(const Duration(milliseconds: 1000), () => 42);
+      createReminderWidget(context, "Remember to", [
+        "Coordinate with the Mule about your order specifics",
+        "Provide the Mule with the PIN once you receive the delivery",
+        "Pay the Mule via Cash or electronic payment apps, the amount on the receipt + a tip",
+        "Wear a mask and help keep your community safe"
+      ]);
       widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
     }
     dispose();

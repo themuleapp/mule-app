@@ -11,7 +11,14 @@ void createReminderWidget(context, String title, List<String> content) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: AppTheme.elementSize(
+                  screenHeight, 15, 15, 16, 17, 18, 19, 22, 26),
+              color: AppTheme.darkGrey),
+        ),
         content: Container(
           height: screenHeight / 4,
           child: UnorderedList(content),

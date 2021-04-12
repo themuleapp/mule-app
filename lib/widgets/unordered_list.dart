@@ -43,7 +43,7 @@ class UnorderedListItem extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: AppTheme.elementSize(
-                  screenHeight, 15, 15, 16, 16, 17, 18, 22, 26),
+                  screenHeight, 14, 14, 15, 16, 17, 18, 21, 24),
               color: AppTheme.darkGrey,
             ),
           ),
