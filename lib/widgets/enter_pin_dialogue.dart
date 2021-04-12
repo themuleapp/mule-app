@@ -20,7 +20,7 @@ Future<bool> enterPinDialogue(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
         content: Container(
-          height: 300,
+          height: screenHeight / 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -152,7 +152,7 @@ Widget _textField(List<TextEditingController> controllers, FocusNode myFocus,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.blueAccent,
+              color: AppTheme.lightBlue,
             ),
             borderRadius: BorderRadius.circular(10.0),
           ),
