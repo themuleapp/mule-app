@@ -14,7 +14,6 @@ import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
 import 'package:mule/widgets/reminder_widget.dart';
 import 'package:mule/widgets/tab.dart';
-import 'package:mule/widgets/unordered_list.dart';
 
 import '../../navigation_home_screen.dart';
 

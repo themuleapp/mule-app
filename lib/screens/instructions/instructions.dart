@@ -91,7 +91,7 @@ class _InstructionsState extends State<Instructions> {
                           "Once matched, please chat with them to discuss your order specifics",
                           "When you receive your order, please remember to provide the PIN to the Mule to complete the delivery",
                           "We currently do not have payments integrated into the app and ask you to use cash, Venmo, ApplePay or GooglePay to pay the Mules. Please ensure that you are paying the correct amount by verifying the receipt",
-                          "We are exploring different ways to incentivize users and Mules. The first model we are testing is a tip to the Mules. Please tip at least 15% of the order amount if under \$12 and at least 10% if over \$12. Please do not pay until after you receive the delivery",
+                          "We are exploring different ways to incentivize users and Mules. The first model we are testing is a fixed delivery fee of \$1.95 that goes directly to the Mules. Please do not pay until after you receive the delivery",
                           "As a Mule, please ensure to provide accurate information about the delivery and send a picture of the receipt to the customer. Please ask the customer for their PIN to complete the delivery after you have received the payment",
                           "We ask everyone to ensure safety measures for themselves and their surroundings by wearing a mask and sanitizing frequently",
                           "We're bound to make mistakes and there might be things that you don't like a certain way! Your feedback and suggestions will be truly appreciated! Please reach out to us if you have any concerns or questions"

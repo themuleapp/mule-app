@@ -98,7 +98,7 @@ class WaitingToMatchState extends State<WaitingToMatchPanel> {
       createReminderWidget(context, "Remember to", [
         "Coordinate with the Mule about your order specifics",
         "Provide the Mule with the PIN once you receive the delivery",
-        "Pay the Mule via Cash or electronic payment apps, the amount on the receipt + a tip",
+        "Pay the Mule via Cash or electronic payment apps, the amount on the receipt + a \$1.95 fee",
         "Wear a mask and help keep your community safe"
       ]);
       widget.slidingUpWidgetController.panel = UserMatchedPanel.from(widget);
