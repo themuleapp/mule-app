@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
@@ -33,17 +34,21 @@ class UserMatchedPanel extends MatchedPanel {
         );
 
   List<StylizedButton> get buttons {
+    final double buttonSize =
+        AppTheme.elementSize(screenHeight, 42, 44, 46, 48, 50, 50, 50, 50);
+    final double buttonMargin =
+        AppTheme.elementSize(screenHeight, 12, 14, 16, 18, 20, 20, 20, 20);
     StylizedButton cancel = CancelButton(
       callback: cancelRequest,
       size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonSpacing),
+      margin: EdgeInsets.only(bottom: buttonMargin),
     );
     StylizedButton currentLocationButton = CurrentLocationButton(
       size: buttonSize,
       callback: () {
         if (!mapController.isMapLoading) mapController.focusCurrentLocation();
       },
-      margin: EdgeInsets.only(bottom: buttonSpacing),
+      margin: EdgeInsets.only(bottom: buttonMargin),
     );
     return [cancel, currentLocationButton];
   }

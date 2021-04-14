@@ -165,8 +165,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Container(
-                height: 60,
-                width: 60,
+                height: AppTheme.elementSize(
+                    widget.screenHeight, 52, 54, 56, 58, 60, 60, 60, 60),
+                width: AppTheme.elementSize(
+                    widget.screenHeight, 52, 54, 56, 58, 60, 60, 60, 60),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   //color: Colors.white,
@@ -226,8 +228,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
               )),
               GestureDetector(
                 child: Container(
-                    height: 50,
-                    width: 50,
+                    height: AppTheme.elementSize(
+                        widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
+                    width: AppTheme.elementSize(
+                        widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       color: AppTheme.lightGrey.withOpacity(0.1),
@@ -255,8 +259,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         GetIt.I.get<UserInfoStore>().fullName,
                 child: GestureDetector(
                   child: Container(
-                      height: 50,
-                      width: 50,
+                      height: AppTheme.elementSize(
+                          widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
+                      width: AppTheme.elementSize(
+                          widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         color: AppTheme.lightGrey.withOpacity(0.1),
