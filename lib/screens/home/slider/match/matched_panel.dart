@@ -12,6 +12,7 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
+import 'package:mule/widgets/confirm_action_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class MatchedPanel extends Panel {
@@ -69,9 +70,18 @@ abstract class MatchedPanel extends Panel {
   }
 
   void cancelRequest(BuildContext context) async {
-    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
-      createDialogWidget(context, "Oops... Something went wrong!",
-          "Something went wrong while trying to cancel your request, please try again later.");
+    bool success = createConfirmActionDialogue(context);
+    if (success == null) {
+      return;
+    }
+    if (success) {
+      slidingUpWidgetController.panel = SearchPanel.from(this);
+    } else {
+      createDialogWidget(
+        context,
+        "Oops... Something went wrong",
+        "Something went wrong while trying to confirm your delivery. Please try again later.",
+      );
     }
   }
 
