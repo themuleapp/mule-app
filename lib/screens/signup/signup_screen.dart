@@ -14,8 +14,6 @@ import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/button.dart';
 import 'package:mule/widgets/custom_text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../navigation_home_screen.dart';
 import '../../stores/global/user_info_store.dart';
 
 class SignupScreen extends StatefulWidget {
