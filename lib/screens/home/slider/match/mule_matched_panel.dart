@@ -38,28 +38,28 @@ class MuleMatchedPanel extends MatchedPanel {
           match: GetIt.I.get<UserInfoStore>().activeOrder.createdBy,
         );
   List<StylizedButton> get buttons {
-    final double buttonSize =
+    buttonSize =
         AppTheme.elementSize(screenHeight, 42, 44, 46, 48, 50, 50, 50, 50);
-    final double buttonMargin =
-        AppTheme.elementSize(screenHeight, 12, 14, 16, 18, 20, 20, 20, 20);
+    buttonSpacing =
+        AppTheme.elementSize(screenHeight, 15, 15, 17, 18, 20, 20, 20, 20);
     StylizedButton cancel = CancelButton(
       callback: cancelRequest,
       size: buttonSize,
       margin: EdgeInsets.only(
-        bottom: buttonMargin,
+        bottom: buttonSpacing,
       ),
     );
     StylizedButton accept = CompletedButton(
       callback: completeRequest,
       size: buttonSize,
-      margin: EdgeInsets.only(bottom: buttonMargin),
+      margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     StylizedButton currentLocationButton = CurrentLocationButton(
       size: buttonSize,
       callback: () {
         if (!mapController.isMapLoading) mapController.focusCurrentLocation();
       },
-      margin: EdgeInsets.only(bottom: buttonMargin),
+      margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     return [accept, cancel, currentLocationButton];
   }

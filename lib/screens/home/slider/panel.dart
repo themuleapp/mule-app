@@ -8,8 +8,8 @@ abstract class Panel extends StatefulWidget {
   final MapController mapController;
   final PanelController controller;
   final double radius;
-  final double buttonSpacing;
-  final double buttonSize;
+  double buttonSpacing;
+  double buttonSize;
   final double screenHeight;
   final double backdropOpacity;
   final bool backdropTapClosesPanel;
