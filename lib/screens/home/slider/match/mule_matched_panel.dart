@@ -45,9 +45,7 @@ class MuleMatchedPanel extends MatchedPanel {
     StylizedButton cancel = CancelButton(
       callback: cancelRequest,
       size: buttonSize,
-      margin: EdgeInsets.only(
-        bottom: buttonSpacing,
-      ),
+      margin: EdgeInsets.only(bottom: buttonSpacing),
     );
     StylizedButton accept = CompletedButton(
       callback: completeRequest,
