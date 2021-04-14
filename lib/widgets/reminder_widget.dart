@@ -19,9 +19,14 @@ void createReminderWidget(context, String title, List<String> content) {
                   screenHeight, 15, 15, 16, 17, 18, 19, 22, 26),
               color: AppTheme.darkGrey),
         ),
-        content: Container(
-          height: screenHeight / 4,
-          child: UnorderedList(content),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              //height: screenHeight / 4,
+              child: UnorderedList(content),
+            ),
+          ],
         ),
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
