@@ -56,6 +56,10 @@ class WaitingToMatchPanel extends Panel {
 
   @override
   List<StylizedButton> get buttons {
+    buttonSize =
+        AppTheme.elementSize(screenHeight, 42, 44, 46, 48, 50, 50, 50, 50);
+    buttonSpacing =
+        AppTheme.elementSize(screenHeight, 15, 15, 17, 18, 20, 20, 20, 20);
     StylizedButton cancel = CancelButton(
       callback: cancelRequest,
       size: buttonSize,
