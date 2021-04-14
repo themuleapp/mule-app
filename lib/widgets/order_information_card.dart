@@ -3,6 +3,8 @@ import 'package:mule/config/app_theme.dart';
 
 Widget orderInformationCard(
     String place, String destination, double screenHeight) {
+  double padding =
+      AppTheme.elementSize(screenHeight, 10, 10, 12, 14, 16, 16, 16, 16);
   return AnimatedOpacity(
     duration: const Duration(milliseconds: 500),
     opacity: 1.0,
@@ -22,7 +24,8 @@ Widget orderInformationCard(
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 16),
+          padding: EdgeInsets.only(
+              top: padding, bottom: padding, left: padding, right: padding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
