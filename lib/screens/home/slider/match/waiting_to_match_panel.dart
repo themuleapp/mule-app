@@ -13,6 +13,7 @@ import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 
 import 'package:mule/widgets/clip_height.dart';
+import 'package:mule/widgets/confirm_action_dialogue.dart';
 import 'package:mule/widgets/reminder_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
 
@@ -42,11 +43,17 @@ class WaitingToMatchPanel extends Panel {
         );
 
   cancelRequest(BuildContext context) async {
-    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
+    bool success = createConfirmActionDialogue(context);
+    if (success == null) {
+      return;
+    }
+    if (success) {
+      slidingUpWidgetController.panel = SearchPanel.from(this);
+    } else {
       createDialogWidget(
         context,
         "Oops... Something went wrong",
-        "Something went wrong while trying to cancel your request. Please try again later.",
+        "Something went wrong while trying to confirm your delivery. Please try again later.",
       );
     }
   }
