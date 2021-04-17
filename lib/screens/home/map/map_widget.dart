@@ -64,6 +64,9 @@ class _MapWidgetState extends State<MapWidget> {
   List<LatLng> _markerLocations;
   PolylinePoints polylinePoints = PolylinePoints();
   Position currentPosition;
+  // This value is absolute jank, please fix this properly
+  // the issue is that the showpolyline func. is called twice when initizalizing the map
+  bool polylineLoading = false;
 
   @override
   void initState() {
@@ -239,9 +242,11 @@ class _MapWidgetState extends State<MapWidget> {
       PointLatLng destination,
       List<PointLatLng> waypoints}) async {
     // Polylines should be cleared when not used or updating
-    if (_polylineCoords != null && !_polylineCoords.isEmpty) {
+    if (!_polylineCoords.isEmpty || polylineLoading) {
       return;
     }
+    polylineLoading = true;
+
     if (waypoints == null) {
       waypoints = [];
     }
@@ -264,7 +269,7 @@ class _MapWidgetState extends State<MapWidget> {
     PolylineResult result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey, origin, destination,
         travelMode: TravelMode.walking, wayPoints: polylinewaypoints);
-    if (result.points.isNotEmpty && _polylineCoords.isEmpty) {
+    if (result.points.isNotEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
       result.points.forEach((PointLatLng point) {
@@ -285,6 +290,7 @@ class _MapWidgetState extends State<MapWidget> {
       // end up showing up on the map
       _polylines.add(polyline);
     });
+    polylineLoading = false;
   }
 
   _removePolyLines() {
