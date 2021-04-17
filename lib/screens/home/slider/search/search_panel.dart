@@ -49,6 +49,10 @@ class SearchPanel extends Panel {
 
   @override
   List<StylizedButton> get buttons {
+    buttonSize =
+        AppTheme.elementSize(screenHeight, 42, 44, 46, 48, 50, 50, 50, 50);
+    buttonSpacing =
+        AppTheme.elementSize(screenHeight, 15, 15, 17, 18, 20, 20, 20, 20);
     StylizedButton currentLocationButton = CurrentLocationButton(
       size: buttonSize,
       callback: () {
@@ -216,15 +220,12 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
 
   _handleFocus() {
     if (_destinationFocusNode.hasFocus) {
-      if(!isOpen) {
+      if (!isOpen) {
         widget.slidingUpWidgetController.open();
       } else {
-        setState(() =>
-          destinationSelected = false
-        );
+        setState(() => destinationSelected = false);
       }
     }
-
   }
 
   _onSubmitChoice() {
@@ -235,7 +236,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   @override
   void close() {
     if (!isOpen) return;
-      
+
     _destinationFocusNode.unfocus();
     _searchFocusNode.unfocus();
 

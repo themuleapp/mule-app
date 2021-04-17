@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "663259817873",
+    "firebase_url": "https://mule-beta.firebaseio.com",
+    "project_id": "mule-beta",
+    "storage_bucket": "mule-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663259817873:android:a9c1bec10ae11b53ef9c30",
+        "android_client_info": {
+          "package_name": "com.example.mule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663259817873-h34to5kftbevt4g0rdkb0g8r1elqemfb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK3uX7rg0ZrevgMmeaasb2AKpZ55QHlB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663259817873-dd2qq8qn13fqvhkrsr40mlpb2n7cha9p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "663259817873-eifocfr58a2mnbpj1ers3751skrc23h4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.themuleapp.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

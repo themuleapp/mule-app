@@ -12,6 +12,7 @@ import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/stores/global/user_info_store.dart';
 import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/stores/location/location_store.dart';
+import 'package:mule/widgets/confirm_action_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class MatchedPanel extends Panel {
@@ -69,9 +70,18 @@ abstract class MatchedPanel extends Panel {
   }
 
   void cancelRequest(BuildContext context) async {
-    if (!await GetIt.I.get<UserInfoStore>().deleteActiveOrder()) {
-      createDialogWidget(context, "Oops... Something went wrong!",
-          "Something went wrong while trying to cancel your request, please try again later.");
+    bool success = createConfirmActionDialogue(context);
+    if (success == null) {
+      return;
+    }
+    if (success) {
+      slidingUpWidgetController.panel = SearchPanel.from(this);
+    } else {
+      createDialogWidget(
+        context,
+        "Oops... Something went wrong",
+        "Something went wrong while trying to confirm your delivery. Please try again later.",
+      );
     }
   }
 
@@ -165,8 +175,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Container(
-                height: 60,
-                width: 60,
+                height: AppTheme.elementSize(
+                    widget.screenHeight, 52, 54, 56, 58, 60, 60, 60, 60),
+                width: AppTheme.elementSize(
+                    widget.screenHeight, 52, 54, 56, 58, 60, 60, 60, 60),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   //color: Colors.white,
@@ -226,8 +238,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
               )),
               GestureDetector(
                 child: Container(
-                    height: 50,
-                    width: 50,
+                    height: AppTheme.elementSize(
+                        widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
+                    width: AppTheme.elementSize(
+                        widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       color: AppTheme.lightGrey.withOpacity(0.1),
@@ -255,8 +269,10 @@ class _MatchedPanelState extends State<MatchedPanel> {
                         GetIt.I.get<UserInfoStore>().fullName,
                 child: GestureDetector(
                   child: Container(
-                      height: 50,
-                      width: 50,
+                      height: AppTheme.elementSize(
+                          widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
+                      width: AppTheme.elementSize(
+                          widget.screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         color: AppTheme.lightGrey.withOpacity(0.1),
