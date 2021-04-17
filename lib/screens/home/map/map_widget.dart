@@ -181,7 +181,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
-  Future<void> _updateMarkers([double updatedZoom]) async {
+  void _updateMarkers([double updatedZoom]) async {
     if (_isFocusedOnRoute ||
         _clusterManager == null ||
         updatedZoom == _currentZoom) return;
@@ -198,9 +198,11 @@ class _MapWidgetState extends State<MapWidget> {
       80,
     );
 
-    _markers
-      ..clear()
-      ..addAll(updatedMarkers);
+    setState(() {
+      _markers
+        ..clear()
+        ..addAll(updatedMarkers);
+    });
   }
 
   _setRouteMarkers() async {
