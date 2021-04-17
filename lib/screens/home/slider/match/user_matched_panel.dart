@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/match/matched_panel.dart';
 import 'package:mule/screens/home/slider/panel.dart';
