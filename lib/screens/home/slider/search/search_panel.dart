@@ -216,15 +216,12 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
 
   _handleFocus() {
     if (_destinationFocusNode.hasFocus) {
-      if(!isOpen) {
+      if (!isOpen) {
         widget.slidingUpWidgetController.open();
       } else {
-        setState(() =>
-          destinationSelected = false
-        );
+        setState(() => destinationSelected = false);
       }
     }
-
   }
 
   _onSubmitChoice() {
@@ -235,7 +232,7 @@ class _SearchPanelState extends State<SearchPanel> with DraggablePanel {
   @override
   void close() {
     if (!isOpen) return;
-      
+
     _destinationFocusNode.unfocus();
     _searchFocusNode.unfocus();
 

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mule/config/app_theme.dart';
+import 'package:mule/stores/global/user_info_store.dart';
 
-createConfirmDialogue(context, actionType) async {
-  // flutter defined function
+createConfirmActionDialogue(BuildContext context) async {
   return await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -10,7 +11,7 @@ createConfirmDialogue(context, actionType) async {
       return AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
-        content: Text("Are you sure you want to $actionType this request?"),
+        content: Text("Are you sure you want to cancel this request?"),
         actions: <Widget>[
           TextButton(
             child: Text(
@@ -22,15 +23,16 @@ createConfirmDialogue(context, actionType) async {
                 fontSize: 14,
               ),
             ),
-            onPressed: () {
-              // Dismiss the dialog and
-              // also dismiss the swiped item
-              Navigator.pop(context, true);
+            onPressed: () async {
+              await GetIt.I.get<UserInfoStore>().deleteActiveOrder();
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
             },
           ),
           TextButton(
             child: Text(
-              "Cancel",
+              "No",
               style: TextStyle(
                 fontFamily: AppTheme.fontName,
                 fontWeight: FontWeight.w500,
@@ -39,9 +41,9 @@ createConfirmDialogue(context, actionType) async {
               ),
             ),
             onPressed: () {
-              // Dismiss the dialog but don't
-              // dismiss the swiped item
-              Navigator.pop(context, false);
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
             },
           ),
         ],

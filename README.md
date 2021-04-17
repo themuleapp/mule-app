@@ -70,11 +70,11 @@ To get a local copy up and running follow these simple steps.
 ### Installation
 1. Clone the repository
 ```sh
-git clone https://github.com/whisperingmule/mule-app.git
+git clone https://github.com/themuleapp/mule-app.git
 ```
 2. Also clone the [mule-backend](https://github.com/themuleapp/mule-backend) repository if you will be working on the backend (Optional)
 ```sh
-git clone https://github.com/whisperingmule/mule-backend.git
+git clone https://github.com/themuleapp/mule-backend.git
 ```
 3. Change the directory to the *mule-app* project repository and run the app
 ```sh

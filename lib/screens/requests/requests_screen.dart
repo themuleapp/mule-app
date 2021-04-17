@@ -12,6 +12,7 @@ import 'package:mule/widgets/alert_widget.dart';
 import 'package:mule/widgets/confirm_dialogue.dart';
 import 'package:mule/widgets/loading-animation.dart';
 import 'package:mule/widgets/order_information_card.dart';
+import 'package:mule/widgets/reminder_widget.dart';
 import 'package:mule/widgets/tab.dart';
 
 import '../../navigation_home_screen.dart';
@@ -32,7 +33,7 @@ class _RequestsScreenState extends State<RequestsScreen>
 
   @override
   initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -124,21 +125,27 @@ class _RequestsScreenState extends State<RequestsScreen>
       // controller.panelIndex = PanelIndex.MuleMatched;
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => NavigationHomeScreen()));
+      await Future.delayed(const Duration(milliseconds: 1000), () => 42);
+      createReminderWidget(context, "Remember to", [
+        "Coordinate with the customer about the order specifics",
+        "Provide the customer with a receipt",
+        "Ask for the PIN to complete the delivery",
+        "Wear a mask, be compliant with guidelines and help keep your community safe"
+      ]);
       dispose();
-      //TODO: Create dialog box with instructions about delivery: safety etc
     } else {
       // Send api request
       // Remove from local list
       success = await muleApiService.dismissRequest(requestId);
 
-      if(success) {
+      if (success) {
         _updateOrders();
       }
     }
     if (!success) {
       createDialogWidget(context, 'There was a problem!',
           'We couldn\'t complete your request, please try again!');
-    }   
+    }
   }
 
   Widget slideRightBackground() {
@@ -214,7 +221,6 @@ class _RequestsScreenState extends State<RequestsScreen>
           TabBar(
             tabs: [
               tab('Available', screenHeight),
-              tab('Dismissed', screenHeight),
               tab('Completed', screenHeight),
             ],
             unselectedLabelColor: AppTheme.lightestGrey,
@@ -240,14 +246,12 @@ class _RequestsScreenState extends State<RequestsScreen>
                   // DO SOMETHING
                 }
                 return Container(
-                  height: screenHeight,
+                  height: screenHeight - (screenHeight / 4),
                   child: TabBarView(
                     controller: _tabController,
                     children: <Widget>[
                       generateItemsList(
                           Status.OPEN, snapshot.data, true, screenHeight),
-                      generateItemsList(
-                          Status.DISMISSED, snapshot.data, false, screenHeight),
                       generateItemsList(
                           Status.COMPLETED, snapshot.data, false, screenHeight),
                     ],

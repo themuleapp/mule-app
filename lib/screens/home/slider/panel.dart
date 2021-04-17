@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mule/config/app_theme.dart';
 import 'package:mule/screens/home/map/map_widget.dart';
 import 'package:mule/screens/home/slider/sliding_up_widget.dart';
 import 'package:mule/widgets/stylized_button.dart';
@@ -23,11 +24,13 @@ abstract class Panel extends StatefulWidget {
     this.backdropTapClosesPanel = true,
     this.backdropOpacity = 0.0,
     this.radius = 20,
-    this.buttonSize = 50.0,
-    this.buttonSpacing = 20.0,
     this.isMapDraggable = true,
     Key key,
-  }) : super(key: key);
+  })  : buttonSize =
+            AppTheme.elementSize(screenHeight, 42, 44, 46, 48, 50, 50, 50, 50),
+        buttonSpacing =
+            AppTheme.elementSize(screenHeight, 15, 15, 17, 18, 20, 20, 20, 20),
+        super(key: key);
 
   // Has to be called in the init of the state of the implementing class for the controller to work
   void init(State<Panel> panelState) {

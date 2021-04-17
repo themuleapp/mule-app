@@ -3,6 +3,8 @@ import 'package:mule/config/app_theme.dart';
 
 Widget orderInformationCard(
     String place, String destination, double screenHeight) {
+  double padding =
+      AppTheme.elementSize(screenHeight, 10, 10, 12, 14, 16, 16, 16, 16);
   return AnimatedOpacity(
     duration: const Duration(milliseconds: 500),
     opacity: 1.0,
@@ -22,66 +24,59 @@ Widget orderInformationCard(
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.only(
+              top: padding, bottom: padding, left: padding, right: padding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        top: AppTheme.elementSize(
-                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
-                    hintStyle: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
-                      color: AppTheme.lightGrey,
-                    ),
-                    hintText: place,
-                    prefixIcon: IconButton(
-                      splashColor: AppTheme.lightBlue,
-                      icon: Icon(
-                        Icons.my_location,
-                        color: AppTheme.secondaryBlue,
-                      ),
-                      onPressed: () {},
-                    ),
-                    enabled: false,
+              Row(
+                children: [
+                  Icon(
+                    Icons.my_location,
+                    color: AppTheme.secondaryBlue,
                   ),
-                ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      place,
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w300,
+                        color: AppTheme.lightGrey,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 15, 16, 17, 20, 24, 26),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
               ),
               SizedBox(
                   height: AppTheme.elementSize(
-                      screenHeight, 0, 0, 0, 2, 8, 10, 10, 10)),
-              Container(
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        top: AppTheme.elementSize(
-                            screenHeight, 10, 12, 13, 14, 15, 16, 16, 18)),
-                    hintStyle: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: AppTheme.elementSize(
-                          screenHeight, 15, 15, 16, 16, 18, 20, 22, 24),
-                      color: AppTheme.lightGrey,
-                    ),
-                    hintText: destination,
-                    prefixIcon: IconButton(
-                      splashColor: AppTheme.lightBlue,
-                      icon: Icon(
-                        Icons.place,
-                        color: AppTheme.secondaryBlue,
-                      ),
-                      onPressed: () {},
-                    ),
-                    enabled: false,
+                      screenHeight, 12, 14, 15, 16, 17, 18, 20, 20)),
+              Row(
+                children: [
+                  Icon(
+                    Icons.place,
+                    color: AppTheme.secondaryBlue,
                   ),
-                ),
-              )
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      destination,
+                      style: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w300,
+                        color: AppTheme.lightGrey,
+                        fontSize: AppTheme.elementSize(
+                            screenHeight, 14, 15, 15, 16, 17, 20, 24, 26),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),

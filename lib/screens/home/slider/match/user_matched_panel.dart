@@ -18,7 +18,7 @@ class UserMatchedPanel extends MatchedPanel {
           mapController: mapController,
           controller: controller,
           match: GetIt.I.get<UserInfoStore>().activeOrder.acceptedBy,
-          headerString: "You are en route",
+          headerString: "You are en route to",
           screenHeight: screenHeight,
         );
 
@@ -38,6 +38,13 @@ class UserMatchedPanel extends MatchedPanel {
       size: buttonSize,
       margin: EdgeInsets.only(bottom: buttonSpacing),
     );
-    return [cancel];
+    StylizedButton currentLocationButton = CurrentLocationButton(
+      size: buttonSize,
+      callback: () {
+        if (!mapController.isMapLoading) mapController.focusCurrentLocation();
+      },
+      margin: EdgeInsets.only(bottom: buttonSpacing),
+    );
+    return [cancel, currentLocationButton];
   }
 }
