@@ -264,7 +264,7 @@ class _MapWidgetState extends State<MapWidget> {
     PolylineResult result = await polylinePoints?.getRouteBetweenCoordinates(
         ExternalApi.googleApiKey, origin, destination,
         travelMode: TravelMode.walking, wayPoints: polylinewaypoints);
-    if (result.points.isNotEmpty) {
+    if (result.points.isNotEmpty && _polylineCoords.isEmpty) {
       // loop through all PointLatLng points and convert them
       // to a list of LatLng, required by the Polyline
       result.points.forEach((PointLatLng point) {
