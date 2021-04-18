@@ -43,6 +43,16 @@
 	<string>This app needs access to location when open.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to the photo gallery when changing the profile picture</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app uses an external library that needs access to your contacts.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app uses an external library that may need access to your calendars data.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app uses an external library that may need access to your Apple Music data.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app uses an external library that may need access to your device's motion data.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This app uses an external library that may need access to your speech recognition data.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
