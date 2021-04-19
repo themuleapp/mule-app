@@ -33,24 +33,24 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera when changing the profile picture</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open and in the background.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to the photo gallery when changing the profile picture</string>
-	<key>NSContactsUsageDescription</key>
-	<string>This app uses an external library that needs access to your contacts.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>This app uses an external library that may need access to your calendars data.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This app uses an external library that may need access to your Apple Music data.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app uses an external library that may need access to your calendars data.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera when changing the profile picture</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app uses an external library that needs access to your contacts.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To get real-time updates on orders, to show you deliverers in your vicinity and improve ordering experience.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To get real-time updates on orders, to show you deliverers in your vicinity and improve ordering experience.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To get real-time updates on orders, to show you deliverers in your vicinity and improve ordering experience.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>This app uses an external library that may need access to your device's motion data.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to the photo gallery when changing the profile picture</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This app uses an external library that may need access to your speech recognition data.</string>
 	<key>UIBackgroundModes</key>
