@@ -65,6 +65,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         index: DrawerIndex.Requests,
         labelName: 'Requests',
         icon: Icon(Icons.playlist_add_check),
+        badgeVisible: true,
       ),
       DrawerList(
         index: DrawerIndex.Orders,
@@ -415,6 +416,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                  Visibility(visible: true, child: Icon(Icons.bolt)),
                 ],
               ),
             ),
@@ -482,11 +484,13 @@ class DrawerList {
     this.icon,
     this.index,
     this.imageName = '',
+    this.badgeVisible = false,
   });
 
   String labelName;
   Icon icon;
   bool isAssetsImage;
   String imageName;
+  bool badgeVisible;
   DrawerIndex index;
 }
