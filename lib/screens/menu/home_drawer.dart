@@ -423,7 +423,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Visibility(
                       visible: listData.labelName == "Requests" &&
                           muleApiService.getOpenRequests() != null &&
-                          muleApiService.getActiveRequest() != null,
+                          muleApiService.getActiveRequest() == null,
                       child: SpinKitDoubleBounce(
                         size: AppTheme.elementSize(
                             screenHeight, 20, 21, 22, 24, 25, 26, 27, 28),
