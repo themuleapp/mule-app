@@ -416,7 +416,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  Visibility(visible: true, child: Icon(Icons.bolt)),
+                  Visibility(
+                    visible: listData.labelName == "Requests" &&
+                        muleApiService.getOpenRequests() != null,
+                    child: Icon(Icons.bolt),
+                  ),
                 ],
               ),
             ),
