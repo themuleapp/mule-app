@@ -9,6 +9,7 @@ import 'package:mule/screens/welcome_screen.dart';
 import 'package:mule/screens/legal/legal.dart';
 import 'package:mule/screens/profile/profile.dart';
 import 'package:mule/stores/global/user_info_store.dart';
+import 'package:mule/widgets/loading-animation.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -415,6 +416,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                  ),
+                  Visibility(
+                      visible: listData.labelName == "Requests" &&
+                          muleApiService.getOpenRequests() != null &&
+                          muleApiService.getActiveRequest() == null,
+                      child: SpinKitDoubleBounce(
+                        size: AppTheme.elementSize(
+                            screenHeight, 20, 21, 22, 24, 25, 26, 27, 28),
+                        color: AppTheme.goldenYellow,
+                      )),
                 ],
               ),
             ),
