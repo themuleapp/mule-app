@@ -29,20 +29,21 @@ dependencies:
   flutter_mobx:
   avatar_glow:
   email_validator:
-  dio: ^3.0.6
+  dio: ^4.0.0
   font_awesome_flutter:
   flutter_secure_storage:
-  google_maps_flutter:
+  google_maps_flutter: ^2.0.11
   sliding_up_panel:
   geolocator:
-  permission_handler: ^5.1.0
+  permission_handler: ^8.2.5
   google_maps_webservice:
   flutter_typeahead:
-  image_picker: ^0.6.7
+  image_picker: ^0.8.4+2
   fluster:
   flutter_cache_manager:
   flutter_polyline_points:
   flutter_progress_button:
+  firebase_core: ^1.7.0
   firebase_messaging:
   latlong: ^0.6.1
   intl:

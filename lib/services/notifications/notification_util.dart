@@ -7,7 +7,7 @@ import 'package:mule/models/req/deviceToken/device_token_req.dart';
 
 class NotificationUtil {
   static void deleteDeviceToken() async {
-    final FirebaseMessaging fcm = FirebaseMessaging();
+    final FirebaseMessaging fcm = FirebaseMessaging.instance;
 
     String fcmToken = await fcm.getToken();
     muleApiService.deleteDeviceToken(DeviceTokenReq(deviceToken: fcmToken));
@@ -31,8 +31,8 @@ class NotificationUtil {
             borderRadius: BorderRadius.circular(8.0),
             barrierBlur: 80,
             position: FlashPosition.top,
-            style: FlashStyle.floating,
-            enableDrag: true,
+            behavior: FlashBehavior.floating,
+            enableVerticalDrag: true,
             onTap: () => controller.dismiss(),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
