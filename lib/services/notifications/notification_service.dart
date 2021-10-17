@@ -20,32 +20,26 @@ class NotificationHandler extends StatefulWidget {
 }
 
 class _NotificationHandlerState extends State<NotificationHandler> {
-  final FirebaseMessaging _fcm = FirebaseMessaging();
 
   @override
   void initState() {
     super.initState();
     if (Platform.isIOS) {
       // When permission is given send the token to the server
-      _fcm.onIosSettingsRegistered.listen((event) => _saveDeviceToken());
-      _fcm.requestNotificationPermissions(IosNotificationSettings());
+      // TODO: Save token
+      FirebaseMessaging.instance.getNotificationSettings();
+      FirebaseMessaging.instance.requestPermission();
     } else {
       _saveDeviceToken();
     }
 
-    _fcm.configure(
-      // App in foreground
-      onMessage: _foregroundMessageHandler,
-      // App in background
-      // onResume: ,
-      // App terminated
-      // onLaunch: ,
-      // onBackgroundMessage: (Map<String, dynamic> message) async {},
-    );
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _foregroundMessageHandler(message);
+});
   }
 
   _saveDeviceToken() async {
-    String fcmToken = await _fcm.getToken();
+    String fcmToken = await FirebaseMessaging.instance.getToken();
     print('Token is $fcmToken');
     // Make a request to save the token on the backend
     await muleApiService
@@ -53,13 +47,12 @@ class _NotificationHandlerState extends State<NotificationHandler> {
   }
 
   Future<dynamic> _foregroundMessageHandler(
-      Map<String, dynamic> message) async {
+      RemoteMessage message) async {
     await GetIt.I.get<UserInfoStore>().updateActiveOrder();
 
-    // Unify message form
-    NotificationMessage notificationMessage = NotificationMessage(message);
+    NotificationMessage notificationMessage = NotificationMessage(message.data);
 
-    switch (notificationMessage.type) {
+    switch (message.messageType) {
       case MULE_NEW_REQUEST:
         NotificationUtil.displaySnackbar(
             title: notificationMessage.title,
