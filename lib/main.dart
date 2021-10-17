@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mule/config/config.dart';
 import 'package:mule/navigation_home_screen.dart';
@@ -11,6 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Config.registerStoresWithGetIt();
   Config.setupLocator();
+  await Firebase.initializeApp();
   runApp(App());
 }
 

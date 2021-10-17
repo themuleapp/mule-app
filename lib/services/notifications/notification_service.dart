@@ -26,7 +26,8 @@ class _NotificationHandlerState extends State<NotificationHandler> {
     super.initState();
     if (Platform.isIOS) {
       // When permission is given send the token to the server
-      FirebaseMessaging.instance.getNotificationSettings().then(_saveDeviceToken());
+      // TODO: Save token
+      FirebaseMessaging.instance.getNotificationSettings();
       FirebaseMessaging.instance.requestPermission();
     } else {
       _saveDeviceToken();
