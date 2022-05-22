@@ -31,6 +31,7 @@
 * [Dependencies](#dependencies)
   * [Dev Dependencies](#dev-dependencies)
 * [Contact](#contact)
+* [Disclaimer](#disclaimer)
 
 
 <!-- ABOUT THE PROJECT -->
@@ -93,7 +94,7 @@ See the [open issues](https://github.com/themuleapp/mule-app/issues) for a list 
 <!-- CONTRIBUTIONS AND GITHUB WORKFLOW -->
 ## Contributions
 
-Contributions are what help us grow abd make us such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what help us grow and make us such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 Please follow the [GitHub Workflow](https://github.com/themuleapp/mule-app/blob/master/github-workflow.md) while making contributions.
 
 ### Authors and Acknowledgements
@@ -141,3 +142,7 @@ Our team of developers deserve all the appreciation in the world! Without them, 
 
 Feel free to [Email](mailto:hello@themuleapp.com?subject=[GitHub]%20Mule%20App%20Repository) us if you have any questions or feedback!\
 You can also visit our [Website](https://themuleapp.com) for more information.
+
+<!-- DISCLAIMER -->
+## Disclaimer
+This software and app is not open source. Without a license, the default copyright laws apply, meaning that we retain all rights to our source code and no one may reproduce, distribute, or create derivative works from our work.
